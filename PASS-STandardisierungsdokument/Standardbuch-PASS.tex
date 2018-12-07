@@ -1,0 +1,37 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{lscape}
+\usepackage{ltablex}
+\renewlist{itemize}{itemize}{20}
+
+% initially, use dots for all levels
+\setlist[itemize]{label=$\cdot$}
+
+% customize the first 3 levels
+\setlist[itemize,1]{label=\textbullet}
+\setlist[itemize,2]{label=--}
+\setlist[itemize,3]{label=*}
+
+\begin{document}
+
+\author{Standardisation Gang}
+\title{Standards for subjectoriented specification of systems}
+\date{August 2018}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+\include{./TeX_files/chapter01}
+\include{./TeX_files/chapter02}
+\include{./TeX_files/chapter03}
+
+\backmatter
+% bibliography, glossary and index would go here.
+
+\end{document}

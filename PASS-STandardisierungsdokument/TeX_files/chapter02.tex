@@ -1,0 +1,358 @@
+\chapter{Classes and Property of the PASS Ontology}
+
+
+\section{All Classes (95)}
+
+\begin{itemize}
+\item PASSProcessModelElement
+\begin{itemize}
+	\item BehaviorDescribingComponent
+	\begin{itemize}
+		\item Action
+		\item DataMappingFunction
+		\begin{itemize}
+			\item DataMappingIncomingToLocal
+			\item DataMappingLocalToOutgoing
+		\end{itemize}
+		\item FunctionSpecification
+		\begin{itemize}
+			\item CommunicationAct
+			\begin{itemize}
+				\item ReceiveFunction
+				\item SendFunction
+			\end{itemize}
+			\item DoFunction
+		\end{itemize}
+		\item ReceiveType
+		\item SendType
+		\item State
+		\begin{itemize}
+			\item ChoiceSegment
+			\item ChoiceSegmentPath
+			\begin{itemize}
+				\item MandatoryToEndChoiceSegmentPath
+				\item MandatoryToStartChoiceSegmentPath
+				\item OptionalToEndChoiceSegmentPath
+				\item OptionalToStartChoiceSegmentPath
+			\end{itemize}
+			\item EndState
+			\item GenericReturnToOriginReference
+			\item InitialStateOfBehavior
+			\item InitialStateOfChoiceSegmentPath
+			\item MacroState
+			\item StandardPASSState
+			\begin{itemize}
+				\item DoState
+				\item ReceiveState
+				\item SendState
+			\end{itemize}
+			\item StateReference
+		\end{itemize}
+		\item Transition
+		\begin{itemize}
+			\item CommunicationTransition
+			\begin{itemize}
+				\item ReceiveTransition
+				\item SendTransition
+			\end{itemize}
+			\item DoTransition
+			\item SendingFailedTransition
+			\item TimeTransition
+			\begin{itemize}
+				\item ReminderTransition
+				\begin{itemize}
+					\item CalendarBasedReminderTransition
+					\item TimeBasedReminderTransition
+				\end{itemize}
+				\item TimerTransition
+				\begin{itemize}
+					\item BusinessDayTimerTransition
+					\item DayTimeTimerTransition
+					\item YearMonthTimerTransition
+				\end{itemize}
+				\item UserCancelTransition
+			\end{itemize}
+			\item TransitionCondition
+			\begin{itemize}
+				\item DoTransitionCondition
+				\item MessageExchangeCondition
+				\begin{itemize}
+					\item ReceiveTransitionCondition
+					\item SendTransitionCondition
+				\end {itemize}
+				\item SendingFailedCondition
+				\item TimeTransitionCondition
+				\begin{itemize}
+					\item ReminderEventTransitionCondition
+%					\begin{itemize}
+%						\item CalendarBasedReminderTransitionCondition
+%						\item TimeBasedReminderTimeOutTransitionCondition
+%					\end{itemize}
+					\item TimerTransitionCondition
+%					\begin{itemize}
+%						\item BusinessDayTimerTransitionCondition
+%						\item DayTimeTimerCondition
+%						\item YearMonthTimerTransitionCondition
+%					\end{itemize}
+				\end{itemize}
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}		
+			
+	\item DataDescribingComponent
+	\begin{itemize}
+		\item DataObjectDefinition
+		\begin{itemize}
+			\item DataObjectListDefintion
+			\item PayloadDataObjectDefinition
+			\item SubjectDataDefinition
+		\end{itemize}
+		\item DataTypeDefinition
+		\begin{itemize}
+			\item CustomOrExternalDataTypeDefinition
+			\begin{itemize}
+					\item JSONDataTypeDefinition
+					\item OWLDataTypeDefinition
+					\item XSD-DataTypeDefinition
+			\end{itemize}
+			\item ModelBuiltInDataTypes
+		\end{itemize}
+		\item PayloadDescription
+		\begin{itemize}
+			\item PayloadDataObjectDefinition
+			\item PayloadPhysicalObjectDescription
+		\end{itemize}
+	\end{itemize}
+	\item InteractionDescribingComponent
+	\begin{itemize}
+		\item InputPoolConstraint
+		\begin{itemize}
+			\item MessageSenderTypeConstraint
+			\item MessageTypeConstraint
+			\item SenderTypeConstraint
+		\end{itemize}
+		\item InputPoolContstraintHandlingStrategy
+		\item MessageExchange
+		\item MessageExchangeList
+		\item MessageSpecification
+		\item Subject
+		\begin{itemize}
+			\item FullySpecifiedSubject
+			\item InterfaceSubject
+			\item MultiSubject
+			\item SingleSubject
+			\item StartSubject
+		\end{itemize}
+	\end{itemize}
+				
+	\item PASSProcessModel
+	\item SubjectBehavior
+	\begin{itemize}
+		\item GuardBehavior
+		\item MacroBehavior
+		\item SubjectBaseBehavior
+	\end{itemize}
+\end{itemize}
+	
+\item SimplePASSElement
+\begin{itemize}
+	\item CommunicationTransition
+	\begin{itemize}
+		\item ReceiveTransition
+		\item SendTransition
+	\end{itemize}
+	\item DataMappingFunction
+	\begin{itemize}
+		\item DataMappingIncomingToLocal
+		\item DataMappingLocalToOutgoing
+	\end{itemize}
+	\item DoTransition
+	\item DoTransitionCondition
+	\item EndState
+	\item FunctionSpecification
+	\begin{itemize}
+		\item CommunicationAct
+		\begin{itemize}
+			\item ReceiveFunction
+			\item SendFunction
+		\end{itemize}
+		\item DoFunction
+	\end{itemize}
+	\item InitialStateOfBehavior
+	\item MessageExchange
+	\item MessageExchangeCondition
+	\begin{itemize}
+		\item ReceiveTransitionCondition
+		\item SendTransitionCondition
+	\end{itemize}
+	\item MessageExchangeList
+	\item MessageSpecification
+	\item ModelBuiltInDataTypes
+	\item PayloadDataObjectDefinition
+	\item StandardPASSState
+	\begin{itemize}
+		\item DoState
+		\item ReceiveState
+		\item SendState
+	\end{itemize}
+	\item Subject
+	\begin{itemize}
+		\item FullySpecifiedSubject
+		\item InterfaceSubject
+		\item MultiSubject
+		\item SingleSubject
+		\item StartSubject
+	\end{itemize}
+	\item SubjectBaseBehavior
+\end{itemize}
+\end{itemize}	
+
+			
+			
+			
+			
+
+
+
+
+
+
+
+
+
+
+\section{Data Properties (27)}
+
+hasBusinessDayDurationTimeOutTime
+hasCalendarBasedFrequencyOrDate
+hasDataMappingString
+hasDayTimeDurationTimeOutTime
+hasDurationTimeOutTime
+hasFeelExpressionAsDataMapping
+hasGraphicalRepresentation
+hasKey
+hasLimit
+hasMaximumSubjectInstanceRestriction
+hasMetaData
+hasModelComponentComment
+hasModelComponentID
+hasModelComponentLabel
+hasPriorityNumber
+hasReoccuranceFrequenyOrDate
+hasSVGRepresentation
+hasTimeBasedReoccuranceFrequencyOrDate
+hasTimeValue
+hasToolSpecificDefinition
+hasValue
+hasYearMonthDurationTimeOutTime
+isOptionalToEndChoiceSegmentPath
+isOptionalToStartChoiceSegmentPath
+owl:topDataProperty
+PASSModelDataProperty
+SimplePASSDataProperties
+
+
+
+
+\section{Object Properties (42)}
+
+\begin{landscape}
+\begin {longtable} { l | p{4 cm}  l |  l |l |}
+\hline
+Property name & Domain & Range & Reference\\
+\toprule
+\endhead
+\hline
+belongsTo & & &\\
+\hline
+contains & & &\\
+\hline	
+belongsTo & PASSProcessModelElement & PASSProcessModelElement & \\
+\hline
+contains & PASSProcessModelElement& PASSProcessModelElement & \\
+\hline
+containsBaseBehavior & Subject & SubjectBehavior & \\
+\hline
+containsBehavior & Subject & SubjectBehavior & \\
+\hline
+containsPayloadDescription & MessageSpecification & PayloadDescription & \\
+\hline
+guardedBy & State, Action & GuardBehavior & \\
+\hline
+guardsBehavior &GuardBehavior &SubjectBehavior &  \\
+\hline
+guardsState & State, Action & guardedBy & \\
+\hline
+hasAdditionalAttribute & PASSProcessModelElement& AdditionalAttribute&  \\
+\hline
+hasCorrespondent & & Subject & \\
+\hline
+hasDataDefinition & & DataObjectDefinition & \\
+\hline
+hasDataMappingFunction &state, SendTransition,\ ReceiveTransition & DataMappingFunction &  \\
+\hline 
+hasDataType & PayloadDescription or \ DataObjectDefinition & DataTypeDefinition &  \\
+\hline
+hasEndState & SubjectBehavior \ or ChoiceSegmentPath & State, not SendState &  \\
+\hline
+hasFunctionSpecification & State& FunctionSpecification&  \\
+\hline
+hasHandlingStrategy &InputPoolConstraint & InputPoolContstraintHandlingStrategy &  \\
+\hline
+hasIncomingMessageExchange & Subject& MessageExchange &  \\
+\hline
+hasIncomingTransition &State &Transition &  \\
+\hline
+hasInitialState & SubjectBehavior or ChoiceSegmentPath &State &  \\
+\hline
+hasInputPoolConstraint &Subject &InputPoolConstraint &  \\
+\hline
+hasKeyValuePair & & &  \\
+\hline
+hasMessageExchange & Subject & &  \\
+\hline
+hasMessageType & MessageTypeConstraint or\ MessageSenderTypeConstraint or \ MessageExchange
+ &MessageSpecification &  \\
+\hline
+hasOutgoingMessageExchange & Subject& MessageExchange&  \\
+\hline
+hasOutgoingTransition &State & Transition&  \\
+\hline
+hasReceiver &MessageExchange & Subject & \\
+\hline
+hasRelationToModelComponent & PASSProcessModelElement& PASSProcessModelElement &  \\
+\hline
+hasSender &MessageExchange & Subject & \\
+\hline
+hasSourceState & Transition& State&  \\
+\hline
+hasStartSubject & PASSProcessModel& StartSubject&  \\
+\hline
+hasTargetState & Transition& State&  \\
+\hline
+hasTransitionCondition &Transition &TransitionCondition &  \\
+\hline
+isBaseBehaviorOf &SubjectBaseBehavior & &  \\
+\hline
+isEndStateOf & State and not SendState & SubjectBehavior or ChoiceSegmentPath &  \\
+\hline
+isInitialStateOf & State& SubjectBehavior or ChoiceSegmentPath &  \\
+\hline
+isReferencedBy & & &  \\
+\hline
+references & & &  \\
+\hline
+referencesMacroBehavior &MacroState &MacroBehavior &  \\
+\hline
+refersTo & CommunicationTransition& MessageExchange&  \\
+\hline
+requiresActiveReceptionOfMessage &ReceiveTransitionCondition &MessageSpecification &  \\
+\hline
+requiresPerformedMessageExchange & MessageExchangeCondition&MessageExchange &  \\
+\hline
+SimplePASSObjectPropertie & & &  \\
+\hline
+\end{longtable}
+\end {landscape}
+
+

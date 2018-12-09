@@ -6,89 +6,103 @@
 \begin{itemize}
 \item PASSProcessModelElement
 \begin{itemize}
-	\item BehaviorDescribingComponent
+	\item BehaviorDescribingComponent \linebreak \textit{Group of PASS-Model components that describe aspects of the behavior of subjects}
 	\begin{itemize}
-		\item Action
-		\item DataMappingFunction
+		\item Action \linebreak \textit{An Action is a grouping concept that groups a state with all its outgoing valid transitions}
+		\item DataMappingFunction \linebreak \textit{Standard Format for DataMappingFunctions must be define: XML? OWL? JSON? 
+		Definitions of the ability/need to write or read data to and from a subject's personal data storage.
+		DataMappingFunctions are behavior describing components since they define what the subject is supposed to do (mapping and translating data)
+		Mapping may be done during reception of message, where data is taken from the message/Business Object (BO) and mapped/put into the local data field.
+		It may be done during sending of a message where data is taken from the local vault and put into a BO.
+		Or it may occur during executing a do function, where it is used to define read(get) and write (set) functions for the local data.}
 		\begin{itemize}
-			\item DataMappingIncomingToLocal
-			\item DataMappingLocalToOutgoing
+			\item DataMappingIncomingToLocal \linebreak \textit{A DataMapping that specifies how data is mapped from an an external source (message, function call etc.) to a subject's private defined data space.}
+			\item DataMappingLocalToOutgoing \linebreak \textit{A DataMapping that specifies how data is mapped from a subject's private data space to an an external destination (message, function call etc.)}
 		\end{itemize}
-		\item FunctionSpecification
+		\item FunctionSpecification \linebreak \textit{A function specification for state denotes \\ 
+			Concept: Definitions of calls of (mostly technical) functions (e.g. Web-service, Scripts, Database access,) that are not part of the process model.\\
+			Function Specifications are more than "Data Properties"? --> - If special function types (e.g. Defaults) are supposed to be reused, having them as explicit entities is a the better OWL-modeling choice.}
 		\begin{itemize}
-			\item CommunicationAct
+			\item CommunicationAct \linebreak \textit{A super class for specialized FunctionSpecification of communication acts (send and receive)}
 			\begin{itemize}
-				\item ReceiveFunction
-				\item SendFunction
+				\item ReceiveFunction \linebreak \textit{Specifications/descriptions for Receive-Functions describe in detail what the subject carrier is supposed to do in a state.\\
+				DefaultFunctionReceive1\_EnvoironmentChoice : present the surrounding execution environment with the given exit choices/conditions currently available depending on the current state of the subjects in-box. Waiting and not executing the receive action is an option.\\
+				DefaultFunctionReceive2\_AutoReceiveEarliest: automatically execute the according activity with the highest priority as soon as possible. In contrast to DefaultFunctionReceive1, it is not an option to prolong the reception and wait e.g. for another message.}
+				\item SendFunction \linebreak \textit{Comments have to be added}
 			\end{itemize}
-			\item DoFunction
+			\item DoFunction \linebreak \textit{Specifications or descriptions for Do-Functions describe in detail what the subject carrier is supposed to do in an according state.
+			The default DoFunction\\ 1: present the surrounding execution environment with the given exit choices/conditions and receive choice of one exit option --> define its Condition to be fulfilled in order to go to the next according state.
+			The default DoFunction \\2: execute automatic rule evaluation (see DoTransitionCondition - ToDo)
+			More specialized Do-Function Specifications may contain Data mappings denoting what of a subjects internal local Data can and should be:\\
+			a) read: in order to simply see it or in order to send it of to an external function (e.g. a web service)\\
+			b) write: in order to write incoming Data from e.g. a web Service or user input, to the local data fault}
 		\end{itemize}
-		\item ReceiveType
-		\item SendType
-		\item State
+		\item ReceiveType \linebreak \textit{Comments have to be added}
+		\item SendType \linebreak \textit{Comments have to be added}
+		\item State \linebreak \textit{A state in the behavior descriptions of a model}
 		\begin{itemize}
-			\item ChoiceSegment
-			\item ChoiceSegmentPath
+			\item ChoiceSegment \linebreak \textit{ChoiceSegments are groups of defined ChoiceSegementPaths. The paths may contain any amount of states. However, those states may not reach out of the bounds of the ChoiceSegmentPath.}
+			\item ChoiceSegmentPath \linebreak \textit{ChoiceSegments are groups of defined ChoiceSegementPaths. The paths may contain any amount of states. However, those states may not reach out of the bounds of the ChoiceSegmentPath.The path may contain any amount of states but may those states may not reach out of the bounds of the choice segment path. Similar to an initial state of a behavior a choice segment path must have one determined initial state. A transition within a choice segment path must not have a target state that is not inside the same choice segment path.}
 			\begin{itemize}
-				\item MandatoryToEndChoiceSegmentPath
-				\item MandatoryToStartChoiceSegmentPath
-				\item OptionalToEndChoiceSegmentPath
-				\item OptionalToStartChoiceSegmentPath
+				\item MandatoryToEndChoiceSegmentPath \linebreak \textit{Comments have to be added}
+				\item MandatoryToStartChoiceSegmentPath \linebreak \textit{Comments have to be added}
+				\item OptionalToEndChoiceSegmentPath \linebreak \textit{Comments have to be added}
+				\item OptionalToStartChoiceSegmentPath \linebreak \textit{ChoiceSegmentPath and (isOptionalToEndChoiceSegmentPath value false)}
 			\end{itemize}
-			\item EndState
-			\item GenericReturnToOriginReference
-			\item InitialStateOfBehavior
-			\item InitialStateOfChoiceSegmentPath
-			\item MacroState
-			\item StandardPASSState
+			\item EndState \linebreak \textit{An end state a behavior. A subject behavior may have one or more end states. Only Do and Receive states may be end states. Send States cannot be end states.There are no individual end states that are not Do, Send, or Receive States at the same time.}
+			\item GenericReturnToOriginReference \linebreak \textit{Comments have to be added}
+			\item InitialStateOfBehavior \linebreak \textit{The initial state of a behavior}
+			\item InitialStateOfChoiceSegmentPath \linebreak \textit{Similar to an initial state of a behavior a choice segment path must have one determined initial state}
+			\item MacroState \linebreak \textit{A state that references a macro behavior that is executed upon entering this state. Only after executing the macro behavior this state is finished also.}
+			\item StandardPASSState \linebreak \textit{A super class to the standard PASS states: Do, Receive and Send}
 			\begin{itemize}
-				\item DoState
-				\item ReceiveState
-				\item SendState
+				\item DoState \linebreak \textit{The standard state in a PASS subject behavior diagram denoting an action or activity of the subject in itself.}
+				\item ReceiveState \linebreak \textit{The standard state in a PASS subject behavior diagram denoting an receive action or rather the waiting for a receive possibility.}
+				\item SendState \linebreak \textit{The standard state in a PASS subject behavior diagram denoting a send action}
 			\end{itemize}
-			\item StateReference
+			\item StateReference \linebreak \textit{A state reference is a model component that is a reference to a state in another behavior. For most modeling aspects it is a normal state.}
 		\end{itemize}
-		\item Transition
+		\item Transition \linebreak \textit{An edge defines the transition between two states. A transition can be traversed if the outcome of the action of the state it originates from satisfies a certain exit condition specified by it's "Alternative}
 		\begin{itemize}
-			\item CommunicationTransition
+			\item CommunicationTransition \linebreak \textit{A super class for the CommunicationTransitions.}
 			\begin{itemize}
-				\item ReceiveTransition
-				\item SendTransition
+				\item ReceiveTransition \linebreak \textit{Comments have to be added}
+				\item SendTransition \linebreak \textit{Comments have to be added}
 			\end{itemize}
-			\item DoTransition
-			\item SendingFailedTransition
-			\item TimeTransition
+			\item DoTransition \linebreak \textit{Comments have to be added}
+			\item SendingFailedTransition \linebreak \textit{Comments have to be added}
+			\item TimeTransition \linebreak \textit{Generic super calls for all TimeTransitions, transitions with conditions based on time events. E.g.passing of a certain time duration or the (reoccurring) calendar event. }
 			\begin{itemize}
-				\item ReminderTransition
+				\item ReminderTransition \linebreak \textit{Reminder transitions are transitions that can be traverses if a certain time based event or frequency has been reached. E.g. a number of months since the last traversal of this transition or the event of a certain preset calendar date etc.}
 				\begin{itemize}
-					\item CalendarBasedReminderTransition
-					\item TimeBasedReminderTransition
+					\item CalendarBasedReminderTransition \linebreak \textit{A reminder transition, for defining exit conditions measured in calendar years or months \\ Conditions are e.g.: reaching of (in model) preset calendar date (e.g. 1st of July) or the reoccurrence of a a long running frequency ("every Month", "2 times a year")"}
+					\item TimeBasedReminderTransition \linebreak \textit{Comments have to be added}
 				\end{itemize}
-				\item TimerTransition
+				\item TimerTransition \linebreak \textit{Generic super calls for all TimeTransitions, transitions with conditions based on time events. E.g.passing of a certain time duration or the (reoccurring) calendar event. }
 				\begin{itemize}
-					\item BusinessDayTimerTransition
-					\item DayTimeTimerTransition
-					\item YearMonthTimerTransition
+					\item BusinessDayTimerTransition \linebreak \textit{imer transitions, denote time outs for the state they originate from. The condition for a timer transition is that a certain amount of time has passed since the state it originates from has been entered.\\ The time unit for this timer transition is measured in business days. The definition of a business day depends on a subject's relevant or legal location}
+					\item DayTimeTimerTransition \linebreak \textit{Timer Transitions, denoting time outs for the state they originate from. The condition for a timer transition is that a certain amount of time has passed since the state it originates from has been entered.\\ Day or Time Timers are measured in normal 24 hour days. Following the XML standard for time and day duration. They are to be differed from the timers that are timeout in units of years or months.}
+					\item YearMonthTimerTransition \linebreak \textit{Timer transitions, denote time outs for the state they originate from. The condition for a timer transition is that a certain amount of time has passed since the state it originates from has been entered.\\ Year or Month timers measure time in calendar years or months. The exact definitions for years and months depends on relevant or legal geographical location of the subject.}
 				\end{itemize}
-				\item UserCancelTransition
+				\item UserCancelTransition \linebreak \textit{A user cancel transition denotes the possibility to exit a receive state without the reception of a specific message.\\ The user cancel allows for an arbitrary decision by a subject carrier/processor to abort a waiting process.}
 			\end{itemize}
-			\item TransitionCondition
+			\item TransitionCondition \linebreak \textit{natives which in turn is given for a state. An alternative (to leave the state) is only a real alternative if the exit condition is fulfilled (technically: if that according function returns "true"). \\Note: Technically and during execution exit conditions belong to states. They define when it is allowed to leave that state. However, in PASS models exit conditions for states are defined and connected to the according transition edges. Therefore transition conditions are individual entities and not DataProperties.\\ The according matching must be done by the model execution environment.\\ By its existence, an edge/transition defines one possible follow up "state" for its state of origin. It is coupled with an "Exit Condition" that must be fulfilled in the originating state in order to leave the state.}
 			\begin{itemize}
-				\item DoTransitionCondition
-				\item MessageExchangeCondition
+				\item DoTransitionCondition \linebreak \textit{A TransitionCondition for the according DoTransitions and DoStates. }
+				\item MessageExchangeCondition \linebreak \textit{MessageExchangeConditon is the super class for Send End Receive Transition Conditions the both require either the sending or receiving (exchange) of a message to be fulfilled.}
 				\begin{itemize}
-					\item ReceiveTransitionCondition
-					\item SendTransitionCondition
+					\item ReceiveTransitionCondition \linebreak \textit{ReceiveTransitionConditions are conditions that state that a certain message must have been taken out of a subjects in-box to be fulfilled.\\ These are the typical conditions defined by Receive Transitions.}
+					\item SendTransitionCondition \linebreak \textit{SendTransitionConditions are conditions that state that a certain message must have been successfully passed to another subjects in-box to be fulfilled.\\ These are the typical conditions defined by Send transitions.}
 				\end {itemize}
-				\item SendingFailedCondition
-				\item TimeTransitionCondition
-				\begin{itemize}
-					\item ReminderEventTransitionCondition
+				\item SendingFailedCondition \linebreak \textit{Comments have to be added}
+				\item TimeTransitionCondition \linebreak \textit{A condition that is deemed 'true' and thus the according edge is gone, if: a surrounding execution system has deemed the time since entering the state and starting with the execution of the according action as too long (predefined by the outgoing edge) \\ A condition that is true if a certain time defined has passed since the state this condition belongs to has been entered. (This is the standard TimeOut Exit condition)}
+				\begin{itemize} 
+					\item ReminderEventTransitionCondition \linebreak \textit{Comments have to be added}
 %					\begin{itemize}
 %						\item CalendarBasedReminderTransitionCondition
 %						\item TimeBasedReminderTimeOutTransitionCondition
 %					\end{itemize}
-					\item TimerTransitionCondition
+					\item TimerTransitionCondition \linebreak \textit{Comments have to be added}
 %					\begin{itemize}
 %						\item BusinessDayTimerTransitionCondition
 %						\item DayTimeTimerCondition
@@ -99,111 +113,111 @@
 		\end{itemize}
 	\end{itemize}		
 			
-	\item DataDescribingComponent
+	\item DataDescribingComponent \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item DataObjectDefinition
+		\item DataObjectDefinition \linebreak \textit{Comments have to be added}
 		\begin{itemize}
-			\item DataObjectListDefintion
-			\item PayloadDataObjectDefinition
-			\item SubjectDataDefinition
+			\item DataObjectListDefintion \linebreak \textit{Comments have to be added}
+			\item PayloadDataObjectDefinition \linebreak \textit{Comments have to be added}
+			\item SubjectDataDefinition \linebreak \textit{Comments have to be added}
 		\end{itemize}
-		\item DataTypeDefinition
+		\item DataTypeDefinition \linebreak \textit{Comments have to be added}
 		\begin{itemize}
-			\item CustomOrExternalDataTypeDefinition
+			\item CustomOrExternalDataTypeDefinition \linebreak \textit{Comments have to be added}
 			\begin{itemize}
-					\item JSONDataTypeDefinition
-					\item OWLDataTypeDefinition
-					\item XSD-DataTypeDefinition
+					\item JSONDataTypeDefinition \linebreak \textit{Comments have to be added}
+					\item OWLDataTypeDefinition \linebreak \textit{Comments have to be added}
+					\item XSD-DataTypeDefinition \linebreak \textit{Comments have to be added}
 			\end{itemize}
-			\item ModelBuiltInDataTypes
+			\item ModelBuiltInDataTypes \linebreak \textit{Comments have to be added}
 		\end{itemize}
-		\item PayloadDescription
+		\item PayloadDescription \linebreak \textit{Comments have to be added}
 		\begin{itemize}
-			\item PayloadDataObjectDefinition
-			\item PayloadPhysicalObjectDescription
+			\item PayloadDataObjectDefinition \linebreak \textit{Comments have to be added}
+			\item PayloadPhysicalObjectDescription \linebreak \textit{Comments have to be added}
 		\end{itemize}
 	\end{itemize}
-	\item InteractionDescribingComponent
+	\item InteractionDescribingComponent \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item InputPoolConstraint
+		\item InputPoolConstraint \linebreak \textit{Comments have to be added}
 		\begin{itemize}
-			\item MessageSenderTypeConstraint
-			\item MessageTypeConstraint
-			\item SenderTypeConstraint
+			\item MessageSenderTypeConstraint \linebreak \textit{Comments have to be added}
+			\item MessageTypeConstraint \linebreak \textit{Comments have to be added}
+			\item SenderTypeConstraint \linebreak \textit{Comments have to be added}
 		\end{itemize}
-		\item InputPoolContstraintHandlingStrategy
-		\item MessageExchange
-		\item MessageExchangeList
-		\item MessageSpecification
+		\item InputPoolContstraintHandlingStrategy \linebreak \textit{Comments have to be added}
+		\item MessageExchange \linebreak \textit{Comments have to be added}
+		\item MessageExchangeList \linebreak \textit{Comments have to be added}
+		\item MessageSpecification \linebreak \textit{Comments have to be added}
 		\item Subject
 		\begin{itemize}
-			\item FullySpecifiedSubject
-			\item InterfaceSubject
-			\item MultiSubject
-			\item SingleSubject
-			\item StartSubject
+			\item FullySpecifiedSubject \linebreak \textit{Comments have to be added}
+			\item InterfaceSubject \linebreak \textit{Comments have to be added}
+			\item MultiSubject \linebreak \textit{Comments have to be added}
+			\item SingleSubject \linebreak \textit{Comments have to be added}
+			\item StartSubject \linebreak \textit{Comments have to be added}
 		\end{itemize}
 	\end{itemize}
 				
-	\item PASSProcessModel
-	\item SubjectBehavior
+	\item PASSProcessModel \linebreak \textit{Comments have to be added}
+	\item SubjectBehavior \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item GuardBehavior
-		\item MacroBehavior
-		\item SubjectBaseBehavior
+		\item GuardBehavior \linebreak \textit{Comments have to be added}
+		\item MacroBehavior \linebreak \textit{Comments have to be added}
+		\item SubjectBaseBehavior \linebreak \textit{Comments have to be added}
 	\end{itemize}
 \end{itemize}
 	
-\item SimplePASSElement
+\item SimplePASSElement \linebreak \textit{Comments have to be added}
 \begin{itemize}
-	\item CommunicationTransition
+	\item CommunicationTransition \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item ReceiveTransition
-		\item SendTransition
+		\item ReceiveTransition \linebreak \textit{Comments have to be added}
+		\item SendTransition \linebreak \textit{Comments have to be added}
 	\end{itemize}
-	\item DataMappingFunction
+	\item DataMappingFunction \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item DataMappingIncomingToLocal
-		\item DataMappingLocalToOutgoing
+		\item DataMappingIncomingToLocal \linebreak \textit{Comments have to be added}
+		\item DataMappingLocalToOutgoing \linebreak \textit{Comments have to be added}
 	\end{itemize}
-	\item DoTransition
-	\item DoTransitionCondition
-	\item EndState
-	\item FunctionSpecification
+	\item DoTransition \linebreak \textit{Comments have to be added}
+	\item DoTransitionCondition \linebreak \textit{Comments have to be added}
+	\item EndState \linebreak \textit{Comments have to be added}
+	\item FunctionSpecification \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item CommunicationAct
+		\item CommunicationAct \linebreak \textit{Comments have to be added}
 		\begin{itemize}
-			\item ReceiveFunction
-			\item SendFunction
+			\item ReceiveFunction \linebreak \textit{Comments have to be added}
+			\item SendFunction \linebreak \textit{Comments have to be added}
 		\end{itemize}
-		\item DoFunction
+		\item DoFunction \linebreak \textit{Comments have to be added}
 	\end{itemize}
-	\item InitialStateOfBehavior
-	\item MessageExchange
-	\item MessageExchangeCondition
+	\item InitialStateOfBehavior \linebreak \textit{Comments have to be added}
+	\item MessageExchange \linebreak \textit{Comments have to be added}
+	\item MessageExchangeCondition \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item ReceiveTransitionCondition
-		\item SendTransitionCondition
-	\end{itemize}
-	\item MessageExchangeList
-	\item MessageSpecification
-	\item ModelBuiltInDataTypes
-	\item PayloadDataObjectDefinition
-	\item StandardPASSState
+		\item ReceiveTransitionCondition \linebreak \textit{Comments have to be added}
+		\item SendTransitionCondition \linebreak \textit{Comments have to be added}
+	\end{itemize} 
+	\item MessageExchangeList \linebreak \textit{Comments have to be added}
+	\item MessageSpecification \linebreak \textit{Comments have to be added}
+	\item ModelBuiltInDataTypes \linebreak \textit{Comments have to be added}
+	\item PayloadDataObjectDefinition \linebreak \textit{Comments have to be added}
+	\item StandardPASSState \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item DoState
-		\item ReceiveState
-		\item SendState
+		\item DoState \linebreak \textit{Comments have to be added}
+		\item ReceiveState \linebreak \textit{Comments have to be added}
+		\item SendState \linebreak \textit{Comments have to be added}
 	\end{itemize}
-	\item Subject
+	\item Subject \linebreak \textit{Comments have to be added}
 	\begin{itemize}
-		\item FullySpecifiedSubject
-		\item InterfaceSubject
-		\item MultiSubject
-		\item SingleSubject
-		\item StartSubject
+		\item FullySpecifiedSubject \linebreak \textit{Comments have to be added}
+		\item InterfaceSubject \linebreak \textit{Comments have to be added}
+		\item MultiSubject \linebreak \textit{Comments have to be added}
+		\item SingleSubject \linebreak \textit{Comments have to be added}
+		\item StartSubject \linebreak \textit{Comments have to be added}
 	\end{itemize}
-	\item SubjectBaseBehavior
+	\item SubjectBaseBehavior \linebreak \textit{Comments have to be added}
 \end{itemize}
 \end{itemize}	
 
@@ -257,100 +271,139 @@ SimplePASSDataProperties
 \section{Object Properties (42)}
 
 \begin{landscape}
-\begin {longtable} { l | p{4 cm}  l |  l |l |}
+\begin {longtable} {| p{0.3\textwidth} | p{0.11\textwidth} | p{0.36\textwidth}|p{0.4\textwidth}|p{0.12\textwidth}|}
 \hline
-Property name & Domain & Range & Reference\\
+Property name &  & Domain-Range & Comments &Reference\\
 \toprule
 \endhead
 \hline
-belongsTo & & &\\
+belongsTo & Domain: & PASSProcessModelElement &Generic ObjectProperty that links two process elements, where one is contained in the other (inverse of contains). &\\
+ & Range: & PASSProcessModelElement & &\\
 \hline
-contains & & &\\
-\hline	
-belongsTo & PASSProcessModelElement & PASSProcessModelElement & \\
+contains & Domain: &PASSProcessModelElement&Generic ObjectProperty that links two model elements where one contains another (possible multiple) &\\
+& Range: & PASSProcessModelElement & & \\
 \hline
-contains & PASSProcessModelElement& PASSProcessModelElement & \\
+containsBaseBehavior & Domain: &Subject & &\\ 
+& Range: &SubjectBehavior & &\\
 \hline
-containsBaseBehavior & Subject & SubjectBehavior & \\
+containsBehavior & Domain: &Subject & &\\ 
+& Range: & SubjectBehavior & &\\
 \hline
-containsBehavior & Subject & SubjectBehavior & \\
+containsPayload-Description & Domain: & MessageSpecification & &\\
+& Range: &PayloadDescription & &\\
 \hline
-containsPayloadDescription & MessageSpecification & PayloadDescription & \\
+guardedBy & Domain: &State, Action & &\\
+& Range: &GuardBehavior & &\\
 \hline
-guardedBy & State, Action & GuardBehavior & \\
+guardsBehavior &Domain: &GuardBehavior & Links a GuardBehavior to another SubjectBehavior. Automatically all individual states in the guarded behavior are guarded by the guard behavior. There is an SWRL Rule in the ontology for that purpose.&\\
+& Range: &SubjectBehavior &  &\\
 \hline
-guardsBehavior &GuardBehavior &SubjectBehavior &  \\
+guardsState & Domain: &State, Action & &\\
+& Range: &guardedBy & & \\
 \hline
-guardsState & State, Action & guardedBy & \\
+hasAdditionalAttribute & Domain: &PASSProcessModelElement& &\\
+& Range: &AdditionalAttribute&  &\\
 \hline
-hasAdditionalAttribute & PASSProcessModelElement& AdditionalAttribute&  \\
+hasCorrespondent & Domain: & &Generic super class for the ObjectProperties that link a Subject with a MessageExchange either in the role of Sender or Receiver. &\\
+& Range: &Subject & &\\
 \hline
-hasCorrespondent & & Subject & \\
+hasDataDefinition &Domain: &  & &\\
+& Range: &DataObjectDefinition & &\\
 \hline
-hasDataDefinition & & DataObjectDefinition & \\
-\hline
-hasDataMappingFunction &state, SendTransition,\ ReceiveTransition & DataMappingFunction &  \\
+\pagebreak
+hasDataMapping-Function &Domain: &state, SendTransition, ReceiveTransition & &\\
+& Range: &DataMappingFunction & & \\
 \hline 
-hasDataType & PayloadDescription or \ DataObjectDefinition & DataTypeDefinition &  \\
+hasDataType & Domain: &PayloadDescription or DataObjectDefinition & &\\
+& Range: &DataTypeDefinition &  &\\
 \hline
-hasEndState & SubjectBehavior \ or ChoiceSegmentPath & State, not SendState &  \\
+hasEndState & Domain: &SubjectBehavior or ChoiceSegmentPath & &\\
+& Range: &State, not SendState &  &\\
 \hline
-hasFunctionSpecification & State& FunctionSpecification&  \\
+hasFunction-Specification & Domain: &State& &\\
+& Range: &FunctionSpecification&  &\\
 \hline
-hasHandlingStrategy &InputPoolConstraint & InputPoolContstraintHandlingStrategy &  \\
+hasHandlingStrategy &Domain: &InputPoolConstraint & &\\
+& Range: &InputPoolContstraint-HandlingStrategy &  &\\
 \hline
-hasIncomingMessageExchange & Subject& MessageExchange &  \\
+hasIncomingMessage-Exchange & Domain: &Subject& &\\
+& Range: &MessageExchange &  &\\
 \hline
-hasIncomingTransition &State &Transition &  \\
+hasIncomingTransition &Domain: &State & &\\
+& Range: &Transition &  &\\
 \hline
-hasInitialState & SubjectBehavior or ChoiceSegmentPath &State &  \\
+hasInitialState & Domain: &SubjectBehavior or ChoiceSegmentPath & &\\
+& Range: &State &  &\\
 \hline
-hasInputPoolConstraint &Subject &InputPoolConstraint &  \\
+\pagebreak
+hasInputPoolConstraint &Domain: &Subject & &\\
+& Range: &InputPoolConstraint &  &\\
 \hline
-hasKeyValuePair & & &  \\
+hasKeyValuePair &Domain: & & &\\
+& Range: & &  &\\
 \hline
-hasMessageExchange & Subject & &  \\
+hasMessageExchange & Domain: &Subject & Generic super class for the ObjectProperties linking a subject with either incoming or outgoing MessageExchanges.&\\
+& Range: & &  &\\
 \hline
-hasMessageType & MessageTypeConstraint or\ MessageSenderTypeConstraint or \ MessageExchange
- &MessageSpecification &  \\
+hasMessageType & Domain: &MessageTypeConstraint or  MessageSenderTypeConstraint or  MessageExchange & &\\
+& Range: &MessageSpecification &  &\\
 \hline
-hasOutgoingMessageExchange & Subject& MessageExchange&  \\
+hasOutgoingMessage-Exchange & Domain: &Subject& &\\
+& Range: &MessageExchange&  &\\
 \hline
-hasOutgoingTransition &State & Transition&  \\
+hasOutgoingTransition &Domain: &State & &\\
+& Range: &Transition&  &\\
 \hline
-hasReceiver &MessageExchange & Subject & \\
+hasReceiver &Domain: &MessageExchange & &\\
+& Range: &Subject & &\\
 \hline
-hasRelationToModelComponent & PASSProcessModelElement& PASSProcessModelElement &  \\
+hasRelationToModel-Component & Domain: &PASSProcessModelElement&Generic super class of all object properties in the standard-pass-ont that are used to link model elements with one-another. &\\
+& Range: &PASSProcessModelElement & & \\
 \hline
-hasSender &MessageExchange & Subject & \\
+hasSender &Domain: &MessageExchange && \\
+& Range: &Subject & &\\
 \hline
-hasSourceState & Transition& State&  \\
+hasSourceState & Domain: &Transition& &\\
+& Range: &State&  &\\
 \hline
-hasStartSubject & PASSProcessModel& StartSubject&  \\
+hasStartSubject & Domain: &PASSProcessModel& &\\
+& Range: &StartSubject& & \\
 \hline
-hasTargetState & Transition& State&  \\
+hasTargetState & Domain &Transition& &\\
+& Range &State& & \\
 \hline
-hasTransitionCondition &Transition &TransitionCondition &  \\
+hasTransitionCondition &Domain &Transition & &\\
+& Range &TransitionCondition & & \\
 \hline
-isBaseBehaviorOf &SubjectBaseBehavior & &  \\
+isBaseBehaviorOf &Domain: &SubjectBaseBehavior & A specialized version of the "belongsTo" ObjectProperty to denote that a -SubjectBehavior belongs to a Subject as its BaseBehavior&\\
+& Range: &&  &\\
 \hline
-isEndStateOf & State and not SendState & SubjectBehavior or ChoiceSegmentPath &  \\
+isEndStateOf & Domain: &State and not SendState & &\\
+& Range: &SubjectBehavior or ChoiceSegmentPath &  &\\
 \hline
-isInitialStateOf & State& SubjectBehavior or ChoiceSegmentPath &  \\
+isInitialStateOf & Domain: &State& &\\
+& Range: &SubjectBehavior or ChoiceSegmentPath &  &\\
 \hline
-isReferencedBy & & &  \\
+isReferencedBy & Domain: & & &\\
+& Range: &&  &\\
 \hline
-references & & &  \\
+references & Domain: & & &\\
+& Range: & &  &\\
 \hline
-referencesMacroBehavior &MacroState &MacroBehavior &  \\
+referencesMacroBehavior &Domain: &MacroState & &\\
+& Range: &MacroBehavior & & \\
 \hline
-refersTo & CommunicationTransition& MessageExchange&  \\
+refersTo & Domain: &CommunicationTransition&Communication transitions (send and receive) should refer to a message exchange that is defined on the interaction layer of a model. & \\
+& Range: &MessageExchange& & \\
 \hline
-requiresActiveReceptionOfMessage &ReceiveTransitionCondition &MessageSpecification &  \\
+requiresActiveReception-OfMessage &Domain: &ReceiveTransitionCondition & &\\
+& Range: &MessageSpecification &  &\\
 \hline
-requiresPerformedMessageExchange & MessageExchangeCondition&MessageExchange &  \\
+requiresPerformed-MessageExchange & Domain: &MessageExchangeCondition& &\\
+& Range: &MessageExchange &  &\\
 \hline
-SimplePASSObjectPropertie & & &  \\
+SimplePASSObject-Propertie & Domain: & &Every element/sub-class of SimplePASSObjectProperties is also a Child of PASSModelObjectPropertiy. This is simply a surrogate class to group all simple elements together &\\
+& Range: & &  &\\
 \hline
 \end{longtable}
 \end {landscape}

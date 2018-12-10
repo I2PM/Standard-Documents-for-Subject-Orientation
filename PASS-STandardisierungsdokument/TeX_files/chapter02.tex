@@ -300,10 +300,14 @@
 	hasDurationTimeOutTime & Domain: &  & &\\
 	& Range: &  & &\\
 	\hline
-	hasFeelExpressionAsDataMapping & Domain: &  & &\\
+	hasFeelExpressionAsDataMapping & Domain: &  &See https://www.omg.org/spec/DMN for specification of Feel-Statement-Strings
+	
+	The idea of these expression is to map data fields from and to the internal Data storage of a subject &\\
 	& Range: &  & &\\
 	\hline
-	hasGraphicalRepresentation & Domain: &  & &\\
+	hasGraphicalRepresentation & Domain: &  & The process models are in principle abstract graph structures. Yet the visualization of process models is very important since many process models are initially created in a graphical form using a graphical graph editor (e.g. MS Visio, yEd, etc.) that was created to foster human comprehensibility.
+	
+	If available any process element may have a graphical representation attached to it&\\
 	& Range: &  & &\\
 	\hline
 	hasKey & Domain: &  & &\\
@@ -318,31 +322,43 @@
 	hasMetaData & Domain: &  & &\\
 	& Range: &  & &\\
 	\hline
-	hasModelComponentComment & Domain: &  & &\\
+	hasModelComponentComment & Domain: &  &equivalent to rdfs:comment &\\
 	& Range: &  & &\\
 	\hline
-	hasModelComponentID & Domain: &  & &\\
+	hasModelComponentID & Domain: &  &The unique ID of a PASSProcessModelComponent &\\
 	& Range: &  & &\\
 	\hline
-	hasModelComponentLabel & Domain: &  & &\\
+	hasModelComponentLabel & Domain: &  &The human legible label or description of a model element. &\\
 	& Range: &  & &\\
 	\hline
-	hasPriorityNumber & Domain: &  & &\\
+	hasPriorityNumber & Domain: &  &Transitions or Behaviors have numbers that denote their execution priority in situations where two or more options could be executed.
+	
+	This is important for automated execution.
+	
+	E.g. when two messages are in the in-box and could be followed, the message denoted on the transition with the higher priority (lower priority number) is taken out and processed.
+	
+	Similarly, SubjectBehaviors with higher priority (lower priority number) are to be executed before Behaviors with lower priority. &\\
 	& Range: &  & &\\
 	\hline
-	hasReoccuranceFrequenyOrDate & Domain: &  & &\\
+	hasReoccuranceFrequenyOrDate & Domain: &  &A data field meant for the two classes ReoccuranceTimeOutTransition and ReoccuranceTimeOutExitCondition.
+	
+	ToDo: Define the according data format for describing the iteration frequencies or reoccurring dates. Opinion: rather complex: expressive capabilities should cover expressions like: "every 2nd Monday of Month at 7:30 in Morning." Every 29th of July" or "Every Hour", "ever 25 Minuets" , "once each day", "twice each week" etc &\\
 	& Range: &  & &\\
 	\hline
-	hasSVGRepresentation & Domain: &  & &\\
+	hasSVGRepresentation & Domain: &  & The Scalable Vector Graphic (SVG) XML format is a text based standard to describe vector graphics.
+	
+	Adding according image information as XML literals is therefor a suitable, yet not necessarily easily changeable option to include the graphical representation of model elements in the an OWL file.&\\
 	& Range: &  & &\\
 	\hline
 	hasTimeBasedReoccuranceFrequencyOrDate & Domain: &  & &\\
 	& Range: &  & &\\
 	\hline
-	hasTimeValue & Domain: &  & &\\
+	hasTimeValue & Domain: &  & Generic super class for all data properties of time based transitions.&\\
 	& Range: &  & &\\
 	\hline
-	hasToolSpecificDefinition & Domain: &  & &\\
+	hasToolSpecificDefinition & Domain: &  & This is a placeholder DataProperty meant as a tie in point for tool vendors to include tool specific data values/properties into models.
+	
+	By denoting their own data properties as sub-classes to this one the according data fields can easily be recognized as such. However, this is only an option and a place holder to remind that something like this is possible.&\\
 	& Range: &  & &\\
 	\hline
 	hasValue & Domain: &  & &\\
@@ -360,11 +376,11 @@
 	owl:topDataProperty & Domain: &  & &\\
 	& Range: &  & &\\
 	\hline
-	PASSModelDataProperty & Domain: &  & &\\
+	PASSModelDataProperty & Domain: &  &Generic super class of all DataProperties that PASS process model elements may have. &\\
 	& Range: &  & &\\
 	\hline
 	SimplePASSDataProperties
- 	& Domain: &  & &\\
+ 	& Domain: &  & Every element/sub-class of SimplePASSDataProperties is also a Child of PASSModelDataPropertiy. This is simply a surrogate class to group all simple elements together&\\
 	& Range: &  & &\\
 	\hline
 \end{longtable}

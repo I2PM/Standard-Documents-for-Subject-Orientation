@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.13)  9 DEC 2018 17:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.13)  10 DEC 2018 10:54
 entering extended mode
 **./Standardbuch-PASS.tex
 (Standardbuch-PASS.tex
@@ -885,6 +885,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--118
  []
 
 
+Overfull \hbox (8.36134pt too wide) in paragraph at lines 116--118
+\OT1/cmr/m/it/12 vid-ual $\OML/cmm/m/it/12 DataObjectDefinition$ \OT1/cmr/m/it/
+12 in form of a $\OML/cmm/m/it/12 SubjectDataDefinition$
+ []
+
+
+Overfull \hbox (12.98004pt too wide) in paragraph at lines 116--118
+\OT1/cmr/m/it/12 ($\OML/cmm/m/it/12 CustomOrExternalDataTypeDefinition$\OT1/cmr
+/m/it/12 ) such as XML-Schemata
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 118--120
 []\OT1/cmr/m/n/12 DataObjectDefinition
  []
@@ -900,6 +912,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 121--122
  []
 
 
+Overfull \hbox (2.04338pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 10 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
+S ONTOLOGY
+ []
+
+[10]
 Underfull \hbox (badness 10000) in paragraph at lines 122--123
 []\OT1/cmr/m/n/12 SubjectDataDefinition
  []
@@ -930,6 +948,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 130--131
  []
 
 
+Overfull \hbox (5.79068pt too wide) in paragraph at lines 130--131
+\OT1/cmr/m/it/12 tech-nol-ogy for de-scrib-ing struc-ture of Data Ob-jects (XML
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 132--133
 []\OT1/cmr/m/n/12 ModelBuiltInDataTypes
  []
@@ -954,210 +978,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 140--142
 []\OT1/cmr/m/n/12 InteractionDescribingComponent
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 142--144
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 142--148
 []\OT1/cmr/m/n/12 InputPoolConstraint
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--145
+Overfull \hbox (56.79556pt too wide) in paragraph at lines 142--148
+\OT1/cmr/m/it/12 Should a con-straint be ap-pli-ca-ble, an "In-put-Pool-Con-str
+aintHandlingStrat-
+ []
+
+
+Overfull \hbox (13.94412pt too wide) in paragraph at lines 142--148
+\OT1/cmr/m/it/12 with the InputPoolConstraintStrategy-Blocking is ef-fec-tively
+ mod-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 148--150
 []\OT1/cmr/m/n/12 MessageSenderTypeConstraint
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 145--146
+Underfull \hbox (badness 10000) in paragraph at lines 150--152
 []\OT1/cmr/m/n/12 MessageTypeConstraint
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 146--147
+Underfull \hbox (badness 10000) in paragraph at lines 152--154
 []\OT1/cmr/m/n/12 SenderTypeConstraint
  []
 
 
-Overfull \hbox (2.04338pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 10 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
-S ONTOLOGY
- []
-
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
+Underfull \hbox (badness 10000) in paragraph at lines 155--161
 []\OT1/cmr/m/n/12 InputPoolContstraintHandlingStrategy
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 149--150
-[]\OT1/cmr/m/n/12 MessageExchange
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 150--151
-[]\OT1/cmr/m/n/12 MessageExchangeList
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 151--152
-[]\OT1/cmr/m/n/12 MessageSpecification
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 154--155
-[]\OT1/cmr/m/n/12 FullySpecifiedSubject
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 155--156
-[]\OT1/cmr/m/n/12 InterfaceSubject
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
-[]\OT1/cmr/m/n/12 MultiSubject
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 157--158
-[]\OT1/cmr/m/n/12 SingleSubject
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 158--159
-[]\OT1/cmr/m/n/12 StartSubject
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 162--163
-[]\OT1/cmr/m/n/12 PASSProcessModel
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 163--165
-[]\OT1/cmr/m/n/12 SubjectBehavior
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 165--166
-[]\OT1/cmr/m/n/12 GuardBehavior
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 166--167
-[]\OT1/cmr/m/n/12 MacroBehavior
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 167--168
-[]\OT1/cmr/m/n/12 SubjectBaseBehavior
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 171--173
-[]\OT1/cmr/m/n/12 SimplePASSElement
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 173--175
-[]\OT1/cmr/m/n/12 CommunicationTransition
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 175--176
-[]\OT1/cmr/m/n/12 ReceiveTransition
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 176--177
-[]\OT1/cmr/m/n/12 SendTransition
- []
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 178--180
-[]\OT1/cmr/m/n/12 DataMappingFunction
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 180--181
-[]\OT1/cmr/m/n/12 DataMappingIncomingToLocal
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 181--182
-[]\OT1/cmr/m/n/12 DataMappingLocalToOutgoing
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 183--184
-[]\OT1/cmr/m/n/12 DoTransition
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 184--185
-[]\OT1/cmr/m/n/12 DoTransitionCondition
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
-[]\OT1/cmr/m/n/12 EndState
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 186--188
-[]\OT1/cmr/m/n/12 FunctionSpecification
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 188--190
-[]\OT1/cmr/m/n/12 CommunicationAct
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 190--191
-[]\OT1/cmr/m/n/12 ReceiveFunction
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
-[]\OT1/cmr/m/n/12 SendFunction
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 193--194
-[]\OT1/cmr/m/n/12 DoFunction
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 195--196
-[]\OT1/cmr/m/n/12 InitialStateOfBehavior
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 196--197
-[]\OT1/cmr/m/n/12 MessageExchange
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 197--199
-[]\OT1/cmr/m/n/12 MessageExchangeCondition
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 199--200
-[]\OT1/cmr/m/n/12 ReceiveTransitionCondition
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 200--201
-[]\OT1/cmr/m/n/12 SendTransitionCondition
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 202--203
-[]\OT1/cmr/m/n/12 MessageExchangeList
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 203--204
-[]\OT1/cmr/m/n/12 MessageSpecification
  []
 
 
@@ -1167,294 +1022,392 @@ S ONTOLOGY
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 204--205
-[]\OT1/cmr/m/n/12 ModelBuiltInDataTypes
+Underfull \hbox (badness 10000) in paragraph at lines 161--164
+[]\OT1/cmr/m/n/12 MessageExchange
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 205--206
-[]\OT1/cmr/m/n/12 PayloadDataObjectDefinition
+Underfull \hbox (badness 10000) in paragraph at lines 164--166
+[]\OT1/cmr/m/n/12 MessageExchangeList
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 206--208
-[]\OT1/cmr/m/n/12 StandardPASSState
+Underfull \hbox (badness 10000) in paragraph at lines 166--167
+[]\OT1/cmr/m/n/12 MessageSpecification
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 208--209
-[]\OT1/cmr/m/n/12 DoState
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
-[]\OT1/cmr/m/n/12 ReceiveState
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 210--211
-[]\OT1/cmr/m/n/12 SendState
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 212--214
+Underfull \hbox (badness 10000) in paragraph at lines 167--169
 []\OT1/cmr/m/n/12 Subject
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 214--215
+Underfull \hbox (badness 10000) in paragraph at lines 169--170
 []\OT1/cmr/m/n/12 FullySpecifiedSubject
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 215--216
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 170--171
 []\OT1/cmr/m/n/12 InterfaceSubject
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 216--217
+Underfull \hbox (badness 10000) in paragraph at lines 171--172
 []\OT1/cmr/m/n/12 MultiSubject
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
+Underfull \hbox (badness 10000) in paragraph at lines 172--173
 []\OT1/cmr/m/n/12 SingleSubject
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 218--219
+Underfull \hbox (badness 10000) in paragraph at lines 173--175
 []\OT1/cmr/m/n/12 StartSubject
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 220--221
+Underfull \hbox (badness 10000) in paragraph at lines 178--179
+[]\OT1/cmr/m/n/12 PASSProcessModel
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 179--182
+[]\OT1/cmr/m/n/12 SubjectBehavior
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 182--184
+[]\OT1/cmr/m/n/12 GuardBehavior
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--185
+[]\OT1/cmr/m/n/12 MacroBehavior
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 []\OT1/cmr/m/n/12 SubjectBaseBehavior
  []
 
 
-Overfull \hbox (12.61668pt too wide) in paragraph at lines 240--267
-\OT1/cmr/m/n/12 has-DataMap-pingString has-Day-Time-Du-ra-tionTime-Out-Time has
--Du-ra-tionTime-
- []
-
-
-Overfull \hbox (23.72075pt too wide) in paragraph at lines 240--267
-\OT1/cmr/m/n/12 Out-Time has-Feel-Ex-pres-sion-As-DataMap-ping has-Graph-i-cal-
-Rep-re-sen-ta-tion hasKey
- []
-
-
-Overfull \hbox (22.56389pt too wide) in paragraph at lines 240--267
-\OT1/cmr/m/n/12 Com-po-nent-Com-ment has-Mod-el-Com-po-nen-tID has-Mod-el-Com-p
-o-nent-La-bel hasPri-
- []
-
-
-Overfull \hbox (0.70154pt too wide) in paragraph at lines 240--267
-\OT1/cmr/m/n/12 Time-Base-dReoc-cu-rance-Fre-quen-cy-Or-Date has-TimeValue has-
-Tool-Speci-ficDef-
- []
-
-
-Overfull \hbox (11.95973pt too wide) in paragraph at lines 240--267
-\OT1/cmr/m/n/12 i-ni-tion has-Value hasYear-Mon-th-Du-ra-tionTime-Out-Time isOp
--tion-al-ToEnd-Choic-
- []
-
-
-Overfull \hbox (27.3346pt too wide) in paragraph at lines 240--267
-\OT1/cmr/m/n/12 e-Seg-ment-Path isOp-tion-al-ToStartChoic-e-Seg-ment-Path owl:t
-opDataProperty PASS-
- []
-
-[13]
 Overfull \hbox (2.04338pt too wide) has occurred while \output is active
 \OT1/cmr/m/n/12 14 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
 S ONTOLOGY
  []
 
 [14]
-Overfull \hbox (2.64723pt too wide) in paragraph at lines 276--277
+Underfull \hbox (badness 10000) in paragraph at lines 189--191
+[]\OT1/cmr/m/n/12 SimplePASSElement
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 191--193
+[]\OT1/cmr/m/n/12 CommunicationTransition
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
+[]\OT1/cmr/m/n/12 ReceiveTransition
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 194--195
+[]\OT1/cmr/m/n/12 SendTransition
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--202
+[]\OT1/cmr/m/n/12 DataMappingFunction
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 202--203
+[]\OT1/cmr/m/n/12 DataMappingIncomingToLocal
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--204
+[]\OT1/cmr/m/n/12 DataMappingLocalToOutgoing
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 205--206
+[]\OT1/cmr/m/n/12 DoTransition
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
+[]\OT1/cmr/m/n/12 DoTransitionCondition
+ []
+
+
+Overfull \hbox (16.27095pt too wide) in paragraph at lines 206--207
+\OT1/cmr/m/it/12 A Tran-si-tion-Con-di-tion for the ac-cord-ing DoTran-si-tions
+ and DoStates. 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 207--209
+[]\OT1/cmr/m/n/12 EndState
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 209--213
+[]\OT1/cmr/m/n/12 FunctionSpecification
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--215
+[]\OT1/cmr/m/n/12 CommunicationAct
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 215--218
+[]\OT1/cmr/m/n/12 ReceiveFunction
+ []
+
+
+Overfull \hbox (9.43867pt too wide) in paragraph at lines 215--218
+\OT1/cmr/m/it/12 DefaultFunctionReceive1[]EnvoironmentChoice : present the
+ []
+
+
+Overfull \hbox (75.12483pt too wide) in paragraph at lines 215--218
+\OT1/cmr/m/it/12 sur-round-ing ex-e-cu-tion en-vi-ron-ment with the given exit 
+choices/conditions
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 218--219
+[]\OT1/cmr/m/n/12 SendFunction
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 220--226
+[]\OT1/cmr/m/n/12 DoFunction
+ []
+
+
+Overfull \hbox (2.04338pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 16 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
+S ONTOLOGY
+ []
+
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 227--228
+[]\OT1/cmr/m/n/12 InitialStateOfBehavior
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 228--231
+[]\OT1/cmr/m/n/12 MessageExchange
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 231--233
+[]\OT1/cmr/m/n/12 MessageExchangeCondition
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 233--235
+[]\OT1/cmr/m/n/12 ReceiveTransitionCondition
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 235--237
+[]\OT1/cmr/m/n/12 SendTransitionCondition
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 238--240
+[]\OT1/cmr/m/n/12 MessageExchangeList
+ []
+
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 240--242
+[]\OT1/cmr/m/n/12 MessageSpecification
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--243
+[]\OT1/cmr/m/n/12 ModelBuiltInDataTypes
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 243--245
+[]\OT1/cmr/m/n/12 PayloadDataObjectDefinition
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 245--247
+[]\OT1/cmr/m/n/12 StandardPASSState
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--248
+[]\OT1/cmr/m/n/12 DoState
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--249
+[]\OT1/cmr/m/n/12 ReceiveState
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 249--250
+[]\OT1/cmr/m/n/12 SendState
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 251--253
+[]\OT1/cmr/m/n/12 Subject
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 253--254
+[]\OT1/cmr/m/n/12 FullySpecifiedSubject
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--255
+[]\OT1/cmr/m/n/12 InterfaceSubject
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
+[]\OT1/cmr/m/n/12 MultiSubject
+ []
+
+
+Overfull \hbox (2.04338pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 18 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
+S ONTOLOGY
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
+[]\OT1/cmr/m/n/12 SingleSubject
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--259
+[]\OT1/cmr/m/n/12 StartSubject
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 260--261
+[]\OT1/cmr/m/n/12 SubjectBaseBehavior
+ []
+
+[19]
+Overfull \hbox (2.64723pt too wide) in paragraph at lines 284--285
 []|\OT1/cmr/m/n/12 Reference| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 280--280
+Overfull \hbox (6.47154pt too wide) in paragraph at lines 288--288
+[]|\OT1/cmr/m/n/12 hasBusinessDayDurationTimeOutTime| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 288--288
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (1.20387pt too wide) in paragraph at lines 280--280
-[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
- []
-
-
-Underfull \hbox (badness 2717) in paragraph at lines 280--280
-\OT1/cmr/m/n/12 links two pro-cess el-e-ments,
- []
-
-
-Overfull \hbox (1.20387pt too wide) in paragraph at lines 281--281
-[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 283--283
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 291--291
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (1.20387pt too wide) in paragraph at lines 283--283
-[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 283--283
-\OT1/cmr/m/n/12 links two model el-e-ments
- []
-
-
-Underfull \hbox (badness 1748) in paragraph at lines 283--283
-\OT1/cmr/m/n/12 where one con-tains an-other
- []
-
-
-Overfull \hbox (1.20387pt too wide) in paragraph at lines 284--284
-[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 286--286
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 294--294
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 289--289
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 297--297
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 292--292
-[]|\OT1/cmr/m/n/12 containsPayload-
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 292--292
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 300--300
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 295--295
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 303--303
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 298--298
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 306--306
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 301--301
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 309--309
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (2.83923pt too wide) in paragraph at lines 304--304
-[]|\OT1/cmr/m/n/12 hasAdditionalAttribute| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 304--304
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 312--312
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (1.20387pt too wide) in paragraph at lines 304--304
-[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
+Overfull \hbox (11.95064pt too wide) in paragraph at lines 315--315
+[]|\OT1/cmr/m/n/12 hasMaximumSubjectInstanceRestriction| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 307--307
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 315--315
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 309
+Underfull \vbox (badness 10000) detected at line 317
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 310--310
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 318--318
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 314--314
-[]|\OT1/cmr/m/n/12 hasDataMapping-
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 314--314
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 321--321
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 317--317
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 324--324
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 317--317
-[]|\OT1/cmr/m/n/12 PayloadDescription or
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 320--320
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 327--327
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 323--323
-[]|\OT1/cmr/m/n/12 hasFunction-
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 323--323
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 330--330
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 326--326
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 333--333
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 327--327
-[]|\OT1/cmr/m/n/12 InputPoolContstraint-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 329--329
-[]|\OT1/cmr/m/n/12 hasIncomingMessage-
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 329--329
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 336--336
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 332--332
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 335--335
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (6.00726pt too wide) in paragraph at lines 339--339
-[]|\OT1/cmr/m/n/12 hasInputPoolConstraint| 
+Overfull \hbox (34.57126pt too wide) in paragraph at lines 339--339
+[]|\OT1/cmr/m/n/12 hasTimeBasedReoccuranceFrequencyOrDate| 
  []
 
 
@@ -1462,9 +1415,7 @@ Overfull \hbox (0.67015pt too wide) in paragraph at lines 339--339
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
-[15
 
-]
 Overfull \hbox (0.67015pt too wide) in paragraph at lines 342--342
 []|\OT1/cmr/m/n/12 Domain:| 
  []
@@ -1477,21 +1428,6 @@ Overfull \hbox (0.67015pt too wide) in paragraph at lines 345--345
 
 Overfull \hbox (0.67015pt too wide) in paragraph at lines 348--348
 []|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 348--348
-[]|\OT1/cmr/m/n/12 MessageTypeConstraint
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 348--348
-\OT1/cmr/m/n/12 or Mes-sage-Sender-Type-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 351--351
-[]|\OT1/cmr/m/n/12 hasOutgoingMessage-
  []
 
 
@@ -1510,28 +1446,8 @@ Overfull \hbox (0.67015pt too wide) in paragraph at lines 357--357
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 360--360
-[]|\OT1/cmr/m/n/12 hasRelationToModel-
- []
-
-
 Overfull \hbox (0.67015pt too wide) in paragraph at lines 360--360
 []|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (1.20387pt too wide) in paragraph at lines 360--360
-[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
- []
-
-
-Underfull \hbox (badness 4328) in paragraph at lines 360--360
-\OT1/cmr/m/n/12 pass-ont that are used to
- []
-
-
-Overfull \hbox (1.20387pt too wide) in paragraph at lines 361--361
-[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
  []
 
 
@@ -1540,182 +1456,469 @@ Overfull \hbox (0.67015pt too wide) in paragraph at lines 363--363
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 366--366
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 367--367
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
 
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 369--369
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (2.04338pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 16 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
-S ONTOLOGY
- []
-
-[16] [17]
-Overfull \hbox (3.56561pt too wide) in paragraph at lines 375--375
-[]|\OT1/cmr/m/n/12 hasTransitionCondition| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 378--378
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 378--378
-[]|\OT1/cmr/m/n/12 A spe-cial-ized ver-sion of
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 378--378
-\OT1/cmr/m/n/12 the "be-longsTo" Ob-ject-
- []
-
-
-Underfull \hbox (badness 2521) in paragraph at lines 378--378
-\OT1/cmr/m/n/12 Prop-erty to de-note that a
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 381--381
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 384--384
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 387--387
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 390--390
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (10.83777pt too wide) in paragraph at lines 393--393
-[]|\OT1/cmr/m/n/12 referencesMacroBehavior| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 393--393
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 396--396
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 396--396
-[]|\OT1/cmr/m/n/12 Communication tran-si-tions
- []
-
-
-Overfull \hbox (11.16415pt too wide) in paragraph at lines 399--399
-[]|\OT1/cmr/m/n/12 requiresActiveReception-
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 399--399
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (1.80385pt too wide) in paragraph at lines 399--399
-[]|\OT1/cmr/m/n/12 ReceiveTransitionCondition| 
- []
-
-
-Overfull \hbox (2.04338pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 18 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
-S ONTOLOGY
- []
-
-[18]
-Underfull \hbox (badness 10000) in paragraph at lines 402--402
-[]|\OT1/cmr/m/n/12 requiresPerformed-
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 402--402
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Overfull \hbox (1.86496pt too wide) in paragraph at lines 402--402
-[]|\OT1/cmr/m/n/12 MessageExchangeCondition| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 405--405
-[]|\OT1/cmr/m/n/12 SimplePASSObject-
- []
-
-
-Overfull \hbox (0.67015pt too wide) in paragraph at lines 405--405
-[]|\OT1/cmr/m/n/12 Domain:| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 405--405
-[]|\OT1/cmr/m/n/12 Every element/sub-class of
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 405--405
-\OT1/cmr/m/n/12 Sim-plePAS-SOb-ject-Prop-er-ties
- []
-
-
-Underfull \hbox (badness 1990) in paragraph at lines 405--405
-\OT1/cmr/m/n/12 e-lOb-ject-Prop-er-tiy. This is
- []
-
-
-Underfull \hbox (badness 1418) in paragraph at lines 405--405
-\OT1/cmr/m/n/12 sim-ply a sur-ro-gate class to
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 405--405
-\OT1/cmr/m/n/12 group all sim-ple el-e-ments
- []
-
-[19]
 Overfull \hbox (2.04338pt too wide) has occurred while \output is active
 \OT1/cmr/m/n/12 20 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
 S ONTOLOGY
  []
 
-[20] [21])
-\openout2 = `./TeX_files/chapter03.aux'.
+[20
 
- (TeX_files/chapter03.tex
+] [21]
 Overfull \hbox (2.04338pt too wide) has occurred while \output is active
 \OT1/cmr/m/n/12 22 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
 S ONTOLOGY
  []
 
-[22
+[22] [23
+
+]
+Overfull \hbox (2.64723pt too wide) in paragraph at lines 384--385
+[]|\OT1/cmr/m/n/12 Reference| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 388--388
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (1.20387pt too wide) in paragraph at lines 388--388
+[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
+ []
+
+
+Underfull \hbox (badness 2717) in paragraph at lines 388--388
+\OT1/cmr/m/n/12 links two pro-cess el-e-ments,
+ []
+
+
+Overfull \hbox (1.20387pt too wide) in paragraph at lines 389--389
+[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 391--391
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (1.20387pt too wide) in paragraph at lines 391--391
+[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 391--391
+\OT1/cmr/m/n/12 links two model el-e-ments
+ []
+
+
+Underfull \hbox (badness 1748) in paragraph at lines 391--391
+\OT1/cmr/m/n/12 where one con-tains an-other
+ []
+
+
+Overfull \hbox (1.20387pt too wide) in paragraph at lines 392--392
+[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 394--394
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 397--397
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 400--400
+[]|\OT1/cmr/m/n/12 containsPayload-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 400--400
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 403--403
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 406--406
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 409--409
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (2.83923pt too wide) in paragraph at lines 412--412
+[]|\OT1/cmr/m/n/12 hasAdditionalAttribute| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 412--412
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (1.20387pt too wide) in paragraph at lines 412--412
+[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 415--415
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 417
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 418--418
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 422--422
+[]|\OT1/cmr/m/n/12 hasDataMapping-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 422--422
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 425--425
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 425--425
+[]|\OT1/cmr/m/n/12 PayloadDescription or
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 428--428
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 431--431
+[]|\OT1/cmr/m/n/12 hasFunction-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 431--431
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 434--434
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 435--435
+[]|\OT1/cmr/m/n/12 InputPoolContstraint-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 437--437
+[]|\OT1/cmr/m/n/12 hasIncomingMessage-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 437--437
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 440--440
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 443--443
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (6.00726pt too wide) in paragraph at lines 447--447
+[]|\OT1/cmr/m/n/12 hasInputPoolConstraint| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 447--447
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (2.04338pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 24 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
+S ONTOLOGY
+ []
+
+[24
+
+]
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 450--450
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 453--453
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 456--456
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 456--456
+[]|\OT1/cmr/m/n/12 MessageTypeConstraint
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 456--456
+\OT1/cmr/m/n/12 or Mes-sage-Sender-Type-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 459--459
+[]|\OT1/cmr/m/n/12 hasOutgoingMessage-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 459--459
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 462--462
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 465--465
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 468--468
+[]|\OT1/cmr/m/n/12 hasRelationToModel-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 468--468
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (1.20387pt too wide) in paragraph at lines 468--468
+[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
+ []
+
+
+Underfull \hbox (badness 4328) in paragraph at lines 468--468
+\OT1/cmr/m/n/12 pass-ont that are used to
+ []
+
+
+Overfull \hbox (1.20387pt too wide) in paragraph at lines 469--469
+[]|\OT1/cmr/m/n/12 PASSProcessModelElement| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 471--471
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 474--474
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 477--477
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+[25]
+Overfull \hbox (2.04338pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 26 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
+S ONTOLOGY
+ []
+
+[26]
+Overfull \hbox (3.56561pt too wide) in paragraph at lines 483--483
+[]|\OT1/cmr/m/n/12 hasTransitionCondition| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 486--486
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 486--486
+[]|\OT1/cmr/m/n/12 A spe-cial-ized ver-sion of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 486--486
+\OT1/cmr/m/n/12 the "be-longsTo" Ob-ject-
+ []
+
+
+Underfull \hbox (badness 2521) in paragraph at lines 486--486
+\OT1/cmr/m/n/12 Prop-erty to de-note that a
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 489--489
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 492--492
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 495--495
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 498--498
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (10.83777pt too wide) in paragraph at lines 501--501
+[]|\OT1/cmr/m/n/12 referencesMacroBehavior| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 501--501
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 504--504
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 504--504
+[]|\OT1/cmr/m/n/12 Communication tran-si-tions
+ []
+
+
+Overfull \hbox (11.16415pt too wide) in paragraph at lines 507--507
+[]|\OT1/cmr/m/n/12 requiresActiveReception-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 507--507
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (1.80385pt too wide) in paragraph at lines 507--507
+[]|\OT1/cmr/m/n/12 ReceiveTransitionCondition| 
+ []
+
+[27]
+Underfull \hbox (badness 10000) in paragraph at lines 510--510
+[]|\OT1/cmr/m/n/12 requiresPerformed-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 510--510
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Overfull \hbox (1.86496pt too wide) in paragraph at lines 510--510
+[]|\OT1/cmr/m/n/12 MessageExchangeCondition| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 513--513
+[]|\OT1/cmr/m/n/12 SimplePASSObject-
+ []
+
+
+Overfull \hbox (0.67015pt too wide) in paragraph at lines 513--513
+[]|\OT1/cmr/m/n/12 Domain:| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 513--513
+[]|\OT1/cmr/m/n/12 Every element/sub-class of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 513--513
+\OT1/cmr/m/n/12 Sim-plePAS-SOb-ject-Prop-er-ties
+ []
+
+
+Underfull \hbox (badness 1990) in paragraph at lines 513--513
+\OT1/cmr/m/n/12 e-lOb-ject-Prop-er-tiy. This is
+ []
+
+
+Underfull \hbox (badness 1418) in paragraph at lines 513--513
+\OT1/cmr/m/n/12 sim-ply a sur-ro-gate class to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 513--513
+\OT1/cmr/m/n/12 group all sim-ple el-e-ments
+ []
+
+
+Overfull \hbox (2.04338pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 28 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
+S ONTOLOGY
+ []
+
+[28] [29]
+Overfull \hbox (2.04338pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 30 \OT1/cmr/m/sl/12 CHAPTER 2.  CLASSES AND PROPERTY OF THE PAS
+S ONTOLOGY
+ []
+
+[30])
+\openout2 = `./TeX_files/chapter03.aux'.
+
+ (TeX_files/chapter03.tex
+Chapter 3.
+[31
 
 
 
 
 ]
-Chapter 3.
-[23]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel-Subj
-ect-Interaction.png, id=93, 697.8572pt x 198.7425pt>
+ect-Interaction.png, id=119, 697.8572pt x 198.7425pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel
 -Subject-Interaction.png Graphic file (type png)
 
@@ -1729,10 +1932,10 @@ Overfull \hbox (8.33858pt too wide) in paragraph at lines 25--26
  [][] 
  []
 
-[24 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispie
-l-Subject-Interaction.png>] [25] [26]
+[32 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispie
+l-Subject-Interaction.png>] [33] [34]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-pool-in
-formal.jpg, id=103, 694.84593pt x 196.48407pt>
+formal.jpg, id=130, 694.84593pt x 196.48407pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-po
 ol-informal.jpg Graphic file (type jpg)
 
@@ -1746,10 +1949,10 @@ Overfull \hbox (8.33858pt too wide) in paragraph at lines 68--69
  [][] 
  []
 
-[27 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-p
-ool-informal.jpg>] [28]
+[35 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-p
+ool-informal.jpg>] [36]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181129-Subj
-ect-Message-Exchange.jpg, id=111, 336.50719pt x 443.40656pt>
+ect-Message-Exchange.jpg, id=137, 336.50719pt x 443.40656pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181129
 -Subject-Message-Exchange.jpg Graphic file (type jpg)
 
@@ -1758,10 +1961,10 @@ Subject-Message-Exchange.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
 nteraction/20181129-Subject-Message-Exchange.jpg used on input line 89.
 (pdftex.def)             Requested size: 284.52756pt x 374.91496pt.
- [29 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/201811
+ [37 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/201811
 29-Subject-Message-Exchange.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181205-Subj
-ect.jpg, id=115, 630.85687pt x 139.27031pt>
+ect.jpg, id=141, 630.85687pt x 139.27031pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181205
 -Subject.jpg Graphic file (type jpg)
 
@@ -1770,10 +1973,10 @@ Subject.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
 nteraction/20181205-Subject.jpg used on input line 101.
 (pdftex.def)             Requested size: 272.99881pt x 60.26758pt.
- [30 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/201812
+ [38 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/201812
 05-Subject.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181205-Data
-types-Payload.jpg, id=119, 517.935pt x 297.36093pt>
+types-Payload.jpg, id=145, 517.935pt x 297.36093pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181205
 -Datatypes-Payload.jpg Graphic file (type jpg)
 
@@ -1782,10 +1985,10 @@ Datatypes-Payload.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
 nteraction/20181205-Datatypes-Payload.jpg used on input line 114.
 (pdftex.def)             Requested size: 272.99881pt x 156.74298pt.
- [31 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/201812
+ [39 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/201812
 05-Datatypes-Payload.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-pool.jp
-g, id=123, 461.47406pt x 157.33781pt>
+g, id=150, 461.47406pt x 157.33781pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-po
 ol.jpg Graphic file (type jpg)
 
@@ -1796,7 +1999,7 @@ nteraction/input-pool.jpg used on input line 127.
 (pdftex.def)             Requested size: 272.99881pt x 93.07817pt.
 
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181203-Inte
-raction-describing-component.jpg, id=124, 766.36313pt x 292.09125pt>
+raction-describing-component.jpg, id=151, 766.36313pt x 292.09125pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181203
 -Interaction-describing-component.jpg Graphic file (type jpg)
 
@@ -1811,7 +2014,7 @@ Overfull \hbox (36.79134pt too wide) in paragraph at lines 136--137
  [][] 
  []
 
-) [32 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input
+) [40 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input
 -pool.jpg> <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/
 20181203-Interaction-describing-component.jpg>] (Standardbuch-PASS.aux
 (TeX_files/chapter01.aux) (TeX_files/chapter02.aux) (TeX_files/chapter03.aux))
@@ -1820,22 +2023,23 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 2949 strings out of 493333
- 41691 string characters out of 3139172
- 139473 words of memory out of 3000000
- 6406 multiletter control sequences out of 15000+200000
+ 2951 strings out of 493333
+ 41704 string characters out of 3139172
+ 142558 words of memory out of 3000000
+ 6408 multiletter control sequences out of 15000+200000
  10113 words of font info for 35 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,7n,35p,1217b,744s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 40i,7n,35p,1455b,744s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmti12.pfb>
-Output written on Standardbuch-PASS.pdf (36 pages, 406877 bytes).
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmti12.pfb>
+Output written on Standardbuch-PASS.pdf (44 pages, 442797 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
+ 180 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -14,6 +14,29 @@ Depending on the required or desired division of labor in a process, a correspon
 
 In case there are many specialized subjects involved in a process, it may lead to many potentially complex interactions between the subjects. This can be a problem, since the communication between process participants always carries the risk of delays and misunderstandings. In case of few subjects, however, the subject carriers often cover a too wide a range of activities, which puts high demands on the participants. The decision with respect to subject scoping therefore has far-reaching consequences. It is complex, represents a major challenge, and requires extensive experience and care.
 
+There are the following types of subjects:
+\begin{itemize}
+	\item Fully specified subjects \\
+	This is the standard subject type. A subject communicates with other subjects by exchangeing messages.
+	\item Multisubjects \\
+	Multisubjects are simular to Fully specified subjects. If in a process model several identical subjects are required e.g. in order to increse the through put these subjects can be modelled by a multi subject. If several communicating subjects in a process modell are multi subjects they can be combined to a multi process 
+	\item Single subject
+	\item Interface subjects \\
+\end{itemize}
+
+
+\subsubsection{Fully specified Subjects}
+Received messages
+Send messages
+Data
+Input Pool
+
+\subsubsection{Multsubjects and Multiprocesses}
+
+\subsubsection{Single subjects}
+
+\subsubsection{Interface Subjects}
+
 
 \subsection{Subject-to-Subject Communication}
 After the identification of subjects involved in the process (as process-specific roles), their interaction relationships need to be represented. These are the messages exchanged between the subjects. Such messages might contain structured information—so-called business objects (see Section xxxxxxx).\
@@ -83,13 +106,19 @@ By limiting the size of the input pool, its ability to store messages may be blo
 \section{OWL Description}
 
 \subsection{Subject Interaction}
-Overview Subject InterAction
+
 \begin{figure*}[ph]
 	\centering
-	\includegraphics[width=10cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181129-Subject-Message-Exchange}
-	\caption[Subject Interaction]{Subject Interaction}
-	\label{fig:20181129-subject-message-exchange}
+	\includegraphics[width=16cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSubjectInteraction}
+	\caption[Sructure of Subject Interactions]{Sructure of Subject Interactions}
+	\label{fig:ontogrsubjectinteraction}
 \end{figure*}
+
+
+
+
+
+
 
 \newpage
 
@@ -98,7 +127,7 @@ Overview Subject InterAction
 Different types of subjects \ref{fig:20181205-subject}
 \begin{figure}[ph]
 	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181205-Subject}
+	\includegraphics[width=0.9\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181205-Subject}
 	\caption[Subject]{Different Types of Subjects}
 	\label{fig:20181205-subject}
 \end{figure}

@@ -3,39 +3,55 @@
 
 \section{Informal Description}
 \subsection{Subject}
+\label{sec: Subject}
 
-Subjects are the active entities in system described in PASS in dependent how they are implemented. Subjects can be relized either by human, machines, software all combinitions of them. Subject descriptions do not contain any information about their implementation. If implementaion information is added to a subject it becomes an actor.\
-In the following we use aan example for the informal definiton of subjects.\
+Subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. 
+Subjects communicate with each other by exchanging messages. Messages have a name and a payload. The name should express the meaning of a message informally and the payloads are the data (business objects) transported. Internally subjects execute local activities such as calculating a price, storing an address etc.
+A subject sends messages to other subjects, expects messages from other subjects, and executes internal actions. All these activities are done in sequences which are defined in a subject's behavior specification.
+
+In the following we use an example for the informal definiton of subjects.\
 In the simple scenario of the business trip application, we can identify three subjects, namely the employee as applicant, the manager as the approver, and the travel office as the travel arranger.
-
-The definition of which subjects should be part of a process is a leadership decision. On the one hand, the necessary subjects result from the actual (as-is) situation, as it has for example already been described in the process analysis. On the other hand, the subject scoping, i.e., the question of what subjects there are and what tasks they roughly perform, can be adjusted to the envisioned or desired (to-be) situation.
-
-Depending on the required or desired division of labor in a process, a corresponding number of subjects is necessary. This division is a design decision that must be taken in accordance with business needs. It influences the necessary granularity of a process model (see Section XXXXX).
-
-In case there are many specialized subjects involved in a process, it may lead to many potentially complex interactions between the subjects. This can be a problem, since the communication between process participants always carries the risk of delays and misunderstandings. In case of few subjects, however, the subject carriers often cover a too wide a range of activities, which puts high demands on the participants. The decision with respect to subject scoping therefore has far-reaching consequences. It is complex, represents a major challenge, and requires extensive experience and care.
 
 There are the following types of subjects:
 \begin{itemize}
-	\item Fully specified subjects \\
-	This is the standard subject type. A subject communicates with other subjects by exchangeing messages.
-	\item Multisubjects \\
-	Multisubjects are simular to Fully specified subjects. If in a process model several identical subjects are required e.g. in order to increse the through put these subjects can be modelled by a multi subject. If several communicating subjects in a process modell are multi subjects they can be combined to a multi process 
+	\item Fully specified subjects 
+	\item Multisubjects 
 	\item Single subject
-	\item Interface subjects \\
+	\item Interface subjects 
+\end{itemize}
+
+\subsubsection{Fully specified Subjects}
+This is the standard subject type. A subject communicates with other subjects by exchangeing messages.
+Fully specified subjects consists of following components:
+\begin{itemize}
+	\item Business Objects\\
+	Each subjects has some business objects. A basic structure of business objects consists of an identifier, data structures, and data elements. The identifier of a business object is derived from the business environment in which it is used. Examples are business trip requests, purchase orders, packing lists, invoices, etc.
+	Business objects are composed of data structures. Their components can be simple data elements of a certain type (e.g., string or number) or even data structures themselves. 
+	\item Sent messages\\
+	Messages which a subject sends to other subjects. Each message has a name and may transport some data objects as a payload. The values of these payload data objects are copied from internal business objects of a subject.
+	\item Received messages\\
+	Messages received by a subject. The values of the payload objects are copied to business objects of the receiving subject.
+	\item Input Pool\\
+	Messages sent to a subjects are deposited in the input pool of the receiving subject.
+	\item Behavior \\
+	The behavior of each subject describes in which order it sends messages, expects (receives) and performs internal functions. Messages transport data from the sending to the receiving subject, and internal functions operate on internal data of a subject. 
 \end{itemize}
 
 
-\subsubsection{Fully specified Subjects}
-Received messages
-Send messages
-Data
-Input Pool
-
 \subsubsection{Multsubjects and Multiprocesses}
+Multisubjects are simular to Fully specified subjects. If in a process model several identical subjects are required e.g. in order to increse the through put these subjects can be modelled by a multi subject. If several communicating subjects in a process modell are multi subjects they can be combined to a multi process.
+
+In a business process, there may be several identical sub-processes that perform certain similar tasks in parallel and independently. This is often the case in a procurement process, when bids from multiple providers are solicited. A process or sub-process is therefore executed simultaneously or sequentially multiple times during overall process execution. A set of type-identical, independently running processes or sub-processes are termed multi-process. The actual number of these independent sub-processes is determined at runtime.
+Multi-processes simplify process execution, since a specific sequence of actions can be used by different processes. They are recommended for recurring structures and similar process flows.
+An example of a multi-process can be illustrated as a variation of the current booking process. The travel agent should simultaneously solicit up to five bids before making a reservation. Once three offers have been received, one is selected and a room is booked. The process of obtaining offers from the hotels is identical for each hotel and is therefore modeled as a multi-process.
+
 
 \subsubsection{Single subjects}
+Single subjects can be instantiated only once. They are used if for the execution of a subject a resource is required which is only available once.
+
 
 \subsubsection{Interface Subjects}
+Interface subjects are used as interfaces to other process systems. If a subject of a process system sends or receives messages from a subject which belongs to an other process system. These so called interface subjects represent fully described subjects which belong to that other process system. This means to each interface subject belongs a fully described subject in an other process system. Interface subjects specifications contain the sent messages, received messages and the refernce to the fully described subject which they represent.
 
 
 \subsection{Subject-to-Subject Communication}
@@ -43,7 +59,7 @@ After the identification of subjects involved in the process (as process-specifi
 
 The result is a model structured according to subjects with explicit communication relationships, which is referred to as a Subject Interaction Diagram (SID) or, synonymously, as a Communication Structure Diagram (CSD) (see \figurename{fig:beispiel-subject-interaction}).
 
-\begin{figure*}
+\begin{figure*}[ph]
 	\centering
 	\includegraphics[width=14cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel-Subject-Interaction}
 	\caption[Subject interaction diagram]{Subject interaction diagram for the process ‘business trip application’}
@@ -74,6 +90,7 @@ Using asynchronous messaging, a sender is able to send anytime. The subject puts
 
 
 \subsubsection{Exchange of Messages via the Input Pool}
+\label{sec: inputpool}
 To solve the problems outlined in asynchronous message exchange, the input pool concept has been developed. Communication via the input pool is considerably more complex than previously shown; however, it allows transmitting an unlimited number of messages simultaneously. Due to its high practical importance, it is considered as a basic construct of PASS.
 Consider the input pool as a mail box of work performers, the operation of which is specified in detail.
 Each subject has its own input pool. It serves as a message buffer to temporarily store messages received by the subject, independent of the sending communication partner. The input pools are therefore inboxes for flexible configuration of the message exchange between the subjects. In contrast to the buffer in which only the front message can be seen and accepted, the pool solution enables picking up (= removing from the buffer) any message. For a subject, all messages in its input pool are visible.
@@ -105,22 +122,53 @@ By limiting the size of the input pool, its ability to store messages may be blo
 
 \section{OWL Description}
 
-\subsection{Subject Interaction}
+The various building blocks of a PASS description and their relations are defined in a ontology.  
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20171217-PASSProcessModellElement}
+	\caption[Elements of PASS Process Models]{Elements of PASS Process Models}
+	\label{fig:20171217-passprocessmodellelement}
+\end{figure}
+
+
+\subsection{Process Model}
+
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181217-PASSProcessModel}
+	\caption[PASS Process Modell]{PASS Process Modell}
+	\label{fig:20181217-passprocessmodel}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+The following figure \ref{fig:ontogrsubjectinteraction} shows athe subset of the classes and properties of the ontology. This subset allows to express the subject interaction diagram. 
 
 \begin{figure*}[ph]
 	\centering
-	\includegraphics[width=16cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSubjectInteraction}
-	\caption[Sructure of Subject Interactions]{Sructure of Subject Interactions}
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSubjectInteraction}
+	\caption[Subject Interaction Diagram]{Subject Interaction Diagram}
 	\label{fig:ontogrsubjectinteraction}
 \end{figure*}
 
 
+The central classes are Subject and MessageExchange. Between these classes are defined the properties hasIncomingTransition (in figure \ref{fig:ontogrsubjectinteraction} number 217) and hasOutgoingTransition (in figure \ref{fig:ontogrsubjectinteraction} number 224). This properties defines that subjects have incoming and outgoing messages. Each message has a sender and a receiver (in figure \ref{fig:ontogrsubjectinteraction} number 227 and number 225). Messages have a type. This is expressed by the property hasMessageType (in figure \ref{fig:ontogrsubjectinteraction} number 222). Instead of the property 222 a message exchange may have the property 201 if a list of messages is used instead of a single message.\\
+Each subject has an input pool. Input pools have three types of constraints (see section \ref{sec: inputpool}). This is expressed by the property references  (in figure \ref{fig:ontogrsubjectinteraction} number 236) and InputPoolConstraints (in figure \ref{fig:ontogrsubjectinteraction} number 219). Constraints which are related to certain messages have references to the class MessageSpecification.\\
+There are four subclasses of the class subject (in figure \ref{fig:ontogrsubjectinteraction} number 079, 080, 081 and 082). The specialties of these subclasses are described in section \ref{sec: Subject}. A class StartSubject (in figure \ref{fig:ontogrsubjectinteraction} number 83) which is a subclass of class subject denotes the subject in which a process instance is started.\\
+All other relarions are subclass relations. The class PASSProcessModelElement is the central PASS class. From this class all the other classes are derived (see next sections). From class InteractionDescribingCOmponent all the classes required for describing the structure of a process system are derived.
 
-
-
-
-
-\newpage
 
 \subsection{Subjects}
 

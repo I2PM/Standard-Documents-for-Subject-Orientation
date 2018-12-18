@@ -1,219 +1,109 @@
-\chapter{Structure of a PASS Description}
-	In this chapter we describe the structure of a PASS specification. The structure of a PASS descritption consists of the subjects and the messages they exchange.
+\chapter{Execution of a PASS Model}
 
-\section{Informal Description}
-\subsection{Subject}
-\label{sec: Subject}
+\section{Informal Description of Subject Behavior and its Execution}
+The excution of subject means sending and reveiving messages and executing internal activities in the defined order. In the following sections it is described what sending and receiving messages and executing internal functions means.
 
-Subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. 
-Subjects communicate with each other by exchanging messages. Messages have a name and a payload. The name should express the meaning of a message informally and the payloads are the data (business objects) transported. Internally subjects execute local activities such as calculating a price, storing an address etc.
-A subject sends messages to other subjects, expects messages from other subjects, and executes internal actions. All these activities are done in sequences which are defined in a subject's behavior specification.
+\subsection{Sending Messages}
+Before sending a message, the values of the parameters to be transmitted need to be determined. In case the message parameters are simple data types, the required values are taken from local variables or business objects of the sending subject, respectively. In case of business objects, a current instance of a business object is transferred as a message parameter.\\
+The sending subject attempts to send the message to the target subject and store it in its input pool. Depending on the described configuration and status of the input pool, the message is either immediately stored or the sending subject is blocked until a delivery of the message is possible.\\
+In the sample business trip application, employees send completed requests using the message ‘send business trip request’ to the manager’s input pool. From a send state, several messages can be sent as an alternative. The following example shows a send state in which the message M1 is sent to the subject S1, or alternatively the message M2 is sent to S2, therefore referred to as alternative sending (see Figure \ref{fig:sendstate}). It does not matter which message is attempted to be sent first. If the send mechanism is successful, the corresponding state transition is executed. In case the message cannot be stored in the input pool of the target subject, sending is interrupted automatically, and another designated message is attempted to be sent. A sending subject will thus only be blocked if it cannot send any of the provided messages.
 
-In the following we use an example for the informal definiton of subjects.\
-In the simple scenario of the business trip application, we can identify three subjects, namely the employee as applicant, the manager as the approver, and the travel office as the travel arranger.
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/sendState}
+	\caption[Example of alternative sending]{Example of alternative sending}
+	\label{fig:sendstate}
+\end{figure}
 
-There are the following types of subjects:
-\begin{itemize}
-	\item Fully specified subjects 
-	\item Multisubjects 
-	\item Single subject
-	\item Interface subjects 
-\end{itemize}
+By specifying priorities, the order of sending can be influenced. For example, it can be determined that the message M1 to S1 has a higher priority than the message M2 to S2. Using this specification, the sending subject starts with sending message M1 to S1 and then tries only in case of failure to send message M2 to S2. In case message M2 can also not be sent to the subject S2, the attempts to send start from the beginning.
 
-\subsubsection{Fully specified Subjects}
-This is the standard subject type. A subject communicates with other subjects by exchangeing messages.
-Fully specified subjects consists of following components:
-\begin{itemize}
-	\item Business Objects\\
-	Each subjects has some business objects. A basic structure of business objects consists of an identifier, data structures, and data elements. The identifier of a business object is derived from the business environment in which it is used. Examples are business trip requests, purchase orders, packing lists, invoices, etc.
-	Business objects are composed of data structures. Their components can be simple data elements of a certain type (e.g., string or number) or even data structures themselves. 
-	\item Sent messages\\
-	Messages which a subject sends to other subjects. Each message has a name and may transport some data objects as a payload. The values of these payload data objects are copied from internal business objects of a subject.
-	\item Received messages\\
-	Messages received by a subject. The values of the payload objects are copied to business objects of the receiving subject.
-	\item Input Pool\\
-	Messages sent to a subjects are deposited in the input pool of the receiving subject.
-	\item Behavior \\
-	The behavior of each subject describes in which order it sends messages, expects (receives) and performs internal functions. Messages transport data from the sending to the receiving subject, and internal functions operate on internal data of a subject. 
-\end{itemize}
-
-
-\subsubsection{Multsubjects and Multiprocesses}
-Multisubjects are simular to Fully specified subjects. If in a process model several identical subjects are required e.g. in order to increse the through put these subjects can be modelled by a multi subject. If several communicating subjects in a process modell are multi subjects they can be combined to a multi process.
-
-In a business process, there may be several identical sub-processes that perform certain similar tasks in parallel and independently. This is often the case in a procurement process, when bids from multiple providers are solicited. A process or sub-process is therefore executed simultaneously or sequentially multiple times during overall process execution. A set of type-identical, independently running processes or sub-processes are termed multi-process. The actual number of these independent sub-processes is determined at runtime.
-Multi-processes simplify process execution, since a specific sequence of actions can be used by different processes. They are recommended for recurring structures and similar process flows.
-An example of a multi-process can be illustrated as a variation of the current booking process. The travel agent should simultaneously solicit up to five bids before making a reservation. Once three offers have been received, one is selected and a room is booked. The process of obtaining offers from the hotels is identical for each hotel and is therefore modeled as a multi-process.
-
-
-\subsubsection{Single subjects}
-Single subjects can be instantiated only once. They are used if for the execution of a subject a resource is required which is only available once.
-
-
-\subsubsection{Interface Subjects}
-Interface subjects are used as interfaces to other process systems. If a subject of a process system sends or receives messages from a subject which belongs to an other process system. These so called interface subjects represent fully described subjects which belong to that other process system. This means to each interface subject belongs a fully described subject in an other process system. Interface subjects specifications contain the sent messages, received messages and the refernce to the fully described subject which they represent.
-
-
-\subsection{Subject-to-Subject Communication}
-After the identification of subjects involved in the process (as process-specific roles), their interaction relationships need to be represented. These are the messages exchanged between the subjects. Such messages might contain structured information—so-called business objects (see Section xxxxxxx).\
-
-The result is a model structured according to subjects with explicit communication relationships, which is referred to as a Subject Interaction Diagram (SID) or, synonymously, as a Communication Structure Diagram (CSD) (see \figurename{fig:beispiel-subject-interaction}).
+The blocking of subjects when attempting to send can be monitored over time with the so-called timeout. The example in Figure \ref{fig:sendstatetimer} shows with ‘Timeout: 24 h’ an additional state transition which occurs when within 24 hours one of the two messages cannot be sent. If a value of zero is specified for the timeout, the process immediately follows the timeout path when the alternative message delivery fails completely.
 
 \begin{figure*}[ph]
 	\centering
-	\includegraphics[width=14cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel-Subject-Interaction}
-	\caption[Subject interaction diagram]{Subject interaction diagram for the process ‘business trip application’}
-	\label{fig:beispiel-subject-interaction}
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SendSTateTimer}
+	\caption[Send using time monitoring]{Send using time monitoring}
+	\label{fig:sendstatetimer}
 \end{figure*}
 
 
-Messages represent the interactions of the subjects during the execution of the process. We recommend naming these messages in such a way that they can be immediately understood and also reflect the meaning of each particular message for the process. In the sample ‘business trip application’, therefore, the messages are referred to as ‘business trip request’, ‘rejection’, and ‘approval’.
+\subsection{Receiving Messages}
+Analogously to sending, the receiving procedure is divided into two phases, which run inversely to send.
 
-Messages serve as a container for the information transmitted from a sending to a receiving subject. There are two options for the message content:
+The first step is to verify whether the expected message is ready for being picked up. In case of synchronous messaging, it is checked whether the sending subject offers the message. In the asynchronous version, it is checked whether the message has already been stored in the input pool. If the expected message is accessible in either form, it is accepted, and in a second step, the corresponding state transition is performed. This leads to a takeover of the message parameters of the accepted message to local variables or business objects of the receiving subject. In case the expected message is not ready, the receiving subject is blocked until the message arrives and can be accepted.
 
-\begin{itemize}
-	\item 	Simple data types: Simple data types are string, integer, character, etc. In the business trip application example, the message ‘business trip request’ can contain several data elements of type string (e.g., destination, reason for traveling, etc.), and of type number (e.g., duration of trip in days).
-	\item Business Objects: Business Objects in their general form are physical and logical ‘things’ that are required to process business transactions., We consider data structures composed of elementary data types, or even other data structures, as logical business objects in business processes. For instance, the business object ‘business trip request’ could consist of the data structures ‘data on applicants’, ‘travel data’, and ‘approval data’—with each of these in turn containing multiple data elements.
-\end{itemize}
+In a certain state, a subject can expect alternatively multiple messages. In this case, it is checked whether any of these messages is available and can be accepted. The test sequence is arbitrary, unless message priorities are defined. In this case, an available message with the highest priority is accepted. However, all other messages remain available (e.g., in the input pool) and can be accepted in other receive states.
 
-
-\subsection{Message Exchange}
-
-In the previous subsection, we have stated that messages are transferred between subjects and have described the nature of these messages. What is still missing is a detailed description of how messages can be exchanged, how the information they carry can be transmitted, and how subjects can be synchronized. These issues are addressed in the following sub-sections.
-
-\subsubsection{Synchronous and Asynchronous Exchange of Messages}
-In the case of synchronous exchange of messages, sender and receiver wait for each other until a message can be passed on. If a subject wants to send a message and the receiver (subject) is not yet in a corresponding receive state, the sender waits until the receiver is able to accept this message. Conversely, a recipient has to wait for a desired message until it is made available by the sender.\
-
-The disadvantage of the synchronous method is a close temporal coupling between sender and receiver. This raises problems in the implementation of business processes in the form of workflows, especially across organizational borders. As a rule, these also represent system boundaries across which a tight coupling between sender and receiver is usually very costly. For long-running processes, sender and receiver may wait for days, or even weeks, for each other.\
-
-Using asynchronous messaging, a sender is able to send anytime. The subject puts a message into a message buffer from which it is picked up by the receiver. However, the recipient sees, for example, only the oldest message in the buffer and can only accept this particular one. If it is not the desired message, the receiver is blocked, even though the message may already be in the buffer, but in a buffer space that is not visible to the receiver. To avoid this, the recipient has the alternative to take all of the messages from the buffer and manage them by himself. In this way, the receiver can identify the appropriate message and process it as soon as he needs it. In asynchronous messaging, sender and receiver are only loosely coupled. Practical problems can arise due to the in reality limited physical size of the receive buffer, which does not allow an unlimited number of messages to be recorded. Once the physical boundary of the buffer has been reached due to high occupancy, this may lead to unpredictable behavior of workflows derived from a business process specification. To avoid this, the input-pool concept has been introduced in PASS.
-
-
-\subsubsection{Exchange of Messages via the Input Pool}
-\label{sec: inputpool}
-To solve the problems outlined in asynchronous message exchange, the input pool concept has been developed. Communication via the input pool is considerably more complex than previously shown; however, it allows transmitting an unlimited number of messages simultaneously. Due to its high practical importance, it is considered as a basic construct of PASS.
-Consider the input pool as a mail box of work performers, the operation of which is specified in detail.
-Each subject has its own input pool. It serves as a message buffer to temporarily store messages received by the subject, independent of the sending communication partner. The input pools are therefore inboxes for flexible configuration of the message exchange between the subjects. In contrast to the buffer in which only the front message can be seen and accepted, the pool solution enables picking up (= removing from the buffer) any message. For a subject, all messages in its input pool are visible.
-
-The input pool has the following configuration parameters (see \figurename{Figure 5.2}):
-\begin{itemize}
-	\item Input-pool size: The input-pool size specifies how many messages can be stored in an input pool, regardless of the number and complexity of the message parameters transmitted with a message. If the input pool size is set to zero, messages can only be exchanged synchronously.
-	\item Maximum number of messages from specific subjects: For an input pool, it can be determined how many messages received from a particular subject may be stored simultaneously in the input pool. Again, a value of zero means that messages can only be accepted synchronously.
-	\item Maximum number of messages with specific identifiers: For an input pool, it can be determined how many messages of a specifically identified message type (e.g., invoice) may be stored simultaneously in the input pool, regardless of what subject they originate from. A specified size of zero allows only for synchronous message reception.
-	\item Maximum number of messages with specific identifiers of certain subjects: For an input pool, it can be determined how many messages of a specific identifier of a particular subject may be stored simultaneously in the input pool. The meaning of the zero value is analogous to the other cases.
-\end{itemize}
+Figure \ref{fig:receivestate} shows a receive state of the subject ‘employee’ which is waiting for the answer regarding a business trip request. The answer may be an approval or a rejection.
 
 \begin{figure}[ph]
 	\centering
-	\includegraphics[width=14cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-pool-informal.jpg}
-	\caption[Input Pool]{Configuration of Input Pool Parameters}
-	\label{fig:input-pool}
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveState}
+	\caption[Example of alternative receiving]{Example of alternative receiving}
+	\label{fig:receivestate}
 \end{figure}
 
-
-By limiting the size of the input pool, its ability to store messages may be blocked at a certain point in time during process runtime. Hence, messaging synchronization mechanisms need to control the assignment of messages to the input pool. Essentially, there are three strategies to handle the access to input pools:
-\begin{itemize}
-	\item Blocking the sender until the input pool’s ability to store messages has been reinstated: Once all slots are occupied in an input pool, the sender is blocked until the receiving subject picks up a message (i.e. a message is removed from the input pool). This creates space for a new message. In case several subjects want to put a message into a fully occupied input pool, the subject that has been waiting longest for an empty slot is allowed to send. The procedure is analogous if corresponding input pool parameters do not allow storing the message in the input pool, i.e., if the corresponding number of messages of the same name or from the same subject has been put into the input pool.
-	\item Delete and release of the oldest message: In case all the slots are already occupied in the input pool of the subject addressed, the oldest message is overwritten with the new message.
-	\item Delete and release of the latest message: The latest message is deleted from the input pool to allow depositing of the newly incoming message. If all the positions in the input pool of the addressed subject are taken, the latest message in the input pool is overwritten with the new message. This strategy applies analogously when the maximum number of messages in the input pool has been reached, either with respect to sender or message type.
-\end{itemize}
-
-\newpage
-
-\section{OWL Description}
-
-The various building blocks of a PASS description and their relations are defined in a ontology.  
+Just as with sending messages, also receiving messages can be monitored over time. If none of the expected messages are available and the receiving subject is therefore blocked, a time limit can be specified for blocking. After the specified time has elapsed, the subject will execute the transition as it is defined for the timeout period. The duration of the time limit may also be dynamic, in the sense that at the end of a process instance the process stakeholders assigned to the subject decide that the appropriate transition should be performed. We then speak of a manual timeout.
 
 \begin{figure}[ph]
 	\centering
-	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20171217-PASSProcessModellElement}
-	\caption[Elements of PASS Process Models]{Elements of PASS Process Models}
-	\label{fig:20171217-passprocessmodellelement}
-\end{figure}
-
-
-\subsection{Process Model}
-
-
-\begin{figure}[ph]
-	\centering
-	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181217-PASSProcessModel}
-	\caption[PASS Process Modell]{PASS Process Modell}
-	\label{fig:20181217-passprocessmodel}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-The following figure \ref{fig:ontogrsubjectinteraction} shows athe subset of the classes and properties of the ontology. This subset allows to express the subject interaction diagram. 
-
-\begin{figure*}[ph]
-	\centering
-	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSubjectInteraction}
-	\caption[Subject Interaction Diagram]{Subject Interaction Diagram}
-	\label{fig:ontogrsubjectinteraction}
-\end{figure*}
-
-
-The central classes are Subject and MessageExchange. Between these classes are defined the properties hasIncomingTransition (in figure \ref{fig:ontogrsubjectinteraction} number 217) and hasOutgoingTransition (in figure \ref{fig:ontogrsubjectinteraction} number 224). This properties defines that subjects have incoming and outgoing messages. Each message has a sender and a receiver (in figure \ref{fig:ontogrsubjectinteraction} number 227 and number 225). Messages have a type. This is expressed by the property hasMessageType (in figure \ref{fig:ontogrsubjectinteraction} number 222). Instead of the property 222 a message exchange may have the property 201 if a list of messages is used instead of a single message.\\
-Each subject has an input pool. Input pools have three types of constraints (see section \ref{sec: inputpool}). This is expressed by the property references  (in figure \ref{fig:ontogrsubjectinteraction} number 236) and InputPoolConstraints (in figure \ref{fig:ontogrsubjectinteraction} number 219). Constraints which are related to certain messages have references to the class MessageSpecification.\\
-There are four subclasses of the class subject (in figure \ref{fig:ontogrsubjectinteraction} number 079, 080, 081 and 082). The specialties of these subclasses are described in section \ref{sec: Subject}. A class StartSubject (in figure \ref{fig:ontogrsubjectinteraction} number 83) which is a subclass of class subject denotes the subject in which a process instance is started.\\
-All other relarions are subclass relations. The class PASSProcessModelElement is the central PASS class. From this class all the other classes are derived (see next sections). From class InteractionDescribingCOmponent all the classes required for describing the structure of a process system are derived.
-
-
-\subsection{Subjects}
-
-Different types of subjects \ref{fig:20181205-subject}
-\begin{figure}[ph]
-	\centering
-	\includegraphics[width=0.9\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181205-Subject}
-	\caption[Subject]{Different Types of Subjects}
-	\label{fig:20181205-subject}
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStateTimer}
+	\caption[Time monitoring for message reception]{Time monitoring for message reception}
+	\label{fig:receivestatetimer}
 \end{figure}
 
 \newpage
+Figure \ref{fig:receivestatetimer} shows that, after waiting three days for the manager’s answer, the employee sends a corresponding request.
 
-\subsection{Messages}
-
-SDescription of messages \ref{fig:20181205-datatypes-payload}
+Instead of waiting for a message for a certain predetermined period of time, the waiting can be interrupted by a subject at all times. In this case, a reason for abortion can be appended to the keyword ‘breakup’. In the example shown in Figure \ref{fig:receivestatebreak}, the receive state is left due to the impatience of the subject.
 
 \begin{figure}[ph]
 	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181205-Datatypes-Payload}
-	\caption[Message specification]{Message Specification with Payload}
-	\label{fig:20181205-datatypes-payload}
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStateBreak}
+	\caption[Message reception with manual interrupt]{Message reception with manual interrupt}
+	\label{fig:receivestatebreak}
 \end{figure}
-
 \newpage
 
-\subsection{Input Pools}
+\subsection{Subject Behavior}
+The possible sequences of a subject’s actions in a process are termed subject behavior. States and state transitions describe what actions a subject performs and how they are interdependent. In addition to the communication for sending and receiving, a subject also performs so-called internal actions or functions.
 
-Description of input pools \ref{fig:20181203-interaction-describing-component}
+States of a subject are therefore distinct: There are actions on the one hand, and communication states to interact with other subjects (receive and send) on the other. This results in three different types of states of a subject. Figure \ref{fig:behavior-symbole} shows the different types of states with the coresponding symbols.
 
 \begin{figure}[ph]
 	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-pool}
-	\caption[Input Pool]{Input Pool description}
-	\label{fig:input-pool}
+	\includegraphics[width=0.5\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Behavior-Symbole}
+	\caption[State types and coresponding symbols]{State types and coresponding symbols}
+	\label{fig:behavior-symbole}
 \end{figure}
 
+In S-BPM, work performers are equipped with elementary tasks to model their work procedures: sending and receiving messages and immediate accomplishment of a task (function state).
+In case an action associated with a state (send, receive, do) is possible, it will be executed, and a state transition to the next state occurs. The transition is characterized through the result of the action of the state under consideration: For a send state, it is determined by the state transition to which subject what information is sent. For a receive state, it becomes evident in this way from what subject it receives which information. For a function state, the state transition describes the result of the action, e.g., that the change of a business object was successful or could not be executed.
 
+The behavior of subjects is represented by modelers using Subject Behavior Diagrams (SBD). Figure \ref{fig:vollst-beispiel} shows the subject behavior diagram depicting the behavior of the subjects ‘employee’, ‘manager’, and ‘travel office’, including the associated states and state transitions. 
 
-\begin{figure*}[ph]
+\begin{landscape}
+\begin{figure}[ph]
 	\centering
-	\includegraphics[width=15cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181203-Interaction-describing-component.jpg}
-	\caption[Message Exchange and Input Pools]{Message Exchange and Input Pools}
-	\label{fig:20181203-interaction-describing-component}
-\end{figure*}
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Vollst-Beispiel}
+	\caption[Subject behavior diagram for the subjects ‘employee’, ‘manager’, and ‘travel office’]{Subject behavior diagram for the subjects ‘employee’, ‘manager’, and ‘travel office’}
+	\label{fig:vollst-beispiel}
+\end{figure}
+\end{landscape}
+\newpage
 
 
-\section{ASM Description}
+
+\section{Ontology of Subject Behavior Description}
+
+\begin{landscape}
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-SubjectBehavior}
+	\caption[Behavior of subjects]{Behavior of subjects}
+	\label{fig:20181218-subjectbehavior}
+\end{figure}
+\end{landscape}
+
+
+\section{ASM Definition of Subject Execution}

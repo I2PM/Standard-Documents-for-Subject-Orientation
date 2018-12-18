@@ -1,540 +1,185 @@
-\chapter{Classes and Property of the PASS Ontology}
+\chapter{Structure of a PASS Description}
+	In this chapter we describe the structure of a PASS specification. The structure of a PASS descritption consists of the subjects and the messages they exchange.
 
+\section{Informal Description}
+\subsection{Subject}
+\label{sec: Subject}
 
-\section{All Classes (95)}
+Subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. 
+Subjects communicate with each other by exchanging messages. Messages have a name and a payload. The name should express the meaning of a message informally and the payloads are the data (business objects) transported. Internally subjects execute local activities such as calculating a price, storing an address etc.
+A subject sends messages to other subjects, expects messages from other subjects, and executes internal actions. All these activities are done in sequences which are defined in a subject's behavior specification.
 
+In the following we use an example for the informal definiton of subjects.\
+In the simple scenario of the business trip application, we can identify three subjects, namely the employee as applicant, the manager as the approver, and the travel office as the travel arranger.
+
+There are the following types of subjects:
 \begin{itemize}
-\item SRN = Subclass Reference Number; Is used for marking the coresponding relations in the following figures. The number identifies the subclass relation to the next level of super class.
-\item PASSProcessModelElement
-\begin{itemize}
-	\item BehaviorDescribingComponent; SRN: 001 \\  \textit{Group of PASS-Model components that describe aspects of the behavior of subjects}
-	\begin{itemize}
-		\item Action; SRN: 002 \\ \textit{An Action is a grouping concept that groups a state with all its outgoing valid transitions}
-		\item DataMappingFunction ; SRN: 003 \\ \textit{Standard Format for DataMappingFunctions must be define: XML? OWL? JSON? 
-		Definitions of the ability/need to write or read data to and from a subject's personal data storage.
-		DataMappingFunctions are behavior describing components since they define what the subject is supposed to do (mapping and translating data)
-		Mapping may be done during reception of message, where data is taken from the message/Business Object (BO) and mapped/put into the local data field.
-		It may be done during sending of a message where data is taken from the local vault and put into a BO.
-		Or it may occur during executing a do function, where it is used to define read(get) and write (set) functions for the local data.}
-		\begin{itemize}
-			\item DataMappingIncomingToLocal ; SRN: 004 \\ \textit{A DataMapping that specifies how data is mapped from an an external source (message, function call etc.) to a subject's private defined data space.}
-			\item DataMappingLocalToOutgoing ; SRN: 005 \\ \textit{A DataMapping that specifies how data is mapped from a subject's private data space to an an external destination (message, function call etc.)}
-		\end{itemize}
-		\item FunctionSpecification ; SRN: 006 \\ \textit{A function specification for state denotes \\ 
-			Concept: Definitions of calls of (mostly technical) functions (e.g. Web-service, Scripts, Database access,) that are not part of the process model.\\
-			Function Specifications are more than "Data Properties"? --> - If special function types (e.g. Defaults) are supposed to be reused, having them as explicit entities is a the better OWL-modeling choice.}
-		\begin{itemize}
-			\item CommunicationAct ; SRN: 007 \\ \textit{A super class for specialized FunctionSpecification of communication acts (send and receive)}
-			\begin{itemize}
-				\item ReceiveFunction ; SRN: 008 \\ \textit{Specifications/descriptions for Receive-Functions describe in detail what the subject carrier is supposed to do in a state.\\
-				DefaultFunctionReceive1\_EnvoironmentChoice : present the surrounding execution environment with the given exit choices/conditions currently available depending on the current state of the subjects in-box. Waiting and not executing the receive action is an option.\\
-				DefaultFunctionReceive2\_AutoReceiveEarliest: automatically execute the according activity with the highest priority as soon as possible. In contrast to DefaultFunctionReceive1, it is not an option to prolong the reception and wait e.g. for another message.}
-				\item SendFunction ; SRN: 009 \\ \textit{Comments have to be added}
-			\end{itemize}
-			\item DoFunction ; SRN: 010 \\ \textit{Specifications or descriptions for Do-Functions describe in detail what the subject carrier is supposed to do in an according state.
-			The default DoFunction\\ 1: present the surrounding execution environment with the given exit choices/conditions and receive choice of one exit option --> define its Condition to be fulfilled in order to go to the next according state.
-			The default DoFunction \\2: execute automatic rule evaluation (see DoTransitionCondition - ToDo)
-			More specialized Do-Function Specifications may contain Data mappings denoting what of a subjects internal local Data can and should be:\\
-			a) read: in order to simply see it or in order to send it of to an external function (e.g. a web service)\\
-			b) write: in order to write incoming Data from e.g. a web Service or user input, to the local data fault}
-		\end{itemize}
-		\item ReceiveType ; SRN: 011 \\ \textit{Comments have to be added}
-		\item SendType ; SRN: 012 \\ \textit{Comments have to be added}
-		\item State ; SRN: 013 \\ \textit{A state in the behavior descriptions of a model}
-		\begin{itemize}
-			\item ChoiceSegment ; SRN: 014 \\ \textit{ChoiceSegments are groups of defined ChoiceSegementPaths. The paths may contain any amount of states. However, those states may not reach out of the bounds of the ChoiceSegmentPath.}
-			\item ChoiceSegmentPath ; SRN: 015 \\ \textit{ChoiceSegments are groups of defined ChoiceSegementPaths. The paths may contain any amount of states. However, those states may not reach out of the bounds of the ChoiceSegmentPath.The path may contain any amount of states but may those states may not reach out of the bounds of the choice segment path. Similar to an initial state of a behavior a choice segment path must have one determined initial state. A transition within a choice segment path must not have a target state that is not inside the same choice segment path.}
-			\begin{itemize}
-				\item MandatoryToEndChoiceSegmentPath ; SRN: 016 \\ \textit{Comments have to be added}
-				\item MandatoryToStartChoiceSegmentPath ; SRN: 017 \\ \textit{Comments have to be added}
-				\item OptionalToEndChoiceSegmentPath ; SRN: 018 \\ \textit{Comments have to be added}
-				\item OptionalToStartChoiceSegmentPath ; SRN: 019 \\ \textit{ChoiceSegmentPath and (isOptionalToEndChoiceSegmentPath value false)}
-			\end{itemize}
-			\item EndState ; SRN: 020 \\ \textit{An end state a behavior. A subject behavior may have one or more end states. Only Do and Receive states may be end states. Send States cannot be end states.There are no individual end states that are not Do, Send, or Receive States at the same time.}
-			\item GenericReturnToOriginReference ; SRN: 021 \\ \textit{Comments have to be added}
-			\item InitialStateOfBehavior ; SRN: 022 \\ \textit{The initial state of a behavior}
-			\item InitialStateOfChoiceSegmentPath ; SRN: 023 \\ \textit{Similar to an initial state of a behavior a choice segment path must have one determined initial state}
-			\item MacroState ; SRN: 024 \\ \textit{A state that references a macro behavior that is executed upon entering this state. Only after executing the macro behavior this state is finished also.}
-			\item StandardPASSState ; SRN: 025 \\ \textit{A super class to the standard PASS states: Do, Receive and Send}
-			\begin{itemize}
-				\item DoState ; SRN: 026 \\ \textit{The standard state in a PASS subject behavior diagram denoting an action or activity of the subject in itself.}
-				\item ReceiveState ; SRN: 027 \\ \textit{The standard state in a PASS subject behavior diagram denoting an receive action or rather the waiting for a receive possibility.}
-				\item SendState ; SRN: 028 \\ \textit{The standard state in a PASS subject behavior diagram denoting a send action}
-			\end{itemize}
-			\item StateReference ; SRN: 029 \\ \textit{A state reference is a model component that is a reference to a state in another behavior. For most modeling aspects it is a normal state.}
-		\end{itemize}
-		\item Transition ; SRN: 030 \\ \textit{An edge defines the transition between two states. A transition can be traversed if the outcome of the action of the state it originates from satisfies a certain exit condition specified by it's "Alternative}
-		\begin{itemize}
-			\item CommunicationTransition ; SRN: 031 \\ \textit{A super class for the CommunicationTransitions.}
-			\begin{itemize}
-				\item ReceiveTransition ; SRN: 032 \\ \textit{Comments have to be added}
-				\item SendTransition ; SRN: 033 \\ \textit{Comments have to be added}
-			\end{itemize}
-			\item DoTransition ; SRN: 034 \\ \textit{Comments have to be added}
-			\item SendingFailedTransition ; SRN: 035 \\ \textit{Comments have to be added}
-			\item TimeTransition ; SRN: 036 \\ \textit{Generic super calls for all TimeTransitions, transitions with conditions based on time events. E.g.passing of a certain time duration or the (reoccurring) calendar event. }
-			\begin{itemize}
-				\item ReminderTransition ; SRN: 037 \\ \textit{Reminder transitions are transitions that can be traverses if a certain time based event or frequency has been reached. E.g. a number of months since the last traversal of this transition or the event of a certain preset calendar date etc.}
-				\begin{itemize}
-					\item CalendarBasedReminderTransition ; SRN: 038 \\ \textit{A reminder transition, for defining exit conditions measured in calendar years or months \\ Conditions are e.g.: reaching of (in model) preset calendar date (e.g. 1st of July) or the reoccurrence of a a long running frequency ("every Month", "2 times a year")"}
-					\item TimeBasedReminderTransition ; SRN: 039 \\ \textit{Comments have to be added}
-				\end{itemize}
-				\item TimerTransition ; SRN: 040 \\ \textit{Generic super calls for all TimeTransitions, transitions with conditions based on time events. E.g.passing of a certain time duration or the (reoccurring) calendar event. }
-				\begin{itemize}
-					\item BusinessDayTimerTransition ; SRN: 041 \\ \textit{imer transitions, denote time outs for the state they originate from. The condition for a timer transition is that a certain amount of time has passed since the state it originates from has been entered.\\ The time unit for this timer transition is measured in business days. The definition of a business day depends on a subject's relevant or legal location}
-					\item DayTimeTimerTransition ; SRN: 042 \\ \textit{Timer Transitions, denoting time outs for the state they originate from. The condition for a timer transition is that a certain amount of time has passed since the state it originates from has been entered.\\ Day or Time Timers are measured in normal 24 hour days. Following the XML standard for time and day duration. They are to be differed from the timers that are timeout in units of years or months.}
-					\item YearMonthTimerTransition ; SRN: 044 \\ \textit{Timer transitions, denote time outs for the state they originate from. The condition for a timer transition is that a certain amount of time has passed since the state it originates from has been entered.\\ Year or Month timers measure time in calendar years or months. The exact definitions for years and months depends on relevant or legal geographical location of the subject.}
-				\end{itemize}
-				\item UserCancelTransition ; SRN: 045 \\ \textit{A user cancel transition denotes the possibility to exit a receive state without the reception of a specific message.\\ The user cancel allows for an arbitrary decision by a subject carrier/processor to abort a waiting process.}
-			\end{itemize}
-			\item TransitionCondition ; SRN: 046 \\ \textit{natives which in turn is given for a state. An alternative (to leave the state) is only a real alternative if the exit condition is fulfilled (technically: if that according function returns "true"). \\Note: Technically and during execution exit conditions belong to states. They define when it is allowed to leave that state. However, in PASS models exit conditions for states are defined and connected to the according transition edges. Therefore transition conditions are individual entities and not DataProperties.\\ The according matching must be done by the model execution environment.\\ By its existence, an edge/transition defines one possible follow up "state" for its state of origin. It is coupled with an "Exit Condition" that must be fulfilled in the originating state in order to leave the state.}
-			\begin{itemize}
-				\item DoTransitionCondition ; SRN: 047 \\ \textit{A TransitionCondition for the according DoTransitions and DoStates. }
-				\item MessageExchangeCondition ; SRN: 048 \\ \textit{MessageExchangeConditon is the super class for Send End Receive Transition Conditions the both require either the sending or receiving (exchange) of a message to be fulfilled.}
-				\begin{itemize}
-					\item ReceiveTransitionCondition ; SRN: 049 \\ \textit{ReceiveTransitionConditions are conditions that state that a certain message must have been taken out of a subjects in-box to be fulfilled.\\ These are the typical conditions defined by Receive Transitions.}
-					\item SendTransitionCondition ; SRN: 050 \\ \textit{SendTransitionConditions are conditions that state that a certain message must have been successfully passed to another subjects in-box to be fulfilled.\\ These are the typical conditions defined by Send transitions.}
-				\end {itemize}
-				\item SendingFailedCondition ; SRN: 051 \\ \textit{Comments have to be added}
-				\item TimeTransitionCondition ; SRN: 052 \\ \textit{A condition that is deemed 'true' and thus the according edge is gone, if: a surrounding execution system has deemed the time since entering the state and starting with the execution of the according action as too long (predefined by the outgoing edge) \\ A condition that is true if a certain time defined has passed since the state this condition belongs to has been entered. (This is the standard TimeOut Exit condition)}
-				\begin{itemize} 
-					\item ReminderEventTransitionCondition ; SRN: 053 \\ \textit{Comments have to be added}
-%					\begin{itemize}
-%						\item CalendarBasedReminderTransitionCondition
-%						\item TimeBasedReminderTimeOutTransitionCondition
-%					\end{itemize}
-					\item TimerTransitionCondition ; SRN: 054 \\ \textit{Comments have to be added}
-%					\begin{itemize}
-%						\item BusinessDayTimerTransitionCondition
-%						\item DayTimeTimerCondition
-%						\item YearMonthTimerTransitionCondition
-%					\end{itemize}
-				\end{itemize}
-			\end{itemize}
-		\end{itemize}
-	\end{itemize}		
-			
-	\item DataDescribingComponent ; SRN: 055 \\ \textit{Subject-Oriented PASS Process Models are in general about describing the activities and interaction of active entities. Yet these interactions are rarely done without data that is being generated by activities and transported via messages. While not considered by Börger's PASS interpreter, the community agreed on adding the ability to integrate the means to describe data objects or data structures to the model and enabling their connection to the process model. It may be defined that messages or subject have their individual $DataObjectDefinition$ in form of a $SubjectDataDefinition$ in the case of $FullySpecifiedSubject$s and \\ $PayloadDataObjectDesfinition$ in the case of \\ $MessageSpecifications$ In general, it expected that these \\ $DataObjectDefinition$ list on or more data fields for the message or subject with an internal data type that is described via a $DataTypeDefinition$. There is a rudimentary concept for a simple build-in data type definition closely oriented at the concept of ActNConnect. Otherwise, the principle idea of the OWL standard is to allow and employ existing or custom technologies for the serialized definition of data structures \\ ($CustomOrExternalDataTypeDefinition$) such as XML-Schemata (XSD), according elements with JSON or directly the powerful expressiveness of OWL itself.}
-	\begin{itemize}
-		\item DataObjectDefinition ; SRN: 056 \\ \textit{Data Object Definitions are model elements used to describe that certain other model elements may posses or carrier Data Objects.\\ E.G. a message may carrier/include a Business Objects. Or the private Data Space of a Subject may contain several Data Objects. \\A Data Objects should refer to a DataTypeDefinition denoting its DataType and structure.\\ DataObject: states that a data item does exist (similar to a variable in programming)DataType: the definition of an Data Object's structure.}
-		\begin{itemize}
-			\item DataObjectListDefintion ; SRN: 057 \\ \textit{Data definition concept for PASS model build in capabilities of data modeling. Defines a simple list structure.}
-			\item PayloadDataObjectDefinition ; SRN: 058 \\ \textit{Messages may have a description regarding their payload (what is transported with them).\\This can either be a description of a physical (real) object or a description of a (digital) data object}
-			\item SubjectDataDefinition ; SRN: 059 \\ \textit{Comments have to be added}
-		\end{itemize}
-		\item DataTypeDefinition ; SRN: 060 \\ \textit{Data Type Definitions are complex descriptions of the supposed structure of Data Objects. \\ DataObject: states that a data item does exist (similar to a variable in programming). \\DataType: the definition of an Data Object's structure.}
-		\begin{itemize}
-			\item CustomOrExternalDataTypeDefinition ; SRN: 061 \\ \textit{Using this class, tool vendors can include their own custom data definitions in the model.}
-			\begin{itemize}
-					\item JSONDataTypeDefinition ; SRN: 062 \\ \textit{Comments have to be added}
-					\item OWLDataTypeDefinition ; SRN: 63 \\ \textit{Comments have to be added}
-					\item XSD-DataTypeDefinition ; SRN: 064 \\ \textit{XML Schemata Description (XSD) is an established technology for describing structure of Data Objects (XML documents) with many tools available that can verify a document against the standard definition}
-			\end{itemize}
-			\item ModelBuiltInDataTypes ; SRN: 065 \\ \textit{Comments have to be added}
-		\end{itemize}
-		\item PayloadDescription ; SRN: 066 \\ \textit{Comments have to be added}
-		\begin{itemize}
-			\item PayloadDataObjectDefinition ; SRN: 067 \\ \textit{Messages may have a description regarding their payload (what is transported with them).\\This can either be a description of a physical (real) object or a description of a (digital) data object}
-			\item PayloadPhysicalObjectDescription ; SRN: 068 \\ \textit{Messages may have a description regarding their payload (what is transported with them).\\This can either be a description of a physical (real) object or a description of a (digital) data object}
-		\end{itemize}
-	\end{itemize}
-	\item InteractionDescribingComponent ; SRN: 069 \\ \textit{This class is the super class of all model elements used to define or specify the interaction means within a process model}
-	\begin{itemize}
-		\item InputPoolConstraint ; SRN: 070 \\ \textit{Subjects do implicitly posses input pools.\\
-			During automatic execution of a PASS model in a work-flow engine this message box is filled with messages.\\
-			Without any constraints models this message in-box is assumed to be able to store an infinite amount of messages.\\
-			For some modeling concepts though it may be of importance to restrict the size of the input pool for certain messages or senders.\\This is done using several different Type of InputPoolConstraints that are attached to a fully specified subject.\\Should a constraint be applicable, an "InputPoolConstraintHandlingStrategy" will be executed by a work-flow engine to determine what to do with the message that does not fit in the pool.\\
-			Limiting the input pool for certain reasons to size 0 together with the InputPoolConstraintStrategy-Blocking is effectively modeling that a communication must happen synchronously instead of the standard asynchronous mode. The sender can send his message only if the receiver is in an according receive state, so the message can be handled directly without being stored in the in-box.}
-		\begin{itemize}
-			\item MessageSenderTypeConstraint ; SRN: 071 \\ \textit{An InputPool constraint that limits the number of message of a certain type and from a certain sender in the input pool.\\
-			E.g. "Only one order from the same customer" (during happy hour at the bar)}
-			\item MessageTypeConstraint ; SRN: 072 \\ \textit{An InputPool constraint that limits the number of message of a certain type in the input pool.\\
-			E.g. You can accept only "three request at once}
-			\item SenderTypeConstraint ; SRN: 073 \\ \textit{An InputPool constraint that limits the number of message from a certain Sender subject in the input pool.\\
-			E.g. as long as a customer has non non-fulfilled request of any type he may not place messages}
-		\end{itemize}
-		\item InputPoolContstraintHandlingStrategy ; SRN: 074 \\ \textit{Should an InputPoolConstraint be applicable, an "InputPoolConstraintHandlingStrategy" will be executed by a work-flow engine to determine what to do with the message that does not fit in the pool.\\
-		There are types of HandlingStrategies. \\
-		InputPoolConstraintStrategy-Blocking - No new message will be adding will need to be repeated until successful \\
-		InputPoolConstraintStrategy-DeleteLatest - The new message will be added, but the last message to arrive before that applicable to the same constraint will be overwritten with the new one. (LIFO deleting concept)\\
-		InputPoolConstraintStrategy-DeleteOldest - The message will be added, but the earliest message in the input pool applicable to the same constraint will be deleted (FIFO deleting concept)\\
-		InputPoolConstraintStrategy-Drop - Sending of the message succeeds. However the new message will not be added to the in-box. Rather it will be deleted directly.}
-		\item MessageExchange ; SRN: 075 \\ \textit{A message exchange is an element in the interaction description section that specifies exactly one possibility of exchanging messages in the given process context of the model.\\
-		A message exchange is a triple of, a sender, a receiver, and the specification of the message that may be exchanged.\\
-		While message exchanges are singular occurrences, they may be grouped in MessageExchangeLists}
-		\item MessageExchangeList ; SRN: 076 \\ \textit{While MessageExchanges are singular occurrences, they may be grouped in MessageExchangeLists.\\
-		In graphical PASS modeling that is usually the case when one arrow between two subjects contains more than one message and thereby specifies more than one possible message exchange channel between the two subjects.}
-		\item MessageSpecification ; SRN: 077 \\ \textit{MessageSpecification are model elements that specify the existence of a message. At minimum its name and id.\\It may contain additional specification for its payload (contained Data, exact form etc.)}
-		\item Subject ; SRN: 078 \\ \textit{The subject is the core model element of a subject-oriented PASS process model.}
-		\begin{itemize}
-			\item FullySpecifiedSubject ; SRN: 079 \\ \textit{Fully specified Subjects in a PASS graph are entities that, in contrast to interface subjects, linked to one ore more Behaviors (they posses a behavior).}
-			\item InterfaceSubject ; SRN: 080 \\ \textit{Interface Subjects are Subjects that are not linked to a behavior. In contrast, they may refer to FullySpecifiedSubjects that are described in other process models.}
-			\item MultiSubject ; SRN: 081 \\ \textit{The Multi-Subject is term for a subject that "has a maximum subject instantiation restriction" within a process context larger than 1.}
-			\item SingleSubject ; SRN: 082 \\ \textit{Single Subject are subject with a maximumInstanceRestriction of 1}
-			\item StartSubject ; SRN: 083 \\ \textit{Subjects that start their behavior with a Do or Send state are active in a process context from the beginning instead of requiring a message from another subject.\\
-			Usually there should be only one Start subject in a process context.}
-		\end{itemize}
-	\end{itemize}
-				
-	\item PASSProcessModel ; SRN: 084 \\ \textit{The main class that contains all relevant process elements}
-	\item SubjectBehavior ; SRN: 085 \\ \textit{Additional to the subject interaction a PASS Model consist of multiple descriptions of subject's behaviors. These are graphs described with the means of $BehaviorDescribingComponents$ \\
-	A subject in a model may be linked to more than one behavior.}
-	\begin{itemize}
-		\item GuardBehavior ; SRN: 086 \\ \textit{A guard behavior is a special usually additional behavior that guards the Base Behavior of a subject.ßß
-		It starts with a (guard) receive state denoting a special interrupting message. Upon reception of that message the subject will execute the according receive transition and the follow up states until it is either redirected to a state on the base behavior or terminates in an end-state within the guard behavior}
-		\item MacroBehavior ; SRN: 087 \\ \textit{A macro behavior is a specialized behavior that may be entered and exited from a function state in another behavior.}
-		\item SubjectBaseBehavior ; SRN: 088 \\ \textit{The standard behavior model type}
-	\end{itemize}
+	\item Fully specified subjects 
+	\item Multisubjects 
+	\item Single subject
+	\item Interface subjects 
 \end{itemize}
-	
-	
-	
-	
-	
-\item SimplePASSElement ; SRN: 089 \\ \textit{Comments have to be added}
+
+\subsubsection{Fully specified Subjects}
+This is the standard subject type. A subject communicates with other subjects by exchangeing messages.
+Fully specified subjects consists of following components:
 \begin{itemize}
-	\item CommunicationTransition ; SRN: 090 \\ \textit{A super class for the CommunicationTransitions.}
-	\begin{itemize}
-		\item ReceiveTransition ; SRN: 091 \\ \textit{Comments have to be added}
-		\item SendTransition ; SRN: 092 \\ \textit{Comments have to be added}
-	\end{itemize}
-	\item DataMappingFunction ; SRN: 093 \\ \textit{Definitions of the ability/need to write or read data to and from a subject's personal data storage.\\
-	DataMappingFunctions are behavior describing components since they define what the subject is supposed to do (mapping and translating data)\\
-	Mapping may be done during reception of message, where data is taken from the message/Business Object (BO) and mapped/put into the local data field.\\
-	It may be done during sending of a message where data is taken from the local vault and put into a BO.\\
-	Or it may occur during executing a do function, where it is used to define read(get) and write (set) functions for the local data.}
-	\begin{itemize}
-		\item DataMappingIncomingToLocal ; SRN: 094 \\ \textit{A DataMapping that specifies how data is mapped from an an external source (message, function call etc.) to a subject's private defined data space.}
-		\item DataMappingLocalToOutgoing ; SRN: 095 \\ \textit{A DataMapping that specifies how data is mapped from a subject's private data space to an an external destination (message, function call etc.)" }
-	\end{itemize}
-	\item DoTransition ; SRN: 096 \\ \textit{Comments have to be added}
-	\item DoTransitionCondition ; SRN: 097 \\ \textit{A TransitionCondition for the according DoTransitions and DoStates.}
-	\item EndState ; SRN: 098 \\ \textit{An end state a behavior. A subject behavior may have one or more end states. Only Do and Receive states may be end states. Send States cannot be end states.\\
-	There are no individual end states that are not Do, Send, or Receive States at the same time.}
-	\item FunctionSpecification ; SRN: 099 \\ \textit{A function specification for state denotes\\
-	Concept: Definitions of calls of (mostly technical) functions (e.g. Web-service, Scripts, Database access,) that are not part of the process model.\\
-	Function Specifications are more than "Data Properties"? --> - If special function types (e.g. Defaults) are supposed to be reused, having them as explicit entities is a the better OWL-modeling choice.}
-	\begin{itemize}
-		\item CommunicationAct ; SRN: 100 \\ \textit{A super class for specialized FunctionSpecification of communication acts (send and receive)}
-		\begin{itemize}
-			\item ReceiveFunction ; SRN: 101 \\ \textit{Specifications/descriptions for Receive-Functions describe in detail what the subject carrier is supposed to do in a state.\\
-			DefaultFunctionReceive1\_EnvoironmentChoice : present the surrounding execution environment with the given exit choices/conditions currently available depending on the current state of the subjects in-box. Waiting and not executing the receive action is an option.\\
-			DefaultFunctionReceive2\_AutoReceiveEarliest: automatically execute the according activity with the highest priority as soon as possible. In contrast to DefaultFunctionReceive1, it is not an option to prolong the reception and wait e.g. for another message.}
-			\item SendFunction ; SRN: 102 \\ \textit{Comments have to be added}
-		\end{itemize}
-		\item DoFunction ; SRN: 103 \\ \textit{Specifications or descriptions for Do-Functions describe in detail what the subject carrier is supposed to do in an according state.\\
-			The default DoFunction 1: present the surrounding execution environment with the given exit choices/conditions and receive choice of one exit option --> define its Condition to be fulfilled in order to go to the next according state.\\
-			The default DoFunction 2: execute automatic rule evaluation (see DoTransitionCondition).\\
-			More specialized Do-Function Specifications may contain Data mappings denoting what of a subjects internal local Data can and should be:\\
-			a) read: in order to simply see it or in order to send it of to an external function (e.g. a web service)\\
-			b) write: in order to write incoming Data from e.g. a web Service or user input, to the local data fault}
-	\end{itemize}
-	\item InitialStateOfBehavior ; SRN: 104 \\ \textit{The initial state of a behavior}
-	\item MessageExchange ; SRN: 105 \\ \textit{A message exchange is an element in the interaction description section that specifies exactly one possibility of exchanging messages in the given process context of the model.\\
-	A message exchange is a triple of, a sender, a receiver, and the specification of the message that may be exchanged.\\
-	While message exchanges are singular occurrences, they may be grouped in MessageExchangeLists}
-	\item MessageExchangeCondition ; SRN: 106 \\ \textit{MessageExchangeConditon is the super class for Send End Receive Transition Conditions the both require either the sending or receiving (exchange) of a message to be fulfilled.}
-	\begin{itemize}
-		\item ReceiveTransitionCondition ; SRN: 107 \\ \textit{ReceiveTransitionConditions are conditions that state that a certain message must have been taken out of a subjects in-box to be fulfilled.\\
-		These are the typical conditions defined by Receive Transitions.}
-		\item SendTransitionCondition ; SRN: 108 \\ \textit{SendTransitionConditions are conditions that state that a certain message must have been successfully passed to another subjects in-box to be fulfilled.\\
-		These are the typical conditions defined by Send transitions.}
-	\end{itemize} 
-	\item MessageExchangeList ; SRN: 109 \\ \textit{While MessageExchanges are singular occurrences, they may be grouped in MessageExchangeLists.\\
-	In graphical PASS modeling that is usually the case when one arrow between two subjects contains more than one message and thereby specifies more than one possible message exchange channel between the two subjects.}
-	\item MessageSpecification ; SRN: 110 \\ \textit{MessageSpecification are model elements that specify the existence of a message. At minimum its name and id.\\
-	It may contain additional specification for its payload (contained Data, exact form etc.)}
-	\item ModelBuiltInDataTypes ; SRN: 111 \\ \textit{Comments have to be added}
-	\item PayloadDataObjectDefinition ; SRN: 112 \\ \textit{Messages may have a description regarding their payload (what is transported with them).\\
-	This can either be a description of a physical (real) object or a description of a (digital) data object}
-	\item StandardPASSState ; SRN: 113 \\ \textit{A super class to the standard PASS states: Do, Receive and Send}
-	\begin{itemize}
-		\item DoState ; SRN: 114 \\ \textit{The standard state in a PASS subject behavior diagram denoting an action or activity of the subject in itself.}
-		\item ReceiveState ; SRN: 115 \\ \textit{The standard state in a PASS subject behavior diagram denoting an receive action or rather the waiting for a receive possibility.}
-		\item SendState ; SRN: 116 \\ \textit{The standard state in a PASS subject behavior diagram denoting a send action}
-	\end{itemize}
-	\item Subject ; SRN: 117 \\ \textit{The subject is the core model element of a subject-oriented PASS process model.}
-	\begin{itemize}
-		\item FullySpecifiedSubject ; SRN: 118 \\ \textit{Fully specified Subjects in a PASS graph are entities that, in contrast to interface subjects, linked to one ore more Behaviors (they posses a behavior).}
-		\item InterfaceSubject ; SRN: 119 \\ \textit{Interface Subjects are Subjects that are not linked to a behavior. In contrast, they may refer to FullySpecifiedSubjects that are described in other process models.}
-		\item MultiSubject ; SRN: 120 \\ \textit{The Multi-Subject is term for a subject that "has a maximum subject instantiation restriction" within a process context larger than 1.}
-		\item SingleSubject ; SRN: 121 \\ \textit{Single Subject are subject with a maximumInstanceRestriction of 1}
-		\item StartSubject ; SRN: 122 \\ \textit{Subjects that start their behavior with a Do or Send state are active in a process context from the beginning instead of requiring a message from another subject.\\
-			Usually there should be only one Start subject in a process context.}
-	\end{itemize}
-	\item SubjectBaseBehavior ; SRN: 123 \\ \textit{The standard behavior model type}
+	\item Business Objects\\
+	Each subjects has some business objects. A basic structure of business objects consists of an identifier, data structures, and data elements. The identifier of a business object is derived from the business environment in which it is used. Examples are business trip requests, purchase orders, packing lists, invoices, etc.
+	Business objects are composed of data structures. Their components can be simple data elements of a certain type (e.g., string or number) or even data structures themselves. 
+	\item Sent messages\\
+	Messages which a subject sends to other subjects. Each message has a name and may transport some data objects as a payload. The values of these payload data objects are copied from internal business objects of a subject.
+	\item Received messages\\
+	Messages received by a subject. The values of the payload objects are copied to business objects of the receiving subject.
+	\item Input Pool\\
+	Messages sent to a subjects are deposited in the input pool of the receiving subject.
+	\item Behavior \\
+	The behavior of each subject describes in which order it sends messages, expects (receives) and performs internal functions. Messages transport data from the sending to the receiving subject, and internal functions operate on internal data of a subject. 
 \end{itemize}
-\end{itemize}	
-
-			
-			
-			
-			
 
 
+\subsubsection{Multsubjects and Multiprocesses}
+Multisubjects are simular to Fully specified subjects. If in a process model several identical subjects are required e.g. in order to increse the through put these subjects can be modelled by a multi subject. If several communicating subjects in a process modell are multi subjects they can be combined to a multi process.
+
+In a business process, there may be several identical sub-processes that perform certain similar tasks in parallel and independently. This is often the case in a procurement process, when bids from multiple providers are solicited. A process or sub-process is therefore executed simultaneously or sequentially multiple times during overall process execution. A set of type-identical, independently running processes or sub-processes are termed multi-process. The actual number of these independent sub-processes is determined at runtime.
+Multi-processes simplify process execution, since a specific sequence of actions can be used by different processes. They are recommended for recurring structures and similar process flows.
+An example of a multi-process can be illustrated as a variation of the current booking process. The travel agent should simultaneously solicit up to five bids before making a reservation. Once three offers have been received, one is selected and a room is booked. The process of obtaining offers from the hotels is identical for each hotel and is therefore modeled as a multi-process.
 
 
+\subsubsection{Single subjects}
+Single subjects can be instantiated only once. They are used if for the execution of a subject a resource is required which is only available once.
 
 
+\subsubsection{Interface Subjects}
+Interface subjects are used as interfaces to other process systems. If a subject of a process system sends or receives messages from a subject which belongs to an other process system. These so called interface subjects represent fully described subjects which belong to that other process system. This means to each interface subject belongs a fully described subject in an other process system. Interface subjects specifications contain the sent messages, received messages and the refernce to the fully described subject which they represent.
 
 
+\subsection{Subject-to-Subject Communication}
+After the identification of subjects involved in the process (as process-specific roles), their interaction relationships need to be represented. These are the messages exchanged between the subjects. Such messages might contain structured information—so-called business objects (see Section xxxxxxx).\
+
+The result is a model structured according to subjects with explicit communication relationships, which is referred to as a Subject Interaction Diagram (SID) or, synonymously, as a Communication Structure Diagram (CSD) (see figure \ref{fig:beispiel-subject-interaction}).
+
+\begin{figure*}[ph]
+	\centering
+	\includegraphics[width=14cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel-Subject-Interaction}
+	\caption[Subject interaction diagram]{Subject interaction diagram for the process ‘business trip application’}
+	\label{fig:beispiel-subject-interaction}
+\end{figure*}
 
 
-\section{Data Properties (27)}
+Messages represent the interactions of the subjects during the execution of the process. We recommend naming these messages in such a way that they can be immediately understood and also reflect the meaning of each particular message for the process. In the sample ‘business trip application’, therefore, the messages are referred to as ‘business trip request’, ‘rejection’, and ‘approval’.
 
-\begin{landscape}
-	\begin {longtable} {| p{0.5
-		\textwidth} | p{0.11\textwidth} | p{0.3\textwidth}|p{0.3\textwidth}|p{0.12\textwidth}|}
-	\hline
-	Property name &  & Domain-Range & Comments &Reference\\
-	\toprule
-	\endhead
-	\hline
-	hasBusinessDayDurationTimeOutTime & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasCalendarBasedFrequencyOrDate & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasDataMappingString & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasDayTimeDurationTimeOutTime & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasDurationTimeOutTime & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasFeelExpressionAsDataMapping & Domain: &  &See https://www.omg.org/spec/DMN for specification of Feel-Statement-Strings
-	
-	The idea of these expression is to map data fields from and to the internal Data storage of a subject &\\
-	& Range: &  & &\\
-	\hline
-	hasGraphicalRepresentation & Domain: &  & The process models are in principle abstract graph structures. Yet the visualization of process models is very important since many process models are initially created in a graphical form using a graphical graph editor (e.g. MS Visio, yEd, etc.) that was created to foster human comprehensibility.
-	
-	If available any process element may have a graphical representation attached to it&\\
-	& Range: &  & &\\
-	\hline
-	hasKey & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasLimit & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasMaximumSubjectInstanceRestriction & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasMetaData & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasModelComponentComment & Domain: &  &equivalent to rdfs:comment &\\
-	& Range: &  & &\\
-	\hline
-	hasModelComponentID & Domain: &  &The unique ID of a PASSProcessModelComponent &\\
-	& Range: &  & &\\
-	\hline
-	hasModelComponentLabel & Domain: &  &The human legible label or description of a model element. &\\
-	& Range: &  & &\\
-	\hline
-	hasPriorityNumber & Domain: &  &Transitions or Behaviors have numbers that denote their execution priority in situations where two or more options could be executed.
-	
-	This is important for automated execution.
-	
-	E.g. when two messages are in the in-box and could be followed, the message denoted on the transition with the higher priority (lower priority number) is taken out and processed.
-	
-	Similarly, SubjectBehaviors with higher priority (lower priority number) are to be executed before Behaviors with lower priority. &\\
-	& Range: &  & &\\
-	\hline
-	hasReoccuranceFrequenyOrDate & Domain: &  &A data field meant for the two classes ReoccuranceTimeOutTransition and ReoccuranceTimeOutExitCondition.
-	
-	ToDo: Define the according data format for describing the iteration frequencies or reoccurring dates. Opinion: rather complex: expressive capabilities should cover expressions like: "every 2nd Monday of Month at 7:30 in Morning." Every 29th of July" or "Every Hour", "ever 25 Minuets" , "once each day", "twice each week" etc &\\
-	& Range: &  & &\\
-	\hline
-	hasSVGRepresentation & Domain: &  & The Scalable Vector Graphic (SVG) XML format is a text based standard to describe vector graphics.
-	
-	Adding according image information as XML literals is therefor a suitable, yet not necessarily easily changeable option to include the graphical representation of model elements in the an OWL file.&\\
-	& Range: &  & &\\
-	\hline
-	hasTimeBasedReoccuranceFrequencyOrDate & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasTimeValue & Domain: &  & Generic super class for all data properties of time based transitions.&\\
-	& Range: &  & &\\
-	\hline
-	hasToolSpecificDefinition & Domain: &  & This is a placeholder DataProperty meant as a tie in point for tool vendors to include tool specific data values/properties into models.
-	
-	By denoting their own data properties as sub-classes to this one the according data fields can easily be recognized as such. However, this is only an option and a place holder to remind that something like this is possible.&\\
-	& Range: &  & &\\
-	\hline
-	hasValue & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	hasYearMonthDurationTimeOutTime & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	isOptionalToEndChoiceSegmentPath & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	isOptionalToStartChoiceSegmentPath & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	owl:topDataProperty & Domain: &  & &\\
-	& Range: &  & &\\
-	\hline
-	PASSModelDataProperty & Domain: &  &Generic super class of all DataProperties that PASS process model elements may have. &\\
-	& Range: &  & &\\
-	\hline
-	SimplePASSDataProperties
- 	& Domain: &  & Every element/sub-class of SimplePASSDataProperties is also a Child of PASSModelDataPropertiy. This is simply a surrogate class to group all simple elements together&\\
-	& Range: &  & &\\
-	\hline
-\end{longtable}
-\end {landscape}
+Messages serve as a container for the information transmitted from a sending to a receiving subject. There are two options for the message content:
+
+\begin{itemize}
+	\item 	Simple data types: Simple data types are string, integer, character, etc. In the business trip application example, the message ‘business trip request’ can contain several data elements of type string (e.g., destination, reason for traveling, etc.), and of type number (e.g., duration of trip in days).
+	\item Business Objects: Business Objects in their general form are physical and logical ‘things’ that are required to process business transactions., We consider data structures composed of elementary data types, or even other data structures, as logical business objects in business processes. For instance, the business object ‘business trip request’ could consist of the data structures ‘data on applicants’, ‘travel data’, and ‘approval data’—with each of these in turn containing multiple data elements.
+\end{itemize}
+
+
+\subsection{Message Exchange}
+
+In the previous subsection, we have stated that messages are transferred between subjects and have described the nature of these messages. What is still missing is a detailed description of how messages can be exchanged, how the information they carry can be transmitted, and how subjects can be synchronized. These issues are addressed in the following sub-sections.
+
+\subsubsection{Synchronous and Asynchronous Exchange of Messages}
+In the case of synchronous exchange of messages, sender and receiver wait for each other until a message can be passed on. If a subject wants to send a message and the receiver (subject) is not yet in a corresponding receive state, the sender waits until the receiver is able to accept this message. Conversely, a recipient has to wait for a desired message until it is made available by the sender.\
+
+The disadvantage of the synchronous method is a close temporal coupling between sender and receiver. This raises problems in the implementation of business processes in the form of workflows, especially across organizational borders. As a rule, these also represent system boundaries across which a tight coupling between sender and receiver is usually very costly. For long-running processes, sender and receiver may wait for days, or even weeks, for each other.\
+
+Using asynchronous messaging, a sender is able to send anytime. The subject puts a message into a message buffer from which it is picked up by the receiver. However, the recipient sees, for example, only the oldest message in the buffer and can only accept this particular one. If it is not the desired message, the receiver is blocked, even though the message may already be in the buffer, but in a buffer space that is not visible to the receiver. To avoid this, the recipient has the alternative to take all of the messages from the buffer and manage them by himself. In this way, the receiver can identify the appropriate message and process it as soon as he needs it. In asynchronous messaging, sender and receiver are only loosely coupled. Practical problems can arise due to the in reality limited physical size of the receive buffer, which does not allow an unlimited number of messages to be recorded. Once the physical boundary of the buffer has been reached due to high occupancy, this may lead to unpredictable behavior of workflows derived from a business process specification. To avoid this, the input-pool concept has been introduced in PASS.
+
+
+\subsubsection{Exchange of Messages via the Input Pool}
+\label{sec: inputpool}
+To solve the problems outlined in asynchronous message exchange, the input pool concept has been developed. Communication via the input pool is considerably more complex than previously shown; however, it allows transmitting an unlimited number of messages simultaneously. Due to its high practical importance, it is considered as a basic construct of PASS.
+Consider the input pool as a mail box of work performers, the operation of which is specified in detail.
+Each subject has its own input pool. It serves as a message buffer to temporarily store messages received by the subject, independent of the sending communication partner. The input pools are therefore inboxes for flexible configuration of the message exchange between the subjects. In contrast to the buffer in which only the front message can be seen and accepted, the pool solution enables picking up (= removing from the buffer) any message. For a subject, all messages in its input pool are visible.
+
+The input pool has the following configuration parameters (see figure \ref{fig:input-pool}):\
+\begin{itemize}
+	\item Input-pool size: The input-pool size specifies how many messages can be stored in an input pool, regardless of the number and complexity of the message parameters transmitted with a message. If the input pool size is set to zero, messages can only be exchanged synchronously.
+	\item Maximum number of messages from specific subjects: For an input pool, it can be determined how many messages received from a particular subject may be stored simultaneously in the input pool. Again, a value of zero means that messages can only be accepted synchronously.
+	\item Maximum number of messages with specific identifiers: For an input pool, it can be determined how many messages of a specifically identified message type (e.g., invoice) may be stored simultaneously in the input pool, regardless of what subject they originate from. A specified size of zero allows only for synchronous message reception.
+	\item Maximum number of messages with specific identifiers of certain subjects: For an input pool, it can be determined how many messages of a specific identifier of a particular subject may be stored simultaneously in the input pool. The meaning of the zero value is analogous to the other cases.
+\end{itemize}
+\newpage
+\begin{figure*}[ph]
+	\centering
+	\includegraphics[width=12cm]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-pool-informal.jpg}
+	\caption[Input Pool]{Configuration of Input Pool Parameters}
+	\label{fig:input-pool}
+\end{figure*}
+
+
+By limiting the size of the input pool, its ability to store messages may be blocked at a certain point in time during process runtime. Hence, messaging synchronization mechanisms need to control the assignment of messages to the input pool. Essentially, there are three strategies to handle the access to input pools:
+\begin{itemize}
+	\item Blocking the sender until the input pool’s ability to store messages has been reinstated: Once all slots are occupied in an input pool, the sender is blocked until the receiving subject picks up a message (i.e. a message is removed from the input pool). This creates space for a new message. In case several subjects want to put a message into a fully occupied input pool, the subject that has been waiting longest for an empty slot is allowed to send. The procedure is analogous if corresponding input pool parameters do not allow storing the message in the input pool, i.e., if the corresponding number of messages of the same name or from the same subject has been put into the input pool.
+	\item Delete and release of the oldest message: In case all the slots are already occupied in the input pool of the subject addressed, the oldest message is overwritten with the new message.
+	\item Delete and release of the latest message: The latest message is deleted from the input pool to allow depositing of the newly incoming message. If all the positions in the input pool of the addressed subject are taken, the latest message in the input pool is overwritten with the new message. This strategy applies analogously when the maximum number of messages in the input pool has been reached, either with respect to sender or message type.
+\end{itemize}
+
+\newpage
+
+\section{OWL Description}
+
+The various building blocks of a PASS description and their relations are defined in a ontology. The following figure \ref{fig:20171217-passprocessmodellelement} gives an overview of the structure of PASS specifications.   
+
+\begin{figure*}[ph]
+	\centering
+	\includegraphics[width=0.9\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20171217-PASSProcessModellElement}
+	\caption[Elements of PASS Process Models]{Elements of PASS Process Models}
+	\label{fig:20171217-passprocessmodellelement}
+\end{figure*}
+
+The class PASSProcessModelElement hs 5 subclasses (subclass relations 084, 055, 069, 001 an 085 in figure \ref{fig:20171217-passprocessmodellelement}). Only the classes PASSProcessModel, DataDescriptionCOmponent, InteractionDescribingComponent are used for defining the structural aspects of a process specification in PASS. The classes BehaviorDescribingComponent and SUbject Behavior define the dynamic aspects. In which sequences messages are sent and received or internal actions are executed. These dynamic asoects are considered in detail in Chapter 3. 
 
 
 
+\subsection{PASS Process Model}
+The central entities of a PASS process model are subjects which represents the active elements of a process and the messages they exchange. Messages transport data from one subject to others (payload). The following figure \ref{fig:20181217-passprocessmodel} shows the coresponding ontology for the PASS Process models.
+
+\begin{figure*}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181217-PASSProcessModel}
+	\caption[PASS Process Modell]{PASS Process Modell}
+	\label{fig:20181217-passprocessmodel}
+\end{figure*}
+
+PASSProcessModelElements and PASSProcessModells have a name. This is described with the property hasAdditionalAttribute (property 208 in \ref{fig:20171217-passprocessmodellelement}). The class subject and the class MessageExchange have the relation hasRelationtoModelComponent to the class PASSProcessModel (property 226 in \ref{fig:20171217-passprocessmodellelement}). The properties hasReceiver and hasSender express that a message has a sending and receiving subject (properties 225 and 227 in \ref{fig:20171217-passprocessmodellelement}) whereas the properties hasOutgoingMessageExchange and hasIncomingMessageExchange define which messages are sent or received by a subject. Property hasStartSubject (property 229 in \ref{fig:20171217-passprocessmodellelement}) defines a start subject for a PASSProcessModell. A start subject is a subclass of the class subject (subclass relation 122 in \ref{fig:20171217-passprocessmodellelement}).
 
 
+\subsection{Data Describing Component}
+Each subject encapsulate data (business objects). The values of these data elements can be transfered to other subjects. The following figure \ref{fig:20181218-data} shows the ontology of this part of the PASS-ontology.
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.9\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181218-Data}
+	\caption[Data Description Component]{Data Description Component}
+	\label{fig:20181218-data}
+\end{figure}
+
+From class DtadescribingCombonent three subclasses are derived (in figure \ref{fig:20181218-data} are these the relations 060, 056 and 066). Subclass PayLoadDescription are the data tranported by messages.he relation of PayloadDescriptions to messages is defined by property ContainsPayloadDescription (in figure \ref{fig:20181218-data} number 204). \\
+There are two types of payloads. The class PayloadPhysicalObjectDescription is used if a message will be later implemented by a physical transport like a parcel. The class PayLoadDataObjectDefinition is used to transport normal data (Subclass relations 068 and 67 in figure \ref{fig:20181218-data}). These payload objects are also a subclass of class DataObjectDefinition (Subclass relation 058 in figure \ref{fig:20181218-data}). \\
+Data objects have a certain type. Therefore class DataObjectDefinition has the relation hasDatatype to class DataTypeDefinition (property 212 in figure\ref{fig:20181218-data}). Class DataTypeDefinition has two subclasses (subclass relations 061 and 065 in figure \ref{fig:20181218-data}). The subclass ModelBuiltInDataTypes are user defined data types whereas the class CustomOfExternalDataTypeDefinition is the superclass of JSON, OWL or XML based data type definitions(subclass relations 062, 63 and 064 in figure \ref{fig:20181218-data}).
+
+\newpage
+
+\subsection{Interaction Describing Component}
+
+The following figure \ref{fig:ontogrsubjectinteraction} shows the subset of the classes and properties required for describing the interaction of subjects. 
+
+\begin{figure*}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSubjectInteraction}
+	\caption[Subject Interaction Diagram]{Subject Interaction Diagram}
+	\label{fig:ontogrsubjectinteraction}
+\end{figure*}
 
 
-\section{Object Properties (42)}
+The central classes are Subject and MessageExchange. Between these classes are defined the properties hasIncomingTransition (in figure \ref{fig:ontogrsubjectinteraction} number 217) and hasOutgoingTransition (in figure \ref{fig:ontogrsubjectinteraction} number 224). This properties defines that subjects have incoming and outgoing messages. Each message has a sender and a receiver (in figure \ref{fig:ontogrsubjectinteraction} number 227 and number 225). Messages have a type. This is expressed by the property hasMessageType (in figure \ref{fig:ontogrsubjectinteraction} number 222). Instead of the property 222 a message exchange may have the property 201 if a list of messages is used instead of a single message.\\
+Each subject has an input pool. Input pools have three types of constraints (see section \ref{sec: inputpool}). This is expressed by the property references  (in figure \ref{fig:ontogrsubjectinteraction} number 236) and InputPoolConstraints (in figure \ref{fig:ontogrsubjectinteraction} number 219). Constraints which are related to certain messages have references to the class MessageSpecification.\\
+There are four subclasses of the class subject (in figure \ref{fig:ontogrsubjectinteraction} number 079, 080, 081 and 082). The specialties of these subclasses are described in section \ref{sec: Subject}. A class StartSubject (in figure \ref{fig:ontogrsubjectinteraction} number 83) which is a subclass of class subject denotes the subject in which a process instance is started.\\
+All other relarions are subclass relations. The class PASSProcessModelElement is the central PASS class. From this class all the other classes are derived (see next sections). From class InteractionDescribingCOmponent all the classes required for describing the structure of a process system are derived.
 
-\begin{landscape}
-\begin {longtable} {| p{0.3\textwidth} | p{0.11\textwidth} | p{0.36\textwidth}|p{0.4\textwidth}| p{0.12\textwidth}|}
-\hline
-Property name &  & Domain-Range & Comments &Reference\\
-\toprule
-\endhead
-\hline
-belongsTo & Domain: & PASSProcessModelElement &Generic ObjectProperty that links two process elements, where one is contained in the other (inverse of contains). & \ \ 200 \\
- & Range: & PASSProcessModelElement & &\\
-\hline
-contains & Domain: &PASSProcessModelElement&Generic ObjectProperty that links two model elements where one contains another (possible multiple) & \ \ 201\\
-& Range: & PASSProcessModelElement & & \\
-\hline
-containsBaseBehavior & Domain: &Subject & &\ \ 202\\ 
-& Range: &SubjectBehavior & &\\
-\hline
-containsBehavior & Domain: &Subject & &\ \ 203\\ 
-& Range: & SubjectBehavior & &\\
-\hline
-containsPayload-Description & Domain: & MessageSpecification & & \ \ 204\\
-& Range: &PayloadDescription & &\\
-\hline
-guardedBy & Domain: &State, Action & & \ \ 205\\
-& Range: &GuardBehavior & &\\
-\hline
-guardsBehavior &Domain: &GuardBehavior & Links a GuardBehavior to another SubjectBehavior. Automatically all individual states in the guarded behavior are guarded by the guard behavior. There is an SWRL Rule in the ontology for that purpose.& \ \ 206 \\
-& Range: &SubjectBehavior &  &\\
-\hline
-guardsState & Domain: &State, Action & &\ \ 207\\
-& Range: &guardedBy & & \\
-\hline
-hasAdditionalAttribute & Domain: &PASSProcessModelElement& &\ \ 208\\
-& Range: &AdditionalAttribute&  &\\
-\hline
-hasCorrespondent & Domain: & &Generic super class for the ObjectProperties that link a Subject with a MessageExchange either in the role of Sender or Receiver. & \ \ 209\\
-& Range: &Subject & &\\
-\hline
-hasDataDefinition &Domain: &  & &\ \ 210\\
-& Range: &DataObjectDefinition & &\\
-\hline
-\pagebreak
-hasDataMapping-Function &Domain: &state, SendTransition, ReceiveTransition & &\ \ 211\\
-& Range: &DataMappingFunction & & \\
-\hline 
-hasDataType & Domain: &PayloadDescription or DataObjectDefinition & &\ \ 212\\
-& Range: &DataTypeDefinition &  &\\
-\hline
-hasEndState & Domain: &SubjectBehavior or ChoiceSegmentPath & &\ \ 213\\
-& Range: &State, not SendState &  &\\
-\hline
-hasFunction-Specification & Domain: &State& &\ \ 214\\
-& Range: &FunctionSpecification&  &\\
-\hline
-hasHandlingStrategy &Domain: &InputPoolConstraint & &\ \ 215\\
-& Range: &InputPoolContstraint-HandlingStrategy &  &\\
-\hline
-hasIncomingMessage-Exchange & Domain: &Subject& &\ \ 216\\
-& Range: &MessageExchange &  &\\
-\hline
-hasIncomingTransition &Domain: &State & &\ \ 217\\
-& Range: &Transition &  &\\
-\hline
-hasInitialState & Domain: &SubjectBehavior or ChoiceSegmentPath & &\ \ 218\\
-& Range: &State &  &\\
-\hline
-\pagebreak
-hasInputPoolConstraint &Domain: &Subject & &\ \ 219\\
-& Range: &InputPoolConstraint &  &\\
-\hline
-hasKeyValuePair &Domain: & & &\ \ 220\\
-& Range: & &  &\\
-\hline
-hasMessageExchange & Domain: &Subject & Generic super class for the ObjectProperties linking a subject with either incoming or outgoing MessageExchanges.&\ \ 221\\
-& Range: & &  &\\
-\hline
-hasMessageType & Domain: &MessageTypeConstraint or  MessageSenderTypeConstraint or  MessageExchange & &\ \ 222\\
-& Range: &MessageSpecification &  &\\
-\hline
-hasOutgoingMessage-Exchange & Domain: &Subject& &\ \ 223\\
-& Range: &MessageExchange&  &\\
-\hline
-hasOutgoingTransition &Domain: &State & &\ \ 224\\
-& Range: &Transition&  &\\
-\hline
-hasReceiver &Domain: &MessageExchange & &\ \ 225\\
-& Range: &Subject & &\\
-\hline
-hasRelationToModel-Component & Domain: &PASSProcessModelElement&Generic super class of all object properties in the standard-pass-ont that are used to link model elements with one-another. &\ \ 226\\
-& Range: &PASSProcessModelElement & & \\
-\hline
-hasSender &Domain: &MessageExchange && \ \ 227\\
-& Range: &Subject & &\\
-\hline
-hasSourceState & Domain: &Transition& &\ \ 228\\
-& Range: &State&  &\\
-\hline
-hasStartSubject & Domain: &PASSProcessModel& &\ \ 229\\
-& Range: &StartSubject& & \\
-\hline
-hasTargetState & Domain &Transition& &\ \ 230\\
-& Range &State& & \\
-\hline
-hasTransitionCondition &Domain &Transition & &\ \ 231\\
-& Range &TransitionCondition & & \\
-\hline
-isBaseBehaviorOf &Domain: &SubjectBaseBehavior & A specialized version of the "belongsTo" ObjectProperty to denote that a -SubjectBehavior belongs to a Subject as its BaseBehavior&\ \ 232\\
-& Range: &&  &\\
-\hline
-isEndStateOf & Domain: &State and not SendState & &\ \ 233\\
-& Range: &SubjectBehavior or ChoiceSegmentPath &  &\\
-\hline
-isInitialStateOf & Domain: &State& &\ \ 234\\
-& Range: &SubjectBehavior or ChoiceSegmentPath &  &\\
-\hline
-isReferencedBy & Domain: & & &\ \ 235\\
-& Range: &&  &\\
-\hline
-references & Domain: & & &\ \ 236\\
-& Range: & &  &\\
-\hline
-referencesMacroBehavior &Domain: &MacroState & &\ \ 237\\
-& Range: &MacroBehavior & & \\
-\hline
-refersTo & Domain: &CommunicationTransition&Communication transitions (send and receive) should refer to a message exchange that is defined on the interaction layer of a model. & \ \ 238\\
-& Range: &MessageExchange& & \\
-\hline
-requiresActiveReception-OfMessage &Domain: &ReceiveTransitionCondition & &\ \ 239\\
-& Range: &MessageSpecification &  &\\
-\hline
-requiresPerformed-MessageExchange & Domain: &MessageExchangeCondition& &\ \ 240\\
-& Range: &MessageExchange &  &\\
-\hline
-SimplePASSObject-Propertie & Domain: & &Every element/sub-class of SimplePASSObjectProperties is also a Child of PASSModelObjectPropertiy. This is simply a surrogate class to group all simple elements together &\ \ 241\\
-& Range: & &  &\\
-\hline
-\end{longtable}
-\end {landscape}
-
-
+\section{ASM Description}
+In this chapter only the structure of a PASS model is considered. Execution has not been considered. Because ASM only considers execution aspects in this chapter an ASM specification of the structural aspects does not make sense. The execution semantic is part of chapter 4.

@@ -1,22 +1,34 @@
 \contentsline {chapter}{\numberline {1}Background}{1}
-\contentsline {chapter}{\numberline {2}Classes and Property of the PASS Ontology}{3}
-\contentsline {section}{\numberline {2.1}All Classes (95)}{3}
-\contentsline {section}{\numberline {2.2}Data Properties (27)}{19}
-\contentsline {section}{\numberline {2.3}Object Properties (42)}{28}
-\contentsline {chapter}{\numberline {3}Structure of a PASS Description}{37}
-\contentsline {section}{\numberline {3.1}Informal Description}{37}
-\contentsline {subsection}{\numberline {3.1.1}Subject}{37}
-\contentsline {subsubsection}{Fully specified Subjects}{38}
-\contentsline {subsubsection}{Multsubjects and Multiprocesses}{39}
-\contentsline {subsubsection}{Single subjects}{39}
-\contentsline {subsubsection}{Interface Subjects}{39}
-\contentsline {subsection}{\numberline {3.1.2}Subject-to-Subject Communication}{39}
-\contentsline {subsection}{\numberline {3.1.3}Message Exchange}{41}
-\contentsline {subsubsection}{Synchronous and Asynchronous Exchange of Messages}{41}
-\contentsline {subsubsection}{Exchange of Messages via the Input Pool}{42}
-\contentsline {section}{\numberline {3.2}OWL Description}{44}
-\contentsline {subsection}{\numberline {3.2.1}Process Model}{44}
-\contentsline {subsection}{\numberline {3.2.2}Subjects}{44}
-\contentsline {subsection}{\numberline {3.2.3}Messages}{47}
-\contentsline {subsection}{\numberline {3.2.4}Input Pools}{49}
-\contentsline {section}{\numberline {3.3}ASM Description}{49}
+\contentsline {section}{\numberline {1.1}Subject Orientation and PASS }{1}
+\contentsline {subsection}{\numberline {1.1.1}Subject-driven Business Processes}{2}
+\contentsline {subsection}{\numberline {1.1.2}Subject Interaction and Behavior}{3}
+\contentsline {subsection}{\numberline {1.1.3}Subjects and Objects}{6}
+\contentsline {section}{\numberline {1.2}Introduction to Ontologies and OWL }{7}
+\contentsline {section}{\numberline {1.3}Introduction to Abstract State Machines }{9}
+\contentsline {chapter}{\numberline {2}Structure of a PASS Description}{11}
+\contentsline {section}{\numberline {2.1}Informal Description}{11}
+\contentsline {subsection}{\numberline {2.1.1}Subject}{11}
+\contentsline {subsubsection}{Fully specified Subjects}{12}
+\contentsline {subsubsection}{Multsubjects and Multiprocesses}{13}
+\contentsline {subsubsection}{Single subjects}{13}
+\contentsline {subsubsection}{Interface Subjects}{13}
+\contentsline {subsection}{\numberline {2.1.2}Subject-to-Subject Communication}{13}
+\contentsline {subsection}{\numberline {2.1.3}Message Exchange}{15}
+\contentsline {subsubsection}{Synchronous and Asynchronous Exchange of Messages}{15}
+\contentsline {subsubsection}{Exchange of Messages via the Input Pool}{16}
+\contentsline {section}{\numberline {2.2}OWL Description}{18}
+\contentsline {subsection}{\numberline {2.2.1}PASS Process Model}{18}
+\contentsline {subsection}{\numberline {2.2.2}Data Describing Component}{20}
+\contentsline {subsection}{\numberline {2.2.3}Interaction Describing Component}{21}
+\contentsline {section}{\numberline {2.3}ASM Description}{22}
+\contentsline {chapter}{\numberline {3}Execution of a PASS Model}{23}
+\contentsline {section}{\numberline {3.1}Informal Description of Subject Behavior and its Execution}{23}
+\contentsline {subsection}{\numberline {3.1.1}Sending Messages}{23}
+\contentsline {subsection}{\numberline {3.1.2}Receiving Messages}{24}
+\contentsline {subsection}{\numberline {3.1.3}Subject Behavior}{28}
+\contentsline {section}{\numberline {3.2}Ontology of Subject Behavior Description}{30}
+\contentsline {section}{\numberline {3.3}ASM Definition of Subject Execution}{32}
+\contentsline {chapter}{\numberline {A}Classes and Property of the PASS Ontology}{33}
+\contentsline {section}{\numberline {A.1}All Classes (95)}{33}
+\contentsline {section}{\numberline {A.2}Data Properties (27)}{50}
+\contentsline {section}{\numberline {A.3}Object Properties (42)}{59}

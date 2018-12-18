@@ -15,3 +15,100 @@ Structure of each chapter docuement
 	\item ASM Sematic
 \end{itemize}
 
+
+
+In order to facilitate the understanding of the following sections we will introduce the philosophy of subjectorienting modelling which is the underlying PASS concept (PASS = Parallel Activity Specification Scheme). Additional we will give a short introduction to ontologies especially OWL (Web Ontology Language) and ASM (Abstract State Machines).
+
+
+
+\section{Subject Orientation and PASS }
+
+In this section we lay ground for PASS as a language for describing proceses in a subjectoriented way. This section is not a complete description of all PASS features it only gives a first impression about subject orientation and the specification language PASS. The advanced features are defined in the ubpcoming chapters.
+
+\subsection{Subject-driven Business Processes}
+Subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. This is different to other encapsulation approaches, such as multi-agent systems.\\ 
+
+Subjects communicate with each other by exchanging messages. Messages have a name and a payload. The name should express the meaning of a message informally and the payloads are the data (business objects) transported. Internally, subjects execute local activities such as calculating a price, storing an address etc.
+A subject sends messages to other subjects, expects messages from other subjects, and executes internal actions. All these activities are done in sequences which are defined in a subject's behavior specification.
+Subject-oriented process specifications are embedded in a context. A context is defined by the business organization and the technology by which a business process is executed.
+Subject-oriented system development integrates established theories and concepts. It has been inspired by various process algebras (see e.g. [2], [3], [4]), by the basic structure of nearly all natural languages (Subject, Predicate, Object) and the systemic sociology developed by Niklas Luhmann (an introduction can be found in [5]). According to the organizational theory developed by Luhmann the smallest organization consists of communication executed between at least two information processing entities [5]. The integrated concepts have been enhanced and adapted to organizational stakeholder requirements, such as providing a simple graphical notation, as detailed in the following sections.
+\newpage
+
+\subsection{Subject Interaction and Behavior}
+We introduce the basic concepts of process modeling in S-BPM using a simple order process. A customer sends an order to the order handling department of a supplier. He is going to receive an order confirmation and the ordered product by the shipment company. Figure \ref{fig:ordercomstructure} shows the communication structure of that process. The involved subjects and the messages they exchange can easily be grasped. 
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure}
+	\caption[The Communication Structure in the Order Process]{The Communication Structure in the Order Process}
+	\label{fig:ordercomstructure}
+\end{figure}
+
+Each subject has a so-called input pool which is its mail box for receiving messages. This input pool can be structured according to the business requirements at hand. The modeler can define how many messages of which type and/or from which sender can be deposited and what the reaction is if these restrictions are violated. This means the synchronization through message exchange can be specified for each subject individually.
+Messages have an intuitive meaning expressed by their name. A formal semantic is given by their use and the data which are transported with a message. Figure \ref{fig:ordercustomerorderhandling} depicts the behavior of the subjects "customer" and "order handling".\\
+\newpage
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerOrderHandling}
+	\caption[The Behavior of Subjects]{The Behavior of Subjects}
+	\label{fig:ordercustomerorderhandling}
+\end{figure}
+
+In the first state of its behavior the subject "customer" executes the internal function "Prepare order". When this function is finished the transition "order prepared" follows. In the succeeding state "send order" the message "order" is sent to the subject "order handling". After this message is sent (deposited in the input pool of subject "order handling"), the subject "Customer" goes into the state "wait for confirmation". If this message is not in the input pool the subject stops its execution, until the corresponding message arrives in the input pool. On arrival the subject removes the message from the input pool and follows the transition into state "Wait for product" and so on.
+
+The subject "Order Handling" waits for the message "order" from the subject "customer". If this message is in the input pool it is removed and the succeeding function "check order" is executed and so on.
+
+The behavior of each subject describes in which order it sends messages, expects (receives) and performs internal functions. Messages transport data from the sending to the receiving subject, and internal functions operate on internal data of a subject. These data aspects of a subject are described in section \ref{SUbjects-Objects} In a dynamic and fast changing world, processes need to  be able to capture known but unpredictable events. In our example let us assume that a customer can change an order. This means the subject "customer" may send the message "Change order" at any time. Figure \ref{fig:ordercomstructure} shows the corresponding communication structure, which now contains the message "change order".
+\newpage
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure}
+	\caption[The Communication Structure with Change Message]{The Communication Structure with Change Message}
+	\label{fig:ordercomstructure}
+\end{figure}
+
+Due to this unpredictable event the behavior of the involved subjects needs also to be adapted. Figure \ref{fig:ordercustomerchange} illustrates the respective behavior of the customer. 
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerChange}
+	\caption[Customer is allowed to Change Orders]{Customer is allowed to Change Orders}
+	\label{fig:ordercustomerchange}
+\end{figure}
+
+
+The subject "customer" may have the idea to change its order in the state "wait for confirmation" or in the state "wait for product". The flags in these states indicate that there is a so-called behavior extension described by a so-called nondeterministic event guard [12, 22]. The non-deterministic event created in the subject is the idea "change order". If this idea comes up, the current states, either "wait for confirmation" or "wait for product", are left, and the subject "customer" jumps into state "change order" in the guard behavior. In this state the message "change order" is sent and the subject waits in state "wait for reaction". In this state the answer can either be "order change accepted" or "order change rejected". Independently of the received message the subject "customer" moves to the state "wait for product". The message "order change accepted" is considered as confirmation, if a confirmation has not arrived yet (state "wait for confirmation"). If the change is rejected the customer has to wait for the product(s) he/she has ordered originally.
+Similar to the behavior of the subject "customer" the behavior of the subject "order handling" has to be adapted.
+
+
+\subsection{Subjects and Objects}
+\label{SUbjects-Objects}
+Up to now we did not mention data or the objects with their predicates, in order to get complete sentences comprising subject, predicate, and object. Figure \ref{fig:subjectobject} displays how subjects and objects are connected. The internal function "prepare order" uses internal data to prepare the data for the order message. This order data is sent as payload of the message "order".
+
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SUbjectObject}
+	\caption[Subjects and Objects]{Subjects and Objects}
+	\label{fig:subjectobject}
+\end{figure}
+
+The internal functions in a subject can be realized as methods of an object or functions implemented in a service, if a service-oriented architecture is available. These objects have an additional method for each message. If a message is sent, the method allows receiving data values sent with the message, and if a message is received the corresponding method is used to store the received data in the object [22]. This means either subjects are the entities which use synchronous services as implementation of functions or asynchronous services are implemented through subjects or even through complex processes consisting of several subjects. Consequently, , the concept Service Oriented Architecture (SOA) is complementary to S-BPM: Subjects are the entities which use the services offered by SOAs (cf. [25]).
+
+
+
+\section{Introduction to Ontologies and OWL }
+
+
+\begin{landscape}
+
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-SubjectBehavior}
+	\caption[Subject Behavior]{Subject Behavior}
+	\label{fig:20181218-subjectbehavior}
+\end{figure}
+\end{landscape}
+
+\section{Introduction to Abstract State Machines }

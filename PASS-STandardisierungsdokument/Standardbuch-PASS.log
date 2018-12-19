@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.13)  18 DEC 2018 16:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.13)  19 DEC 2018 11:42
 entering extended mode
 **./Standardbuch-PASS.tex
 (Standardbuch-PASS.tex
@@ -456,29 +456,35 @@ Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \TX@cols=\count99
 \TX@ftn=\toks20
 ))
-(Standardbuch-PASS.aux (TeX_files/chapter01.aux
+("C:\Program Files\MiKTeX 2.9\tex\latex\comment\comment.sty"
+\CommentStream=\write3
+
+Excluding comment 'comment') (Standardbuch-PASS.aux (TeX_files/chapter01.aux
 
 LaTeX Warning: Label `fig:ordercomstructure' multiply defined.
 
 ) (TeX_files/chapter02.aux) (TeX_files/chapter03.aux
+
+LaTeX Warning: Label `fig:extension' multiply defined.
+
 
 LaTeX Warning: Label `fig:20181218-subjectbehavior' multiply defined.
 
 ) (TeX_files/appendix.aux))
 \openout1 = `Standardbuch-PASS.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
 
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -539,30 +545,33 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 26.
+(Font)              <14.4> on input line 27.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 26.
- [1
+(Font)              <7> on input line 27.
+
+Overfull \hbox (16.4617pt too wide) in paragraph at lines 27--27
+ [][] 
+ []
+
+[1
 
 
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2
 
-] (Standardbuch-PASS.toc
+]
+(Standardbuch-PASS.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 2.
-)
-\tf@toc=\write3
-\openout3 = `Standardbuch-PASS.toc'.
+ [3])
+\tf@toc=\write4
+\openout4 = `Standardbuch-PASS.toc'.
 
-
-[3] [4
-
-]
+ [4]
 \openout2 = `./TeX_files/chapter01.aux'.
 
  (TeX_files/chapter01.tex
@@ -579,6 +588,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 29--30
  []
 
 [1
+
 
 
 ] [2]
@@ -867,18 +877,138 @@ ON \OT1/cmr/m/n/12 29
 [29
 
  <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Vollst-Beispi
-el.jpg>] [30
+el.jpg>]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroBehavior.jp
+g, id=129, 132.495pt x 452.4403pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroBehavi
+or.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroBehavio
+r.jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/MacroBehavior.jpg used on input line 114.
+(pdftex.def)             Requested size: 77.99881pt x 266.35066pt.
+ [30
 
 ]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroUsage.jpg, 
+id=133, 580.41844pt x 478.03593pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroUsage.
+jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroUsage.j
+pg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/MacroUsage.jpg used on input line 129.
+(pdftex.def)             Requested size: 234.00238pt x 192.72818pt.
+
+Overfull \hbox (67.84975pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 3.1.  INFORMAL DESCRIPTION OF SUBJECT BEHAVIOR AND ITS EXECUTI
+ON \OT1/cmr/m/n/12 31
+ []
+
+[31] [32 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Macro
+Behavior.jpg> <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/
+MacroUsage.jpg>]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Exception.jp
+g, id=140, 680.5425pt x 108.405pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Excepti
+on.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Exceptio
+n.jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/SID-Exception.jpg used on input line 151.
+(pdftex.def)             Requested size: 272.99881pt x 43.48694pt.
+
+Overfull \hbox (67.84975pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 3.1.  INFORMAL DESCRIPTION OF SUBJECT BEHAVIOR AND ITS EXECUTI
+ON \OT1/cmr/m/n/12 33
+ []
+
+[33 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Except
+ion.jpg>]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ExceptionHandlin
+g.jpg, id=145, 662.475pt x 590.95781pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ExceptionHa
+ndling.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ExceptionHan
+dling.jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/ExceptionHandling.jpg used on input line 162.
+(pdftex.def)             Requested size: 272.99881pt x 243.52061pt.
+ [34 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Exception
+Handling.jpg>]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.jpg, i
+d=149, 662.475pt x 433.62pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.j
+pg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.jp
+g>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/Extension.jpg used on input line 176.
+(pdftex.def)             Requested size: 272.99881pt x 178.6852pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--189
+
+ []
+
+
+Overfull \hbox (67.84975pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 3.1.  INFORMAL DESCRIPTION OF SUBJECT BEHAVIOR AND ITS EXECUTI
+ON \OT1/cmr/m/n/12 35
+ []
+
+[35 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.
+jpg>] [36]
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.j
+pg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.jp
+g>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/Extension.jpg used on input line 201.
+(pdftex.def)             Requested size: 272.99881pt x 178.6852pt.
+
+Overfull \hbox (67.84975pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 3.1.  INFORMAL DESCRIPTION OF SUBJECT BEHAVIOR AND ITS EXECUTI
+ON \OT1/cmr/m/n/12 37
+ []
+
+[37]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternative.jpg,
+ id=159, 573.64313pt x 620.3175pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternative
+.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternative.
+jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/ALternative.jpg used on input line 226.
+(pdftex.def)             Requested size: 272.99881pt x 295.21233pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[38]
+Overfull \hbox (67.84975pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 3.1.  INFORMAL DESCRIPTION OF SUBJECT BEHAVIOR AND ITS EXECUTI
+ON \OT1/cmr/m/n/12 39
+ []
+
+[39 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternativ
+e.jpg>] [40]
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-Su
 bjectBehavior.png Graphic file (type png)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-Sub
 jectBehavior.png>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/20181218-SubjectBehavior.png used on input line 102.
+ecution/20181218-SubjectBehavior.png used on input line 251.
 (pdftex.def)             Requested size: 592.0pt x 303.75882pt.
- [31]) [32
+ [41]) [42
 
 
 ]
@@ -886,7 +1016,7 @@ ecution/20181218-SubjectBehavior.png used on input line 102.
 
  (TeX_files/appendix.tex
 Appendix A.
-[33
+[43
 
 
 
@@ -907,38 +1037,38 @@ Overfull \hbox (4.72173pt too wide) in paragraph at lines 29--32
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 34 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 44 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[34]
+[44]
 Overfull \hbox (1.03508pt too wide) in paragraph at lines 46--48
 \OT1/cmr/m/it/12 the Choic-e-Seg-ment-Path.The path may con-tain any amount
  []
 
-[35]
+[45]
 Overfull \hbox (15.94621pt too wide) in paragraph at lines 51--52
 \OT1/cmr/m/it/12 ChoiceSegmentPath and (isOp-tion-al-ToEnd-Choic-e-Seg-ment-
  []
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 36 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 46 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[36] [37]
+[46] [47]
 Overfull \hbox (3.42363pt too wide) in paragraph at lines 86--87
 \OT1/cmr/m/it/12 or months. The ex-act def-i-ni-tions for years and months
  []
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 38 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 48 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[38] [39]
+[48] [49]
 Overfull \hbox (8.36134pt too wide) in paragraph at lines 117--119
 \OT1/cmr/m/it/12 vid-ual $\OML/cmm/m/it/12 DataObjectDefinition$ \OT1/cmr/m/it/
 12 in form of a $\OML/cmm/m/it/12 SubjectDataDefinition$
@@ -952,17 +1082,17 @@ Overfull \hbox (12.98004pt too wide) in paragraph at lines 117--119
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 40 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 50 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[40]
+[50]
 Overfull \hbox (5.79068pt too wide) in paragraph at lines 131--132
 \OT1/cmr/m/it/12 tech-nol-ogy for de-scrib-ing struc-ture of Data Ob-jects (XML
 
  []
 
-[41]
+[51]
 Overfull \hbox (56.79556pt too wide) in paragraph at lines 143--149
 \OT1/cmr/m/it/12 Should a con-straint be ap-pli-ca-ble, an "In-put-Pool-Con-str
 aintHandlingStrat-
@@ -976,23 +1106,23 @@ Overfull \hbox (13.94412pt too wide) in paragraph at lines 143--149
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 42 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 52 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[42] [43]
+[52] [53]
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 44 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 54 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[44]
+[54]
 Overfull \hbox (16.27095pt too wide) in paragraph at lines 211--212
 \OT1/cmr/m/it/12 A Tran-si-tion-Con-di-tion for the ac-cord-ing DoTran-si-tions
  and DoStates. 
  []
 
-[45]
+[55]
 Overfull \hbox (9.43867pt too wide) in paragraph at lines 220--223
 \OT1/cmr/m/it/12 DefaultFunctionReceive1[]EnvoironmentChoice : present the
  []
@@ -1005,23 +1135,23 @@ choices/conditions
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 46 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 56 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[46] [47]
+[56] [57]
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 48 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 58 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[48] [49]
+[58] [59]
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 50 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 60 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[50]
+[60]
 Overfull \hbox (2.64723pt too wide) in paragraph at lines 289--290
 []|\OT1/cmr/m/n/12 Reference| 
  []
@@ -1355,7 +1485,7 @@ Underfull \hbox (badness 2173) in paragraph at lines 366--366
 \OT1/cmr/m/n/12 can eas-ily be rec-og-
  []
 
-[51
+[61
 
 ]
 Overfull \hbox (0.67015pt too wide) in paragraph at lines 369--369
@@ -1439,29 +1569,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 388--388
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 52 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 62 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[52] [53]
+[62] [63]
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 54 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 64 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[54] [55]
+[64] [65]
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 56 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 66 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[56] [57]
+[66] [67]
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 58 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 68 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[58] [59
+[68] [69
 
 ]
 Overfull \hbox (2.64723pt too wide) in paragraph at lines 400--401
@@ -1654,11 +1784,11 @@ Overfull \hbox (0.67015pt too wide) in paragraph at lines 463--463
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 60 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 70 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[60
+[70
 
 ]
 Overfull \hbox (0.67015pt too wide) in paragraph at lines 466--466
@@ -1745,13 +1875,13 @@ Overfull \hbox (0.67015pt too wide) in paragraph at lines 493--493
 []|\OT1/cmr/m/n/12 Domain:| 
  []
 
-[61]
+[71]
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 62 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 72 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[62]
+[72]
 Overfull \hbox (3.56561pt too wide) in paragraph at lines 499--499
 []|\OT1/cmr/m/n/12 hasTransitionCondition| 
  []
@@ -1831,7 +1961,7 @@ Overfull \hbox (1.80385pt too wide) in paragraph at lines 523--523
 []|\OT1/cmr/m/n/12 ReceiveTransitionCondition| 
  []
 
-[63]
+[73]
 Underfull \hbox (badness 10000) in paragraph at lines 526--526
 []|\OT1/cmr/m/n/12 requiresPerformed-
  []
@@ -1883,30 +2013,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 529--529
 
 
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 64 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 74 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[64] [65]
+[74] [75]
 Overfull \hbox (7.19658pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 66 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
+\OT1/cmr/m/n/12 76 \OT1/cmr/m/sl/12 APPENDIX A.  CLASSES AND PROPERTY OF THE PA
 SS ONTOLOGY
  []
 
-[66]) (Standardbuch-PASS.aux (TeX_files/chapter01.aux) (TeX_files/chapter02.aux
+[76]) (Standardbuch-PASS.aux (TeX_files/chapter01.aux) (TeX_files/chapter02.aux
 ) (TeX_files/chapter03.aux) (TeX_files/appendix.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3029 strings out of 493333
- 46204 string characters out of 3139172
- 141007 words of memory out of 3000000
- 6468 multiletter control sequences out of 15000+200000
+ 3104 strings out of 493333
+ 49034 string characters out of 3139172
+ 141967 words of memory out of 3000000
+ 6533 multiletter control sequences out of 15000+200000
  10113 words of font info for 35 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,6n,35p,1458b,750s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 40i,7n,35p,1458b,748s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTe
@@ -1914,9 +2044,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 /public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmti12.pfb>
-Output written on Standardbuch-PASS.pdf (70 pages, 1696539 bytes).
+Output written on Standardbuch-PASS.pdf (80 pages, 1963304 bytes).
 PDF statistics:
- 273 PDF objects out of 1000 (max. 8388607)
+ 312 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
 

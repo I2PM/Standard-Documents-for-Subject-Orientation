@@ -25,10 +25,17 @@
 \contentsline {section}{\numberline {3.1}Informal Description of Subject Behavior and its Execution}{23}
 \contentsline {subsection}{\numberline {3.1.1}Sending Messages}{23}
 \contentsline {subsection}{\numberline {3.1.2}Receiving Messages}{24}
-\contentsline {subsection}{\numberline {3.1.3}Subject Behavior}{28}
-\contentsline {section}{\numberline {3.2}Ontology of Subject Behavior Description}{30}
-\contentsline {section}{\numberline {3.3}ASM Definition of Subject Execution}{32}
-\contentsline {chapter}{\numberline {A}Classes and Property of the PASS Ontology}{33}
-\contentsline {section}{\numberline {A.1}All Classes (95)}{33}
-\contentsline {section}{\numberline {A.2}Data Properties (27)}{50}
-\contentsline {section}{\numberline {A.3}Object Properties (42)}{59}
+\contentsline {subsection}{\numberline {3.1.3}Standard Subject Behavior}{28}
+\contentsline {subsection}{\numberline {3.1.4}Extended Behavior}{30}
+\contentsline {subsubsection}{Macros}{30}
+\contentsline {subsubsection}{Guards: Exception Handling and Extensions}{33}
+\contentsline {subsubsection}{Alternative Actions (Freedom of Choice)}{37}
+\contentsline {section}{\numberline {3.2}Ontology of Subject Behavior Description}{40}
+\contentsline {subsection}{\numberline {3.2.1}Subject Base Behavior}{40}
+\contentsline {subsection}{\numberline {3.2.2}Macro Behavior}{42}
+\contentsline {subsection}{\numberline {3.2.3}Guard Behavior}{42}
+\contentsline {section}{\numberline {3.3}ASM Definition of Subject Execution}{42}
+\contentsline {chapter}{\numberline {A}Classes and Property of the PASS Ontology}{43}
+\contentsline {section}{\numberline {A.1}All Classes (95)}{43}
+\contentsline {section}{\numberline {A.2}Data Properties (27)}{60}
+\contentsline {section}{\numberline {A.3}Object Properties (42)}{69}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.13)  19 DEC 2018 11:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.13)  21 DEC 2018 11:17
 entering extended mode
 **./Standardbuch-PASS.tex
 (Standardbuch-PASS.tex
@@ -467,9 +467,6 @@ LaTeX Warning: Label `fig:ordercomstructure' multiply defined.
 
 LaTeX Warning: Label `fig:extension' multiply defined.
 
-
-LaTeX Warning: Label `fig:20181218-subjectbehavior' multiply defined.
-
 ) (TeX_files/appendix.aux))
 \openout1 = `Standardbuch-PASS.aux'.
 
@@ -582,16 +579,16 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 5.
+ [1
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--30
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 32--33
 
  []
 
-[1
-
-
-
-] [2]
+[2]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructur
 e.jpg, id=25, 594.72188pt x 164.11313pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStr
@@ -600,10 +597,10 @@ ucture.jpg Graphic file (type jpg)
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStru
 cture.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/OrderComStructure.jpg used on input line 42.
+ecution/OrderComStructure.jpg used on input line 45.
 (pdftex.def)             Requested size: 272.99881pt x 75.33267pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 47--49
+Underfull \hbox (badness 10000) in paragraph at lines 50--52
 
  []
 
@@ -617,7 +614,7 @@ erOrderHandling.jpg Graphic file (type jpg)
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustome
 rOrderHandling.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/OrderCustomerOrderHandling.jpg used on input line 52.
+ecution/OrderCustomerOrderHandling.jpg used on input line 55.
 (pdftex.def)             Requested size: 272.99881pt x 169.98459pt.
  [4 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCusto
 merOrderHandling.jpg>]
@@ -627,7 +624,7 @@ ucture.jpg Graphic file (type jpg)
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStru
 cture.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/OrderComStructure.jpg used on input line 65.
+ecution/OrderComStructure.jpg used on input line 68.
 (pdftex.def)             Requested size: 272.99881pt x 75.33267pt.
 
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerCha
@@ -638,7 +635,7 @@ erChange.jpg Graphic file (type jpg)
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustome
 rChange.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/OrderCustomerChange.jpg used on input line 74.
+ecution/OrderCustomerChange.jpg used on input line 77.
 (pdftex.def)             Requested size: 272.99881pt x 184.16562pt.
  [5 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCusto
 merChange.jpg>]
@@ -650,25 +647,27 @@ ct.jpg Graphic file (type jpg)
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SUbjectObjec
 t.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/SUbjectObject.jpg used on input line 91.
+ecution/SUbjectObject.jpg used on input line 94.
 (pdftex.def)             Requested size: 272.99881pt x 207.32054pt.
- [6 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SUbjectObj
-ect.jpg>] [7]
-<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-Subject
-Behavior.png, id=45, 1351.29843pt x 693.34032pt>
-File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-Su
-bjectBehavior.png Graphic file (type png)
 
-<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-Sub
-jectBehavior.png>
-Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/20181218-SubjectBehavior.png used on input line 108.
-(pdftex.def)             Requested size: 592.0pt x 303.75882pt.
- [8 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-S
-ubjectBehavior.png>]) [9
+Underfull \hbox (badness 10000) in paragraph at lines 106--109
 
+ []
 
-]
+[6 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SUbjectObje
+ct.jpg>]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Properties.j
+pg, id=42, 599.23875pt x 136.25906pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Propert
+ies.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Properti
+es.jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduct
+ion/Classes-Properties.jpg used on input line 115.
+(pdftex.def)             Requested size: 272.99881pt x 62.07697pt.
+ [7 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Proper
+ties.jpg>] [8]) [9]
 \openout2 = `./TeX_files/chapter02.aux'.
 
  (TeX_files/chapter02.tex [10
@@ -679,17 +678,17 @@ ubjectBehavior.png>]) [9
 Chapter 2.
 [11] [12] [13]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel-Subj
-ect-Interaction.png, id=65, 697.8572pt x 198.7425pt>
+ect-Interaction.png, id=66, 697.8572pt x 198.7425pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel
 -Subject-Interaction.png Graphic file (type png)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel-
 Subject-Interaction.png>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
-nteraction/Beispiel-Subject-Interaction.png used on input line 64.
+nteraction/Beispiel-Subject-Interaction.png used on input line 65.
 (pdftex.def)             Requested size: 398.33858pt x 113.44208pt.
 
-Overfull \hbox (8.33858pt too wide) in paragraph at lines 64--65
+Overfull \hbox (8.33858pt too wide) in paragraph at lines 65--66
  [][] 
  []
 
@@ -700,40 +699,40 @@ Underfull \vbox (badness 3547) has occurred while \output is active []
  [15]
 [16]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-pool-in
-formal.jpg, id=76, 694.84593pt x 196.48407pt>
+formal.jpg, id=77, 694.84593pt x 196.48407pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-po
 ol-informal.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-poo
 l-informal.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
-nteraction/input-pool-informal.jpg used on input line 108.
+nteraction/input-pool-informal.jpg used on input line 109.
 (pdftex.def)             Requested size: 341.43306pt x 96.54785pt.
  [17 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-
 pool-informal.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20171217-PASS
-ProcessModellElement.jpg, id=80, 909.3975pt x 299.61937pt>
+ProcessModellElement.jpg, id=81, 909.3975pt x 299.61937pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20171217
 -PASSProcessModellElement.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20171217-
 PASSProcessModellElement.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
-nteraction/20171217-PASSProcessModellElement.jpg used on input line 129.
+nteraction/20171217-PASSProcessModellElement.jpg used on input line 130.
 (pdftex.def)             Requested size: 350.99762pt x 115.64412pt.
 
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181217-PASS
-ProcessModel.jpg, id=81, 700.11563pt x 540.51938pt>
+ProcessModel.jpg, id=82, 700.11563pt x 540.51938pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181217
 -PASSProcessModel.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181217-
 PASSProcessModel.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
-nteraction/20181217-PASSProcessModel.jpg used on input line 143.
+nteraction/20181217-PASSProcessModel.jpg used on input line 144.
 (pdftex.def)             Requested size: 390.0pt x 301.10524pt.
 
-Overfull \hbox (0.51497pt too wide) in paragraph at lines 148--149
+Overfull \hbox (0.51497pt too wide) in paragraph at lines 149--150
 []\OT1/cmr/m/n/12 PASSProcessModelElements and PASSPro-cess-Mod-ells have a nam
 e. This
  []
@@ -742,26 +741,26 @@ e. This
 7-PASSProcessModellElement.jpg>] [19 <./20181026-Ontologie-Bilder/Grafiken-Onto
 logie/SUbject-Interaction/20181217-PASSProcessModel.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181218-Data
-.jpg, id=88, 1035.87pt x 500.62032pt>
+.jpg, id=89, 1035.87pt x 500.62032pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181218
 -Data.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181218-
 Data.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
-nteraction/20181218-Data.jpg used on input line 156.
+nteraction/20181218-Data.jpg used on input line 157.
 (pdftex.def)             Requested size: 350.99762pt x 169.6281pt.
  [20 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/201812
 18-Data.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSubject
-Interaction.jpg, id=92, 1202.24156pt x 587.19376pt>
+Interaction.jpg, id=93, 1202.24156pt x 587.19376pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSu
 bjectInteraction.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSub
 jectInteraction.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-I
-nteraction/OntoGrSubjectInteraction.jpg used on input line 173.
+nteraction/OntoGrSubjectInteraction.jpg used on input line 174.
 (pdftex.def)             Requested size: 390.0pt x 190.47731pt.
  [21 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGr
 SubjectInteraction.jpg>]) [22]
@@ -775,49 +774,49 @@ Chapter 3.
 
 ]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/sendState.jpg, i
-d=103, 478.78876pt x 225.09094pt>
+d=104, 478.78876pt x 225.09094pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/sendState.j
 pg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/sendState.jp
 g>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/sendState.jpg used on input line 13.
+ecution/sendState.jpg used on input line 14.
 (pdftex.def)             Requested size: 272.99881pt x 128.34438pt.
 
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SendSTateTimer.j
-pg, id=104, 685.05937pt x 226.59656pt>
+pg, id=105, 685.05937pt x 226.59656pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SendSTateTi
 mer.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SendSTateTim
 er.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/SendSTateTimer.jpg used on input line 24.
+ecution/SendSTateTimer.jpg used on input line 25.
 (pdftex.def)             Requested size: 272.99881pt x 90.30162pt.
  [24 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/sendState
 .jpg> <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SendSTat
 eTimer.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveState.jpg
-, id=108, 579.66562pt x 274.77657pt>
+, id=109, 579.66562pt x 274.77657pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStat
 e.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveState
 .jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/ReceiveState.jpg used on input line 41.
+ecution/ReceiveState.jpg used on input line 42.
 (pdftex.def)             Requested size: 272.99881pt x 129.40913pt.
 
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStateTime
-r.jpg, id=109, 599.23875pt x 304.13625pt>
+r.jpg, id=110, 599.23875pt x 304.13625pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStat
 eTimer.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveState
 Timer.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/ReceiveStateTimer.jpg used on input line 50.
+ecution/ReceiveStateTimer.jpg used on input line 51.
 (pdftex.def)             Requested size: 272.99881pt x 138.55855pt.
 
 Overfull \hbox (67.84975pt too wide) has occurred while \output is active
@@ -828,14 +827,14 @@ ON \OT1/cmr/m/n/12 25
 [25 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveSta
 te.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStateBrea
-k.jpg, id=113, 618.81187pt x 309.40594pt>
+k.jpg, id=114, 618.81187pt x 309.40594pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStat
 eBreak.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveState
 Break.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/ReceiveStateBreak.jpg used on input line 62.
+ecution/ReceiveStateBreak.jpg used on input line 63.
 (pdftex.def)             Requested size: 272.99881pt x 136.50256pt.
  [26]
 Overfull \hbox (67.84975pt too wide) has occurred while \output is active
@@ -847,26 +846,26 @@ ON \OT1/cmr/m/n/12 27
 teTimer.jpg> <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/R
 eceiveStateBreak.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Behavior-Symbole
-.jpg, id=121, 228.10219pt x 124.96687pt>
+.jpg, id=122, 228.10219pt x 124.96687pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Behavior-Sy
 mbole.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Behavior-Sym
 bole.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/Behavior-Symbole.jpg used on input line 75.
+ecution/Behavior-Symbole.jpg used on input line 76.
 (pdftex.def)             Requested size: 195.0pt x 106.83443pt.
  [28 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Behavior-
 Symbole.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Vollst-Beispiel.
-jpg, id=125, 938.75719pt x 494.59781pt>
+jpg, id=126, 938.75719pt x 494.59781pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Vollst-Beis
 piel.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Vollst-Beisp
 iel.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/Vollst-Beispiel.jpg used on input line 88.
+ecution/Vollst-Beispiel.jpg used on input line 89.
 (pdftex.def)             Requested size: 414.3982pt x 218.32556pt.
 
 Overfull \hbox (67.84975pt too wide) has occurred while \output is active
@@ -879,27 +878,27 @@ ON \OT1/cmr/m/n/12 29
  <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Vollst-Beispi
 el.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroBehavior.jp
-g, id=129, 132.495pt x 452.4403pt>
+g, id=130, 132.495pt x 452.4403pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroBehavi
 or.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroBehavio
 r.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/MacroBehavior.jpg used on input line 114.
+ecution/MacroBehavior.jpg used on input line 115.
 (pdftex.def)             Requested size: 77.99881pt x 266.35066pt.
  [30
 
 ]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroUsage.jpg, 
-id=133, 580.41844pt x 478.03593pt>
+id=134, 580.41844pt x 478.03593pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroUsage.
 jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroUsage.j
 pg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/MacroUsage.jpg used on input line 129.
+ecution/MacroUsage.jpg used on input line 130.
 (pdftex.def)             Requested size: 234.00238pt x 192.72818pt.
 
 Overfull \hbox (67.84975pt too wide) has occurred while \output is active
@@ -911,14 +910,14 @@ ON \OT1/cmr/m/n/12 31
 Behavior.jpg> <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/
 MacroUsage.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Exception.jp
-g, id=140, 680.5425pt x 108.405pt>
+g, id=141, 680.5425pt x 108.405pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Excepti
 on.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Exceptio
 n.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/SID-Exception.jpg used on input line 151.
+ecution/SID-Exception.jpg used on input line 152.
 (pdftex.def)             Requested size: 272.99881pt x 43.48694pt.
 
 Overfull \hbox (67.84975pt too wide) has occurred while \output is active
@@ -929,29 +928,29 @@ ON \OT1/cmr/m/n/12 33
 [33 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Except
 ion.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ExceptionHandlin
-g.jpg, id=145, 662.475pt x 590.95781pt>
+g.jpg, id=146, 662.475pt x 590.95781pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ExceptionHa
 ndling.jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ExceptionHan
 dling.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/ExceptionHandling.jpg used on input line 162.
+ecution/ExceptionHandling.jpg used on input line 163.
 (pdftex.def)             Requested size: 272.99881pt x 243.52061pt.
  [34 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Exception
 Handling.jpg>]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.jpg, i
-d=149, 662.475pt x 433.62pt>
+d=150, 662.475pt x 433.62pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.j
 pg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.jp
 g>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/Extension.jpg used on input line 176.
+ecution/Extension.jpg used on input line 177.
 (pdftex.def)             Requested size: 272.99881pt x 178.6852pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 187--189
+Underfull \hbox (badness 10000) in paragraph at lines 188--190
 
  []
 
@@ -969,7 +968,7 @@ pg Graphic file (type jpg)
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.jp
 g>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/Extension.jpg used on input line 201.
+ecution/Extension.jpg used on input line 202.
 (pdftex.def)             Requested size: 272.99881pt x 178.6852pt.
 
 Overfull \hbox (67.84975pt too wide) has occurred while \output is active
@@ -979,14 +978,14 @@ ON \OT1/cmr/m/n/12 37
 
 [37]
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternative.jpg,
- id=159, 573.64313pt x 620.3175pt>
+ id=160, 573.64313pt x 620.3175pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternative
 .jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternative.
 jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/ALternative.jpg used on input line 226.
+ecution/ALternative.jpg used on input line 227.
 (pdftex.def)             Requested size: 272.99881pt x 295.21233pt.
 
 
@@ -999,28 +998,31 @@ ON \OT1/cmr/m/n/12 39
  []
 
 [39 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternativ
-e.jpg>] [40]
-File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-Su
-bjectBehavior.png Graphic file (type png)
+e.jpg>]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-SUbject
+Behavior.jpg, id=168, 644.4075pt x 277.035pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-SU
+bjectBehavior.jpg Graphic file (type jpg)
 
-<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-Sub
-jectBehavior.png>
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-SUb
+jectBehavior.jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/20181218-SubjectBehavior.png used on input line 251.
-(pdftex.def)             Requested size: 592.0pt x 303.75882pt.
- [41]) [42
+ecution/20181218-SUbjectBehavior.jpg used on input line 248.
+(pdftex.def)             Requested size: 350.99762pt x 150.90288pt.
+ [40 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-
+SUbjectBehavior.jpg>]) [41
 
 
 ]
 \openout2 = `./TeX_files/appendix.aux'.
 
- (TeX_files/appendix.tex
-Appendix A.
-[43
+ (TeX_files/appendix.tex [42
 
 
 
 ]
+Appendix A.
+[43]
 Overfull \hbox (9.49628pt too wide) in paragraph at lines 29--32
 \OT1/cmr/m/it/12 Specifications/descriptions for Receive-Functions de-scribe
  []
@@ -2030,10 +2032,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3104 strings out of 493333
- 49034 string characters out of 3139172
- 141967 words of memory out of 3000000
- 6533 multiletter control sequences out of 15000+200000
+ 3116 strings out of 493333
+ 49537 string characters out of 3139172
+ 142015 words of memory out of 3000000
+ 6543 multiletter control sequences out of 15000+200000
  10113 words of font info for 35 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,7n,35p,1458b,748s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2044,9 +2046,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 /public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmti12.pfb>
-Output written on Standardbuch-PASS.pdf (80 pages, 1963304 bytes).
+Output written on Standardbuch-PASS.pdf (80 pages, 1533206 bytes).
 PDF statistics:
- 312 PDF objects out of 1000 (max. 8388607)
+ 313 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 121 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 126 words of extra memory for PDF output out of 10000 (max. 10000000)
 

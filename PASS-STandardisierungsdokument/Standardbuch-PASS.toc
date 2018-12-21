@@ -4,7 +4,7 @@
 \contentsline {subsection}{\numberline {1.1.2}Subject Interaction and Behavior}{3}
 \contentsline {subsection}{\numberline {1.1.3}Subjects and Objects}{6}
 \contentsline {section}{\numberline {1.2}Introduction to Ontologies and OWL }{7}
-\contentsline {section}{\numberline {1.3}Introduction to Abstract State Machines }{9}
+\contentsline {section}{\numberline {1.3}Introduction to Abstract State Machines }{8}
 \contentsline {chapter}{\numberline {2}Structure of a PASS Description}{11}
 \contentsline {section}{\numberline {2.1}Informal Description}{11}
 \contentsline {subsection}{\numberline {2.1.1}Subject}{11}
@@ -32,9 +32,9 @@
 \contentsline {subsubsection}{Alternative Actions (Freedom of Choice)}{37}
 \contentsline {section}{\numberline {3.2}Ontology of Subject Behavior Description}{40}
 \contentsline {subsection}{\numberline {3.2.1}Subject Base Behavior}{40}
-\contentsline {subsection}{\numberline {3.2.2}Macro Behavior}{42}
-\contentsline {subsection}{\numberline {3.2.3}Guard Behavior}{42}
-\contentsline {section}{\numberline {3.3}ASM Definition of Subject Execution}{42}
+\contentsline {subsection}{\numberline {3.2.2}Macro Behavior}{41}
+\contentsline {subsection}{\numberline {3.2.3}Guard Behavior}{41}
+\contentsline {section}{\numberline {3.3}ASM Definition of Subject Execution}{41}
 \contentsline {chapter}{\numberline {A}Classes and Property of the PASS Ontology}{43}
 \contentsline {section}{\numberline {A.1}All Classes (95)}{43}
 \contentsline {section}{\numberline {A.2}Data Properties (27)}{60}

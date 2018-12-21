@@ -22,8 +22,11 @@ In order to facilitate the understanding of the following sections we will intro
 
 
 \section{Subject Orientation and PASS }
-
+\label{SubjectOrient}.
 In this section we lay ground for PASS as a language for describing proceses in a subjectoriented way. This section is not a complete description of all PASS features it only gives a first impression about subject orientation and the specification language PASS. The advanced features are defined in the ubpcoming chapters.
+
+The term subject has manifold meanings depending on the discipline. In philosophy a subject is an observer and an object is a thing observed. In the grammar of many languages the term subject has a slightly different meaning. “According to the traditional view, subject is the doer of the action (actor) or the element that expresses what the sentence is about (topic).”(see E. L. Keenan; Towards a universal definition of 'subject'. Subject and topic, ed. by  Charles N. Li,: Academic Press New York 1976 ). In PASS the term subject coreponds to the doer of an action whereas in ontology description languages like RDF (see section \ref{IntroOntology} ) the term subject means the topic what the "sentence" is about.
+
 
 \subsection{Subject-driven Business Processes}
 Subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. This is different to other encapsulation approaches, such as multi-agent systems.\\ 
@@ -98,17 +101,83 @@ The internal functions in a subject can be realized as methods of an object or f
 
 
 \section{Introduction to Ontologies and OWL }
+\label{IntroOntology}
 
+This short introduction to ontology, the Resource Description Framework and Web Ontology Language (OWL) should help to get an understanding of the PASS ontology outlined in section \ref{PASSStruct} and \ref{PASSExec}.\\
+Ontologies are a formal way to describe taxonomies and classification networks, essentially defining the structure of knowledge for various domains: the nouns representing classes of objects and the verbs representing relations between the objects of classes.\\
+In computer science and information science, an ontology encompasses a representation, formal naming, and definition of the classes, properties, and relations between the data, and entities that substantiate considered domains.\\
 
-\begin{landscape}
+The Resource Description Framework (RDF) provides a graph-based data model or framework for structuring data as statements about resources. A “resource” may be any “thing” that exists in the world: a person, place, event, book, museum object, but also an abstract concept like data objects.
+The following figure \ref{fig:classes-properties}  shows an RDF graph.
 
-
-\begin{figure}[ph]
+\begin{figure}[ph!]
 	\centering
-	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-SubjectBehavior}
-	\caption[Subject Behavior]{Subject Behavior}
-	\label{fig:20181218-subjectbehavior}
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Properties}
+	\caption[RDF graphic]{RDF graphic}
+	\label{fig:classes-properties}
 \end{figure}
-\end{landscape}
+
+RDF is based on the idea of making statements about resources (in particular web resources) in expressions of the form subject–predicate–object, known as triples. The subject denotes the resource, and the predicate denotes traits or aspects of the resource, and expresses a relationship between the subject and the object. In the context of ontology the term subject expresses what the sentence is about (topic) (see \ref{SubjectOrient}).\\
+For describing ontologies several languages have been developed. One widely used langauge is OWL (world wide web ontology language) which is based on the Resource Description Framework (RDF).
+OWL has classes, properties and instances. Classes represents terms also called concepts. Classes have properties and instances are individuals of one or more classes.
+A class is a type of thing. A type of “resource” in the RDF sense can be
+person, place, object, concept, event, etc.. Classes and subclasses form a hierarchical
+taxonomy and members of a subclass inherit the characteristics of their parent class
+(superclass). Everything whichis true for the parent class is also true for the subclass.
+A member of a subclass “is a”, or “is a kind of” its parent class.\\
+Ontologies define a set of properties used in a specific knowledge domain. In an ontology context, properties relate members of one class to members of another class, or to a literal.\\
+Domains and ranges define restrictions on properties. A domain restricts what kinds of resources or members of a class can be the subject of a given property in an
+RDF triple.A range restricts what kinds of resources / members of a
+class or data types (literals) can be the object of a given property in an RDF triple.\\
+Entities belonging to a certain class are instances of this class or inviduals. A simple ontology with various classes, properties and individual is shown below:
+
+
+Ontology statement examples:
+\begin{itemize}
+	\item \textbf {Class definition statements:}
+	\begin{itemize}
+		\item Parent isA Class
+		\item Mother isA Class
+		\item Mother subClassOf Parent
+		\item Child isA Class
+	\end{itemize}
+	\item \textbf {Property definition statement:}
+	\begin{itemize}
+		\item isMotherOf isA Property with domain Mother and range Child
+	\end{itemize}
+	\item \textbf{Individual/instance statements:}
+	\begin{itemize}
+		\item MariaSchmidt isA Mother
+		\item MaxSchmidt isA Child
+		\item MariaSchmidt isMotherOf MaxSchmidt
+	\end{itemize}
+\end{itemize}
+
 
 \section{Introduction to Abstract State Machines }
+
+An abstract state machine (ASM) is a state machine operating on states that are arbitrary data structures (structure in the sense of mathematical logic, that is a nonempty set together with a number of functions (operations) and relations over the set).
+The language of the so called Abstract STate Machine uses only elementary If-Then-Else-rules which are typical also for rule systems formulated in natural language, i.e., rules of the (symbolic) form\
+\textbf{if} \textit{Condition} \textbf{then} \textit{ACTION}\
+with arbitrary \textit{Condition} and \textit{ACTION}. The latter is usually a finite set of assignments of form \textit{f (t1, ..., tn) := t}. The meaning of such a rule is to perform in any given state the indicated action if the indicated condition holds in this state.\ 
+
+The unrestricted generality of the used notion of Condition and ACTION is guaranteed by using as ASM-states the so-called Tarski structures, i.e., arbitrary sets of arbitrary elements with arbitrary functions and relations defined on them. These structures are updatable by rules of the form above. In the case of business processes, the elements are placeholders for values of arbitrary type and the operations are typically the creation, duplication, deletion, or manipulation (value change) of objects. The so-called views are conceptually nothing else than projections (read: substructures) of such Tarski structures.\
+
+An (asynchronous, also called distributed) ASM consists of a set of agents each of which is equipped with a set of rules of the above form, called its program. Every agent can execute in an arbitrary state in one step all its rules which are executable, i.e., whose condition is true in the indicated state. For this reason, such an ASM, if it has only one agent, is also called sequential ASM. In general, each agent has its own ‘time’ to execute a step, in particular if its step is independent of the steps of other agents;  in special cases multiple agents can also execute their steps simultaneously (in a synchronous manner).\
+
+Without further explanations, we adopt usual notations, abbreviations, etc., for example:\\
+\textbf{if} \textit{Cond} \textbf{then} \textit{M1} else \textit{M2}\\
+instead of the equivalent ASM with two rules:\\
+\textbf{if} \textit{Cond} \textbf{then} \textit{M1} \\
+\textbf{if} \textbf{not} \textit{Cond} \textbf{then} \textit{M2}\\
+Another notation used below is\\
+\textbf{let} \textit{x = t} \textbf{in} \textit{M}\\
+for M(x/a), where a denotes the value of t in the given state and M(x/a) is obtained from M by substitution of each (free) occurrence of x in M by a.
+
+For details of a mathematical definition of the semantics of ASMs which justifies their intuitive (rule-based or pseudo-code) understanding, we refer the reader to the AsmBook Börger, E., Stärk R. Abstract State Machines. A Method for High-Level System Design and Analysis. Springer, 2003.
+
+
+
+
+
+

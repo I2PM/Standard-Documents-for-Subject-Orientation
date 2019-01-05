@@ -242,20 +242,45 @@ The leeway for freedom of choice with regards to actions and decisions associate
 \newpage
 
 \section{Ontology of Subject Behavior Description}
+Each subject has a base behavior (see property 202 in \ref{fig:20190104-simple-elements-and-modellelement}) and may have additional subject behaviors (see class SubjectBehavior in \ref{fig:20190104-simple-elements-and-modellelement}) for macros and guards. All these behaviors are subclasses of the class SubjectBehavior. The details of these behaviors are defined as state transition diagrams (PASS behavior diagrams). These behavior diagrams are represented in the ontology with the class BehaviorDescribingComponent (see figure \ref{fig:20190104-simple-elements-and-modellelement}). The behavior diagrams have the relation belongsTo to the class SubjectBehavior. The other classes are needed for embeddingsubjects into the subject interaction diagram (SID) of a PASS specification (see chapter \ref{OWL-DescriptionSID}).
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.9\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190104-SImple-Elements-and-Modellelement}
+	\caption[Structure of Subject Behavior Specification]{Structure of Subject Behavior Specification}
+	\label{fig:20190104-simple-elements-and-modellelement}
+\end{figure}
+
+\newpage
+
+\subsection{Behavior Describing Component}
+The following figure shows the details of the claa BehaviorDescribingComponent. This claa has the subclasses Stat, Transition and TranssitionCondition (see figure \ref{fig:20190104-behavior-describing-component}). The subclasses of the state represent the various types of states (class relations 025, 014 und 024 in \ref{fig:20190104-behavior-describing-component}). The standard states are subclasses of the class StandardPASSState (class relations 114, 115 und 116 in \ref{fig:20190104-behavior-describing-component}). The subclass relations 104 and 020 allow that there exist a start state (class InitialStatOfBehavior in \ref{fig:20190104-behavior-describing-component}) and none or several end states (see subclass relation 020 in figure\ref{fig:20190104-behavior-describing-component}) The fact that there must be at least one start state and none or several end states is defined by so called axioms which are not shown in figure \ref{fig:20190104-behavior-describing-component}.
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190104-Behavior-describing-component}
+	\caption[Subject Behavior describingComponent]{Subject Behavior describingComponent}
+	\label{fig:20190104-behavior-describing-component}
+\end{figure}
+
+\newpage
+\subsubsection{Transitions}
 
 \begin{figure}[ph]
 	\centering
-	\includegraphics[width=0.9\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20181218-SUbjectBehavior.jpg}
-	\caption[Types of Subject Behaviors]{Types of Subject Behaviors}
-	\label{fig:20181218-subjectbehavior}
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190105-Transitions}
+	\caption[Details of transitions]{Details of transitions}
+	\label{fig:20190105-transitions}
 \end{figure}
 
+\newpage
 
+\subsection{Simple Elements for Behavior Description}
+
+
+\newpage
 \subsection{Subject Base Behavior}
 
-\begin{landscape}
 
-\end{landscape}
+
 
 \subsection{Macro Behavior}
 

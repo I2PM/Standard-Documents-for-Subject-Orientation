@@ -253,7 +253,7 @@ Each subject has a base behavior (see property 202 in \ref{fig:20190104-simple-e
 \newpage
 
 \subsection{Behavior Describing Component}
-The following figure shows the details of the claa BehaviorDescribingComponent. This claa has the subclasses Stat, Transition and TranssitionCondition (see figure \ref{fig:20190104-behavior-describing-component}). The subclasses of the state represent the various types of states (class relations 025, 014 und 024 in \ref{fig:20190104-behavior-describing-component}). The standard states are subclasses of the class StandardPASSState (class relations 114, 115 und 116 in \ref{fig:20190104-behavior-describing-component}). The subclass relations 104 and 020 allow that there exist a start state (class InitialStatOfBehavior in \ref{fig:20190104-behavior-describing-component}) and none or several end states (see subclass relation 020 in figure\ref{fig:20190104-behavior-describing-component}) The fact that there must be at least one start state and none or several end states is defined by so called axioms which are not shown in figure \ref{fig:20190104-behavior-describing-component}.
+The following figure shows the details of the claa BehaviorDescribingComponent. This class has the subclasses State, Transition and TranssitionCondition (see figure \ref{fig:20190104-behavior-describing-component}). The subclasses of the state represent the various types of states (class relations 025, 014 und 024 in \ref{fig:20190104-behavior-describing-component}). The standard states DoSTates, SendState and ReceiveState are subclasses of the class StandardPASSState (class relations 114, 115 und 116 in \ref{fig:20190104-behavior-describing-component}). The subclass relations 104 and 020 allow that there exist a start state (class InitialStatOfBehavior in \ref{fig:20190104-behavior-describing-component}) and none or several end states (see subclass relation 020 in figure\ref{fig:20190104-behavior-describing-component}) The fact that there must be at least one start state and none or several end states is defined by so called axioms which are not shown in figure \ref{fig:20190104-behavior-describing-component}.
 \begin{figure}[ph]
 	\centering
 	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190104-Behavior-describing-component}
@@ -261,31 +261,51 @@ The following figure shows the details of the claa BehaviorDescribingComponent. 
 	\label{fig:20190104-behavior-describing-component}
 \end{figure}
 
+States can be starting and/or endpoints of transitions (see properties 228 and 230 in figure \ref{fig:20190104-behavior-describing-component}). This means a state may have outgoing and/or incoming transitions (see properties 224 and 217 in figure \ref{fig:20190104-behavior-describing-component}). Each transition is controlled by a transition condition which must be true before a beahaior follows a transition from the source state to the target state.
+
+
+
 \newpage
+\subsubsection{States}
+As shown in figure \ref{fig:20190109-states} the class state has a subclass StandardPASSState (subclass relation 025) which have the subclasses ReceiveState, SendState and DoState(subclass relations 027, 026, 025). A state can be a start state (subclass InitialStateOfBehavior subclass relation 022). Besides these standard states there are macro states (subclass 024). Macro states contain a reference (subclass 029) to the coreponding macro (Property 201).
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190109-States}
+	\caption[Details of States]{Details of States}
+	\label{fig:20190109-states}
+\end{figure}
+
+more complex states are choice segments (subclass relatuion 014). A choice segment contains choice segment paths (subclass 015 and property 200). Each choice segment path can be of one of four types. If a segemnt path is started than it must be finished or not or a segment path must started and must be finished or not (subclass relations 16, 17, 18 1nd 19).
+
+
+\newpage
+
 \subsubsection{Transitions}
 
 \begin{figure}[ph]
 	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190105-Transitions}
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190105-Transitions}
 	\caption[Details of transitions]{Details of transitions}
 	\label{fig:20190105-transitions}
 \end{figure}
 
 \newpage
 
-\subsection{Simple Elements for Behavior Description}
+\subsubsection{Data Mapping: Relationship of Behavior to Data}
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=1.0\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190106-DataMapping}
+	\caption[Relationship of Behavior to Data]{Relationship of Behavior to Data}
+	\label{fig:20190106-datamapping}
+\end{figure}
+
+
+
 
 
 \newpage
-\subsection{Subject Base Behavior}
-
-
-
-
-\subsection{Macro Behavior}
-
-
-\subsection{Guard Behavior}
 
 
 

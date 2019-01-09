@@ -32,13 +32,11 @@
 \contentsline {subsubsection}{Alternative Actions (Freedom of Choice)}{37}
 \contentsline {section}{\numberline {3.2}Ontology of Subject Behavior Description}{40}
 \contentsline {subsection}{\numberline {3.2.1}Behavior Describing Component}{41}
-\contentsline {subsubsection}{Transitions}{42}
-\contentsline {subsection}{\numberline {3.2.2}Simple Elements for Behavior Description}{43}
-\contentsline {subsection}{\numberline {3.2.3}Subject Base Behavior}{44}
-\contentsline {subsection}{\numberline {3.2.4}Macro Behavior}{44}
-\contentsline {subsection}{\numberline {3.2.5}Guard Behavior}{44}
-\contentsline {section}{\numberline {3.3}ASM Definition of Subject Execution}{44}
-\contentsline {chapter}{\numberline {A}Classes and Property of the PASS Ontology}{45}
-\contentsline {section}{\numberline {A.1}All Classes (95)}{45}
-\contentsline {section}{\numberline {A.2}Data Properties (27)}{62}
-\contentsline {section}{\numberline {A.3}Object Properties (42)}{71}
+\contentsline {subsubsection}{States}{42}
+\contentsline {subsubsection}{Transitions}{43}
+\contentsline {subsubsection}{Data Mapping: Relationship of Behavior to Data}{44}
+\contentsline {section}{\numberline {3.3}ASM Definition of Subject Execution}{45}
+\contentsline {chapter}{\numberline {A}Classes and Property of the PASS Ontology}{47}
+\contentsline {section}{\numberline {A.1}All Classes (95)}{47}
+\contentsline {section}{\numberline {A.2}Object Properties (42)}{64}
+\contentsline {section}{\numberline {A.3}Data Properties (27)}{72}

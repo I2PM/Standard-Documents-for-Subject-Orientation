@@ -41,4 +41,13 @@
 \contentsline {section}{\numberline {A.1}All Classes (95)}{47}
 \contentsline {section}{\numberline {A.2}Object Properties (42)}{64}
 \contentsline {section}{\numberline {A.3}Data Properties (27)}{72}
-\contentsline {chapter}{\numberline {B}PASS Interpreter defined as Abstract State Machine (ASM)}{81}
+\contentsline {chapter}{\numberline {B}A Subject-Oriented Interpreter Model for S-BPM developed by Egon B\IeC {\"o}rger}{81}
+\contentsline {section}{\numberline {B.1}Subject Behavior Diagram Interpretation}{81}
+\contentsline {section}{\numberline {B.2}Alternative Send/Receive Round Interpretation}{82}
+\contentsline {section}{\numberline {B.3}MsgElaboration Interpretation for Multi Send/Receive}{85}
+\contentsline {section}{\numberline {B.4}Multi Send/Receive Round Interpretation}{85}
+\contentsline {section}{\numberline {B.5}Actual Send Interpretation}{85}
+\contentsline {section}{\numberline {B.6}Actual Receive Interpreation}{85}
+\contentsline {section}{\numberline {B.7}Alternative Action Interpretation}{85}
+\contentsline {section}{\numberline {B.8}Interrupt Behavior}{85}
+\contentsline {chapter}{\numberline {C}PASS Interpreter defined as Abstract State Machine (ASM)}{87}

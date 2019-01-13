@@ -531,6 +531,84 @@ SimplePASSObject-Propertie & Domain: & &Every element/sub-class of SimplePASSObj
 
 
 
+
+\chapter{A Subject-Oriented Interpreter Model for
+	S-BPM developed by Egon Börger}
+\label{ASM-Interpreter}
+
+This is a uncommented version of the PASS interpreter. A commented version can be found in the appendix of A. Fleischmann.............
+
+
+\section{Subject Behavior Diagram Interpretation}
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior}
+	\caption[Subject Behavior Diagram Interpretation]{Subject Behavior Diagram Interpretation}
+	\label{fig:asm-behavior}
+\end{figure}
+
+
+
+\section{Alternative Send/Receive Round Interpretation}
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform}
+	\caption[Alternative Send/Receive Round Interpretation]{Alternative Send/Receive Round Interpretation}
+	\label{fig:asm-perform}
+\end{figure}
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Perform-Bild}
+	\caption[Diagram of Alternative Send/Receive Round Interpretation]{Diagram of Alternative Send/Receive Round Interpretation}
+	\label{fig:asm-perform-bild}
+\end{figure}
+
+\newpage
+\textbf{Interpretation of Auxiliary Macros}
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Start}
+	\caption[Start function]{Start function}
+	\label{fig:asm-start}
+\end{figure}
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Try-Run}
+	\caption[Try non/blocking Round]{Try non/blocking Round}
+	\label{fig:asm-try-run}
+\end{figure}
+
+\begin{figure}[ph]
+	\centering
+	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Interrupt}
+	\caption[Interupt Handling]{Interupt Handling}
+	\label{fig:asm-interrupt}
+\end{figure}
+
+\newpage
+
+
+\section{MsgElaboration Interpretation for Multi Send/Receive}
+
+
+
+\section{Multi Send/Receive Round Interpretation}
+
+\section{Actual Send Interpretation}
+
+\section{Actual Receive Interpreation}
+
+
+\section{Alternative Action Interpretation}
+
+
+\section{Interrupt Behavior}
+
+
 \chapter{PASS Interpreter defined as Abstract State Machine (ASM)}
 
 \textbf{Class}\\
@@ -624,13 +702,16 @@ SimplePASSObject-Propertie & Domain: & &Every element/sub-class of SimplePASSObj
 	\hline
 	\textbf{CommunicationActs} with sub-classes (\textbf{ReceiveFunction SendFunction}) \newline
 	\textbf{\textit{DefaultFunctionReceive1\_EnvironmentChoice \newline
-	DefaultFunctionReceive2\_AutoReceiveEarliest \newline
-	DefaultFunctionSend }}
+			DefaultFunctionReceive2\_AutoReceiveEarliest \newline
+			DefaultFunctionSend }}
 	& \textit{ComAct} 
 	& Specialized version of Perform-ASM Rule for communication, either send or receive. These rules distinguish internally between send and receive.
 	\\
 	\hline
-
+	
 	
 \end{longtable}
 \end {landscape}
+
+
+

@@ -299,6 +299,15 @@ Transitions connect the source state with the target state (see figure \ref{fig:
 
 \section{ASM Definition of Subject Execution}
 
+ \textit{Behavior(subbj;state)} is the ASM-Rule to interpret a specific node of a behavior diagram for a specific subject.
+ 
+ It expresses that when a subject in a given state has completed a given action (function, send or receive
+ operation) -read: Performing the action has been completed while the subject
+ was in the given SID-state. Assuming that the action has been started by the
+ subject upon entering this state-then the subject proceeds to start its next
+ action in its successor state. The successor state is determined by an ExitCondition whose
+ value is defined by the just completed action. Figure \ref{fig:asm-behavior} shows the ASM code for thebehavior rule.
+
 \begin{figure}[ph]
 	\centering
 	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior}
@@ -306,52 +315,22 @@ Transitions connect the source state with the target state (see figure \ref{fig:
 	\label{fig:asm-behavior}
 \end{figure}
 
+The complete ASM based definition of PASS was developed by Egon Börger and can be found in Annex \ref{ASM-Interpreter}
 
 \subsection{Internal Functions/Action}
 
 A detailed internal Behavior of a subject in a state with internal function A can
-be dedefined in terms of the submachines Start and Perform together with the
+be dedefined in terms of the ASM submachines Start and Perform together with the
 completion predicate Completed for the parameters (subj ;A; state) in the same
-manner as has been done for communication actions in Sect. 3.3-3.4|but only
-once it is known how to start, to perform and to complete A. For example, for
-Java coded functions A Start(subj ;A; state) could mean to call the (multithreaded)
-Java interpreter execJavaThread defined in terms of ASMs in [4,
-p.101], Perform(subj ;A; state) means to execute it step by step and the completion
-predicate coincides with the termination condition of execJavaThread. 
+manner as has been done for communication actions in section \ref{CommunicationAction} but only
+once it is known how to start, to perform and to complete A. For example, Start(subj ;A; state) could mean to call function A which is implemented as a methode of a class. The completion
+predicate coincides with the termination condition of the method. 
 
-A
-still more detailed description, one step closer to executed code, can be obtained
-by a renement which replaces the computation of execJavaThread for A by a
-(in [4, Ch.14] proven to be equivalent) computation of the Java Virtual Machine
-model (called diligentVMD in [4, p.303]) on compile(A).
-
-
-For internal states with uninterpreted internal functions A the two submachines
-of Behavior(state) and the completion predicate remain abstract and the
-semantics of the SBD where they occur derives from the semantics of ASMs [2]
-for which the only requirement is that in an ASM state every function is interpreted
-even if the specification does not define the interpretation. The only
-requirement is that Performing an internal action is guarded by an interrupt
-mechanism. This comes up to further specify the SID-transition scheme for internal
-actions by detailing its else-clause as follows:
-
-if Timeout(subj ; state; timeout(state)) then
-Interruptservice(state)(subj ; state)
-elseif UserAbruption(subj ; state)
-then Abruptservice(state)(subj ; state)
-else Perform(subj ; state)
-
-Remark. An internal function is not permitted to represent a nested subject
-behavior diagram so that the SID-level normalized behavior view, the one dened
-by the subject behavior diagrams of a process (see Sect. 5.2), is clearly separated
-from the local subject behavior view for the execution of a single internal function
-by a subject. At present the tool permits as internal functions only self-services,
-no delegated service.
 
 
 
 \subsection{Communication Action}
-
+\label{CommunicationAction}
 
 \begin{figure}[ph]
 	\centering

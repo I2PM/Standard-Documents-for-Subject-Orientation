@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.13)  12 JAN 2019 11:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.13)  13 JAN 2019 19:32
 entering extended mode
 **./Standardbuch-PASS.tex
 (Standardbuch-PASS.tex
@@ -493,7 +493,14 @@ LaTeX Warning: Label `fig:ordercomstructure' multiply defined.
 
 LaTeX Warning: Label `fig:extension' multiply defined.
 
-) (TeX_files/appendix.aux))
+) (TeX_files/appendix.aux
+
+LaTeX Warning: Label `fig:asm-behavior' multiply defined.
+
+
+LaTeX Warning: Label `fig:asm-perform' multiply defined.
+
+))
 \openout1 = `Standardbuch-PASS.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
@@ -508,8 +515,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
 LaTeX Font Info:    ... okay on input line 21.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
 LaTeX Font Info:    ... okay on input line 21.
-
-("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+ ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count108
 \scratchdimen=\dimen131
@@ -1082,22 +1088,22 @@ r.jpg Graphic file (type jpg)
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior
 .jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/ASM-Behavior.jpg used on input line 304.
+ecution/ASM-Behavior.jpg used on input line 313.
 (pdftex.def)             Requested size: 272.99881pt x 160.23003pt.
- [44 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behav
-ior.jpg>]
+
 <20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform.jpg,
- id=188, 630.10406pt x 475.02469pt>
+ id=185, 630.10406pt x 475.02469pt>
 File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform
 .jpg Graphic file (type jpg)
 
 <use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform.
 jpg>
 Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
-ecution/ASM-perform.jpg used on input line 358.
+ecution/ASM-perform.jpg used on input line 337.
 (pdftex.def)             Requested size: 272.99881pt x 205.80775pt.
-) [45 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perf
-orm.jpg>]
+ [44 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behav
+ior.jpg>]) [45 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution
+/ASM-perform.jpg>]
 \openout2 = `./TeX_files/appendix.aux'.
 
  (TeX_files/appendix.tex [46
@@ -2112,90 +2118,190 @@ SS ONTOLOGY
 [80]
 Appendix B.
 
-Underfull \hbox (badness 10000) in paragraph at lines 536--539
-
+Overfull \hbox (4.57979pt too wide) in paragraph at lines 542--542
+[]\OT1/cmr/bx/n/17.28 Subject Be-hav-ior Di-a-gram In-ter-pre-ta-tion 
  []
 
-[81
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavio
+r.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior
+.jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/ASM-Behavior.jpg used on input line 546.
+(pdftex.def)             Requested size: 272.99881pt x 160.23003pt.
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform
+.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform.
+jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/ASM-perform.jpg used on input line 557.
+(pdftex.def)             Requested size: 234.00238pt x 176.40872pt.
+
+Underfull \vbox (badness 2538) has occurred while \output is active []
+
+ [81
 
 
 ]
-Underfull \hbox (badness 1824) in paragraph at lines 553--554
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Perform-Bild
+.jpg, id=308, 722.7pt x 542.025pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Perform
+-Bild.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Perform-
+Bild.jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/ASM-Perform-Bild.jpg used on input line 564.
+(pdftex.def)             Requested size: 234.00238pt x 175.50266pt.
+
+Overfull \hbox (233.89192pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 82 \OT1/cmr/m/sl/12 APPENDIX B.  A SUBJECT-ORIENTED INTERPRETER
+ MODEL FOR S-BPM DEVELOPED BY EGON B[]ORGER
+ []
+
+[82 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Perfor
+m-Bild.jpg>]
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Start.jpg, i
+d=312, 771.63281pt x 569.12625pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Start.j
+pg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Start.jp
+g>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/ASM-Start.jpg used on input line 573.
+(pdftex.def)             Requested size: 272.99881pt x 201.35085pt.
+
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Try-Run.jpg,
+ id=313, 591.71063pt x 501.37312pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Try-Run
+.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Try-Run.
+jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/ASM-Try-Run.jpg used on input line 580.
+(pdftex.def)             Requested size: 234.00238pt x 198.27354pt.
+
+<20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Interrupt.jp
+g, id=314, 582.67688pt x 365.86688pt>
+File: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Interru
+pt.jpg Graphic file (type jpg)
+
+<use 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Interrup
+t.jpg>
+Package pdftex.def Info: 20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectEx
+ecution/ASM-Interrupt.jpg used on input line 587.
+(pdftex.def)             Requested size: 234.00238pt x 146.93033pt.
+ [83 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Start
+.jpg>]
+Overfull \hbox (233.89192pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 84 \OT1/cmr/m/sl/12 APPENDIX B.  A SUBJECT-ORIENTED INTERPRETER
+ MODEL FOR S-BPM DEVELOPED BY EGON B[]ORGER
+ []
+
+[84 <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Try-Ru
+n.jpg> <./20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Int
+errupt.jpg>]
+Overfull \hbox (40.52617pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/12 B.3.  MSGELABORATION INTERPRETATION FOR MULTI SEND/RECEIVE \OT
+1/cmr/m/n/12 85
+ []
+
+[85]
+Overfull \hbox (233.89192pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 86 \OT1/cmr/m/sl/12 APPENDIX B.  A SUBJECT-ORIENTED INTERPRETER
+ MODEL FOR S-BPM DEVELOPED BY EGON B[]ORGER
+ []
+
+[86
+
+]
+Appendix C.
+
+Underfull \hbox (badness 10000) in paragraph at lines 614--617
+
+ []
+
+[87]
+Underfull \hbox (badness 1824) in paragraph at lines 631--632
 \OT1/cmr/m/n/12 sump-tion that it is com-plete and
  []
 
 
-Underfull \hbox (badness 2460) in paragraph at lines 602--603
+Underfull \hbox (badness 2460) in paragraph at lines 680--681
 []|\OT1/cmr/bx/n/12 SubjectBehavior \OT1/cmr/m/n/12 or rather \OT1/cmr/bx/n/12 
 Sub-
  []
 
 
-Underfull \hbox (badness 6859) in paragraph at lines 608--610
+Underfull \hbox (badness 6859) in paragraph at lines 686--688
 []|\OT1/cmr/m/n/12 Object Prop-erty: \OT1/cmr/bx/it/12 has-Func-tion-
  []
 
 
-Underfull \hbox (badness 1152) in paragraph at lines 608--610
+Underfull \hbox (badness 1152) in paragraph at lines 686--688
 \OT1/cmr/bx/it/12 Spec-i-fi-ca-tion \OT1/cmr/m/n/12 (link-ing \OT1/cmr/bx/n/12 
 State\OT1/cmr/m/n/12 , and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 608--610
+Underfull \hbox (badness 10000) in paragraph at lines 686--688
 \OT1/cmr/bx/n/12 Func-tion-Spec-i-fi-ca-tion \OT1/cmr/m/n/12 -->(\OT1/cmr/bx/n/
 12 State
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 625--629
+Underfull \hbox (badness 10000) in paragraph at lines 703--707
 []|\OT1/cmr/bx/n/12 CommunicationActs \OT1/cmr/m/n/12 with sub-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 625--629
+Underfull \hbox (badness 10000) in paragraph at lines 703--707
 \OT1/cmr/m/n/12 classes (\OT1/cmr/bx/n/12 ReceiveFunction Send-
  []
 
 
-Overfull \hbox (77.40456pt too wide) in paragraph at lines 625--629
+Overfull \hbox (77.40456pt too wide) in paragraph at lines 703--707
 \OT1/cmr/bx/it/12 DefaultFunctionReceive1[]EnvironmentChoice 
  []
 
 
-Overfull \hbox (79.54121pt too wide) in paragraph at lines 625--629
+Overfull \hbox (79.54121pt too wide) in paragraph at lines 703--707
 \OT1/cmr/bx/it/12 DefaultFunctionReceive2[]AutoReceiveEarliest 
  []
 
 
-Underfull \vbox (badness 10000) detected at line 635
+Underfull \vbox (badness 10000) detected at line 713
  []
 
 
-Overfull \hbox (107.27345pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 82 \OT1/cmr/m/sl/12 APPENDIX B.  PASS INTERPRETER DEFINED AS AB
+Overfull \hbox (107.43872pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 88 \OT1/cmr/m/sl/12 APPENDIX C.  PASS INTERPRETER DEFINED AS AB
 STRACT STATE MACHINE (ASM)
  []
 
-[82
+[88
 
-] [83]
-Overfull \hbox (107.27345pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/12 84 \OT1/cmr/m/sl/12 APPENDIX B.  PASS INTERPRETER DEFINED AS AB
+] [89]
+Overfull \hbox (107.43872pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/12 90 \OT1/cmr/m/sl/12 APPENDIX C.  PASS INTERPRETER DEFINED AS AB
 STRACT STATE MACHINE (ASM)
  []
 
-[84]) (Standardbuch-PASS.aux (TeX_files/chapter01.aux) (TeX_files/chapter02.aux
+[90]) (Standardbuch-PASS.aux (TeX_files/chapter01.aux) (TeX_files/chapter02.aux
 ) (TeX_files/chapter03.aux) (TeX_files/appendix.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4488 strings out of 493333
- 70701 string characters out of 3139172
- 163044 words of memory out of 3000000
- 7896 multiletter control sequences out of 15000+200000
+ 4515 strings out of 493333
+ 72213 string characters out of 3139172
+ 163120 words of memory out of 3000000
+ 7919 multiletter control sequences out of 15000+200000
  10824 words of font info for 37 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,9n,35p,1458b,748s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2208,9 +2314,9 @@ e1/public/amsfonts/cm/cmsl12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
 ts/cm/cmti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
 ti8.pfb>
-Output written on Standardbuch-PASS.pdf (88 pages, 2422831 bytes).
+Output written on Standardbuch-PASS.pdf (94 pages, 2980389 bytes).
 PDF statistics:
- 351 PDF objects out of 1000 (max. 8388607)
+ 374 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 151 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 171 words of extra memory for PDF output out of 10000 (max. 10000000)
 

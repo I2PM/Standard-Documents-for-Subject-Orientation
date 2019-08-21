@@ -1,4 +1,5 @@
-\chapter{Background}
+\chapter{Foundation}
+
 Structure of PASS descriptions and ts relation to the execution semantics defined as Abstract State Machines (ASM).
 
 \begin{itemize}
@@ -7,53 +8,58 @@ Structure of PASS descriptions and ts relation to the execution semantics define
 	\item End Event
 \end{itemize}
 
-
 Structure of each chapter docuement
+
 \begin{itemize}
 	\item Informal description of PASS aspects
 	\item OWL Description of these aspects
 	\item ASM Sematic
 \end{itemize}
 
-
-
-In order to facilitate the understanding of the following sections we will introduce the philosophy of subjectorienting modelling which is the underlying PASS concept (PASS = Parallel Activity Specification Scheme). Additional we will give a short introduction to ontologies especially OWL (Web Ontology Language) and ASM (Abstract State Machines).
-
-
+In order to facilitate the understanding of the following sections we will introduce the philosophy of subject-orienting modelling which is the underlying Parallel Activity Specification Scheme (PASS). Additional we will give a short introduction to ontologies, especially the Web Ontology Language (OWL), and to Abstract State Machines (ASM) as underlying concepts of this standard document.
 
 \section{Subject Orientation and PASS }
-\label{SubjectOrient}.
+\label{SubjectOrient}
+
+\sidepar{Text in the sidebar}
+
 In this section we lay ground for PASS as a language for describing proceses in a subjectoriented way. This section is not a complete description of all PASS features it only gives a first impression about subject orientation and the specification language PASS. The advanced features are defined in the ubpcoming chapters.
 
 The term subject has manifold meanings depending on the discipline. In philosophy a subject is an observer and an object is a thing observed. In the grammar of many languages the term subject has a slightly different meaning. “According to the traditional view, subject is the doer of the action (actor) or the element that expresses what the sentence is about (topic).”(see E. L. Keenan; Towards a universal definition of 'subject'. Subject and topic, ed. by  Charles N. Li,: Academic Press New York 1976 ). In PASS the term subject coreponds to the doer of an action whereas in ontology description languages like RDF (see section \ref{IntroOntology} ) the term subject means the topic what the "sentence" is about.
 
-
 \subsection{Subject-driven Business Processes}
-Subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. This is different to other encapsulation approaches, such as multi-agent systems.\\ 
+
+Subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. This is different to other encapsulation approaches, such as multi-agent systems.
 
 Subjects communicate with each other by exchanging messages. Messages have a name and a payload. The name should express the meaning of a message informally and the payloads are the data (business objects) transported. Internally, subjects execute local activities such as calculating a price, storing an address etc.
+
 A subject sends messages to other subjects, expects messages from other subjects, and executes internal actions. All these activities are done in sequences which are defined in a subject's behavior specification.
 Subject-oriented process specifications are embedded in a context. A context is defined by the business organization and the technology by which a business process is executed.
+
 Subject-oriented system development integrates established theories and concepts. It has been inspired by various process algebras (see e.g. [2], [3], [4]), by the basic structure of nearly all natural languages (Subject, Predicate, Object) and the systemic sociology developed by Niklas Luhmann (an introduction can be found in [5]). According to the organizational theory developed by Luhmann the smallest organization consists of communication executed between at least two information processing entities [5]. The integrated concepts have been enhanced and adapted to organizational stakeholder requirements, such as providing a simple graphical notation, as detailed in the following sections.
-\newpage
 
 \subsection{Subject Interaction and Behavior}
+
 We introduce the basic concepts of process modeling in S-BPM using a simple order process. A customer sends an order to the order handling department of a supplier. He is going to receive an order confirmation and the ordered product by the shipment company. Figure \ref{fig:ordercomstructure} shows the communication structure of that process. The involved subjects and the messages they exchange can easily be grasped. 
 
-\begin{figure}[ph]
+\strictpagecheck
+\begin{figure}[htbp]
+	\begin{sidecaption}[The Communication Structure in the Order Process]{The Communication Structure in the Order Process}
 	\centering
 	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure}
-	\caption[The Communication Structure in the Order Process]{The Communication Structure in the Order Process}
+	\end{sidecaption}
 	\label{fig:ordercomstructure}
 \end{figure}
 
 Each subject has a so-called input pool which is its mail box for receiving messages. This input pool can be structured according to the business requirements at hand. The modeler can define how many messages of which type and/or from which sender can be deposited and what the reaction is if these restrictions are violated. This means the synchronization through message exchange can be specified for each subject individually.
-Messages have an intuitive meaning expressed by their name. A formal semantic is given by their use and the data which are transported with a message. Figure \ref{fig:ordercustomerorderhandling} depicts the behavior of the subjects "customer" and "order handling".\\
-\newpage
-\begin{figure}[ph]
+Messages have an intuitive meaning expressed by their name. A formal semantic is given by their use and the data which are transported with a message. Figure \ref{fig:ordercustomerorderhandling} depicts the behavior of the subjects "customer" and "order handling".
+
+\strictpagecheck
+\begin{figure}[htbp]
+	\begin{sidecaption}[The Behavior of Subjects]{The Behavior of Subjects}
 	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerOrderHandling}
-	\caption[The Behavior of Subjects]{The Behavior of Subjects}
+	\includegraphics[width=0.9\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerOrderHandling}
+	\end{sidecaption}
 	\label{fig:ordercustomerorderhandling}
 \end{figure}
 
@@ -62,16 +68,19 @@ In the first state of its behavior the subject "customer" executes the internal 
 The subject "Order Handling" waits for the message "order" from the subject "customer". If this message is in the input pool it is removed and the succeeding function "check order" is executed and so on.
 
 The behavior of each subject describes in which order it sends messages, expects (receives) and performs internal functions. Messages transport data from the sending to the receiving subject, and internal functions operate on internal data of a subject. These data aspects of a subject are described in section \ref{SUbjects-Objects} In a dynamic and fast changing world, processes need to  be able to capture known but unpredictable events. In our example let us assume that a customer can change an order. This means the subject "customer" may send the message "Change order" at any time. Figure \ref{fig:ordercomstructure} shows the corresponding communication structure, which now contains the message "change order".
-\newpage
-\begin{figure}[ph]
+
+\strictpagecheck
+\begin{figure}[htbp]
+	\begin{sidecaption}[The Communication Structure with Change Message]{The Communication Structure with Change Message}
 	\centering
 	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure}
-	\caption[The Communication Structure with Change Message]{The Communication Structure with Change Message}
+	\end{sidecaption}
 	\label{fig:ordercomstructure}
 \end{figure}
 
 Due to this unpredictable event the behavior of the involved subjects needs also to be adapted. Figure \ref{fig:ordercustomerchange} illustrates the respective behavior of the customer. 
 
+\strictpagecheck
 \begin{figure}[ph]
 	\centering
 	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerChange}
@@ -86,8 +95,8 @@ Similar to the behavior of the subject "customer" the behavior of the subject "o
 
 \subsection{Subjects and Objects}
 \label{SUbjects-Objects}
-Up to now we did not mention data or the objects with their predicates, in order to get complete sentences comprising subject, predicate, and object. Figure \ref{fig:subjectobject} displays how subjects and objects are connected. The internal function "prepare order" uses internal data to prepare the data for the order message. This order data is sent as payload of the message "order".
 
+Up to now we did not mention data or the objects with their predicates, in order to get complete sentences comprising subject, predicate, and object. Figure \ref{fig:subjectobject} displays how subjects and objects are connected. The internal function "prepare order" uses internal data to prepare the data for the order message. This order data is sent as payload of the message "order".
 
 \begin{figure}[ph]
 	\centering
@@ -97,8 +106,6 @@ Up to now we did not mention data or the objects with their predicates, in order
 \end{figure}
 
 The internal functions in a subject can be realized as methods of an object or functions implemented in a service, if a service-oriented architecture is available. These objects have an additional method for each message. If a message is sent, the method allows receiving data values sent with the message, and if a message is received the corresponding method is used to store the received data in the object [22]. This means either subjects are the entities which use synchronous services as implementation of functions or asynchronous services are implemented through subjects or even through complex processes consisting of several subjects. Consequently, , the concept Service Oriented Architecture (SOA) is complementary to S-BPM: Subjects are the entities which use the services offered by SOAs (cf. [25]).
-
-
 
 \section{Introduction to Ontologies and OWL }
 \label{IntroOntology}
@@ -110,27 +117,32 @@ In computer science and information science, an ontology encompasses a represent
 The Resource Description Framework (RDF) provides a graph-based data model or framework for structuring data as statements about resources. A “resource” may be any “thing” that exists in the world: a person, place, event, book, museum object, but also an abstract concept like data objects.
 The following figure \ref{fig:classes-properties}  shows an RDF graph.
 
-\begin{figure}[ph!]
+\strictpagecheck
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Properties}
-	\caption[RDF graphic]{RDF graphic}
+	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Properties}
+	\begin{sidecaption}
+		[RDF graphic]{RDF graphic}
+	\end{sidecaption}
 	\label{fig:classes-properties}
 \end{figure}
 
-RDF is based on the idea of making statements about resources (in particular web resources) in expressions of the form subject–predicate–object, known as triples. The subject denotes the resource, and the predicate denotes traits or aspects of the resource, and expresses a relationship between the subject and the object. In the context of ontology the term subject expresses what the sentence is about (topic) (see \ref{SubjectOrient}).\\
-For describing ontologies several languages have been developed. One widely used langauge is OWL (world wide web ontology language) which is based on the Resource Description Framework (RDF).
-OWL has classes, properties and instances. Classes represents terms also called concepts. Classes have properties and instances are individuals of one or more classes.
-A class is a type of thing. A type of “resource” in the RDF sense can be
-person, place, object, concept, event, etc.. Classes and subclasses form a hierarchical
-taxonomy and members of a subclass inherit the characteristics of their parent class
-(superclass). Everything whichis true for the parent class is also true for the subclass.
-A member of a subclass “is a”, or “is a kind of” its parent class.\\
-Ontologies define a set of properties used in a specific knowledge domain. In an ontology context, properties relate members of one class to members of another class, or to a literal.\\
-Domains and ranges define restrictions on properties. A domain restricts what kinds of resources or members of a class can be the subject of a given property in an
-RDF triple.A range restricts what kinds of resources / members of a
-class or data types (literals) can be the object of a given property in an RDF triple.\\
-Entities belonging to a certain class are instances of this class or inviduals. A simple ontology with various classes, properties and individual is shown below:
+RDF is based on the idea of making statements about resources (in particular web resources) in expressions of the form subject–predicate–object, known as triples. The subject denotes the resource, and the predicate denotes traits or aspects of the resource, and expresses a relationship between the subject and the object. In the context of ontology the term subject expresses what the sentence is about (topic) (see \ref{SubjectOrient}).
 
+For describing ontologies several languages have been developed. One widely used langauge is OWL (world wide web ontology language) which is based on the Resource Description Framework (RDF).
+
+OWL has classes, properties and instances. Classes represents terms also called concepts. Classes have properties and instances are individuals of one or more classes.
+
+A class is a type of thing. A type of “resource” in the RDF sense can be
+person, place, object, concept, event, etc.. Classes and subclasses form a hierarchical taxonomy and members of a subclass inherit the characteristics of their parent class (superclass). Everything whichis true for the parent class is also true for the subclass.
+
+A member of a subclass “is a”, or “is a kind of” its parent class.\\
+Ontologies define a set of properties used in a specific knowledge domain. In an ontology context, properties relate members of one class to members of another class, or to a literal.
+
+Domains and ranges define restrictions on properties. A domain restricts what kinds of resources or members of a class can be the subject of a given property in an RDF triple.A range restricts what kinds of resources / members of a
+class or data types (literals) can be the object of a given property in an RDF triple.
+
+Entities belonging to a certain class are instances of this class or inviduals. A simple ontology with various classes, properties and individual is shown below:
 
 Ontology statement examples:
 \begin{itemize}
@@ -153,10 +165,10 @@ Ontology statement examples:
 	\end{itemize}
 \end{itemize}
 
-
 \section{Introduction to Abstract State Machines }
 
 An abstract state machine (ASM) is a state machine operating on states that are arbitrary data structures (structure in the sense of mathematical logic, that is a nonempty set together with a number of functions (operations) and relations over the set).
+
 The language of the so called Abstract STate Machine uses only elementary If-Then-Else-rules which are typical also for rule systems formulated in natural language, i.e., rules of the (symbolic) form\
 \textbf{if} \textit{Condition} \textbf{then} \textit{ACTION}\
 with arbitrary \textit{Condition} and \textit{ACTION}. The latter is usually a finite set of assignments of form \textit{f (t1, ..., tn) := t}. The meaning of such a rule is to perform in any given state the indicated action if the indicated condition holds in this state.\ 

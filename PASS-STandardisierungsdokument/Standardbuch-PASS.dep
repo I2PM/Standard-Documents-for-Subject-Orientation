@@ -1,0 +1,115 @@
+\RequireVersions{
+  *{application}{TeX}     {1990/03/25 v3.x}
+  *{format} {LaTeX2e}     {2018-12-01 v2.e}
+  *{package}{snapshot}    {2002/03/05 v1.14}
+  *{class}  {memoir}      {2018/12/12 v3.7h}
+  *{package}{ifpdf}       {2018/09/07 v3.3}
+  *{package}{ifetex}      {2018/03/31 v1.2a}
+  *{package}{ifxetex}     {2010/09/12 v0.6}
+  *{package}{ifluatex}    {2016/05/16 v1.4}
+  *{file}   {mem11.clo}   {2008/01/30 v0.3}
+  *{package}{array}       {2018/12/30 v2.4k}
+  *{package}{dcolumn}     {2014/10/28 v1.06}
+  *{package}{delarray}    {2014/10/28 v1.01}
+  *{package}{tabularx}    {2016/02/03 v2.11b}
+  *{package}{fontenc}     {0000/00/00 v0.0}
+  *{file}   {t1enc.def}   {2018/08/11 v2.0j}
+  *{package}{textcomp}    {2018/08/11 v2.0j}
+  *{file}   {ts1enc.def}  {2001/06/05 v3.0e}
+  *{file}   {ts1enc.dfu}  {2018/10/05 v1.2f}
+  *{package}{memsty}      {2010/02/09 v0.0}
+  *{package}{etex}        {2016/08/01 v2.7}
+  *{package}{layouts}     {2009/09/02 v2.6d}
+  *{package}{url}         {2013/09/16 v3.4}
+  *{package}{fixltx2e}    {2016/12/29 v2.1a}
+  *{package}{alltt}       {1997/06/16 v2.0g}
+  *{package}{graphicx}    {2017/06/01 v1.1a}
+  *{package}{keyval}      {2014/10/28 v1.15}
+  *{package}{graphics}    {2017/06/25 v1.2c}
+  *{package}{trig}        {2016/01/03 v1.10}
+  *{file}   {graphics.cfg}{2016/06/04 v1.11}
+  *{file}   {pdftex.def}  {2018/01/08 v1.0l}
+  *{package}{xcolor}      {2016/05/11 v2.12}
+  *{file}   {color.cfg}   {2016/01/02 v1.6}
+  *{package}{latexsym}    {1998/08/17 v2.2e}
+  *{package}{memfonts}    {2007/11/13 v1.0}
+  *{package}{pifont}      {2005/04/12 v9.2a}
+  *{file}   {upzd.fd}     {2001/06/04 v0.0}
+  *{file}   {upsy.fd}     {2001/06/04 v0.0}
+  *{package}{amsmath}     {2018/12/01 v2.17b}
+  *{package}{amstext}     {2000/06/29 v2.01}
+  *{package}{amsgen}      {1999/11/30 v2.0}
+  *{package}{amsbsy}      {1999/11/29 v1.2d}
+  *{package}{amsopn}      {2016/03/08 v2.02}
+  *{package}{fontenc}     {0000/00/00 v0.0}
+  *{file}   {t1enc.def}   {2018/08/11 v2.0j}
+  *{package}{hyperref}    {2018/11/30 v6.88e}
+  *{package}{hobsub-hyperref}{2016/05/16 v1.14}
+  *{package}{hobsub-generic}{2016/05/16 v1.14}
+  *{package}{hobsub}      {2016/05/16 v1.14}
+  *{package}{infwarerr}   {2016/05/16 v1.4}
+  *{package}{ltxcmds}     {2016/05/16 v1.23}
+  *{package}{ifvtex}      {2016/05/16 v1.6}
+  *{package}{intcalc}     {2016/05/16 v1.2}
+  *{package}{etexcmds}    {2016/05/16 v1.6}
+  *{package}{kvsetkeys}   {2016/05/16 v1.17}
+  *{package}{kvdefinekeys}{2016/05/16 v1.4}
+  *{package}{pdftexcmds}  {2018/09/10 v0.29}
+  *{package}{pdfescape}   {2016/05/16 v1.14}
+  *{package}{bigintcalc}  {2016/05/16 v1.4}
+  *{package}{bitset}      {2016/05/16 v1.2}
+  *{package}{uniquecounter}{2016/05/16 v1.3}
+  *{package}{letltxmacro} {2016/05/16 v1.5}
+  *{package}{hopatch}     {2016/05/16 v1.3}
+  *{package}{xcolor-patch}{2016/05/16 v0.0}
+  *{package}{atveryend}   {2016/05/16 v1.9}
+  *{package}{atbegshi}    {2016/06/09 v1.18}
+  *{package}{refcount}    {2016/05/16 v3.5}
+  *{package}{hycolor}     {2016/05/16 v1.8}
+  *{package}{auxhook}     {2016/05/16 v1.4}
+  *{package}{kvoptions}   {2016/05/16 v3.12}
+  *{file}   {pd1enc.def}  {2018/11/30 v6.88e}
+  *{file}   {hyperref.cfg}{2002/06/06 v1.2}
+  *{package}{memhfixc}    {2013/05/30 v1.17}
+  *{file}   {hpdftex.def} {2018/11/30 v6.88e}
+  *{package}{rerunfilecheck}{2016/05/16 v1.8}
+  *{package}{comment}     {0000/00/00 v0.0}
+  *{package}{titlepages}  {2009/07/09 v1.1}
+  *{package}{memlays}     {2002/08/10 v1.0}
+  *{package}{dpfloat}     {2006/10/05 v0.0}
+  *{package}{fonttable}   {2017/06/06 v1.6c}
+  *{package}{lipsum}      {2019/01/02 v2.2}
+  *{package}{expl3}       {2019-02-15 v3}
+  *{file}   {expl3-code.tex}{2019-02-15 v3}
+  *{file}   {l3pdfmode.def}{2019-02-15 v3}
+  *{package}{xparse}      {2018-10-17 v3}
+  *{file}   {lipsum.ltd}  {0000/00/00 v0.0}
+  *{package}{sidecap}     {2003/06/06 v1.6f}
+  *{package}{ifthen}      {2014/09/29 v1.1c}
+  *{package}{wrapfig}     {2003/01/31 v3.6}
+  *{package}{keystroke}   {2010/04/23 v1.6}
+  *{file}   {keystroke_left.pdf}{Graphic v0.0}
+  *{file}   {keystroke_middle.pdf}{Graphic v0.0}
+  *{file}   {keystroke_right.pdf}{Graphic v0.0}
+  *{file}   {ts1cmr.fd}   {2014/09/29 v2.5h}
+  *{file}   {t1ppl.fd}    {2001/06/04 v1/ppl.}
+  *{file}   {supp-pdf.mkii}{0000/00/00 v0.0}
+  *{package}{epstopdf-base}{2016/05/15 v2.6}
+  *{package}{grfext}      {2016/05/16 v1.2}
+  *{file}   {epstopdf-sys.cfg}{2010/07/13 v1.3}
+  *{package}{nameref}     {2016/05/21 v2.44}
+  *{package}{gettitlestring}{2016/05/16 v1.5}
+  *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
+  *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
+  *{package}{ragged2e}    {2009/05/21 v2.1}
+  *{package}{everysel}    {2011/10/28 v1.2}
+  *{file}   {ts1ppl.fd}   {2001/06/04 v1/ppl.}
+  *{file}   {ulasy.fd}    {1998/08/17 v2.2e}
+  *{file}   {./TeX_files/chapter01.tex}{0000/00/00 v0.0}
+  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
+  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerOrderHandling.jpg}{0000/00/00 v0.0}
+  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
+  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerChange.jpg}{0000/00/00 v0.0}
+  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SUbjectObject.jpg}{0000/00/00 v0.0}
+  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Properties.jpg}{0000/00/00 v0.0}
+}

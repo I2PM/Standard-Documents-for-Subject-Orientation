@@ -1,40 +1,237 @@
-\documentclass[a4paper,12pt]{book}
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{enumitem}
-\usepackage{xcolor}
-\usepackage{booktabs}
-\usepackage{lscape}
-\usepackage{ltablex}
+\RequirePackage{snapshot}
+
+\documentclass[11pt, showtrims, final]{memoir}
+
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+\usepackage{memsty}
 \usepackage{comment}
-\renewlist{itemize}{itemize}{20}
-\usepackage{listings}
+
+\usepackage{titlepages}
+\usepackage{memlays}
+\usepackage{dpfloat}
+\usepackage{fonttable}[2009/04/01]
+
+\usepackage{lipsum}
+
+\usepackage{sidecap}
+\usepackage{wrapfig}
+
+\usepackage{keystroke}
+
+% Use the built-in division styling
+\headstyles{memman}
+
+% BoD bietet zwei Grossformate an: A4 und etwas kleiner
+% Springer empfiehlt 24 x 17
+\setstocksize{29.7cm}{21cm}
+
+% size of the page after trimming the typeblock
+% Springer Textfeld inkl. Kopfzeile 20.5 x 13.5
+\settrimmedsize{29.7cm}{21.0cm}{*}
+
+% lines of text
+\settypeblocksize{50\onelineskip}{32pc}{*}
+
+% Stocksize ist deckungsgleich mit Druckbereich
+\setlength{\trimtop}{0pt}
+\setlength{\trimedge}{\stockwidth}
+\addtolength{\trimedge}{-\paperwidth}
+
+% Margins
+\setulmargins{2.0cm}{*}{*}
+\setlrmargins{2.0cm}{*}{*}
+
+\setheadfoot{\onelineskip}{\onelineskip}
+\setheaderspaces{*}{\onelineskip}{*}
+
+\setmarginnotes{17pt}{3cm}{\onelineskip}
+
+\sideparmargin{outer}
+\sidecapmargin{outer}
+
+\checkandfixthelayout[lines]
+
+\title{Standard for the Subject-oriented\\ Specification of Systems}
+\author{Stephan Borgert, Matthes Elstermann, Albert Fleischmann, \\ Reinhard Gniza, Herbert Kindermann, Florian Krenn,\\ Werner Schmidt, Robert Singer, Florian Strecker, André Wolski}
+
+% ToC down to subsections
+\settocdepth{subsection}
+% Numbering down to subsections as well
+\setsecnumdepth{subsection}
+
+% extra index for first lines
+\makeindex[lines]
+
+% keine Links anzeigen
+\hypersetup{
+	colorlinks=false,
+	pdfborder={0 0 0},
+}
+
+% Marginpar mit kleiner Schrift
+%\let\oldmarginpar\marginpar
+%\renewcommand{\marginpar}[1]
+%    {\oldmarginpar{\scriptsize #1 }}
+
+%\makepagenote
+
+\renewcommand*{\sideparfont}{\normalfont\footnotesize}
+
+%===================================
+
+%\documentclass[a4paper,12pt]{book}
+%\usepackage[utf8]{inputenc}
+%\usepackage{graphicx}
+%\usepackage{enumitem}
+%\usepackage{xcolor}
+%\usepackage{booktabs}
+%\usepackage{lscape}
+%\usepackage{ltablex}
+%\usepackage{comment}
+%\renewlist{itemize}{itemize}{20}
+%\usepackage{listings}
 
 % initially, use dots for all levels
-\setlist[itemize]{label=$\cdot$}
+%\setlist[itemize]{label=$\cdot$}
 
 % customize the first 3 levels
-\setlist[itemize,1]{label=\textbullet}
-\setlist[itemize,2]{label=--}
-\setlist[itemize,3]{label=*}
+%\setlist[itemize,1]{label=\textbullet}
+%\setlist[itemize,2]{label=--}
+%\setlist[itemize,3]{label=*}
 
 \begin{document}
 	
-	\author{Standardisation Gang: \\ Stephan Borgert, Matthes Elstermann, Albert Fleischmann, \\ Reinhard Gniza, Herbert Kindermann, Florian Krenn,\\ Werner Schmidt, Robert Singer, Florian Strecker, André Wolski}
-	\title{Standards for Subject-oriented\\ Specification of Systems}
-	\date{August 2018}
-	
-	\frontmatter
-	\maketitle
-	\tableofcontents
-	
-	\mainmatter
-	\include{./TeX_files/chapter01}
-	\include{./TeX_files/chapter02}
-	\include{./TeX_files/chapter03}
-	\include{./TeX_files/appendix}
-	
-%	\backmatter
-	% bibliography, glossary and index would go here.
+% Print variable
+% \the\baselineskip
+
+\chapterstyle{veelo}
+
+% wir machen eigene Titelseiten
+% \maketitle
+
+%===================================
+
+\frontmatter
+
+\pagestyle{empty}
+
+% half-title page
+\vspace*{3cm}
+\begin{adjustwidth}{0cm}{-3cm}
+	\begin{flushright}
+		\LARGE\textsf Standard for the Subject-oriented\\Specification of Systems
+	\end{flushright}
+\end{adjustwidth}
+\vspace*{\fill}
+\cleardoublepage
+
+% title page
+\vspace*{0cm}
+\begin{flushleft}
+	\Large\textsf{Albert Fleischmann \textit{Editor}}\par
+\end{flushleft}
+\vspace{2cm}
+\begin{flushleft}
+	\Huge\textsf{Standard for the Subject-oriented\\Specification of Systems}\par
+	\bigskip\bigskip
+	\Large\textsf{Working Document}
+\end{flushleft}
+\vspace{2.5cm}
+\begin{flushleft}
+	%\normalsize\textsf{With 178 Figures}
+\end{flushleft}
+\vspace*{\fill}
+\clearpage
+
+% copyright page
+\begingroup
+\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+% Platz 
+\vspace*{3cm}
+% Autoren
+\begin{flushleft}
+	Egon B\"orger\\
+	xyz\\
+	\medskip
+	Stefan Borgert\\
+	xyz\\
+	\medskip
+	Matthes Elstermann\\
+	xyz\\
+	\medskip
+	Albert Fleischmann\\
+	xyz\\
+	\medskip
+	Reinhard Gniza\\
+	xyz\\
+	\medskip
+	Herbert Kindermann\\
+	xyz\\
+	\medskip
+	Florian Krenn\\
+	xyz\\
+	\medskip
+	Werner Schmidt\\
+	xyz\\
+	\medskip
+	Robert Singer\\
+	FH JOANNEUM--University of Applied Sciences\\
+	\medskip
+	Christian Stary\\
+	xyz\\
+	\medskip
+	Florian Strecker\\
+	xyz\\
+	\medskip
+	André Wolski\\
+	xyz\\
+\end{flushleft}
+\vspace*{\fill}
+This work is subject to copyright. All rights are reserved, whether the whole or part of the material is concerned, specifically the rights of translation, reprinting, reuse of illustrations, recitation, broadcasting, reproduction on microfilm or in any other way, and storage in data banks. Duplication of this publication or parts thereof is permitted only under the provisions of the German Copyright Law of September 9, 1965, in its current version. Violations
+are liable to prosecution under the German Copyright Law.\par
+\textcopyright{ 2020} Institute of Innovative Process Management, Ingolstadt\par
+The use of general descriptive names, registered names, trademarks, etc. in this publication does not imply, even in the absence of a specific statement, that such names are exempt from the relevant protective laws and regulations and therefore free for general use.\par
+Typeset by the authors\par
+Production and publishing: XYZ\par
+ISBN: 978-3-123-45678-9 (dummy)
+\endgroup
+\clearpage
+
+\pagestyle{companion}
+
+\setupshorttoc
+\tableofcontents
+\cleardoublepage
+
+\chapter{Preface}
+
+
+
+\cleardoublepage
+
+\setupparasubsecs
+\setupmaintoc
+\tableofcontents
+\setlength{\unitlength}{1pt}
+\cleardoublepage
+
+%\listoffigures
+%\clearpage
+%\listoftables
+
+%\lipsum{2}
+
+%===================================
+
+\mainmatter
+
+\include{./TeX_files/chapter01}
+%\include{./TeX_files/chapter02}
+%\include{./TeX_files/chapter03}
+%\include{./TeX_files/appendix}
 	
 \end{document}

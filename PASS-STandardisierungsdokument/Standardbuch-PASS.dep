@@ -14,9 +14,6 @@
   *{package}{tabularx}    {2016/02/03 v2.11b}
   *{package}{fontenc}     {0000/00/00 v0.0}
   *{file}   {t1enc.def}   {2018/08/11 v2.0j}
-  *{package}{textcomp}    {2018/08/11 v2.0j}
-  *{file}   {ts1enc.def}  {2001/06/05 v3.0e}
-  *{file}   {ts1enc.dfu}  {2018/10/05 v1.2f}
   *{package}{memsty}      {2010/02/09 v0.0}
   *{package}{etex}        {2016/08/01 v2.7}
   *{package}{layouts}     {2009/09/02 v2.6d}
@@ -73,25 +70,17 @@
   *{package}{memhfixc}    {2013/05/30 v1.17}
   *{file}   {hpdftex.def} {2018/11/30 v6.88e}
   *{package}{rerunfilecheck}{2016/05/16 v1.8}
-  *{package}{comment}     {0000/00/00 v0.0}
-  *{package}{titlepages}  {2009/07/09 v1.1}
   *{package}{memlays}     {2002/08/10 v1.0}
+  *{package}{titlepages}  {2009/07/09 v1.1}
   *{package}{dpfloat}     {2006/10/05 v0.0}
   *{package}{fonttable}   {2017/06/06 v1.6c}
-  *{package}{lipsum}      {2019/01/02 v2.2}
-  *{package}{expl3}       {2019-02-15 v3}
-  *{file}   {expl3-code.tex}{2019-02-15 v3}
-  *{file}   {l3pdfmode.def}{2019-02-15 v3}
-  *{package}{xparse}      {2018-10-17 v3}
-  *{file}   {lipsum.ltd}  {0000/00/00 v0.0}
   *{package}{sidecap}     {2003/06/06 v1.6f}
   *{package}{ifthen}      {2014/09/29 v1.1c}
   *{package}{wrapfig}     {2003/01/31 v3.6}
-  *{package}{keystroke}   {2010/04/23 v1.6}
-  *{file}   {keystroke_left.pdf}{Graphic v0.0}
-  *{file}   {keystroke_middle.pdf}{Graphic v0.0}
-  *{file}   {keystroke_right.pdf}{Graphic v0.0}
-  *{file}   {ts1cmr.fd}   {2014/09/29 v2.5h}
+  *{package}{listings}    {2019/02/27 v1.8b}
+  *{package}{lstmisc}     {2019/02/27 v1.8b}
+  *{file}   {listings.cfg}{2019/02/27 v1.8b}
+  *{package}{comment}     {0000/00/00 v0.0}
   *{file}   {t1ppl.fd}    {2001/06/04 v1/ppl.}
   *{file}   {supp-pdf.mkii}{0000/00/00 v0.0}
   *{package}{epstopdf-base}{2016/05/15 v2.6}
@@ -103,7 +92,7 @@
   *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
   *{package}{ragged2e}    {2009/05/21 v2.1}
   *{package}{everysel}    {2011/10/28 v1.2}
-  *{file}   {ts1ppl.fd}   {2001/06/04 v1/ppl.}
+  *{file}   {omsppl.fd}   {0000/00/00 v0.0}
   *{file}   {ulasy.fd}    {1998/08/17 v2.2e}
   *{file}   {./TeX_files/chapter01.tex}{0000/00/00 v0.0}
   *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
@@ -112,4 +101,5 @@
   *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerChange.jpg}{0000/00/00 v0.0}
   *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SUbjectObject.jpg}{0000/00/00 v0.0}
   *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Properties.jpg}{0000/00/00 v0.0}
+  *{file}   {Standardbuch-PASS.bbl}{0000/00/00 v0.0}
 }

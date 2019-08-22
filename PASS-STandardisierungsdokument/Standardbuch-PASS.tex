@@ -1,24 +1,22 @@
+% !TeX spellcheck = en_US
+
 \RequirePackage{snapshot}
 
 \documentclass[11pt, showtrims, final]{memoir}
 
 \usepackage[T1]{fontenc}
-\usepackage{textcomp}
 
 \usepackage{memsty}
-\usepackage{comment}
-
-\usepackage{titlepages}
 \usepackage{memlays}
+\usepackage{titlepages}
 \usepackage{dpfloat}
 \usepackage{fonttable}[2009/04/01]
-
-\usepackage{lipsum}
-
 \usepackage{sidecap}
 \usepackage{wrapfig}
 
-\usepackage{keystroke}
+\usepackage{listings}
+
+\usepackage{comment}
 
 % Use the built-in division styling
 \headstyles{memman}
@@ -40,16 +38,16 @@
 \addtolength{\trimedge}{-\paperwidth}
 
 % Margins
-\setulmargins{2.0cm}{*}{*}
-\setlrmargins{2.0cm}{*}{*}
+%\setulmargins{2.0cm}{*}{*}
+%\setlrmargins{2.0cm}{*}{*}
 
-\setheadfoot{\onelineskip}{\onelineskip}
-\setheaderspaces{*}{\onelineskip}{*}
+%\setheadfoot{\onelineskip}{\onelineskip}
+%\setheaderspaces{*}{\onelineskip}{*}
 
-\setmarginnotes{17pt}{3cm}{\onelineskip}
+%\setmarginnotes{17pt}{3cm}{\onelineskip}
 
-\sideparmargin{outer}
-\sidecapmargin{outer}
+%\sideparmargin{outer}
+%\sidecapmargin{outer}
 
 \checkandfixthelayout[lines]
 
@@ -70,48 +68,11 @@
 	pdfborder={0 0 0},
 }
 
-% Marginpar mit kleiner Schrift
-%\let\oldmarginpar\marginpar
-%\renewcommand{\marginpar}[1]
-%    {\oldmarginpar{\scriptsize #1 }}
-
-%\makepagenote
-
 \renewcommand*{\sideparfont}{\normalfont\footnotesize}
 
-%===================================
-
-%\documentclass[a4paper,12pt]{book}
-%\usepackage[utf8]{inputenc}
-%\usepackage{graphicx}
-%\usepackage{enumitem}
-%\usepackage{xcolor}
-%\usepackage{booktabs}
-%\usepackage{lscape}
-%\usepackage{ltablex}
-%\usepackage{comment}
-%\renewlist{itemize}{itemize}{20}
-%\usepackage{listings}
-
-% initially, use dots for all levels
-%\setlist[itemize]{label=$\cdot$}
-
-% customize the first 3 levels
-%\setlist[itemize,1]{label=\textbullet}
-%\setlist[itemize,2]{label=--}
-%\setlist[itemize,3]{label=*}
-
 \begin{document}
-	
-% Print variable
-% \the\baselineskip
 
 \chapterstyle{veelo}
-
-% wir machen eigene Titelseiten
-% \maketitle
-
-%===================================
 
 \frontmatter
 
@@ -209,8 +170,6 @@ ISBN: 978-3-123-45678-9 (dummy)
 
 \chapter{Preface}
 
-
-
 \cleardoublepage
 
 \setupparasubsecs
@@ -233,5 +192,10 @@ ISBN: 978-3-123-45678-9 (dummy)
 %\include{./TeX_files/chapter02}
 %\include{./TeX_files/chapter03}
 %\include{./TeX_files/appendix}
-	
+
+\backmatter
+
+%\bibliographystyle{IEEEtran}
+\bibliography{Standard}
+
 \end{document}

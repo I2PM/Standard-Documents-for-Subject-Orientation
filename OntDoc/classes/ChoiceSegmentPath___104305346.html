@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Ontology Browser</title>
+<meta http-equiv='content-type' content='text/html;charset=UTF-8'>
+<link rel='stylesheet' href='../css/default.css' type='text/css' />
+</head>
+
+<body>
+
+<div id='tabs'>
+<a href='../ontologies/index.html' class='' >Ontologies</a>
+<a href='index.html' class='' >Classes</a>
+<a href='../objectproperties/index.html' class='' >Object Properties</a>
+<a href='../dataproperties/index.html' class='' >Data Properties</a>
+<a href='../annotationproperties/index.html' class='' >Annotation Properties</a>
+<a href='../individuals/index.html' class='' >Individuals</a>
+<a href='../datatypes/index.html' class='' >Datatypes</a>
+<a href='../cloud/' class='' >Clouds</a>
+</div> <!-- tabs -->
+
+
+<div class='summary'><h2>Class: ChoiceSegmentPath</h2>
+
+<div id='annotations_(1)'>
+<h4>Annotations (1)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="../annotationproperties/comment___1501100887.html" class='Annotation Property' title="http://www.w3.org/2000/01/rdf-schema#comment">rdfs:comment</a> <span class='literal'>"ChoiceSegments are groups of defined ChoiceSegementPaths. The paths may contain any amount of states. However, those states may not reach out of the bounds of the ChoiceSegmentPath.<br /><br />The path may contain any amount of states but may those states may not reach out of the bounds of the choice segment path.<br /><br />Similar to an initial state of a behavior a choice segment path must have one determined initial state.<br /><br />A transition within a choice segment path must not have a target state that is not inside the same choice segment path."</span> <span style='color: black;'>@en</span></li>
+</ul>
+</div>
+</div><!-- annotations (1) -->
+
+
+<div id='superclasses_(7)'>
+<h4>Superclasses (7)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="State___1087395260.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#State">State</a></li>
+<li class="asserted"><a href="../objectproperties/contains___439744362.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#contains">contains</a> <span class='min'>min</span> 1 <a href="State___1087395260.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#State">State</a></li>
+<li class="asserted"><a href="../objectproperties/belongsTo___249251322.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#belongsTo">belongsTo</a> <span class='exactly'>exactly</span> 1 <a href="ChoiceSegment___-1259199619.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ChoiceSegment">ChoiceSegment</a></li>
+<li class="asserted"><a href="../objectproperties/hasEndState___1301142139.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasEndState">hasEndState</a> <span class='exactly'>exactly</span> 1 <a href="State___1087395260.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#State">State</a></li>
+<li class="asserted"><a href="../objectproperties/hasInitialState___1741338802.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasInitialState">hasInitialState</a> <span class='exactly'>exactly</span> 1 <a href="InitialStateOfChoiceSegmentPath___2126701758.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InitialStateOfChoiceSegmentPath">InitialStateOfChoiceSegmentPath</a></li>
+<li class="asserted"><a href="../dataproperties/isOptionalToEndChoiceSegmentPath___-1001613908.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#isOptionalToEndChoiceSegmentPath">isOptionalToEndChoiceSegmentPath</a> <span class='max'>max</span> 1 <a href="../datatypes/boolean___1756652655.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a></li>
+<li class="asserted"><a href="../dataproperties/isOptionalToStartChoiceSegmentPath___722596805.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#isOptionalToStartChoiceSegmentPath">isOptionalToStartChoiceSegmentPath</a> <span class='max'>max</span> 1 <a href="../datatypes/boolean___1756652655.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a></li>
+</ul>
+</div>
+</div><!-- superclasses (7) -->
+
+
+<div id='disjoints_(6)'>
+<h4>Disjoints (6)</h4>
+<div class='codebox'>
+<span class="asserted"><a href="ChoiceSegment___-1259199619.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ChoiceSegment">ChoiceSegment</a></span>,
+<span class="asserted"><span class='Class active-entity'>ChoiceSegmentPath</span></span>,
+<span class="asserted"><a href="GenericReturnToOriginReference___-1891655410.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#GenericReturnToOriginReference">GenericReturnToOriginReference</a></span>,
+<span class="asserted"><a href="InitialStateOfBehavior___1997462081.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InitialStateOfBehavior">InitialStateOfBehavior</a></span>,
+<span class="asserted"><a href="InitialStateOfChoiceSegmentPath___2126701758.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InitialStateOfChoiceSegmentPath">InitialStateOfChoiceSegmentPath</a></span>,
+<span class="asserted"><a href="StateReference___-1920500955.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#StateReference">StateReference</a></span></div>
+</div><!-- disjoints (6) -->
+
+
+<div id='usage_(12)'>
+<h4>Usage (12)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="MandatoryToEndChoiceSegmentPath___-1108465797.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MandatoryToEndChoiceSegmentPath">MandatoryToEndChoiceSegmentPath</a> <span class='keyword'>&equiv;</span> <span class='Class active-entity'>ChoiceSegmentPath</span> <span class='keyword'>and</span> <a href="../dataproperties/isOptionalToStartChoiceSegmentPath___722596805.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#isOptionalToStartChoiceSegmentPath">isOptionalToStartChoiceSegmentPath</a> <span class='value'>value</span> <span class='literal'>"true"</span>(<a href="../datatypes/boolean___1756652655.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a>)</li>
+<li class="asserted"><a href="MandatoryToStartChoiceSegmentPath___1117146580.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MandatoryToStartChoiceSegmentPath">MandatoryToStartChoiceSegmentPath</a> <span class='keyword'>&equiv;</span> <span class='Class active-entity'>ChoiceSegmentPath</span> <span class='keyword'>and</span> <a href="../dataproperties/isOptionalToEndChoiceSegmentPath___-1001613908.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#isOptionalToEndChoiceSegmentPath">isOptionalToEndChoiceSegmentPath</a> <span class='value'>value</span> <span class='literal'>"true"</span>(<a href="../datatypes/boolean___1756652655.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a>)</li>
+<li class="asserted"><a href="OptionalToEndChoiceSegmentPath___-2081395198.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#OptionalToEndChoiceSegmentPath">OptionalToEndChoiceSegmentPath</a> <span class='keyword'>&equiv;</span> <span class='Class active-entity'>ChoiceSegmentPath</span> <span class='keyword'>and</span> <a href="../dataproperties/isOptionalToStartChoiceSegmentPath___722596805.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#isOptionalToStartChoiceSegmentPath">isOptionalToStartChoiceSegmentPath</a> <span class='value'>value</span> <span class='literal'>"false"</span>(<a href="../datatypes/boolean___1756652655.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a>)</li>
+<li class="asserted"><a href="OptionalToStartChoiceSegmentPath___-1860104549.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#OptionalToStartChoiceSegmentPath">OptionalToStartChoiceSegmentPath</a> <span class='keyword'>&equiv;</span> <span class='Class active-entity'>ChoiceSegmentPath</span> <span class='keyword'>and</span> <a href="../dataproperties/isOptionalToEndChoiceSegmentPath___-1001613908.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#isOptionalToEndChoiceSegmentPath">isOptionalToEndChoiceSegmentPath</a> <span class='value'>value</span> <span class='literal'>"false"</span>(<a href="../datatypes/boolean___1756652655.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a>)</li>
+<li class="asserted"><a href="ChoiceSegment___-1259199619.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ChoiceSegment">ChoiceSegment</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/contains___439744362.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#contains">contains</a> <span class='min'>min</span> 2 <span class='Class active-entity'>ChoiceSegmentPath</span></li>
+<li class="asserted"><a href="InitialStateOfChoiceSegmentPath___2126701758.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InitialStateOfChoiceSegmentPath">InitialStateOfChoiceSegmentPath</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/belongsTo___249251322.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#belongsTo">belongsTo</a> <span class='exactly'>exactly</span> 1 <span class='Class active-entity'>ChoiceSegmentPath</span></li>
+<li class="asserted"><a href="../objectproperties/hasEndState___1301142139.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasEndState">hasEndState</a> <span class='keyword'>Domain</span> (<a href="SubjectBehavior___-640894775.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#SubjectBehavior">SubjectBehavior</a> <span class='keyword'>or</span> <span class='Class active-entity'>ChoiceSegmentPath</span>)</li>
+<li class="asserted"><a href="../objectproperties/hasInitialState___1741338802.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasInitialState">hasInitialState</a> <span class='keyword'>Domain</span> (<a href="SubjectBehavior___-640894775.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#SubjectBehavior">SubjectBehavior</a> <span class='keyword'>or</span> <span class='Class active-entity'>ChoiceSegmentPath</span>)</li>
+<li class="asserted"><a href="../objectproperties/isEndStateOf___1508826882.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#isEndStateOf">isEndStateOf</a> <span class='keyword'>Range</span> (<a href="SubjectBehavior___-640894775.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#SubjectBehavior">SubjectBehavior</a> <span class='keyword'>or</span> <span class='Class active-entity'>ChoiceSegmentPath</span>)</li>
+<li class="asserted"><a href="../objectproperties/isInitialStateOf___-945339527.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#isInitialStateOf">isInitialStateOf</a> <span class='keyword'>Range</span> (<a href="SubjectBehavior___-640894775.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#SubjectBehavior">SubjectBehavior</a> <span class='keyword'>or</span> <span class='Class active-entity'>ChoiceSegmentPath</span>)</li>
+<li class="asserted"><a href="../dataproperties/isOptionalToEndChoiceSegmentPath___-1001613908.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#isOptionalToEndChoiceSegmentPath">isOptionalToEndChoiceSegmentPath</a> <span class='keyword'>Domain</span> <span class='Class active-entity'>ChoiceSegmentPath</span></li>
+<li class="asserted"><a href="../dataproperties/isOptionalToStartChoiceSegmentPath___722596805.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#isOptionalToStartChoiceSegmentPath">isOptionalToStartChoiceSegmentPath</a> <span class='keyword'>Domain</span> <span class='Class active-entity'>ChoiceSegmentPath</span></li>
+</ul>
+</div>
+</div><!-- usage (12) -->
+
+</div> <!-- summary -->
+<p class='footer'>
+<a href='http://code.google.com/p/ontology-browser/' target='_blank'>OWL HTML inside</a>
+</p>
+</body>
+</html>

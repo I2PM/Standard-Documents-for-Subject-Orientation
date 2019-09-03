@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Ontology Browser</title>
+<meta http-equiv='content-type' content='text/html;charset=UTF-8'>
+<link rel='stylesheet' href='../css/default.css' type='text/css' />
+</head>
+
+<body>
+
+<div id='tabs'>
+<a href='../ontologies/index.html' class='' >Ontologies</a>
+<a href='index.html' class='' >Classes</a>
+<a href='../objectproperties/index.html' class='' >Object Properties</a>
+<a href='../dataproperties/index.html' class='' >Data Properties</a>
+<a href='../annotationproperties/index.html' class='' >Annotation Properties</a>
+<a href='../individuals/index.html' class='' >Individuals</a>
+<a href='../datatypes/index.html' class='' >Datatypes</a>
+<a href='../cloud/' class='' >Clouds</a>
+</div> <!-- tabs -->
+
+
+<div class='summary'><h2>Class: MessageExchange</h2>
+
+<div id='annotations_(1)'>
+<h4>Annotations (1)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="../annotationproperties/comment___1501100887.html" class='Annotation Property' title="http://www.w3.org/2000/01/rdf-schema#comment">rdfs:comment</a> <span class='literal'>"A message exchange is an element in the interaction description section that specifies exactly one possibility of exchanging messages in the given process context of the model.<br /><br />A message exchange is a triple of, a sender, a receiver, and the specification of the message that may be exchanged.<br /><br />While message exchanges are singular occurrences, they may be grouped in MessageExchangeLists"</span> <span style='color: black;'>@en</span></li>
+</ul>
+</div>
+</div><!-- annotations (1) -->
+
+
+<div id='superclasses_(5)'>
+<h4>Superclasses (5)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="InteractionDescribingComponent___1010248462.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InteractionDescribingComponent">InteractionDescribingComponent</a></li>
+<li class="asserted"><a href="SimplePASSElement___-232013340.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#SimplePASSElement">SimplePASSElement</a></li>
+<li class="asserted"><a href="../objectproperties/hasMessageType___32799282.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasMessageType">hasMessageType</a> <span class='exactly'>exactly</span> 1 <a href="MessageSpecification___-816010841.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageSpecification">MessageSpecification</a></li>
+<li class="asserted"><a href="../objectproperties/hasReceiver___-1222039564.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasReceiver">hasReceiver</a> <span class='max'>max</span> 1 <a href="Subject___803958359.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#Subject">Subject</a></li>
+<li class="asserted"><a href="../objectproperties/hasSender___720977594.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasSender">hasSender</a> <span class='max'>max</span> 1 <a href="Subject___803958359.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#Subject">Subject</a></li>
+</ul>
+</div>
+</div><!-- superclasses (5) -->
+
+
+<div id='disjoints_(5)'>
+<h4>Disjoints (5)</h4>
+<div class='codebox'>
+<span class="asserted"><a href="InputPoolConstraint___63904430.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraint">InputPoolConstraint</a></span>,
+<span class="asserted"><span class='Class active-entity'>MessageExchange</span></span>,
+<span class="asserted"><a href="MessageExchangeList___-1682197453.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageExchangeList">MessageExchangeList</a></span>,
+<span class="asserted"><a href="MessageSpecification___-816010841.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageSpecification">MessageSpecification</a></span>,
+<span class="asserted"><a href="Subject___803958359.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#Subject">Subject</a></span></div>
+</div><!-- disjoints (5) -->
+
+
+<div id='usage_(13)'>
+<h4>Usage (13)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="MessageExchangeCondition___-1384560036.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageExchangeCondition">MessageExchangeCondition</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/requiresPerformedMessageExchange___-1142766973.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#requiresPerformedMessageExchange">requiresPerformedMessageExchange</a> <span class='exactly'>exactly</span> 1 <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="MessageExchangeList___-1682197453.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageExchangeList">MessageExchangeList</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/contains___439744362.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#contains">contains</a> <span class='some'>some</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="PASSProcessModel___-1722598922.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#PASSProcessModel">PASSProcessModel</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/hasRelationToModelComponent___-1710590128.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasRelationToModelComponent">hasRelationToModelComponent</a> <span class='some'>some</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="Subject___803958359.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#Subject">Subject</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/hasIncomingMessageExchange___-1843387499.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasIncomingMessageExchange">hasIncomingMessageExchange</a> <span class='some'>some</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="Subject___803958359.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#Subject">Subject</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/hasOutgoingMessageExchange___828388239.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasOutgoingMessageExchange">hasOutgoingMessageExchange</a> <span class='some'>some</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="../objectproperties/hasMessageType___32799282.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasMessageType">hasMessageType</a> <span class='keyword'>Domain</span> (<a href="MessageTypeConstraint___1068811721.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageTypeConstraint">MessageTypeConstraint</a> <span class='keyword'>or</span> <a href="MessageSenderTypeConstraint___-1734542818.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageSenderTypeConstraint">MessageSenderTypeConstraint</a> <span class='keyword'>or</span> <span class='Class active-entity'>MessageExchange</span>)</li>
+<li class="asserted"><a href="../objectproperties/hasReceiver___-1222039564.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasReceiver">hasReceiver</a> <span class='keyword'>Domain</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="../objectproperties/hasSender___720977594.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasSender">hasSender</a> <span class='keyword'>Domain</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="../objectproperties/hasIncomingMessageExchange___-1843387499.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasIncomingMessageExchange">hasIncomingMessageExchange</a> <span class='keyword'>Range</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="../objectproperties/hasOutgoingMessageExchange___828388239.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasOutgoingMessageExchange">hasOutgoingMessageExchange</a> <span class='keyword'>Range</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"><a href="../objectproperties/requiresPerformedMessageExchange___-1142766973.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#requiresPerformedMessageExchange">requiresPerformedMessageExchange</a> <span class='keyword'>Range</span> <span class='Class active-entity'>MessageExchange</span></li>
+<li class="asserted"></li>
+<li class="asserted"></li>
+</ul>
+</div>
+</div><!-- usage (13) -->
+
+</div> <!-- summary -->
+<p class='footer'>
+<a href='http://code.google.com/p/ontology-browser/' target='_blank'>OWL HTML inside</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Ontology Browser</title>
+<meta http-equiv='content-type' content='text/html;charset=UTF-8'>
+<link rel='stylesheet' href='../css/default.css' type='text/css' />
+</head>
+
+<body>
+
+<div id='tabs'>
+<a href='../ontologies/index.html' class='' >Ontologies</a>
+<a href='index.html' class='' >Classes</a>
+<a href='../objectproperties/index.html' class='' >Object Properties</a>
+<a href='../dataproperties/index.html' class='' >Data Properties</a>
+<a href='../annotationproperties/index.html' class='' >Annotation Properties</a>
+<a href='../individuals/index.html' class='' >Individuals</a>
+<a href='../datatypes/index.html' class='' >Datatypes</a>
+<a href='../cloud/' class='' >Clouds</a>
+</div> <!-- tabs -->
+
+
+<div class='summary'><h2>Class: InputPoolContstraintHandlingStrategy</h2>
+
+<div id='annotations_(1)'>
+<h4>Annotations (1)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="../annotationproperties/comment___1501100887.html" class='Annotation Property' title="http://www.w3.org/2000/01/rdf-schema#comment">rdfs:comment</a> <span class='literal'>"Should an InputPoolConstraint be applicable, an "InputPoolConstraintHandlingStrategy" will be executed by a work-flow engine to determine what to do with the message that does not fit in the pool.<br /><br />There are    types of HandlingStrategies<br /><br />InputPoolConstraintStrategy-Blocking - No new message will be adding will need to be repeated until successful<br /><br />InputPoolConstraintStrategy-DeleteLatest - The new message will be added, but the last message to arrive before that applicable to the same constraint will be overwritten with the new one. (LIFO deleting concept)<br /><br />InputPoolConstraintStrategy-DeleteOldest - The message will be added, but the earliest message in the input pool applicable to the same constraint will be deleted (FIFO deleting concept) <br /><br />InputPoolConstraintStrategy-Drop - Sending of the message succeeds. However the new message will not be added to the in-box. Rather it will be deleted directly."</span> <span style='color: black;'>@en</span></li>
+</ul>
+</div>
+</div><!-- annotations (1) -->
+
+
+<div id='equivalents_(2)'>
+<h4>Equivalents (2)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><span class='Class active-entity'>InputPoolContstraintHandlingStrategy</span></li>
+<li class="asserted">{<a href="../individuals/InputPoolConstraintStrategy-DeleteOldest___1899128684.html" class='Individual' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraintStrategy-DeleteOldest">InputPoolConstraintStrategy-DeleteOldest</a>, <a href="../individuals/InputPoolConstraintStrategy-Blocking___-890201193.html" class='Individual' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraintStrategy-Blocking">InputPoolConstraintStrategy-Blocking</a>, <a href="../individuals/InputPoolConstraintStrategy-Drop___-1619197487.html" class='Individual' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraintStrategy-Drop">InputPoolConstraintStrategy-Drop</a>, <a href="../individuals/InputPoolConstraintStrategy-DeleteLatest___1803559156.html" class='Individual' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraintStrategy-DeleteLatest">InputPoolConstraintStrategy-DeleteLatest</a>}</li>
+</ul>
+</div>
+</div><!-- equivalents (2) -->
+
+
+<div id='superclasses_(1)'>
+<h4>Superclasses (1)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="InteractionDescribingComponent___1010248462.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InteractionDescribingComponent">InteractionDescribingComponent</a></li>
+</ul>
+</div>
+</div><!-- superclasses (1) -->
+
+
+<div id='members_(4)'>
+<h4>Members (4)</h4>
+<div class='codebox'>
+<span class="asserted"><a href="../individuals/InputPoolConstraintStrategy-Blocking___-890201193.html" class='Individual' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraintStrategy-Blocking">InputPoolConstraintStrategy-Blocking</a></span>,
+<span class="asserted"><a href="../individuals/InputPoolConstraintStrategy-DeleteLatest___1803559156.html" class='Individual' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraintStrategy-DeleteLatest">InputPoolConstraintStrategy-DeleteLatest</a></span>,
+<span class="asserted"><a href="../individuals/InputPoolConstraintStrategy-DeleteOldest___1899128684.html" class='Individual' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraintStrategy-DeleteOldest">InputPoolConstraintStrategy-DeleteOldest</a></span>,
+<span class="asserted"><a href="../individuals/InputPoolConstraintStrategy-Drop___-1619197487.html" class='Individual' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraintStrategy-Drop">InputPoolConstraintStrategy-Drop</a></span></div>
+</div><!-- members (4) -->
+
+
+<div id='usage_(2)'>
+<h4>Usage (2)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="InputPoolConstraint___63904430.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InputPoolConstraint">InputPoolConstraint</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/hasHandlingStrategy___-1799694467.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasHandlingStrategy">hasHandlingStrategy</a> <span class='exactly'>exactly</span> 1 <span class='Class active-entity'>InputPoolContstraintHandlingStrategy</span></li>
+<li class="asserted"><a href="../objectproperties/hasHandlingStrategy___-1799694467.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasHandlingStrategy">hasHandlingStrategy</a> <span class='keyword'>Range</span> <span class='Class active-entity'>InputPoolContstraintHandlingStrategy</span></li>
+</ul>
+</div>
+</div><!-- usage (2) -->
+
+</div> <!-- summary -->
+<p class='footer'>
+<a href='http://code.google.com/p/ontology-browser/' target='_blank'>OWL HTML inside</a>
+</p>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Ontology Browser</title>
+<meta http-equiv='content-type' content='text/html;charset=UTF-8'>
+<link rel='stylesheet' href='../css/default.css' type='text/css' />
+</head>
+
+<body>
+
+<div id='tabs'>
+<a href='../ontologies/index.html' class='' >Ontologies</a>
+<a href='index.html' class='' >Classes</a>
+<a href='../objectproperties/index.html' class='' >Object Properties</a>
+<a href='../dataproperties/index.html' class='' >Data Properties</a>
+<a href='../annotationproperties/index.html' class='' >Annotation Properties</a>
+<a href='../individuals/index.html' class='' >Individuals</a>
+<a href='../datatypes/index.html' class='' >Datatypes</a>
+<a href='../cloud/' class='' >Clouds</a>
+</div> <!-- tabs -->
+
+
+<div class='summary'><h2>Class: SubjectBehavior</h2>
+
+<div id='annotations_(1)'>
+<h4>Annotations (1)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="../annotationproperties/comment___1501100887.html" class='Annotation Property' title="http://www.w3.org/2000/01/rdf-schema#comment">rdfs:comment</a> <span class='literal'>"Additional to the subject interaction a PASS Model consist of multiple descriptions of subject's behaviors. These are graphs described with the means of $BehaviorDescribingComponents$<br /><br />A subject in a model may be linked to more than one behavior."</span> <span style='color: black;'>@en</span></li>
+</ul>
+</div>
+</div><!-- annotations (1) -->
+
+
+<div id='superclasses_(5)'>
+<h4>Superclasses (5)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="PASSProcessModelElement___1933801756.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#PASSProcessModelElement">PASSProcessModelElement</a></li>
+<li class="asserted"><a href="../objectproperties/contains___439744362.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#contains">contains</a> <span class='only'>only</span> <a href="BehaviorDescribingComponent___369736334.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#BehaviorDescribingComponent">BehaviorDescribingComponent</a></li>
+<li class="asserted"><a href="../objectproperties/hasEndState___1301142139.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasEndState">hasEndState</a> <span class='min'>min</span> 1 <a href="State___1087395260.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#State">State</a></li>
+<li class="asserted"><a href="../objectproperties/hasInitialState___1741338802.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasInitialState">hasInitialState</a> <span class='exactly'>exactly</span> 1 <a href="InitialStateOfBehavior___1997462081.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InitialStateOfBehavior">InitialStateOfBehavior</a></li>
+<li class="asserted"><a href="../dataproperties/hasPriorityNumber___-1863532398.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#hasPriorityNumber">hasPriorityNumber</a> <span class='exactly'>exactly</span> 1 <a href="../datatypes/nonNegativeInteger___-179353341.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">xsd:nonNegativeInteger</a></li>
+</ul>
+</div>
+</div><!-- superclasses (5) -->
+
+
+<div id='disjoints_(5)'>
+<h4>Disjoints (5)</h4>
+<div class='codebox'>
+<span class="asserted"><a href="BehaviorDescribingComponent___369736334.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#BehaviorDescribingComponent">BehaviorDescribingComponent</a></span>,
+<span class="asserted"><a href="DataDescribingComponent___-1886454218.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#DataDescribingComponent">DataDescribingComponent</a></span>,
+<span class="asserted"><a href="InteractionDescribingComponent___1010248462.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InteractionDescribingComponent">InteractionDescribingComponent</a></span>,
+<span class="asserted"><a href="PASSProcessModel___-1722598922.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#PASSProcessModel">PASSProcessModel</a></span>,
+<span class="asserted"><span class='Class active-entity'>SubjectBehavior</span></span></div>
+</div><!-- disjoints (5) -->
+
+
+<div id='usage_(15)'>
+<h4>Usage (15)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="BehaviorDescribingComponent___369736334.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#BehaviorDescribingComponent">BehaviorDescribingComponent</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/belongsTo___249251322.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#belongsTo">belongsTo</a> <span class='exactly'>exactly</span> 1 <span class='Class active-entity'>SubjectBehavior</span></li>
+<li class="asserted"><a href="FullySpecifiedSubject___-604874127.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#FullySpecifiedSubject">FullySpecifiedSubject</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/containsBehavior___2056421084.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#containsBehavior">containsBehavior</a> <span class='min'>min</span> 1 <span class='Class active-entity'>SubjectBehavior</span></li>
+<li class="asserted"><a href="FullySpecifiedSubject___-604874127.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#FullySpecifiedSubject">FullySpecifiedSubject</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/containsBaseBehavior___-2048011955.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#containsBaseBehavior">containsBaseBehavior</a> <span class='exactly'>exactly</span> 1 <span class='Class active-entity'>SubjectBehavior</span></li>
+<li class="asserted"><a href="GuardBehavior___1653633346.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#GuardBehavior">GuardBehavior</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/guardsBehavior___-1146814421.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#guardsBehavior">guardsBehavior</a> <span class='some'>some</span> <span class='Class active-entity'>SubjectBehavior</span></li>
+<li class="asserted"><a href="InterfaceSubject___861446942.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#InterfaceSubject">InterfaceSubject</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/containsBehavior___2056421084.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#containsBehavior">containsBehavior</a> <span class='max'>max</span> 0 <span class='Class active-entity'>SubjectBehavior</span></li>
+<li class="asserted"><a href="../objectproperties/hasEndState___1301142139.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasEndState">hasEndState</a> <span class='keyword'>Domain</span> (<span class='Class active-entity'>SubjectBehavior</span> <span class='keyword'>or</span> <a href="ChoiceSegmentPath___104305346.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ChoiceSegmentPath">ChoiceSegmentPath</a>)</li>
+<li class="asserted"><a href="../objectproperties/hasInitialState___1741338802.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasInitialState">hasInitialState</a> <span class='keyword'>Domain</span> (<span class='Class active-entity'>SubjectBehavior</span> <span class='keyword'>or</span> <a href="ChoiceSegmentPath___104305346.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ChoiceSegmentPath">ChoiceSegmentPath</a>)</li>
+<li class="asserted"><a href="../objectproperties/containsBehavior___2056421084.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#containsBehavior">containsBehavior</a> <span class='keyword'>Range</span> <span class='Class active-entity'>SubjectBehavior</span></li>
+<li class="asserted"><a href="../objectproperties/guardsBehavior___-1146814421.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#guardsBehavior">guardsBehavior</a> <span class='keyword'>Range</span> <span class='Class active-entity'>SubjectBehavior</span></li>
+<li class="asserted"><a href="../objectproperties/isEndStateOf___1508826882.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#isEndStateOf">isEndStateOf</a> <span class='keyword'>Range</span> (<span class='Class active-entity'>SubjectBehavior</span> <span class='keyword'>or</span> <a href="ChoiceSegmentPath___104305346.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ChoiceSegmentPath">ChoiceSegmentPath</a>)</li>
+<li class="asserted"><a href="../objectproperties/isInitialStateOf___-945339527.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#isInitialStateOf">isInitialStateOf</a> <span class='keyword'>Range</span> (<span class='Class active-entity'>SubjectBehavior</span> <span class='keyword'>or</span> <a href="ChoiceSegmentPath___104305346.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ChoiceSegmentPath">ChoiceSegmentPath</a>)</li>
+<li class="asserted"></li>
+<li class="asserted"></li>
+<li class="asserted"></li>
+<li class="asserted"></li>
+</ul>
+</div>
+</div><!-- usage (15) -->
+
+</div> <!-- summary -->
+<p class='footer'>
+<a href='http://code.google.com/p/ontology-browser/' target='_blank'>OWL HTML inside</a>
+</p>
+</body>
+</html>

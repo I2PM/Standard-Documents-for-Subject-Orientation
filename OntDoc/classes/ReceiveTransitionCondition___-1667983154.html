@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Ontology Browser</title>
+<meta http-equiv='content-type' content='text/html;charset=UTF-8'>
+<link rel='stylesheet' href='../css/default.css' type='text/css' />
+</head>
+
+<body>
+
+<div id='tabs'>
+<a href='../ontologies/index.html' class='' >Ontologies</a>
+<a href='index.html' class='' >Classes</a>
+<a href='../objectproperties/index.html' class='' >Object Properties</a>
+<a href='../dataproperties/index.html' class='' >Data Properties</a>
+<a href='../annotationproperties/index.html' class='' >Annotation Properties</a>
+<a href='../individuals/index.html' class='' >Individuals</a>
+<a href='../datatypes/index.html' class='' >Datatypes</a>
+<a href='../cloud/' class='' >Clouds</a>
+</div> <!-- tabs -->
+
+
+<div class='summary'><h2>Class: ReceiveTransitionCondition</h2>
+
+<div id='annotations_(1)'>
+<h4>Annotations (1)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="../annotationproperties/comment___1501100887.html" class='Annotation Property' title="http://www.w3.org/2000/01/rdf-schema#comment">rdfs:comment</a> <span class='literal'>"ReceiveTransitionConditions are conditions that state that a certain message must have been taken out of a subjects in-box to be fulfilled.<br /><br />These are the typical conditions defined by Receive Transitions."</span> <span style='color: black;'>@en</span></li>
+</ul>
+</div>
+</div><!-- annotations (1) -->
+
+
+<div id='superclasses_(6)'>
+<h4>Superclasses (6)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="MessageExchangeCondition___-1384560036.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageExchangeCondition">MessageExchangeCondition</a></li>
+<li class="asserted"><a href="../objectproperties/hasReceiveType___-1197531378.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasReceiveType">hasReceiveType</a> <span class='max'>max</span> 1 <a href="ReceiveType___571635176.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ReceiveType">ReceiveType</a></li>
+<li class="asserted"><a href="../objectproperties/requiresMessageSentFrom___271431750.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#requiresMessageSentFrom">requiresMessageSentFrom</a> <span class='max'>max</span> 1 <a href="Subject___803958359.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#Subject">Subject</a></li>
+<li class="asserted"><a href="../objectproperties/requiresReceptionOfMessage___-1220416070.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#requiresReceptionOfMessage">requiresReceptionOfMessage</a> <span class='max'>max</span> 1 <a href="MessageSpecification___-816010841.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#MessageSpecification">MessageSpecification</a></li>
+<li class="asserted"><a href="../dataproperties/hasMultiReceiveLowerBound___259848844.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#hasMultiReceiveLowerBound">hasMultiReceiveLowerBound</a> <span class='max'>max</span> 1 <a href="../datatypes/positiveInteger___-976552628.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#positiveInteger">xsd:positiveInteger</a></li>
+<li class="asserted"><a href="../dataproperties/hasMultiReceiveUpperBound___1663969675.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#hasMultiReceiveUpperBound">hasMultiReceiveUpperBound</a> <span class='max'>max</span> 1 <a href="../datatypes/positiveInteger___-976552628.html" class='Datatype' title="http://www.w3.org/2001/XMLSchema#positiveInteger">xsd:positiveInteger</a></li>
+</ul>
+</div>
+</div><!-- superclasses (6) -->
+
+
+<div id='disjoints_(2)'>
+<h4>Disjoints (2)</h4>
+<div class='codebox'>
+<span class="asserted"><span class='Class active-entity'>ReceiveTransitionCondition</span></span>,
+<span class="asserted"><a href="SendTransitionCondition___-883809335.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#SendTransitionCondition">SendTransitionCondition</a></span></div>
+</div><!-- disjoints (2) -->
+
+
+<div id='usage_(6)'>
+<h4>Usage (6)</h4>
+<div class='codebox'>
+<ul>
+<li class="asserted"><a href="ReceiveTransition___457211331.html" class='Class' title="http://www.i2pm.net/standard-pass-ont#ReceiveTransition">ReceiveTransition</a> <span class='keyword'>&sube;</span> <a href="../objectproperties/hasTransitionCondition___1065728919.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#hasTransitionCondition">hasTransitionCondition</a> <span class='exactly'>exactly</span> 1 <span class='Class active-entity'>ReceiveTransitionCondition</span></li>
+<li class="asserted"><a href="../objectproperties/requiresMessageSentFrom___271431750.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#requiresMessageSentFrom">requiresMessageSentFrom</a> <span class='keyword'>Domain</span> <span class='Class active-entity'>ReceiveTransitionCondition</span></li>
+<li class="asserted"><a href="../objectproperties/requiresReceptionOfMessage___-1220416070.html" class='Object Property' title="http://www.i2pm.net/standard-pass-ont#requiresReceptionOfMessage">requiresReceptionOfMessage</a> <span class='keyword'>Domain</span> <span class='Class active-entity'>ReceiveTransitionCondition</span></li>
+<li class="asserted"><a href="../dataproperties/hasMultiReceiveLowerBound___259848844.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#hasMultiReceiveLowerBound">hasMultiReceiveLowerBound</a> <span class='keyword'>Domain</span> <span class='Class active-entity'>ReceiveTransitionCondition</span></li>
+<li class="asserted"><a href="../dataproperties/hasMultiReceiveUpperBound___1663969675.html" class='Data Property' title="http://www.i2pm.net/standard-pass-ont#hasMultiReceiveUpperBound">hasMultiReceiveUpperBound</a> <span class='keyword'>Domain</span> <span class='Class active-entity'>ReceiveTransitionCondition</span></li>
+<li class="asserted"></li>
+</ul>
+</div>
+</div><!-- usage (6) -->
+
+</div> <!-- summary -->
+<p class='footer'>
+<a href='http://code.google.com/p/ontology-browser/' target='_blank'>OWL HTML inside</a>
+</p>
+</body>
+</html>

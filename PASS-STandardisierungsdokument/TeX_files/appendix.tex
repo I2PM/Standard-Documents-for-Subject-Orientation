@@ -1,7 +1,11 @@
 \appendix
-\chapter{Classes and Property of the PASS Ontology}
+
+\chapter[Classes and Properties of the PASS Ontology]{Classes and Properties of the\\PASS Ontology}
 
 \section{All Classes (95)}
+
+%appendix in smaller font size
+\footnotesize
 
 \begin{itemize}
 \item SRN = Subclass Reference Number; Is used for marking the coresponding relations in the following figures. The number identifies the subclass relation to the next level of super class.
@@ -187,10 +191,6 @@
 	\end{itemize}
 \end{itemize}
 	
-	
-	
-	
-	
 \item SimplePASSElement ; SRN: 089 \\ \textit{Comments have to be added}
 \begin{itemize}
 	\item CommunicationTransition ; SRN: 090 \\ \textit{A super class for the CommunicationTransitions.}
@@ -266,15 +266,11 @@
 \end{itemize}
 \end{itemize}	
 
-			
-\newpage			
-			
-			
-
-
+\normalsize
 
 \section{Object Properties (42)}
 
+\footnotesize
 \begin{landscape}
 \begin {longtable} {| p{0.3\textwidth} | p{0.11\textwidth} | p{0.36\textwidth}|p{0.4\textwidth}| p{0.12\textwidth}|}
 \hline
@@ -414,9 +410,11 @@ SimplePASSObject-Propertie & Domain: & &Every element/sub-class of SimplePASSObj
 \end {landscape}
 
 
-
+\normalsize
 
 \section{Data Properties (27)}
+
+\footnotesize
 
 \begin{landscape}
 	\begin {longtable} {| p{0.5
@@ -529,189 +527,184 @@ SimplePASSObject-Propertie & Domain: & &Every element/sub-class of SimplePASSObj
 
 
 
-
-
-
-\chapter{A Subject-Oriented Interpreter Model for
-	S-BPM developed by Egon Börger}
+\chapter{A Subject-Oriented Interpreter Model for S-BPM developed by Egon Börger}
 \label{ASM-Interpreter}
 
-This is a uncommented version of the PASS interpreter. A commented version can be found in the appendix of A. Fleischmann.............
+This is an uncommented version of the PASS interpreter. A commented version can be found in the appendix of A. Fleischmann.............
 
-
-\section{Subject Behavior Diagram Interpretation}
-
-\begin{figure}[ph]
-	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior}
-	\caption[Subject Behavior Diagram Interpretation]{Subject Behavior Diagram Interpretation}
-	\label{fig:asm-behavior}
-\end{figure}
-
-
-
-\section{Alternative Send/Receive Round Interpretation}
-
-\begin{figure}[ph]
-	\centering
-	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform}
-	\caption[Alternative Send/Receive Round Interpretation]{Alternative Send/Receive Round Interpretation}
-	\label{fig:asm-perform}
-\end{figure}
-
-\begin{figure}[ph]
-	\centering
-	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Perform-Bild}
-	\caption[Diagram of Alternative Send/Receive Round Interpretation]{Diagram of Alternative Send/Receive Round Interpretation}
-	\label{fig:asm-perform-bild}
-\end{figure}
-
-\newpage
-\textbf{Interpretation of Auxiliary Macros}
-\begin{figure}[ph]
-	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Start}
-	\caption[Start function]{Start function}
-	\label{fig:asm-start}
-\end{figure}
-
-\begin{figure}[ph]
-	\centering
-	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Try-Run}
-	\caption[Try non/blocking Round]{Try non/blocking Round}
-	\label{fig:asm-try-run}
-\end{figure}
-
-\begin{figure}[ph]
-	\centering
-	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Interrupt}
-	\caption[Interupt Handling]{Interupt Handling}
-	\label{fig:asm-interrupt}
-\end{figure}
-
-\newpage
-
-
-\section{MsgElaboration Interpretation for Multi Send/Receive}
-
-
-
-\section{Multi Send/Receive Round Interpretation}
-
-\section{Actual Send Interpretation}
-
-\section{Actual Receive Interpreation}
-
-
-\section{Alternative Action Interpretation}
-
-
-\section{Interrupt Behavior}
-
-
-\chapter{PASS Interpreter defined as Abstract State Machine (ASM)}
-
-\textbf{Class}\\
-\textbf{\emph{Object property}}\\
-\textit{ASM interpreter Specification}\\
-
-
-\begin{landscape}
-	\begin {longtable} {| p{0.5\textwidth} | p{0.3\textwidth} | p{0.6\textwidth}|}
-	\hline
-	OWL Model element &   ASM interpreter & Description\\
-	\toprule
-	\endhead
-	\hline
-	
-	X - Execution concept – the state the subject is currently in as defined by a \textbf{State} in the model & \textit{SID\_state} &  Execution concept – no model representation, Not to be confused by a model “state” in an SBD Diagram. State in the SBD diagram define possible SID\_States.
-	\\
-	\hline
-	
-	\textbf{SubjectBehavior }	– under the assumption that it is complete and sound.
-	& \textit{D} 
-	&  A Diagram that is a completely connected SBD
-	\\
-	\hline
-	
-	\textbf{State}
-	& \textit{node} 
-	&  A specific element of diagram D -	Every node 1:1 to state
-	\\
-	\hline
-	
-	\textbf{State}
-	& \textit{state} 
-	& The current active state of a diagram determined by the nodes of Diagram D
-	\\
-	\hline
-	
-	\textbf{InitialStateOfBehavior, \newline EndState }
-	& \textit{initial state, \newline end state} 
-	& The interpreter expects and SBD Graph D to contain exactly one initial (start) state and at least one end state.
-	\\
-	\hline
-	
-	\textbf{Transition}
-	& \textit{edge / outEdge} 
-	& “Passive Element” of an edge in an SBD-graph
-	\\
-	\hline
-	
-	\textbf{TransitionConditionn}
-	& \textit{ExitCondition} 
-	& Static Concept that represents a Data condition
-	\\
-	\hline
-	
-	Execution Concept – ID of a Subject Carrier responsible possible multiple Instances of according to specific  \textbf{SubjectBehavior}
-	& \textit{subj} 
-	& Identifier for a specific Subject Carrier that may be responsible for multiple Subjects
-	\\
-	\hline
-	
-	Represented in the model with \textbf{InterfaceSubject}
-	& \textit{ExternalSubject} 
-	& A representation of a service execution entity outside of the boundaries of the interpreter
-	(The PASS-OWL Standardization community decided on the new Term of Interface Subject to replace the often-misleading older term of External Subject)
-	
-	\\
-	\hline
-	\textbf{SubjectBehavior} or rather \textbf{SubjectBaseBehavior} as MacroBehaviors and GuardBehaviors are not covered by Börger
-	& \textit{subject-SBD / \newline SBDsubject\textsubscript{subject}} 
-	& Names for completely connected graphs / diagrams representing SBDs
-	\\
-	\hline
-	
-	Object Property: \textbf{\textit{hasFunctionSpecification}} 
-	(linking \textbf{State}, and \textbf{FunctionSpecification} -->(\textbf{State} \textbf{\textit{hasFunctionSpecification }} \textbf{FunctionSpecification})
-	& \textit{service(state) / \newline service(node)} 
-	& Rule/Function that reads/returns the service of function of a given state/node
-	\\
-	\hline
-	
-	\textbf{DoState} \newline \textbf{SendState} \newline \textbf{ReceiveState}
-	& \textit{function state, \newline send state, \newline receive state} 
-	& The ASM spec does not itself contain these terms. The description text, however, uses them to describe states with an according service (e.g. a state in which a (ComAct = Send) service is executed is referred to as a send state)
-	Seen from the other side: a SendState is a state with service(state) = Send)
-	\newline
-	Both send and receive services are a ComAct service.
-	The ComAct service is used to define common rules of these communication services.
-	
-	\\
-	\hline
-	\textbf{CommunicationActs} with sub-classes (\textbf{ReceiveFunction SendFunction}) \newline
-	\textbf{\textit{DefaultFunctionReceive1\_EnvironmentChoice \newline
-			DefaultFunctionReceive2\_AutoReceiveEarliest \newline
-			DefaultFunctionSend }}
-	& \textit{ComAct} 
-	& Specialized version of Perform-ASM Rule for communication, either send or receive. These rules distinguish internally between send and receive.
-	\\
-	\hline
-	
-	
-\end{longtable}
-\end {landscape}
-
+%\section{Subject Behavior Diagram Interpretation}
+%
+%\begin{figure}[ph]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior}
+%	\caption[Subject Behavior Diagram Interpretation]{Subject Behavior Diagram Interpretation}
+%	\label{fig:asm-behavior}
+%\end{figure}
+%
+%
+%
+%\section{Alternative Send/Receive Round Interpretation}
+%
+%\begin{figure}[ph]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform}
+%	\caption[Alternative Send/Receive Round Interpretation]{Alternative Send/Receive Round Interpretation}
+%	\label{fig:asm-perform}
+%\end{figure}
+%
+%\begin{figure}[ph]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Perform-Bild}
+%	\caption[Diagram of Alternative Send/Receive Round Interpretation]{Diagram of Alternative Send/Receive Round Interpretation}
+%	\label{fig:asm-perform-bild}
+%\end{figure}
+%
+%\newpage
+%\textbf{Interpretation of Auxiliary Macros}
+%\begin{figure}[ph]
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Start}
+%	\caption[Start function]{Start function}
+%	\label{fig:asm-start}
+%\end{figure}
+%
+%\begin{figure}[ph]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Try-Run}
+%	\caption[Try non/blocking Round]{Try non/blocking Round}
+%	\label{fig:asm-try-run}
+%\end{figure}
+%
+%\begin{figure}[ph]
+%	\centering
+%	\includegraphics[width=0.6\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Interrupt}
+%	\caption[Interupt Handling]{Interupt Handling}
+%	\label{fig:asm-interrupt}
+%\end{figure}
+%
+%\newpage
+%
+%
+%\section{MsgElaboration Interpretation for Multi Send/Receive}
+%
+%
+%
+%\section{Multi Send/Receive Round Interpretation}
+%
+%\section{Actual Send Interpretation}
+%
+%\section{Actual Receive Interpreation}
+%
+%
+%\section{Alternative Action Interpretation}
+%
+%
+%\section{Interrupt Behavior}
+%
+%
+%\chapter{PASS Interpreter defined as Abstract State Machine (ASM)}
+%
+%\textbf{Class}\\
+%\textbf{\emph{Object property}}\\
+%\textit{ASM interpreter Specification}\\
+%
+%
+%\begin{landscape}
+%	\begin {longtable} {| p{0.5\textwidth} | p{0.3\textwidth} | p{0.6\textwidth}|}
+%	\hline
+%	OWL Model element &   ASM interpreter & Description\\
+%	\toprule
+%	\endhead
+%	\hline
+%	
+%	X - Execution concept – the state the subject is currently in as defined by a \textbf{State} in the model & \textit{SID\_state} &  Execution concept – no model representation, Not to be confused by a model “state” in an SBD Diagram. State in the SBD diagram define possible SID\_States.
+%	\\
+%	\hline
+%	
+%	\textbf{SubjectBehavior }	– under the assumption that it is complete and sound.
+%	& \textit{D} 
+%	&  A Diagram that is a completely connected SBD
+%	\\
+%	\hline
+%	
+%	\textbf{State}
+%	& \textit{node} 
+%	&  A specific element of diagram D -	Every node 1:1 to state
+%	\\
+%	\hline
+%	
+%	\textbf{State}
+%	& \textit{state} 
+%	& The current active state of a diagram determined by the nodes of Diagram D
+%	\\
+%	\hline
+%	
+%	\textbf{InitialStateOfBehavior, \newline EndState }
+%	& \textit{initial state, \newline end state} 
+%	& The interpreter expects and SBD Graph D to contain exactly one initial (start) state and at least one end state.
+%	\\
+%	\hline
+%	
+%	\textbf{Transition}
+%	& \textit{edge / outEdge} 
+%	& “Passive Element” of an edge in an SBD-graph
+%	\\
+%	\hline
+%	
+%	\textbf{TransitionConditionn}
+%	& \textit{ExitCondition} 
+%	& Static Concept that represents a Data condition
+%	\\
+%	\hline
+%	
+%	Execution Concept – ID of a Subject Carrier responsible possible multiple Instances of according to specific  \textbf{SubjectBehavior}
+%	& \textit{subj} 
+%	& Identifier for a specific Subject Carrier that may be responsible for multiple Subjects
+%	\\
+%	\hline
+%	
+%	Represented in the model with \textbf{InterfaceSubject}
+%	& \textit{ExternalSubject} 
+%	& A representation of a service execution entity outside of the boundaries of the interpreter
+%	(The PASS-OWL Standardization community decided on the new Term of Interface Subject to replace the often-misleading older term of External Subject)
+%	
+%	\\
+%	\hline
+%	\textbf{SubjectBehavior} or rather \textbf{SubjectBaseBehavior} as MacroBehaviors and GuardBehaviors are not covered by Börger
+%	& \textit{subject-SBD / \newline SBDsubject\textsubscript{subject}} 
+%	& Names for completely connected graphs / diagrams representing SBDs
+%	\\
+%	\hline
+%	
+%	Object Property: \textbf{\textit{hasFunctionSpecification}} 
+%	(linking \textbf{State}, and \textbf{FunctionSpecification} -->(\textbf{State} \textbf{\textit{hasFunctionSpecification }} \textbf{FunctionSpecification})
+%	& \textit{service(state) / \newline service(node)} 
+%	& Rule/Function that reads/returns the service of function of a given state/node
+%	\\
+%	\hline
+%	
+%	\textbf{DoState} \newline \textbf{SendState} \newline \textbf{ReceiveState}
+%	& \textit{function state, \newline send state, \newline receive state} 
+%	& The ASM spec does not itself contain these terms. The description text, however, uses them to describe states with an according service (e.g. a state in which a (ComAct = Send) service is executed is referred to as a send state)
+%	Seen from the other side: a SendState is a state with service(state) = Send)
+%	\newline
+%	Both send and receive services are a ComAct service.
+%	The ComAct service is used to define common rules of these communication services.
+%	
+%	\\
+%	\hline
+%	\textbf{CommunicationActs} with sub-classes (\textbf{ReceiveFunction SendFunction}) \newline
+%	\textbf{\textit{DefaultFunctionReceive1\_EnvironmentChoice \newline
+%			DefaultFunctionReceive2\_AutoReceiveEarliest \newline
+%			DefaultFunctionSend }}
+%	& \textit{ComAct} 
+%	& Specialized version of Perform-ASM Rule for communication, either send or receive. These rules distinguish internally between send and receive.
+%	\\
+%	\hline
+%	
+%	
+%\end{longtable}
+%\end {landscape}
+%
 
 

@@ -82,7 +82,8 @@
   *{package}{listings}    {2019/02/27 v1.8b}
   *{package}{lstmisc}     {2019/02/27 v1.8b}
   *{file}   {listings.cfg}{2019/02/27 v1.8b}
-  *{package}{geometry}    {2018/04/16 v5.8}
+  *{package}{enumitem}    {2019/06/20 v3.9}
+  *{package}{longtable}   {2014/10/28 v4.11}
   *{file}   {t1ppl.fd}    {2001/06/04 v1/ppl.}
   *{file}   {supp-pdf.mkii}{0000/00/00 v0.0}
   *{package}{epstopdf-base}{2016/05/15 v2.6}
@@ -131,5 +132,6 @@
   *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190105-Transitions.jpg}{0000/00/00 v0.0}
   *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior.jpg}{0000/00/00 v0.0}
   *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform.jpg}{0000/00/00 v0.0}
+  *{file}   {./TeX_files/appendix.tex}{0000/00/00 v0.0}
   *{file}   {Standardbuch-PASS.bbl}{0000/00/00 v0.0}
 }

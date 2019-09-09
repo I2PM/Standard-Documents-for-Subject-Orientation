@@ -16,9 +16,22 @@
 \usepackage[htt]{hyphenat}
 \usepackage{lscape}
 \usepackage{listings}
-\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{longtable}
 
-%\usepackage{comment}
+\setlistdepth{9}
+
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\bullet$}
+\setlist[itemize,3]{label=$\bullet$}
+\setlist[itemize,4]{label=$\bullet$}
+\setlist[itemize,5]{label=$\bullet$}
+\setlist[itemize,6]{label=$\bullet$}
+\setlist[itemize,7]{label=$\bullet$}
+\setlist[itemize,8]{label=$\bullet$}
+\setlist[itemize,9]{label=$\bullet$}
+
+\renewlist{itemize}{itemize}{9}
 
 % Use the built-in division styling
 \headstyles{memman}
@@ -193,7 +206,7 @@ ISBN: 978-3-123-45678-9 (dummy)
 \include{./TeX_files/chapter01}
 \include{./TeX_files/chapter02}
 \include{./TeX_files/chapter03}
-%\include{./TeX_files/appendix}
+\include{./TeX_files/appendix}
 
 \backmatter
 

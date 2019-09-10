@@ -273,6 +273,7 @@
 \footnotesize
 \begin{landscape}
 \begin {longtable} {| p{0.3\textwidth} | p{0.11\textwidth} | p{0.36\textwidth}|p{0.4\textwidth}| p{0.12\textwidth}|}
+%\begin {longtable} {| p{0.3\textheight} | p{0.11\textheight} | p{0.30\textheight}|p{0.4\textheight}| p{0.12\textheight}|}
 \hline
 Property name &  & Domain-Range & Comments &Reference\\
 \toprule
@@ -308,10 +309,9 @@ hasAdditionalAttribute & Domain: &PASSProcessModelElement& &\ \ 208\\
 hasCorrespondent & Domain: & &Generic super class for the ObjectProperties that link a Subject with a MessageExchange either in the role of Sender or Receiver. & \ \ 209\\
 & Range: &Subject & &\\
 \hline
-hasDataDefinition &Domain: &  & &\ \ 210\\
-& Range: &DataObjectDefinition & &\\
+hasDataDefinition &Domain: &  & & \ \ 210\\
+& Range: &DataObjectDefinition & &\\ 
 \hline
-\pagebreak
 hasDataMapping-Function &Domain: &state, SendTransition, ReceiveTransition & &\ \ 211\\
 & Range: &DataMappingFunction & & \\
 \hline 
@@ -336,7 +336,6 @@ hasIncomingTransition &Domain: &State & &\ \ 217\\
 hasInitialState & Domain: &SubjectBehavior or ChoiceSegmentPath & &\ \ 218\\
 & Range: &State &  &\\
 \hline
-\pagebreak
 hasInputPoolConstraint &Domain: &Subject & &\ \ 219\\
 & Range: &InputPoolConstraint &  &\\
 \hline
@@ -379,6 +378,7 @@ hasTransitionCondition &Domain &Transition & &\ \ 231\\
 isBaseBehaviorOf &Domain: &SubjectBaseBehavior & A specialized version of the "belongsTo" ObjectProperty to denote that a -SubjectBehavior belongs to a Subject as its BaseBehavior&\ \ 232\\
 & Range: &&  &\\
 \hline
+\pagebreak
 isEndStateOf & Domain: &State and not SendState & &\ \ 233\\
 & Range: &SubjectBehavior or ChoiceSegmentPath &  &\\
 \hline
@@ -439,14 +439,12 @@ SimplePASSObject-Propertie & Domain: & &Every element/sub-class of SimplePASSObj
 	hasDurationTimeOutTime & Domain: &  & &\\
 	& Range: &  & &\\
 	\hline
-	hasFeelExpressionAsDataMapping & Domain: &  &See https://www.omg.org/spec/DMN for specification of Feel-Statement-Strings
+	hasFeelExpressionAsDataMapping & Domain: &  &See \url{https://www.omg.org/spec/DMN} for specification of Feel-Statement-Strings
 	
 	The idea of these expression is to map data fields from and to the internal Data storage of a subject &\\
 	& Range: &  & &\\
 	\hline
-	hasGraphicalRepresentation & Domain: &  & The process models are in principle abstract graph structures. Yet the visualization of process models is very important since many process models are initially created in a graphical form using a graphical graph editor (e.g. MS Visio, yEd, etc.) that was created to foster human comprehensibility.
-	
-	If available any process element may have a graphical representation attached to it&\\
+	hasGraphicalRepresentation & Domain: &  & The process models are in principle abstract graph structures. Yet the visualization of process models is very important since many process models are initially created in a graphical form using a graph editor that was created to foster human comprehensibility. If available any process element may have a graphical representation attached to it&\\
 	& Range: &  & &\\
 	\hline
 	hasKey & Domain: &  & &\\

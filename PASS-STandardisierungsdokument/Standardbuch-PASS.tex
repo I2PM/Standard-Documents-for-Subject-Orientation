@@ -20,6 +20,20 @@
 \usepackage{longtable}
 \usepackage{pdfpages}
 
+% The `minted` package is used to colorful render CoreASM code.
+% See README-minted.md for further instructions.
+% NOTE: escapeinside funktioniert nicht im draft mode - es treten leichte
+% Verschiebungen auf, da bspw. §$\varphi$§ zu φ gerendert wird. Zum Setzen
+% von Bildern und Umbrüchen daher ohne draft rendern!
+\usepackage{minted}
+%\usepackage[draft=true]{minted}
+%\usepackage[cache=false,draft=true]{minted}
+
+\newmintinline[asminline]{lexer.py:CoreASMLexer -x}{escapeinside=~~}
+%\definecolor{bg}{rgb}{0.9, 0.9, 0.9}
+%\newmintinline[asminlinebg]{lexer.py:CoreASMLexer -x}{escapeinside=~~, bgcolor=bg}
+
+
 \setlistdepth{9}
 
 \setlist[itemize,1]{label=$\bullet$}

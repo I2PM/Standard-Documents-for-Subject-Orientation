@@ -285,153 +285,27 @@ Transitions connect the source state with the target state (see figure \ref{fig:
 	\label{fig:20190105-transitions}
 \end{figure}
 
+
 \section{ASM Definition of Subject Execution}
 
-\texttt{Behavior(subj;state)} is the ASM-Rule to interpret a specific node of a behavior diagram for a specific subject.
+% NOTE: DRAFT WOLSKIA
 
-It expresses that when a subject in a given state has completed a given action (function, send or receive operation)---read: Performing the action has been completed while the subject was in the given SID-state. Assuming that the action has been started by the subject upon entering this state-then the subject proceeds to start its next action in its successor state. The successor state is determined by an \texttt{ExitCondition} whose value is defined by the just-completed action. Figure \ref{fig:asm-behavior} shows the ASM code for the behavior rule.
+This section provides a reduced overview of the ASM semantics given in Appendix~\ref{CoreASM-Reference-Implementation}.
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior}
-	\caption[ASM Code for Behavior]{ASM Code for Behavior}
-	\label{fig:asm-behavior}
-\end{figure}
+The goal of this section is to provide a minimal set of rules to establish a foundation to understand the ASM semantics,
+without going into their details.
+It is therefore just an informal introduction to the topic.
 
-Because of historical reasons in the ASM the names of the objects in the ontology are not used. Table \ref{tab:places} shows the mapping of the variable names used in the ASM (in ASM also called places) to the ontology object names. The names printed in \textit{italic }in the column "ASM-Interpreter" corespond to the \textbf{bold} printed names in the column "OWL Model".
-The OWL model element \textbf{State} coresponds to the place \textit{SID\_state} or \textit{D} is mapped to \textbf{SubjectBehaviour}.
-
-\begin{landscape}
-	\begin {longtable} {| p{0.5\textwidth} | p{0.3\textwidth} | p{0.6\textwidth}|}
-	\hline
-	OWL Model element &   ASM interpreter & Description\\
-	\toprule
-	\endhead
-	\hline
-	
-	X - Execution concept – the state the subject is currently in as defined by a \textbf{State} in the model 
-	& \textit{SID\_state} 
-	&  Execution concept – no model representation, Not to be confused by a model “state” in an SBD Diagram. State in the SBD diagram define possible SID\_States.
-	\\
-	\hline
-	
-	\textbf{SubjectBehavior }	– under the assumption that it is complete and sound.
-	& \textit{D} 
-	&  A Diagram that is a completely connected SBD
-	\\
-	\hline
-	
-	\textbf{State}
-	& \textit{node} 
-	&  A specific element of diagram D -	Every node 1:1 to state
-	\\
-	\hline
-	
-	\textbf{State}
-	& \textit{state} 
-	& The current active state of a diagram determined by the nodes of Diagram D
-	\\
-	\hline
-	
-	\textbf{InitialStateOfBehavior, \newline EndState }
-	& \textit{initial state, \newline end state} 
-	& The interpreter expects and SBD Graph D to contain exactly one initial (start) state and at least one end state.
-	\\
-	\hline
-	
-	\textbf{Transition}
-	& \textit{edge / outEdge} 
-	& “Passive Element” of an edge in an SBD-graph
-	\\
-	\hline
-	
-	\textbf{TransitionConditionn}
-	& \textit{ExitCondition} 
-	& Static Concept that represents a Data condition
-	\\
-	\hline
-	
-	Execution Concept – ID of a Subject Carrier responsible possible multiple Instances of according to specific  \textbf{SubjectBehavior}
-	& \textit{subj} 
-	& Identifier for a specific Subject Carrier that may be responsible for multiple Subjects
-	\\
-	\hline
-	
-	Represented in the model with \textbf{InterfaceSubject}
-	& \textit{ExternalSubject} 
-	& A representation of a service execution entity outside of the boundaries of the interpreter
-	(The PASS-OWL Standardization community decided on the new Term of Interface Subject to replace the often-misleading older term of External Subject)
-	
-	\\
-	\hline
-	\textbf{SubjectBehavior} or rather \textbf{SubjectBaseBehavior} as MacroBehaviors and GuardBehaviors are not covered by Börger
-	& \textit{subject-SBD / \newline SBDsubject\textsubscript{subject}} 
-	& Names for completely connected graphs / diagrams representing SBDs
-	\\
-	\hline
-	
-	Object Property: \textbf{\textit{hasFunctionSpecification}} 
-	(linking \textbf{State}, and \textbf{FunctionSpecification} -->(\textbf{State} \textbf{\textit{hasFunctionSpecification }} \textbf{FunctionSpecification})
-	& \textit{service(state) / \newline service(node)} 
-	& Rule/Function that reads/returns the service of function of a given state/node
-	\\
-	\hline
-	
-	\textbf{DoState} \newline \textbf{SendState} \newline \textbf{ReceiveState}
-	& \textit{function state, \newline send state, \newline receive state} 
-	& The ASM spec does not itself contain these terms. The description text, however, uses them to describe states with an according service (e.g. a state in which a (ComAct = Send) service is executed is referred to as a send state)
-	Seen from the other side: a SendState is a state with service(state) = Send)
-	\newline
-	Both send and receive services are a ComAct service.
-	The ComAct service is used to define common rules of these communication services.
-	
-	\\
-	\hline
-	\textbf{CommunicationActs} with sub-classes (\textbf{ReceiveFunction SendFunction}) \newline
-	\textbf{\textit{DefaultFunctionReceive1\_-EnvironmentChoice \newline
-			DefaultFunctionReceive2\_-AutoReceiveEarliest \newline
-			DefaultFunctionSend }}
-	& \textit{ComAct} 
-	& Specialized version of Perform-ASM Rule for communication, either send or receive. These rules distinguish internally between send and receive.
-	\\
-	\hline
-	\caption{Mapping of ASM places to objects of the ontology}
-	\label{tab:places}
-	
-\end{longtable}
-\end {landscape}
-
-%\textcolor{orange}{\textbf{Objekte}}\\
-%\textcolor{blue}{Object properties}\\
-%\textcolor{purple}{\textbf{constraint}}\\
-%\textcolor{green}{data properties}
-
-The complete ASM based definition of PASS was developed by Egon Börger and can be found in Annex \ref{ASM-Interpreter}
-
-\subsection{Internal Functions/Action}
-
-A detailed internal Behavior of a subject in a state with internal function A can
-be defined in terms of the ASM submachines START and PERFORM together with the
-completion predicate "Completed" for the parameters (subj ;A; state) in the same
-manner as has been done for communication actions in section \ref{CommunicationAction} but only
-once it is known how to start, to perform and to complete A. For example, Start(subj ;A; state) could mean to call function A which is implemented as a methode of a class. The completion
-predicate coincides with the termination condition of the method. 
-
-The complete ASM based definition of PASS was developed by Egon Börger and can be found in Annex \ref{ASM-Interpreter}.
-
-\subsection{Internal Functions/Action}
-
-A detailed internal \texttt{Behavior} of a subject in a state with internal function A can be defined in terms of the ASM sub-machines \texttt{Start} and \texttt{Perform} together with the predicate \texttt{Completed} for the parameters \texttt{(subj ;A; state)} in the same manner as has been done for communication actions in section \ref{CommunicationAction} but only once it is known how to start, to perform and to complete A. For example, \texttt{Start(subj ;A; state)} could mean to call function A which is implemented as a method of a class. The completion predicate coincides with the termination condition of the method. 
->>>>>>> 9542de488102928f002a500d8df07552608d9983
-
-\subsection{Communication Action}
-\label{CommunicationAction}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.7\linewidth]{20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform}
-	\caption{}
-	\label{fig:asm-perform}
-\end{figure}
-
-
+Rules under consideration to be presented:
+\begin{itemize}
+	\item \asminline{rule Behavior}
+	\item \asminline{rule PerformInternalAction}
+	\item Inputpool \& Send Definitions
+	\item \asminline{rule PerformSend}
+	\item \asminline{rule DoReservations}
+	\item \asminline{rule DoReservation}
+	\item \asminline{rule PerformEdgeSend}
+	\item \asminline{rule PerformReceive}
+	\item \asminline{rule CheckIP}
+	\item \asminline{rule PerformEdgeReceive}
+\end{itemize}

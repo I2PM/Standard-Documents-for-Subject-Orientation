@@ -271,7 +271,7 @@ rule StartMainMacro = {
         activeStates(channelFor(self), MI) := [startState]
     }
 
-    program(self) := @ExecuteSubject
+    program(self) := @SubjectBehaviour
 }
 \end{minted}
 \caption{StartMainMacro}
@@ -286,10 +286,6 @@ rule StartMainMacro = {
 rule StartMacro(MI, currentStateNumber, mIDNew, MINew) = {
     let processID = processIDFor(self) in
     let startState = macroStartState(processID, mIDNew) in {
-        if (activeStates(channelFor(self), MINew) != undef) then {
-            Crash()
-        }
-
         activeStates(channelFor(self), MINew) := []
         AddState(MI, currentStateNumber, MINew, startState)
     }
@@ -339,16 +335,6 @@ function addStates : LIST * NUMBER * NUMBER -> LIST
 
 // ch * MacroInstanceNumber * stateNumber => List[(MI, s)]
 function removeStates : LIST * NUMBER * NUMBER -> LIST
-
-rule SetExecutionState(MI, currentStateNumber, exState) = {
-    if (executionState(channelFor(self), MI, currentStateNumber) = undef) then {
-        executionState(channelFor(self), MI, currentStateNumber) := exState
-    }
-    else {
-        debuginfo SetExecutionState self + ": executionState already set! It is: " + executionState(channelFor(self), MI, currentStateNumber)
-        Crash()
-    }
-}
 \end{minted}
 \caption{SetExecutionState}
 \label{lst:asm:SetExecutionState}
@@ -373,19 +359,6 @@ rule RemoveState(MI, currentStateNumber, MIOld, sOld) = {
 
 
 
-
-\begin{listing}[H]
-\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule ExecuteSubject = {
-    seqblock
-        SubjectBehaviour()
-    endseqblock
-}
-
-\end{minted}
-\caption{ExecuteSubject}
-\label{lst:asm:ExecuteSubject}
-\end{listing}
 
 
 
@@ -442,7 +415,6 @@ rule KillBehaviour(MI, currentStateNumber) = {
                 Crash()
             }
             else {
-                debuginfo KillBehaviour self + ": removeStates: " + removeStates(channelFor(self), MI, currentStateNumber)
                 foreach x in removeStates(channelFor(self), MI, currentStateNumber) do {
                     let xMI = nth(x, 1),
                         xN  = nth(x, 2) in {
@@ -468,12 +440,6 @@ rule KillBehaviour(MI, currentStateNumber) = {
 rule MacroBehaviour(MI) = {
     let processID = processIDFor(self) in
     local listres := activeStates(channelFor(self), MI) in seqblock // remaining states
-
-        if (|listres| = 0) then {
-            debuginfo MacroBehaviour self + ": activeStates must not be empty!"
-            Crash()
-        }
-
         macroExecutionState(channelFor(self), MI) := undef
 
         // can not be done with foreach as listres is modified depending on the executionState and the priorities of the other states
@@ -493,11 +459,6 @@ rule MacroBehaviour(MI) = {
                 UpdateActiveStates(MI, stateNumber)
             endseqblock
         }
-
-        if (macroExecutionState(channelFor(self), MI) = undef) then {
-            debuginfo MacroBehaviour self + ": macroExecutionState is undef!"
-            Crash()
-        }
     endseqblock
 }
 \end{minted}
@@ -513,11 +474,6 @@ rule MacroBehaviour(MI) = {
 // WARNING: mutates listres!
 rule UpdateRemainingStates(MI, stateNumber, exState, remainingStates) = {
     if (exState = 0) then { // REPEAT
-        if (|addStates(channelFor(self), MI, stateNumber)| > 0 or |removeStates(channelFor(self), MI, stateNumber)| > 0 ) then {
-            debuginfo MacroBehaviour self + ": REPEAT -> addStates and removeStates must be empty! (use DONE to add / remove states)"
-            Crash()
-        }
-
         remainingStates := [stateNumber]
 
         macroExecutionState(channelFor(self), MI) := 1 // DONE - something changed and nothing else should happen
@@ -547,11 +503,6 @@ rule UpdateRemainingStates(MI, stateNumber, exState, remainingStates) = {
     }
     else if (exState = 2) then { // NEXT
         seqblock
-            if (|addStates(channelFor(self), MI, stateNumber)| > 0 or |removeStates(channelFor(self), MI, stateNumber)| > 0 ) then {
-                debuginfo MacroBehaviour self + ": NEXT -> addStates and removeStates must be empty! (use DONE to add / remove states)"
-                Crash()
-            }
-
             remove stateNumber from remainingStates // remove self
 
             remainingStates := filterStatesWithSamePrio(processIDFor(self), remainingStates, statePriority(processIDFor(self), stateNumber)) // reduce to states with same priority
@@ -562,20 +513,11 @@ rule UpdateRemainingStates(MI, stateNumber, exState, remainingStates) = {
         endseqblock
     }
     else if (exState = 3) then { // LOWER
-        if (|addStates(channelFor(self), MI, stateNumber)| > 0 or |removeStates(channelFor(self), MI, stateNumber)| > 0 ) then {
-            debuginfo MacroBehaviour self + ": LOWER -> addStates and removeStates must be empty! (use DONE to add / remove states)"
-            Crash()
-        }
-
         remove stateNumber from remainingStates // remove self
 
         if (macroExecutionState(channelFor(self), MI) != 1 and macroExecutionState(channelFor(self), MI) != 2) then {
             macroExecutionState(channelFor(self), MI) := 3 // LOWER - nothing changed and lower not blocked; unless already DONE or NEXT
         }
-    }
-    else {
-        debuginfo MacroBehaviour self + ": invalid executionState: " + undefStr(exState)
-        Crash()
     }
 }
 \end{minted}
@@ -696,10 +638,6 @@ rule AbortState(MI, currentStateNumber) = {
                 Proceed(MI, currentStateNumber, t)
             }
         }
-        else {
-            debuginfo AbortState self + ": neither cancelDecision nor timeoutActive set!"
-            Crash()
-        }
 
         SetExecutionState(MI, currentStateNumber, 1) // DONE, make global update
     }
@@ -815,11 +753,6 @@ rule Perform(MI, currentStateNumber) = {
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 rule StartSelectedTransition(MI, currentStateNumber) = {
     let transitionNumber = selectedTransition(channelFor(self), MI, currentStateNumber) in {
-        if (transitionNumber = undef) then {
-            debuginfo StartSelectedTransition self + ": there is no outgoing transition selected!"
-            Crash()
-        }
-
         InitializeCompletionTransition(MI, transitionNumber)
         initializedSelectedTransition(channelFor(self), MI, currentStateNumber) := true
     }
@@ -863,11 +796,6 @@ rule ResetTimeout(MI, currentStateNumber) = {
 }
 
 rule ActivateTimeout(MI, currentStateNumber) = {
-    if (shouldTimeout(channelFor(self), MI, currentStateNumber) != true) then {
-        debuginfo ActivateTimeout self + ": shouldTimeout != true - unable to activate timeout!"
-        Crash()
-    }
-
     timeoutActive(channelFor(self), MI, currentStateNumber) := true
 }
 
@@ -899,14 +827,6 @@ rule EnableAllTransitions(MI, currentStateNumber) = {
 
 rule DisableTransition(MI, currentStateNumber, transitionNumber) = {
     exitCondition(channelFor(self), MI, transitionNumber) := false
-
-    if (selectedTransition(channelFor(self), MI, currentStateNumber) = transitionNumber) then {
-        selectedTransition(channelFor(self), MI, currentStateNumber) := undef
-
-        // NOTE: just to try out if this case happens in a test, should not crash
-        debuginfo DisableTransition self + ": WARN: reset selectedTransition"
-        Crash()
-    }
 }
 
 rule DisableAllTransitions(MI, currentStateNumber) = {
@@ -923,16 +843,6 @@ rule InitializeCompletionTransition(MI, transitionNumber) = {
 
 
 rule SetCompletedTransition(MI, currentStateNumber, transitionNumber) = {
-    if (transitionCompleted(channelFor(self), MI, transitionNumber) != false) then {
-        debuginfo SetCompletedTransition self + ": transitionCompleted should be false.. -> " + transitionCompleted(channelFor(self), MI, transitionNumber)
-        Crash()
-    }
-
-    if (transitionNumber = undef) then {
-        debuginfo SetCompletedTransition self + ": didn't expect transitionNumber to be undef, maybe some old leftover"
-        Crash()
-    }
-
     SetExecutionState(MI, currentStateNumber, 0)
 
     transitionCompleted(channelFor(self), MI, transitionNumber) := true
@@ -999,7 +909,7 @@ rule StartFunction(MI, currentStateNumber) = {
     let processID = processIDFor(self) in
     let actionName = stateFunction(processID, currentStateNumber) in {
         if (startFunction(actionName) = undef) then {
-            debuginfo StartFunction self + ": INFO: startFunction("+actionName+") is undefined, nothing to do"
+            skip
         }
         else {
             call startFunction(actionName) (MI, currentStateNumber)
@@ -1020,22 +930,14 @@ rule StartFunction(MI, currentStateNumber) = {
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 rule PerformFunction(MI, currentStateNumber) = {
     if (shouldTimeout(channelFor(self), MI, currentStateNumber) = true) then {
-        debuginfo PerformFunction self + ": shouldTimeout"
         SetCompleted(MI, currentStateNumber) // sets executionState to REPEAT
         ActivateTimeout(MI, currentStateNumber)
     }
     else {
         let processID = processIDFor(self) in
         let actionName = stateFunction(processID, currentStateNumber),
-            args       = stateFunctionArguments(processID, currentStateNumber) in {
-            if (performFunction(actionName) = undef) then {
-                debuginfo PerformFunction self + ": WARN: performFunction("+actionName+") is undefined!"
-                Crash()
-            }
-            else {
+            args       = stateFunctionArguments(processID, currentStateNumber) in
                 call performFunction(actionName) (MI, currentStateNumber, args)
-            }
-        }
     }
 }
 \end{minted}
@@ -1096,21 +998,10 @@ rule SetCompletedAction(MI, currentStateNumber, res) = {
             choose transitionNumber in outgoingNormalTransitions(processID, currentStateNumber) do {
                 selectedTransition(channelFor(self), MI, currentStateNumber) := transitionNumber
             }
-            ifnone {
-                debuginfo SetCompletedAction self + ": WARN: unable to get transition! (no normal out transitions?)"
-                Crash()
-            }
         }
         else {
-            let transitionNumber = getTransitionByLabel(processID, currentStateNumber, res) in {
-                if (transitionNumber = undef) then {
-                    debuginfo SetCompletedAction self + ": WARN: unable to get transition! (no transition with that name?)"
-                    Crash()
-                }
-                else {
-                    selectedTransition(channelFor(self), MI, currentStateNumber) := transitionNumber
-                }
-            }
+            let transitionNumber = getTransitionByLabel(processID, currentStateNumber, res) in
+                selectedTransition(channelFor(self), MI, currentStateNumber) := transitionNumber
         }
     }
 
@@ -1332,10 +1223,6 @@ rule PerformTransitionSend(MI, currentStateNumber, transitionNumber) = {
         let storeReceiverVarname = messageStoreReceiverVar(processID, transitionNumber) in
             if (storeReceiverVarname != undef and storeReceiverVarname != "") then {
                 SetVar(MI, storeReceiverVarname, "ChannelInformation", reservationsDone(channelFor(self), MI, currentStateNumber))
-                debuginfo PerformTransitionSend self + ": messageStoreReceiverVar: SetVar("+MI+", "+storeReceiverVarname+", ChannelInformation, "+reservationsDone(channelFor(self), MI, currentStateNumber)+")"
-            }
-            else {
-                debuginfo PerformTransitionSend self + ": messageStoreReceiverVar not set"
             }
 
         foreach r in reservationsDone(channelFor(self), MI, currentStateNumber) do {
@@ -1343,11 +1230,6 @@ rule PerformTransitionSend(MI, currentStateNumber, transitionNumber) = {
 
             EnsureRunning(r)
         }
-        ifnone {
-            debuginfo PerformTransitionSend self + ": Something strange happened..."
-            Crash()
-        }
-        endforeach
 
         SetCompletedTransition(MI, currentStateNumber, transitionNumber) // sets executionState to REPEAT
     }
@@ -1398,11 +1280,6 @@ rule DoReservations(MI, currentStateNumber) = {
                         }
                 }
             }
-            ifnone {
-                debuginfo DoReservations self + ": is this even possible? must be a weird internal error"
-                Crash()
-            }
-            endforeach
         next
             if (boolres = true) then {
                 debuginfo DoReservations self + ": DONE: reservation(s) placed, make update"
@@ -1436,11 +1313,6 @@ rule DoReservation(MI, currentStateNumber, receiverChannel) = {
             msgCorrelationID   = loadCorrelationID(MI, messageNewCorrelationVar(processID, transitionNumber)),
             ipCorrelationID    = loadCorrelationID(MI, messageWithCorrelationVar(processID, transitionNumber)) in
         let reservationMessage = [senderChannel, messageType(processID, transitionNumber), {}, msgCorrelationID, true] in {
-            if (senderSubjectID = undef) then {
-                debuginfo DoReservation self + ": failed to lookup own subject"
-                Crash()
-            }
-
             seq
                 if (inputPool(receiverChannel, senderSubjectID, messageType(processID, transitionNumber), ipCorrelationID) = undef) then {
                     add [senderSubjectID, messageType(processID, transitionNumber), ipCorrelationID] to inputPoolDefined(receiverChannel)
@@ -2829,13 +2701,6 @@ rule SelectAgents(MI, currentStateNumber, sIDLocal, countMin, countMax) = {
                             seq
                                 numres1 <- StartProcess(resolvedProcessID, resolvedSubjectID, agent)
                             next {
-                                debuginfo SelectAgents self + ": created PI " + numres1 + " for " + sIDLocal + " (" + resolvedSubjectID + " in " + resolvedProcessID + ")"
-
-                                if (numres1 = undef) then {
-                                    debuginfo SelectAgents self + ": invalid PI"
-                                    Crash()
-                                }
-
                                 let ch = [resolvedProcessID, numres1, resolvedSubjectID, agent] in
                                     add ch to setres1
                             }
@@ -2866,11 +2731,6 @@ rule SelectAgents(MI, currentStateNumber, sIDLocal, countMin, countMax) = {
     else {
         if not(contains(wantInput(channelFor(self), MI, currentStateNumber), "SelectAgentsDecision")) then {
             add "SelectAgentsDecision" to wantInput(channelFor(self), MI, currentStateNumber)
-
-            debuginfo selectAgents self + ": resolvedProcessID: " + resolvedProcessID
-            debuginfo selectAgents self + ": resolvedSubjectID: " + resolvedSubjectID
-            debuginfo selectAgents self + ": countMin: " + countMin
-            debuginfo selectAgents self + ": countMax: " + countMax
 
             selectAgentsProcessID(channelFor(self), MI, currentStateNumber) := resolvedProcessID
             selectAgentsSubjectID(channelFor(self), MI, currentStateNumber) := resolvedSubjectID

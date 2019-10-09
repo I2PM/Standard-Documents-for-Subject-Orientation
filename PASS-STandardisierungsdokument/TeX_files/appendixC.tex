@@ -552,35 +552,24 @@ derived abortState(MI, stateNumber) = return boolres in {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule Behaviour(MI, currentStateNumber) = {
-  let processID = processIDFor(self) in {
-    if (initializedState(channelFor(self), MI, currentStateNumber) != true) then {
-      StartState(MI, currentStateNumber)
-    }
-    else if (abortState(MI, currentStateNumber) = true) then { // -> derived from timeoutActive / cancelDecision
-      AbortState(MI, currentStateNumber)
-    }
-    else if (completed(channelFor(self), MI, currentStateNumber) != true) then {
-      Perform(MI, currentStateNumber)
-    }
-    else if (initializedSelectedTransition(channelFor(self), MI, currentStateNumber) != true) then {
-      StartSelectedTransition(MI, currentStateNumber)
-    }
+rule Behaviour(MI, currentStateNumber) =
+ let ch = channelFor(self) in
+  if (initializedState(ch, MI, currentStateNumber) != true) then
+    StartState(MI, currentStateNumber)
+  else if (abortState(MI, currentStateNumber) = true) then
+    AbortState(MI, currentStateNumber)
+  else if (completed(ch, MI, currentStateNumber) != true) then
+    Perform(MI, currentStateNumber)
+  else if (initializedSelectedTransition(ch, MI, currentStateNumber) != true) then
+    StartSelectedTransition(MI, currentStateNumber)
+  else
+   let transitionNumber = selectedTransition(ch, MI, currentStateNumber) in
+    if (transitionCompleted(ch, MI, transitionNumber) != true) then
+      PerformTransition(MI, currentStateNumber, transitionNumber)
     else {
-      let transitionNumber = selectedTransition(channelFor(self), MI, currentStateNumber) in
-      let t = targetStateNumber(processID, transitionNumber) in {
-        if (transitionCompleted(channelFor(self), MI, transitionNumber) != true) then {
-          PerformTransition(MI, currentStateNumber, transitionNumber)
-        }
-        else {
-          Proceed(MI, currentStateNumber, t)
-
-          SetExecutionState(MI, currentStateNumber, 1) // DONE, make global update
-        }
-      }
+      Proceed(MI, currentStateNumber, targetStateNumber(processIDFor(self), transitionNumber))
+      SetExecutionState(MI, currentStateNumber, 1) // DONE, make global update
     }
-  }
-}
 \end{minted}
 \caption{Behaviour}
 \label{lst:asm:Behaviour}

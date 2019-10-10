@@ -241,7 +241,7 @@ rule StartMainMacro = {
     activeStates(channelFor(self), MI) := [startState]
   }
 
-  program(self) := @SubjectBehaviour
+  program(self) := @SubjectBehavior
 }
 \end{minted}
 \caption{StartMainMacro}
@@ -272,7 +272,7 @@ rule StartMacro(MI, currentStateNumber, mIDNew, MINew) = {
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 /*
 0 - REPEAT
-  -* Behaviour should be executed again for this state
+  -* Behavior should be executed again for this state
   -* results of previous execution will be merged with following execution in one global ASM step
   -* no other states are allowed to be executed
 1 - DONE
@@ -335,20 +335,20 @@ rule RemoveState(MI, currentStateNumber, MIOld, sOld) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule SubjectBehaviour = {
+rule SubjectBehavior = {
   choose x in killStates(channelFor(self)) do {
-    KillBehaviour(nth(x, 1), nth(x, 2))
+    KillBehavior(nth(x, 1), nth(x, 2))
   }
   ifnone seqblock
-    MacroBehaviour(1)
+    MacroBehavior(1)
 
     // reset
     macroExecutionState(channelFor(self), 1) := undef
   endseqblock
 }
 \end{minted}
-\caption{SubjectBehaviour}
-\label{lst:asm:SubjectBehaviour}
+\caption{SubjectBehavior}
+\label{lst:asm:SubjectBehavior}
 \end{listing}
 
 
@@ -356,7 +356,7 @@ rule SubjectBehaviour = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule KillBehaviour(MI, currentStateNumber) = {
+rule KillBehavior(MI, currentStateNumber) = {
   if (initializedState(channelFor(self), MI, currentStateNumber) != true) then {
     remove [MI, currentStateNumber] from killStates(channelFor(self))
     remove n from activeStates(channelFor(self), MI)
@@ -398,8 +398,8 @@ rule KillBehaviour(MI, currentStateNumber) = {
   endseqblock
 }
 \end{minted}
-\caption{KillBehaviour}
-\label{lst:asm:KillBehaviour}
+\caption{KillBehavior}
+\label{lst:asm:KillBehavior}
 \end{listing}
 
 
@@ -407,7 +407,7 @@ rule KillBehaviour(MI, currentStateNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule MacroBehaviour(MI) = {
+rule MacroBehavior(MI) = {
   let processID = processIDFor(self) in
   local listres := activeStates(channelFor(self), MI) in seqblock // remaining states
     macroExecutionState(channelFor(self), MI) := undef
@@ -420,7 +420,7 @@ rule MacroBehaviour(MI) = {
         addStates(channelFor(self), MI, stateNumber)      := []
         removeStates(channelFor(self), MI, stateNumber)   := []
 
-        Behaviour(MI, stateNumber)
+        Behavior(MI, stateNumber)
 
         // WARNING: mutates listres!
         let state = executionState(channelFor(self), MI, stateNumber) in
@@ -432,8 +432,8 @@ rule MacroBehaviour(MI) = {
   endseqblock
 }
 \end{minted}
-\caption{MacroBehaviour}
-\label{lst:asm:MacroBehaviour}
+\caption{MacroBehavior}
+\label{lst:asm:MacroBehavior}
 \end{listing}
 
 
@@ -545,7 +545,7 @@ derived abortState(MI, stateNumber) = return boolres in {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule Behaviour(MI, currentStateNumber) =
+rule Behavior(MI, currentStateNumber) =
  let s  = currentStateNumber,
  let ch = channelFor(self) in
   if (initializedState(ch, MI, s) != true) then
@@ -565,8 +565,8 @@ rule Behaviour(MI, currentStateNumber) =
       SetExecutionState(MI, s, DONE)
     }
 \end{minted}
-\caption{Behaviour}
-\label{lst:asm:Behaviour}
+\caption{Behavior}
+\label{lst:asm:Behavior}
 \end{listing}
 
 
@@ -2267,7 +2267,7 @@ rule CallMacro(MI, currentStateNumber, args) = {
           }
         }
         else seqblock
-          MacroBehaviour(childInstance)
+          MacroBehavior(childInstance)
 
           let mState = macroExecutionState(channelFor(self), childInstance) in
             SetExecutionState(MI, currentStateNumber, mState)

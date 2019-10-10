@@ -939,7 +939,7 @@ rule SetCompletedAction(MI, currentStateNumber, res) =
       let t = getTransitionByLabel(pID, s, res) in
         selectedTransition(ch, MI, s) := t
 
-    SetCompleted(MI, s) // sets executionState to REPEAT
+    SetCompleted(MI, s)
   }
 \end{minted}
 \caption{SetCompletedAction}
@@ -953,22 +953,29 @@ rule SetCompletedAction(MI, currentStateNumber, res) =
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 rule StartSend(MI, currentStateNumber) = {
-  let pID = processIDFor(self) in
-  let transitionNumber = first_outgoingNormalTransition(pID, currentStateNumber) in {
-    receivers(channelFor(self), MI, currentStateNumber) := undef
-    reservationsDone(channelFor(self), MI, currentStateNumber) := {}
-    messageContent(channelFor(self), MI, currentStateNumber) := loadVar(MI, messageContentVar(pID, first_outgoingNormalTransition(pID, currentStateNumber)))
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  // there must be exactly one transition
+  let  t = first_outgoingNormalTransition(pID, s) in {
+    receivers(ch, MI, s) := undef
+    reservationsDone(ch, MI, s) := {}
+    let mcVName = messageContentVar(pID, t) in
+      messageContent(ch, MI, s) := loadVar(MI, mcVName)
 
-    let cIDVarname = messageNewCorrelationVar(pID, transitionNumber) in
-      if (cIDVarname != undef and cIDVarname != "") then {
-        SetVar(MI, cIDVarname, "CorrelationID", nextCorrelationID)
-        // FIXME: it's a bad idea to save the cID early and read this variable later: it might get changed in the meantime
+    let cIDVName = messageNewCorrelationVar(pID, t) in
+      if (cIDVName != undef and cIDVName != "") then {
+        // FIXME: it's a bad idea to save the cID early and read
+        // this variable later: it might get changed in the meantime
+        SetVar(MI, cIDVName, "CorrelationID", nextCorrelationID)
+
         nextCorrelationID := nextCorrelationID + 1
-        nextCorrelationIDUsedBy(nextCorrelationID) := self // ensure no other agent increments nextCorrelationID
+        // ensure no other agent increments nextCorrelationID
+        nextCorrelationIDUsedBy(nextCorrelationID) := self
       }
   }
 
-  SetExecutionState(MI, currentStateNumber, LOWER)
+  SetExecutionState(MI, s, LOWER)
 }
 \end{minted}
 \caption{StartSend}
@@ -980,29 +987,26 @@ rule StartSend(MI, currentStateNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule PerformSend(MI, currentStateNumber) = {
-  if (receivers(channelFor(self), MI, currentStateNumber) = undef) then {
-    SelectReceivers(MI, currentStateNumber) // sets executionState to DONE / REPEAT / NEXT
+rule PerformSend(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  if (receivers(ch, MI, s) = undef) then
+    SelectReceivers(MI, s)
+  else if (messageContent(ch, MI, s) = undef) then
+    SetMessageContent(MI, s)
+  else if (startTime(ch, MI, s) = undef) then {
+    StartTimeout(MI, s)
+    SetExecutionState(MI, s, REPEAT)
   }
-  else if (messageContent(channelFor(self), MI, currentStateNumber) = undef) then {
-    SetMessageContent(MI, currentStateNumber) // sets executionState to DONE / NEXT
+  else if (|receivers(ch, MI, s)| =
+           |reservationsDone(ch, MI, s)|) then
+    TryCompletePerformSend(MI, s)
+  else if (shouldTimeout(ch, MI, s) = true) then {
+    SetCompleted(MI, s)
+    ActivateTimeout(MI, s)
   }
-  else if (startTime(channelFor(self), MI, currentStateNumber) = undef) then {
-    StartTimeout(MI, currentStateNumber)
-
-    SetExecutionState(MI, currentStateNumber, REPEAT)
-  }
-  else if ( | receivers(channelFor(self), MI, currentStateNumber) | = | reservationsDone(channelFor(self), MI, currentStateNumber) |) then {
-    TryCompletePerformSend(MI, currentStateNumber) // sets executionState to NEXT / REPEAT
-  }
-  else if (shouldTimeout(channelFor(self), MI, currentStateNumber) = true) then {
-    SetCompleted(MI, currentStateNumber) // sets executionState to REPEAT
-    ActivateTimeout(MI, currentStateNumber)
-  }
-  else {
-    DoReservations(MI, currentStateNumber) // sets executionState to DONE or NEXT
-  }
-}
+  else
+    DoReservations(MI, s)
 \end{minted}
 \caption{PerformSend}
 \label{lst:asm:PerformSend}
@@ -1013,28 +1017,26 @@ rule PerformSend(MI, currentStateNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule TryCompletePerformSend(MI, currentStateNumber) = {
-  if (anyNonProperTerminated(receivers(channelFor(self), MI, currentStateNumber)) = true) then {
-    debuginfo TryCompletePerformSend self + ": a receiver where a reservation was placed has terminated non-proper in the meantime, refusing to continue"
-
-    if (shouldTimeout(channelFor(self), MI, currentStateNumber) = true) then {
-      debuginfo TryCompletePerformSend self + ": shouldTimeout"
-      SetCompleted(MI, currentStateNumber) // sets executionState to REPEAT
-      ActivateTimeout(MI, currentStateNumber)
+rule TryCompletePerformSend(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  if (anyNonProperTerminated(receivers(ch, MI, s)) = true) then
+    // BLOCKED: a receiver where a reservation was placed has
+    // terminated non-proper in the meantime, refusing to continue
+    if (shouldTimeout(ch, MI, s) = true) then {
+      SetCompleted(MI, s)
+      ActivateTimeout(MI, s)
     }
-    else {
-      SetExecutionState(MI, currentStateNumber, NEXT)
-    }
-  }
+    else
+      SetExecutionState(MI, s, NEXT)
   else {
-    // there must be only one transition
-    let transitionNumber = first_outgoingNormalTransition(processIDFor(self), currentStateNumber) in {
-      selectedTransition(channelFor(self), MI, currentStateNumber) := transitionNumber
-    }
+    // there must be exactly one transition
+    let t = first_outgoingNormalTransition(pID, s) in
+      selectedTransition(ch, MI, s) := t
 
-    SetCompleted(MI, currentStateNumber) // sets executionState to REPEAT
+    SetCompleted(MI, s)
   }
-}
 \end{minted}
 \caption{TryCompletePerformSend}
 \label{lst:asm:TryCompletePerformSend}
@@ -1045,59 +1047,39 @@ rule TryCompletePerformSend(MI, currentStateNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule SelectReceivers(MI, currentStateNumber) = {
-  let pID = processIDFor(self) in
-  let transitionNumber = first_outgoingNormalTransition(pID, currentStateNumber) in
-  let countMin = messageSubjectCountMin(pID, transitionNumber),
-    countMax = messageSubjectCountMax(pID, transitionNumber) in {
-    if (messageSubjectVar(pID, transitionNumber) != undef and messageSubjectVar(pID, transitionNumber) != "") then {
-      let rChs = loadChannelsFromVariable(MI, messageSubjectVar(pID, transitionNumber), messageSubjectId(pID, transitionNumber)) in {
-
-        // countMin = 0 => ALL
-        if (| rChs | = 0 or (countMin != 0 and | rChs | < countMin)) then {
-          debuginfo SelectReceivers self + ": WARN: not enough receivers given in '" + messageSubjectVar(pID, transitionNumber) + "'"
-
-          SetExecutionState(MI, currentStateNumber, NEXT)
-        }
-        // countMax = 0 => at least countMin, but unlimited
-        else if (countMax != 0 and | rChs | > countMax)  then {
-          debuginfo SelectReceivers self + ": too many receivers given -> Selection"
-
-          SelectReceivers_Selection(MI, currentStateNumber, rChs, countMin, countMax) // sets either NEXT or REPEAT
-        }
+rule SelectReceivers(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  // there must be exactly one transition
+  let t = first_outgoingNormalTransition(pID, s) in
+  let min = messageSubjectCountMin(pID, t),   // 0 => ALL
+      max = messageSubjectCountMax(pID, t) in // 0 => no limit
+    let recVName = messageSubjectVar(pID, t) in
+    if (recVName != undef and recVName != "") then
+      let rChs = loadChannelsFromVariable(MI, recVName, messageSubjectId(pID, t)) in
+        if (|rChs| = 0 or (min != 0 and |rChs| < min)) then
+          // BLOCKED: not enough receivers given
+          SetExecutionState(MI, s, NEXT)
+        else if (max != 0 and |rChs| > max)  then
+          // too many receivers given -> call VarMan-Selection
+          SelectReceivers_Selection(MI, s, rChs, min, max)
         else {
-          debuginfo SelectReceivers self + ": receivers fit min/max -> use them"
-
-          receivers(channelFor(self), MI, currentStateNumber) := rChs
-
-          SetExecutionState(MI, currentStateNumber, REPEAT)
+          // receivers fit min/max -> use them
+          receivers(ch, MI, s) := rChs
+          SetExecutionState(MI, s, REPEAT)
         }
-      }
-    }
-    else {
-      if (selectAgentsResult(channelFor(self), MI, currentStateNumber) != undef) then {
-        let y = selectAgentsResult(channelFor(self), MI, currentStateNumber) in
-        {
-          if (|y| < countMin or |y| > countMax) then {
-            debuginfo SelectReceivers self + ": invalid receivers selected, must be between "+countMin+" and "+countMax+"!"
-            Crash()
-          }
+    else // no variable with receivers -> call SelectAgents
+      if (selectAgentsResult(ch, MI, s) != undef) then
+        let y = selectAgentsResult(ch, MI, s) in {
+          receivers(ch, MI, s) := y
+          selectAgentsResult(ch, MI, s) := undef // reset
 
-          receivers(channelFor(self), MI, currentStateNumber) := y
-
-          selectAgentsResult(channelFor(self), MI, currentStateNumber) := undef
-
-          SetExecutionState(MI, currentStateNumber, REPEAT)
+          SetExecutionState(MI, s, REPEAT)
         }
-      }
-      else {
-        let sIDLocal = messageSubjectId(pID, transitionNumber) in {
-          SelectAgents(MI, currentStateNumber, sIDLocal, countMin, countMax) // sets executionState to DONE / REPEAT / NEXT
-        }
-      }
-    }
-  }
-}
+      else
+        let sIDLocal = messageSubjectId(pID, t) in
+          SelectAgents(MI, s, sIDLocal, min, max)
 \end{minted}
 \caption{SelectReceivers}
 \label{lst:asm:SelectReceivers}
@@ -1108,21 +1090,19 @@ rule SelectReceivers(MI, currentStateNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule SelectReceivers_Selection(MI, currentStateNumber, rChs, minimum, maximum) = {
-  let res = selectionResult(channelFor(self), MI, currentStateNumber) in
-  if (res = undef) then {
-    let src = ["ChannelInformation", rChs] in {
-      Selection(MI, currentStateNumber, src, minimum, maximum)
-    }
-  }
+rule SelectReceivers_Selection(MI, currentStateNumber, rChs, min, max) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  let res = selectionResult(ch, MI, s) in
+  if (res = undef) then
+    let src = ["ChannelInformation", rChs] in
+      Selection(MI, s, src, min, max)
   else {
-    selectionResult(channelFor(self), MI, currentStateNumber) := undef
+    selectionResult(ch, MI, s) := undef
+    receivers(ch, MI, s) := res
 
-    receivers(channelFor(self), MI, currentStateNumber) := res
-
-    SetExecutionState(MI, currentStateNumber, REPEAT)
+    SetExecutionState(MI, s, REPEAT)
   }
-}
 \end{minted}
 \caption{SelectReceivers_Selection}
 \label{lst:asm:SelectReceivers_Selection}
@@ -1133,13 +1113,15 @@ rule SelectReceivers_Selection(MI, currentStateNumber, rChs, minimum, maximum) =
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule AbortSend(MI, currentStateNumber) = {
-  foreach r in reservationsDone(channelFor(self), MI, currentStateNumber) do {
-    CancelReservation(MI, currentStateNumber, r)
-  }
+rule AbortSend(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+    foreach r in reservationsDone(ch, MI, s) do {
+      CancelReservation(MI, s, r)
+    }
 
-  SetAbortionCompleted(MI, currentStateNumber)  // sets executionState to DONE
-}
+    SetAbortionCompleted(MI, s)
+  }
 \end{minted}
 \caption{AbortSend}
 \label{lst:asm:AbortSend}
@@ -1150,22 +1132,23 @@ rule AbortSend(MI, currentStateNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule PerformTransitionSend(MI, currentStateNumber, transitionNumber) = {
-  let pID = processIDFor(self) in {
-    let storeReceiverVarname = messageStoreReceiverVar(pID, transitionNumber) in
-      if (storeReceiverVarname != undef and storeReceiverVarname != "") then {
-        SetVar(MI, storeReceiverVarname, "ChannelInformation", reservationsDone(channelFor(self), MI, currentStateNumber))
-      }
+rule PerformTransitionSend(MI, currentStateNumber, t) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in {
+    let storeVName = messageStoreReceiverVar(pID, t) in
+      if (storeVName != undef and storeVName != "") then
+        SetVar(MI, storeVName, "ChannelInformation",
+          reservationsDone(ch, MI, s))
 
-    foreach r in reservationsDone(channelFor(self), MI, currentStateNumber) do {
-      ReplaceReservation(MI, currentStateNumber, r)
+    foreach r in reservationsDone(ch, MI, s) do {
+      ReplaceReservation(MI, s, r)
 
       EnsureRunning(r)
     }
 
-    SetCompletedTransition(MI, currentStateNumber, transitionNumber) // sets executionState to REPEAT
+    SetCompletedTransition(MI, s, t)
   }
-}
 \end{minted}
 \caption{PerformTransitionSend}
 \label{lst:asm:PerformTransitionSend}
@@ -1176,17 +1159,17 @@ rule PerformTransitionSend(MI, currentStateNumber, transitionNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule SetMessageContent(MI, currentStateNumber) = {
-  if not(contains(wantInput(channelFor(self), MI, currentStateNumber), "MessageContentDecision")) then {
-    add "MessageContentDecision" to wantInput(channelFor(self), MI, currentStateNumber)
-
-    SetExecutionState(MI, currentStateNumber, DONE)
-  }
-  else {
-    debuginfo SetMessageContent self + ": waiting for messageContent"
-    SetExecutionState(MI, currentStateNumber, NEXT)
-  }
-}
+rule SetMessageContent(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+    if not(contains(wantInput(ch, MI, ch),
+                    "MessageContentDecision")) then {
+      add "MessageContentDecision" to wantInput(ch, MI, ch)
+      SetExecutionState(MI, ch, DONE)
+    }
+    else
+      // waiting for messageContent
+      SetExecutionState(MI, ch, NEXT)
 \end{minted}
 \caption{SetMessageContent}
 \label{lst:asm:SetMessageContent}
@@ -1197,31 +1180,28 @@ rule SetMessageContent(MI, currentStateNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule DoReservations(MI, currentStateNumber) = {
-  local boolres := false in { // hasPlacedReservation
+// handle all receivers
+rule DoReservations(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  local hasPlacedReservation := false in
     seq
-      let receiversTodo = (receivers(channelFor(self), MI, currentStateNumber) diff reservationsDone(channelFor(self), MI, currentStateNumber)) in
-      foreach receiver in receiversTodo do {
-        local boolres1 := false in {
+      let receiversTodo = (receivers(ch, MI, s) diff
+                           reservationsDone(ch, MI, s)) in
+      foreach receiver in receiversTodo do
+        local tmp := false in
           seq
-            boolres1 <- DoReservation(MI, currentStateNumber, receiver) // returns true iff a reservation was made
-          next
-            if (boolres1 = true) then {
-              boolres := true
-            }
-        }
-      }
+            // result is true if a reservation was made
+            tmp <- DoReservation(MI, s, receiver)
+          next if (tmp = true) then
+            hasPlacedReservation := true
     next
-      if (boolres = true) then {
-        debuginfo DoReservations self + ": reservation(s) placed, make update"
-        SetExecutionState(MI, currentStateNumber, DONE)
-      }
-      else {
-        debuginfo DoReservations self + ": no reservations made, allow other states"
-        SetExecutionState(MI, currentStateNumber, NEXT)
-      }
-  }
-}
+      if (hasPlacedReservation = true) then
+        // reservation(s) placed, make update
+        SetExecutionState(MI, s, DONE)
+      else
+        // no reservations made, allow other states
+        SetExecutionState(MI, s, NEXT)
 \end{minted}
 \caption{DoReservations}
 \label{lst:asm:DoReservations}
@@ -1233,46 +1213,38 @@ rule DoReservations(MI, currentStateNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-// result = hasPlacedReservation
-rule DoReservation(MI, currentStateNumber, receiverChannel) = {
-  if (properTerminated(receiverChannel) = true) then {
-      let pID          = processIDFor(self) in
-      let transitionNumber   = first_outgoingNormalTransition(pID, currentStateNumber),
+// handle single reservation
+// result true if hasPlacedReservation, adds to reservationsDone
+rule DoReservation(MI, currentStateNumber, receiverChannel) =
+  if (properTerminated(receiverChannel) = true) then
+    let pID = processIDFor(self) in
+    // there must be exactly one transition
+    let t                  = first_outgoingNormalTransition(pID, currentStateNumber),
         senderChannel      = channelFor(self),
         receiverProcessID  = processIDOf(receiverChannel) in
-      let senderSubjectID    = searchSenderSubjectID(pID, subjectIDFor(self), receiverProcessID),
-        msgCorrelationID   = loadCorrelationID(MI, messageNewCorrelationVar(pID, transitionNumber)),
-        ipCorrelationID    = loadCorrelationID(MI, messageWithCorrelationVar(pID, transitionNumber)) in
-      let reservationMessage = [senderChannel, messageType(pID, transitionNumber), {}, msgCorrelationID, true] in {
-        seq
-          if (inputPool(receiverChannel, senderSubjectID, messageType(pID, transitionNumber), ipCorrelationID) = undef) then {
-              add [senderSubjectID, messageType(pID, transitionNumber), ipCorrelationID] to inputPoolDefined(receiverChannel)
-              inputPool(receiverChannel, senderSubjectID, messageType(pID, transitionNumber), ipCorrelationID) := []
+    let senderSubjectID    = searchSenderSubjectID(pID, subjectIDFor(self), receiverProcessID),
+        msgCorrelationID   = loadCorrelationID(MI, messageNewCorrelationVar(pID, t)),
+        ipCorrelationID    = loadCorrelationID(MI, messageWithCorrelationVar(pID, t)) in
+    let reservationMessage = [senderChannel, messageType(pID, t), {}, msgCorrelationID, true] in
+      seq
+        // prepare receiver IP
+        if (inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) = undef) then {
+          add [senderSubjectID, messageType(pID, t), ipCorrelationID] to inputPoolDefined(receiverChannel)
+          inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) := []
+        }
+      next
+        if (inputPoolIsClosed(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) != true) then
+          if (inputPoolGetFreeSpace(receiverChannel, senderSubjectID, messageType(pID, t)) > 0) then {
+            enqueue reservationMessage into inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID)
+            add receiverChannel to reservationsDone(channelFor(self), MI, currentStateNumber)
+            result := true
           }
-        next
-          if (inputPoolIsClosed(receiverChannel, senderSubjectID, messageType(pID, transitionNumber), ipCorrelationID) != true) then {
-              if (inputPoolGetFreeSpace(receiverChannel, senderSubjectID, messageType(pID, transitionNumber)) > 0) then {
-                enqueue reservationMessage into inputPool(receiverChannel, senderSubjectID, messageType(pID, transitionNumber), ipCorrelationID)
-                add receiverChannel to reservationsDone(channelFor(self), MI, currentStateNumber)
-                debuginfo DoReservation self + ": added reservation to inputPool: " + reservationMessage
-                result := true
-              }
-              else {
-                debuginfo DoReservation self + ": no free space!"
-                result := false
-              }
-          }
-          else {
-              debuginfo DoReservation self + ": inputPoolIsClosed"
-              result := false
-          }
-      }
-  }
-  else {
-      debuginfo DoReservation self + ": non-properTerminated, skipping receiver"
-      result := false
-  }
-}
+          else
+            result := false // BLOCKED: no free space!
+        else
+          result := false // BLOCKED: inputPoolIsClosed
+  else
+    result := false // BLOCKED: non-properTerminated
 \end{minted}
 \caption{DoReservation}
 \label{lst:asm:DoReservation}
@@ -1419,9 +1391,9 @@ rule PerformTransitionReceive(MI, currentStateNumber, transitionNumber) = {
 rule ReceiveMessage(MI, currentStateNumber, transitionNumber) = {
   let pID   = processIDFor(self) in
   let s           = messageSubjectId         (pID, transitionNumber),
-      sChsVarname = messageSubjectVar        (pID, transitionNumber),
+      sChsVName = messageSubjectVar        (pID, transitionNumber),
       mt          = messageType              (pID, transitionNumber),
-      cIDVarname  = messageWithCorrelationVar(pID, transitionNumber) in
+      cIDVName  = messageWithCorrelationVar(pID, transitionNumber) in
   // TODO 2019-02-22: local receivedMessages ? Or is that function used elsewhere?
   // Alternative: directly return as listres via result in InputPool_Pop?
   local stringres1, // subjectID
@@ -1446,12 +1418,12 @@ rule ReceiveMessage(MI, currentStateNumber, transitionNumber) = {
       }
 
 
-      if (sChsVarname = undef or sChsVarname = "") then {
+      if (sChsVName = undef or sChsVName = "") then {
         setres1 := undef
       }
       else {
         seq
-          setres1 := loadChannelsFromVariable(MI, sChsVarname, s) // (stringres1 would be fine too)
+          setres1 := loadChannelsFromVariable(MI, sChsVName, s) // (stringres1 would be fine too)
         next
           debuginfo CheckIP self + ": considering only messages from the following channels: " + setres1
       }
@@ -1469,15 +1441,15 @@ rule ReceiveMessage(MI, currentStateNumber, transitionNumber) = {
       }
 
 
-      if (cIDVarname = "*") then {
+      if (cIDVName = "*") then {
         debuginfo ReceiveMessage self + ": wildcard for cID type is ? and not *"
         Crash()
       }
-      else if (cIDVarname = "?") then {
+      else if (cIDVName = "?") then {
         numres1 := undef
       }
       else {
-        numres1 := loadCorrelationID(MI, cIDVarname)
+        numres1 := loadCorrelationID(MI, cIDVName)
       }
 
 
@@ -1520,9 +1492,9 @@ rule ReceiveMessage(MI, currentStateNumber, transitionNumber) = {
 rule CheckIP(MI, currentStateNumber, transitionNumber) = {
   let pID   = processIDFor(self) in
   let sID         = messageSubjectId         (pID, transitionNumber),
-      sChsVarname = messageSubjectVar        (pID, transitionNumber),
+      sChsVName = messageSubjectVar        (pID, transitionNumber),
       mT          = messageType              (pID, transitionNumber),
-      cIDVarname  = messageWithCorrelationVar(pID, transitionNumber) in
+      cIDVName  = messageWithCorrelationVar(pID, transitionNumber) in
   local stringres1, // subjectID
       setres1,    // subjectChannels
       stringres2, // messageType
@@ -1543,12 +1515,12 @@ rule CheckIP(MI, currentStateNumber, transitionNumber) = {
       }
 
 
-      if (sChsVarname = undef or sChsVarname = "") then {
+      if (sChsVName = undef or sChsVName = "") then {
         setres1 := undef
       }
       else {
         seq
-          setres1 := loadChannelsFromVariable(MI, sChsVarname, sID) // (stringres1 would be fine too)
+          setres1 := loadChannelsFromVariable(MI, sChsVName, sID) // (stringres1 would be fine too)
         next
           debuginfo CheckIP self + ": considering only messages from the following channels: " + setres1
       }
@@ -1566,10 +1538,10 @@ rule CheckIP(MI, currentStateNumber, transitionNumber) = {
       }
 
 
-      if (cIDVarname = "?") then {
+      if (cIDVName = "?") then {
         numres1 := undef
       }
-      else if (cIDVarname = "*") then {
+      else if (cIDVName = "*") then {
         debuginfo CheckIP self + ": correlationID wildcard is '?'"
         Crash()
       }
@@ -1995,8 +1967,8 @@ function selectionDecision : LIST * NUMBER * NUMBER -> SET
 
 function selectionResult   : LIST * NUMBER * NUMBER -> SET
 
-rule VarMan_Selection(MI, currentStateNumber, srcVarname, dstVarname, minimum, maximum) = {
-  let src = loadVar(MI, srcVarname),
+rule VarMan_Selection(MI, currentStateNumber, srcVName, dstVName, minimum, maximum) = {
+  let src = loadVar(MI, srcVName),
     res = selectionResult(channelFor(self), MI, currentStateNumber) in
   if (res = undef) then {
     // TODO: cancel / timeout transition?
@@ -2005,7 +1977,7 @@ rule VarMan_Selection(MI, currentStateNumber, srcVarname, dstVarname, minimum, m
   else {
     selectionResult(channelFor(self), MI, currentStateNumber) := undef
 
-    SetVar(MI, dstVarname, head(src), res)
+    SetVar(MI, dstVName, head(src), res)
 
     SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
   }
@@ -2374,13 +2346,13 @@ rule PerformTransitionCancel(MI, currentStateNumber, transitionNumber) = {
 rule CloseIP(MI, currentStateNumber, args) = {
   let senderSubjID         = nth(args, 1),
       messageType          = nth(args, 2),
-      correlationIDVarname = nth(args, 3) in {
-      if (messageType = "*" or messageType = "?" or senderSubjID = "*" or senderSubjID = "?" or correlationIDVarname = "*" or correlationIDVarname = "?") then {
+      correlationIDVName = nth(args, 3) in {
+      if (messageType = "*" or messageType = "?" or senderSubjID = "*" or senderSubjID = "?" or correlationIDVName = "*" or correlationIDVName = "?") then {
         debuginfo CloseIP self + ": no wildcards allowed. You may want to use CloseAllIPs"
         Crash()
       }
       else {
-        let correlationID = loadCorrelationID(MI, correlationIDVarname) in {
+        let correlationID = loadCorrelationID(MI, correlationIDVName) in {
           inputPoolClosed(channelFor(self), senderSubjID, messageType, correlationID) := true
           if (inputPool(channelFor(self), senderSubjID, messageType, correlationID) = undef) then {
               add [senderSubjID, messageType, correlationID] to inputPoolDefined(channelFor(self))
@@ -2406,13 +2378,13 @@ rule CloseIP(MI, currentStateNumber, args) = {
 rule OpenIP(MI, currentStateNumber, args) = {
   let senderSubjID         = nth(args, 1),
       messageType          = nth(args, 2),
-      correlationIDVarname = nth(args, 3) in {
-      if (messageType = "*" or messageType = "?" or senderSubjID = "*" or senderSubjID = "?" or correlationIDVarname = "*" or correlationIDVarname = "?") then {
+      correlationIDVName = nth(args, 3) in {
+      if (messageType = "*" or messageType = "?" or senderSubjID = "*" or senderSubjID = "?" or correlationIDVName = "*" or correlationIDVName = "?") then {
         debuginfo OpenIP self + ": no wildcards allowed. You may want to use CloseAllIPs"
         Crash()
       }
       else {
-        let correlationID = loadCorrelationID(MI, correlationIDVarname) in {
+        let correlationID = loadCorrelationID(MI, correlationIDVName) in {
           inputPoolClosed(channelFor(self), senderSubjID, messageType, correlationID) := false
           if (inputPool(channelFor(self), senderSubjID, messageType, correlationID) = undef) then {
               add [senderSubjID, messageType, correlationID] to inputPoolDefined(channelFor(self))
@@ -2487,21 +2459,21 @@ rule IsIPEmpty(MI, currentStateNumber, args) = {
   local numres in
   let senderSubjID         = nth(args, 1),
       messageType          = nth(args, 2),
-      correlationIDVarname = nth(args, 3) in
+      correlationIDVName = nth(args, 3) in
   seqblock
 
-      if (correlationIDVarname = undef or correlationIDVarname = 0 or correlationIDVarname = "") then {
+      if (correlationIDVName = undef or correlationIDVName = 0 or correlationIDVName = "") then {
         numres := 0
       }
-      else if (correlationIDVarname = "*") then {
+      else if (correlationIDVName = "*") then {
         numres := undef
       }
-      else if (correlationIDVarname = "?") then {
-        debuginfo OpenIP self + ": correlationIDVarname must not be '?'. wildcard is '*'"
+      else if (correlationIDVName = "?") then {
+        debuginfo OpenIP self + ": correlationIDVName must not be '?'. wildcard is '*'"
         Crash()
       }
       else {
-        numres := loadCorrelationID(MI, correlationIDVarname)
+        numres := loadCorrelationID(MI, correlationIDVName)
       }
 
       // receiverChannel * senderSubjID * messageType * correlationID

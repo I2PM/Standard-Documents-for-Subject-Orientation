@@ -298,14 +298,18 @@ It is therefore just an informal introduction to the topic.
 
 Rules under consideration to be presented:
 \begin{itemize}
+    % subject data
+    % macro instacnces, but no execution state -> no observer -> @see appendix
+    % note: no kill behavior -> not needed, as no call macro / recursion
+	\item \asminline{rule Macro} % minimal choose, no loop
 	\item \asminline{rule Behavior}
-	\item \asminline{rule PerformInternalAction}
-	\item Inputpool \& Send Definitions
+	\item \asminline{rule PerformInternalAction} % ohne wantInput
+	\item Inputpool \& Send Definitions % mit CorrelationID
 	\item \asminline{rule PerformSend}
 	\item \asminline{rule DoReservations}
 	\item \asminline{rule DoReservation}
 	\item \asminline{rule PerformEdgeSend}
-	\item \asminline{rule PerformReceive}
+	\item \asminline{rule PerformReceive} % mit storeMessage
 	\item \asminline{rule CheckIP}
 	\item \asminline{rule PerformEdgeReceive}
 \end{itemize}

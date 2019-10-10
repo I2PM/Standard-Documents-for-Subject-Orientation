@@ -371,7 +371,7 @@ rule KillBehaviour(MI, currentStateNumber) = {
     }
     else {
       RemoveState(MI, currentStateNumber, MI, currentStateNumber)
-      SetExecutionState(MI, currentStateNumber, 1)
+      SetExecutionState(MI, currentStateNumber, DONE)
     }
 
     if (executionState(channelFor(self), MI, currentStateNumber) != 1) then {
@@ -443,50 +443,47 @@ rule MacroBehaviour(MI) = {
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 // WARNING: mutates listres!
 rule UpdateRemainingStates(MI, stateNumber, exState, remainingStates) = {
-  if (exState = 0) then { // REPEAT
+  if (exState = REPEAT) then {
     remainingStates := [stateNumber]
 
-    macroExecutionState(channelFor(self), MI) := 1 // DONE - something changed and nothing else should happen
+    macroExecutionState(channelFor(self), MI) := DONE
 
     // quasi-reset
-    // 2019-02-13: why? will happen in next loop iteration anyway
     executionState(channelFor(self), MI, stateNumber) := undef
   }
-  else if (exState = 1) then { // DONE
+  else if (exState = DONE) then {
     seq
       // end loop ...
       remainingStates := []
     next
       // ... but add new states of this MI to initialize them,
       // so that all states have the same start time
-      // TODO: theoretically it should be possible to initialize states from a different MI as well. Why not?
       foreach x in addStates(channelFor(self), MI, stateNumber)
         with nth(x, 1) = MI do {
         add nth(x, 2) to remainingStates
       }
 
-    macroExecutionState(channelFor(self), MI) := 1 // DONE - something changed and nothing else should happen
+    macroExecutionState(channelFor(self), MI) := DONE // something changed and nothing else should happen
 
     // quasi-reset
-    // 2019-02-13: why? I guess for UI?
-    executionState(channelFor(self), MI, stateNumber) := 2
+    executionState(channelFor(self), MI, stateNumber) := NEXT
   }
-  else if (exState = 2) then { // NEXT
+  else if (exState = NEXT) then {
     seqblock
       remove stateNumber from remainingStates // remove self
 
       remainingStates := filterStatesWithSamePrio(processIDFor(self), remainingStates, statePriority(processIDFor(self), stateNumber)) // reduce to states with same priority
 
-      if (macroExecutionState(channelFor(self), MI) != 1) then {
-        macroExecutionState(channelFor(self), MI) := 2 // NEXT - nothing changed but block lower; unless already DONE
+      if (macroExecutionState(channelFor(self), MI) != DONE) then {
+        macroExecutionState(channelFor(self), MI) := NEXT
       }
     endseqblock
   }
-  else if (exState = 3) then { // LOWER
+  else if (exState = LOWER) then {
     remove stateNumber from remainingStates // remove self
 
-    if (macroExecutionState(channelFor(self), MI) != 1 and macroExecutionState(channelFor(self), MI) != 2) then {
-      macroExecutionState(channelFor(self), MI) := 3 // LOWER - nothing changed and lower not blocked; unless already DONE or NEXT
+    if (macroExecutionState(channelFor(self), MI) != DONE and macroExecutionState(channelFor(self), MI) != NEXT) then {
+      macroExecutionState(channelFor(self), MI) := LOWER
     }
   }
 }
@@ -510,7 +507,6 @@ rule UpdateActiveStates(MI, stateNumber) = seqblock
     }
   }
 
-  // NOTE: reset only needed for verification as optimization -> no need to carry over to next step / store globally
   addStates(channelFor(self), MI, stateNumber) := undef
 
   foreach x in removeStates(channelFor(self), MI, stateNumber) do {
@@ -519,13 +515,10 @@ rule UpdateActiveStates(MI, stateNumber) = seqblock
       // remove one instance of xN, if any
       remove xN from activeStates(channelFor(self), xMI)
 
-      // NOTE: reset only needed for verification as optimization
-      // FIXME 2019-02-15: what happens if a state is multiple times in activeStates - this would reset the other ones as well?!
       ResetState(xMI, xN)
     }
   }
 
-  // NOTE: reset only needed for verification as optimization -> no need to carry over to next step / store globally
   removeStates(channelFor(self), MI, stateNumber) := undef
 endseqblock
 \end{minted}
@@ -569,7 +562,7 @@ rule Behaviour(MI, currentStateNumber) =
       PerformTransition(MI, s, t)
     else {
       Proceed(MI, s, targetStateNumber(processIDFor(self), t))
-      SetExecutionState(MI, s, 1) // DONE, make global update
+      SetExecutionState(MI, s, DONE)
     }
 \end{minted}
 \caption{Behaviour}
@@ -599,7 +592,7 @@ rule AbortState(MI, currentStateNumber) = {
       }
     }
 
-    SetExecutionState(MI, currentStateNumber, 1) // DONE, make global update
+    SetExecutionState(MI, currentStateNumber, DONE)
   }
 }
 \end{minted}
@@ -631,7 +624,7 @@ rule StartState(MI, currentStateNumber) = {
       "function"       : StartFunction(MI, currentStateNumber)
       "internalAction" : StartInternalAction(MI, currentStateNumber)
       "send"           : StartSend(MI, currentStateNumber)
-      "receive"        : SetExecutionState(MI, currentStateNumber, 3) // NEXT, nothing to do. Handle all other startStates, LTS step implied afterwards
+      "receive"        : SetExecutionState(MI, currentStateNumber, LOWER)
       "end"            : StartEnd(MI, currentStateNumber)
     endcase
 
@@ -717,7 +710,7 @@ rule StartSelectedTransition(MI, currentStateNumber) = {
     initializedSelectedTransition(channelFor(self), MI, currentStateNumber) := true
   }
 
-  SetExecutionState(MI, currentStateNumber, 0)
+  SetExecutionState(MI, currentStateNumber, REPEAT)
 }
 \end{minted}
 \caption{StartSelectedTransition}
@@ -764,12 +757,12 @@ rule InitializeCompletion(MI, currentStateNumber) = {
 }
 
 rule SetCompleted(MI, currentStateNumber) = {
-  SetExecutionState(MI, currentStateNumber, 0)
+  SetExecutionState(MI, currentStateNumber, REPEAT)
   completed(channelFor(self), MI, currentStateNumber) := true
 }
 
 rule SetAbortionCompleted(MI, currentStateNumber) = {
-  SetExecutionState(MI, currentStateNumber, 1) // DONE, make global update
+  SetExecutionState(MI, currentStateNumber, DONE)
   abortionCompleted(channelFor(self), MI, currentStateNumber) := true
 }
 
@@ -803,7 +796,7 @@ rule InitializeCompletionTransition(MI, transitionNumber) = {
 
 
 rule SetCompletedTransition(MI, currentStateNumber, transitionNumber) = {
-  SetExecutionState(MI, currentStateNumber, 0)
+  SetExecutionState(MI, currentStateNumber, REPEAT)
 
   transitionCompleted(channelFor(self), MI, transitionNumber) := true
 }
@@ -824,7 +817,7 @@ rule StartInternalAction(MI, currentStateNumber) = {
 
     EnableAllTransitions(MI, currentStateNumber)
 
-    SetExecutionState(MI, currentStateNumber, 3) // handle all other startStates, LTS step afterwards
+    SetExecutionState(MI, currentStateNumber, LOWER)
   }
 }
 \end{minted}
@@ -876,7 +869,7 @@ rule StartFunction(MI, currentStateNumber) = {
     }
   }
 
-  SetExecutionState(MI, currentStateNumber, 3) // handle all other startStates, LTS step afterwards
+  SetExecutionState(MI, currentStateNumber, LOWER)
 }
 \end{minted}
 \caption{StartFunction}
@@ -994,7 +987,7 @@ rule StartSend(MI, currentStateNumber) = {
       }
   }
 
-  SetExecutionState(MI, currentStateNumber, 3) // handle all other startStates, LTS step afterwards
+  SetExecutionState(MI, currentStateNumber, LOWER)
 }
 \end{minted}
 \caption{StartSend}
@@ -1016,7 +1009,7 @@ rule PerformSend(MI, currentStateNumber) = {
   else if (startTime(channelFor(self), MI, currentStateNumber) = undef) then {
     StartTimeout(MI, currentStateNumber)
 
-    SetExecutionState(MI, currentStateNumber, 0)
+    SetExecutionState(MI, currentStateNumber, REPEAT)
   }
   else if ( | receivers(channelFor(self), MI, currentStateNumber) | = | reservationsDone(channelFor(self), MI, currentStateNumber) |) then {
     TryCompletePerformSend(MI, currentStateNumber) // sets executionState to NEXT / REPEAT
@@ -1049,8 +1042,7 @@ rule TryCompletePerformSend(MI, currentStateNumber) = {
       ActivateTimeout(MI, currentStateNumber)
     }
     else {
-      debuginfo TryCompletePerformSend self + ": NEXT"
-      SetExecutionState(MI, currentStateNumber, 2)
+      SetExecutionState(MI, currentStateNumber, NEXT)
     }
   }
   else {
@@ -1084,21 +1076,20 @@ rule SelectReceivers(MI, currentStateNumber) = {
         if (| rChs | = 0 or (countMin != 0 and | rChs | < countMin)) then {
           debuginfo SelectReceivers self + ": WARN: not enough receivers given in '" + messageSubjectVar(processID, transitionNumber) + "'"
 
-          SetExecutionState(MI, currentStateNumber, 2) // NEXT
+          SetExecutionState(MI, currentStateNumber, NEXT)
         }
         // countMax = 0 => at least countMin, but unlimited
         else if (countMax != 0 and | rChs | > countMax)  then {
           debuginfo SelectReceivers self + ": too many receivers given -> Selection"
 
-          SelectReceivers_Selection(MI, currentStateNumber, rChs, countMin, countMax) // sets either Next or Repeat
+          SelectReceivers_Selection(MI, currentStateNumber, rChs, countMin, countMax) // sets either NEXT or REPEAT
         }
         else {
           debuginfo SelectReceivers self + ": receivers fit min/max -> use them"
 
           receivers(channelFor(self), MI, currentStateNumber) := rChs
 
-          debuginfo SelectReceivers self + ": REPEAT"
-          SetExecutionState(MI, currentStateNumber, 0)
+          SetExecutionState(MI, currentStateNumber, REPEAT)
         }
       }
     }
@@ -1115,7 +1106,7 @@ rule SelectReceivers(MI, currentStateNumber) = {
 
           selectAgentsResult(channelFor(self), MI, currentStateNumber) := undef
 
-          SetExecutionState(MI, currentStateNumber, 0)
+          SetExecutionState(MI, currentStateNumber, REPEAT)
         }
       }
       else {
@@ -1148,7 +1139,7 @@ rule SelectReceivers_Selection(MI, currentStateNumber, rChs, minimum, maximum) =
 
     receivers(channelFor(self), MI, currentStateNumber) := res
 
-    SetExecutionState(MI, currentStateNumber, 0)
+    SetExecutionState(MI, currentStateNumber, REPEAT)
   }
 }
 \end{minted}
@@ -1208,12 +1199,11 @@ rule SetMessageContent(MI, currentStateNumber) = {
   if not(contains(wantInput(channelFor(self), MI, currentStateNumber), "MessageContentDecision")) then {
     add "MessageContentDecision" to wantInput(channelFor(self), MI, currentStateNumber)
 
-    SetExecutionState(MI, currentStateNumber, 1)
+    SetExecutionState(MI, currentStateNumber, DONE)
   }
   else {
     debuginfo SetMessageContent self + ": waiting for messageContent"
-    debuginfo SetMessageContent self + ": allow next states to be executed, but not with lower priority"
-    SetExecutionState(MI, currentStateNumber, 2)
+    SetExecutionState(MI, currentStateNumber, NEXT)
   }
 }
 \end{minted}
@@ -1242,12 +1232,12 @@ rule DoReservations(MI, currentStateNumber) = {
       }
     next
       if (boolres = true) then {
-        debuginfo DoReservations self + ": DONE: reservation(s) placed, make update"
-        SetExecutionState(MI, currentStateNumber, 1)
+        debuginfo DoReservations self + ": reservation(s) placed, make update"
+        SetExecutionState(MI, currentStateNumber, DONE)
       }
       else {
-        debuginfo DoReservations self + ": NEXT: no reservations made, allow other states"
-        SetExecutionState(MI, currentStateNumber, 2)
+        debuginfo DoReservations self + ": no reservations made, allow other states"
+        SetExecutionState(MI, currentStateNumber, NEXT)
       }
   }
 }
@@ -1366,7 +1356,7 @@ rule PerformReceive(MI, currentStateNumber) = {
   if (startTime(channelFor(self), MI, currentStateNumber) = undef) then {
     StartTimeout(MI, currentStateNumber)
 
-    SetExecutionState(MI, currentStateNumber, 0)
+    SetExecutionState(MI, currentStateNumber, REPEAT)
   }
   else {
     if (shouldTimeout(channelFor(self), MI, currentStateNumber) = true) then {
@@ -1416,8 +1406,7 @@ rule PerformReceive(MI, currentStateNumber) = {
           }
           else {
             debuginfo PerformReceive self + ": no IP with messages, trying later.."
-            debuginfo PerformReceive self + ": allow all other states to be executed, especially states with lower priority"
-            SetExecutionState(MI, currentStateNumber, 3)
+            SetExecutionState(MI, currentStateNumber, LOWER)
           }
         }
     }
@@ -1647,7 +1636,7 @@ rule CheckIP(MI, currentStateNumber, transitionNumber) = {
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 rule StartEnd(MI, currentStateNumber) = {
-  SetExecutionState(MI, currentStateNumber, 0) // REPEAT, continue directly to PerformEnd, avoiding LTS step
+  SetExecutionState(MI, currentStateNumber, REPEAT)
 }
 \end{minted}
 \caption{StartEnd}
@@ -1663,7 +1652,7 @@ rule PerformEnd(MI, currentStateNumber) = {
   if (|activeStates(channelFor(self), MI)| > 1) then {
       AbortMacroInstance(MI, currentStateNumber) // do not remove self. calls ClearAllVarInMIForChannel bat that's not needed
 
-      SetExecutionState(MI, currentStateNumber, 1) // DONE, make global update
+      SetExecutionState(MI, currentStateNumber, DONE)
   }
   else {
       if (MI = 1) then {
@@ -1702,7 +1691,7 @@ rule PerformEnd(MI, currentStateNumber) = {
 
       // remove self
       RemoveState(MI, currentStateNumber, MI, currentStateNumber)
-      SetExecutionState(MI, currentStateNumber, 1) // DONE - make global update
+      SetExecutionState(MI, currentStateNumber, DONE)
   }
 }
 \end{minted}
@@ -2075,20 +2064,17 @@ rule Selection(MI, currentStateNumber, src, minimum, maximum) = {
       selectionMax     (channelFor(self), MI, currentStateNumber) := maximum
       selectionDecision(channelFor(self), MI, currentStateNumber) := undef // just to be sure
 
-      debuginfo Selection self + ": REPEAT => Behaviour should be executed again for this state"
-      SetExecutionState(MI, currentStateNumber, 0)
+      SetExecutionState(MI, currentStateNumber, REPEAT)
   }
   else if (selectionDecision(channelFor(self), MI, currentStateNumber) = undef) then {
       if not(contains(wantInput(channelFor(self), MI, currentStateNumber), "SelectionDecision")) then {
         add "SelectionDecision" to wantInput(channelFor(self), MI, currentStateNumber)
 
-        debuginfo Selection self + ": DONE, make global update"
-        SetExecutionState(MI, currentStateNumber, 1)
+        SetExecutionState(MI, currentStateNumber, DONE)
       }
       else {
         debuginfo Selection self + ": waiting for selectionDecision"
-        debuginfo Selection self + ": allow next states to be executed, but not with lower priority"
-        SetExecutionState(MI, currentStateNumber, 2)
+        SetExecutionState(MI, currentStateNumber, NEXT)
       }
   }
   else {
@@ -2098,8 +2084,7 @@ rule Selection(MI, currentStateNumber, src, minimum, maximum) = {
 
       ResetSelection(MI, currentStateNumber)
 
-      debuginfo Selection self + ": REPEAT => Behaviour should be executed again for this state"
-      SetExecutionState(MI, currentStateNumber, 0)
+      SetExecutionState(MI, currentStateNumber, REPEAT)
   }
 }
 \end{minted}
@@ -2124,7 +2109,7 @@ rule ModalSplit(MI, currentStateNumber, args) = {
     // remove self
     RemoveState(MI, currentStateNumber, MI, currentStateNumber)
 
-    SetExecutionState(MI, currentStateNumber, 1)
+    SetExecutionState(MI, currentStateNumber, DONE)
   endseqblock
 }
 \end{minted}
@@ -2160,8 +2145,7 @@ rule ModalJoin(MI, currentStateNumber, args) = {
       // remove self
       RemoveState(MI, currentStateNumber, MI, currentStateNumber)
 
-      debuginfo ModalJoin self + ": DONE, make global update"
-      SetExecutionState(MI, currentStateNumber, 1)
+      SetExecutionState(MI, currentStateNumber, DONE)
     }
     else {
       joinCount(channelFor(self), MI, currentStateNumber) := undef
@@ -2184,7 +2168,7 @@ rule AbortCallMacro(MI, currentStateNumber) = {
     if (|activeStates(channelFor(self), childInstance)| > 0) then {
       AbortMacroInstance(childInstance, undef)
 
-      SetExecutionState(MI, currentStateNumber, 1) // DONE, make global update
+      SetExecutionState(MI, currentStateNumber, DONE)
     }
     else {
       callMacroChildInstance(channelFor(self), MI, currentStateNumber) := undef
@@ -2262,8 +2246,7 @@ rule CallMacro(MI, currentStateNumber, args) = {
           InitializeMacroArguments(MI, currentStateNumber, mIDNew, MINew, tail(args))
         }
 
-        debuginfo CallMacro self + ": DONE, make global update"
-        SetExecutionState(MI, currentStateNumber, 1)
+        SetExecutionState(MI, currentStateNumber, DONE)
 
         StartMacro(MI, currentStateNumber, mIDNew, MINew)
       endseqblock
@@ -2284,27 +2267,10 @@ rule CallMacro(MI, currentStateNumber, args) = {
           }
         }
         else seqblock
-          debuginfo CallMacro self + ": execute MacroBehaviour("+childInstance+") with activeStates(ch, "+childInstance+"): " + activeStates(channelFor(self), childInstance)
-
           MacroBehaviour(childInstance)
 
-          let state = macroExecutionState(channelFor(self), childInstance) in {
-            debuginfo CallMacro self + ": macroExecutionState(ch, "+childInstance+"): " + macroExecutionState(channelFor(self), childInstance)
-
-            if (state = 1) then { // DONE
-              SetExecutionState(MI, currentStateNumber, 1)
-            }
-            else if (state = 2) then { // NEXT
-              SetExecutionState(MI, currentStateNumber, 2)
-            }
-            else if (state = 3) then { // LOWER
-              SetExecutionState(MI, currentStateNumber, 3)
-            }
-            else {
-              debuginfo CallMacro self + ": invalid macroExecutionState!"
-              Crash()
-            }
-          }
+          let mState = macroExecutionState(channelFor(self), childInstance) in
+            SetExecutionState(MI, currentStateNumber, mState)
 
           // reset
           macroExecutionState(channelFor(self), childInstance) := undef
@@ -2386,9 +2352,7 @@ rule Cancel(MI, currentStateNumber, args) = {
       }
       else {
         debuginfo Cancel self + ": no transition with active states, trying later.."
-        debuginfo Cancel self + ": allow all other states to be executed, especially states with lower priority"
-        SetExecutionState(MI, currentStateNumber, 3)
-        // TODO: discuss: LOWER or NEXT?
+        SetExecutionState(MI, currentStateNumber, LOWER)
       }
     }
   endseqblock
@@ -2667,16 +2631,14 @@ rule SelectAgents(MI, currentStateNumber, sIDLocal, countMin, countMax) = {
       selectAgentsProcessID(channelFor(self), MI, currentStateNumber) := undef
       selectAgentsSubjectID(channelFor(self), MI, currentStateNumber) := undef
 
-      debuginfo SelectAgents self + ": REPEAT"
-      SetExecutionState(MI, currentStateNumber, 0)
+      SetExecutionState(MI, currentStateNumber, REPEAT)
   }
   else if(hasSizeWithin(predefinedAgents(processID, PI, sIDLocal), countMin, countMax) = true) then {
       debuginfo SelectAgents self + ": apply predefinedAgents: " + predefinedAgents(processID, PI, sIDLocal)
 
       selectAgentsDecision(channelFor(self), MI, currentStateNumber) := predefinedAgents(processID, PI, sIDLocal)
 
-      debuginfo SelectAgents self + ": REPEAT"
-      SetExecutionState(MI, currentStateNumber, 0)
+      SetExecutionState(MI, currentStateNumber, REPEAT)
   }
   else {
       if not(contains(wantInput(channelFor(self), MI, currentStateNumber), "SelectAgentsDecision")) then {
@@ -2689,13 +2651,11 @@ rule SelectAgents(MI, currentStateNumber, sIDLocal, countMin, countMax) = {
 
         selectAgentsResult(channelFor(self), MI, currentStateNumber) := undef
 
-        debuginfo SelectAgents self + ": DONE, make global update"
-        SetExecutionState(MI, currentStateNumber, 1)
+        SetExecutionState(MI, currentStateNumber, DONE)
       }
       else {
         debuginfo SelectAgents self + ": waiting for selectAgentsDecision"
-        debuginfo SelectAgents self + ": NEXT"
-        SetExecutionState(MI, currentStateNumber, 2)
+        SetExecutionState(MI, currentStateNumber, NEXT)
       }
   }
 }

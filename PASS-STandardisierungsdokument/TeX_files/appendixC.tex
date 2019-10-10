@@ -100,7 +100,7 @@ function transitionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
 derived shouldTimeout(ch, MI, stateNumber) = return boolres in {
   let pID = processIDOf(ch) in {
     if (hasTimeoutTransition(pID, stateNumber) = true and startTime(ch, MI, stateNumber) != undef) then {
-      let transitionNumber = first_outgoingTimeoutTransition(pID, stateNumber) in
+      let transitionNumber = outgoingTimeoutTransition(pID, stateNumber) in
       let timeout = transitionTimeout(pID, transitionNumber) * 1000 * 1000 * 1000 in {
         let runningTime = (nanoTime() - startTime(ch, MI, stateNumber)) in
           boolres := (runningTime > timeout)
@@ -193,7 +193,7 @@ rule AbortMacroInstance(MIAbort, ignoreState) =
       add [MIAbort, currentState] to killStates(ch)
     }
 
-    ClearAllVarInMIForChannel(ch, MIAbort)
+    ClearAllVarInMI(ch, MIAbort)
   }
 \end{minted}
 \caption{AbortMacroInstance}
@@ -205,13 +205,21 @@ rule AbortMacroInstance(MIAbort, ignoreState) =
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+// -> SET[ASMAgent]
+function asmAgents : -> SET
+
+derived running(ch) = exists a in asmAgents
+                        with channelFor(a) = ch
+
+rule EnsureRunning(ch) =
+  if (running(ch) != true) then
+    StartASMAgent(ch)
+
 rule StartASMAgent(ch) =
   extend Agents with a do {
-    channelFor(a) := ch
-
     add a to asmAgents
-
-    program(a) := @StartMainMacro
+    channelFor(a) := ch
+    program(a)    := @StartMainMacro
   }
 \end{minted}
 \caption{StartASMAgent}
@@ -580,13 +588,13 @@ rule AbortState(MI, currentStateNumber) =
     Abort(MI, s)
   else {
     if (cancelDecision(ch, MI, s) = true) then {
-      let t = first_outgoingCancelTransition(pID, s) in
+      let t = outgoingCancelTransition(pID, s) in
       let target = targetStateNumber(pID, t) in {
         Proceed(MI, s, target)
       }
     }
     else if (timeoutActive(ch, MI, s) = true) then {
-      let t = first_outgoingTimeoutTransition(pID, s) in
+      let t = outgoingTimeoutTransition(pID, s) in
       let target = targetStateNumber(pID, t) in {
         Proceed(MI, s, target)
       }
@@ -698,6 +706,27 @@ rule Perform(MI, currentStateNumber) =
 \end{listing}
 
 
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule SelectTransition(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     s = currentStateNumber in
+  if (|outgoingEnabledTransitions(ch, MI, s)| = 0) then
+    // BLOCKED: none to select
+    SetExecutionState(MI, s, NEXT)
+  else if (not(contains(wantInput(ch, MI, s),
+                        "TransitionDecision"))) then {
+    add "TransitionDecision" to wantInput(ch, MI, s)
+    SetExecutionState(MI, s, DONE)
+  }
+  else
+    // waiting for selectedTransition
+    SetExecutionState(MI, s, NEXT)
+\end{minted}
+\caption{SelectTransition}
+\label{lst:asm:SelectTransition}
+\end{listing}
+
 
 
 \begin{listing}[H]
@@ -719,6 +748,22 @@ rule StartSelectedTransition(MI, currentStateNumber) =
 
 
 
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule PerformTransition(MI, currentStateNumber, t) =
+  let pID = processIDFor(self),
+        s = currentStateNumber in
+  case stateType(pID, s) of
+    "function"       : PerformTransitionFunction(MI, s, t)
+    "internalAction" : SetCompletedTransition(MI, s, t)
+    "send"           : PerformTransitionSend(MI, s, t)
+    "receive"        : PerformTransitionReceive(MI, s, t)
+  endcase
+\end{minted}
+\caption{PerformTransition}
+\label{lst:asm:PerformTransition}
+\end{listing}
 
 
 
@@ -1349,12 +1394,10 @@ rule PerformReceive(MI, currentStateNumber) =
 \end{listing}
 
 
-% FIXME: PerformTransitionReceive is never called - missed to copy PerformTransition rule?
-
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule PerformTransitionReceive(MI, currentStateNumber, transitionNumber) =
-  ReceiveMessage(MI, currentStateNumber, transitionNumber)
+rule PerformTransitionReceive(MI, currentStateNumber, t) =
+  ReceiveMessage(MI, currentStateNumber, t)
 \end{minted}
 \caption{PerformTransitionReceive}
 \label{lst:asm:PerformTransitionReceive}
@@ -1446,9 +1489,8 @@ rule ReceiveMessage(MI, currentStateNumber, transitionNumber) = {
         debuginfo ReceiveMessage self + ": receivedMessages: " + msgs
 
         if (messageStoreMessagesVar(pID, transitionNumber) != undef and messageStoreMessagesVar(pID, transitionNumber) != "") then {
-          let varname = messageStoreMessagesVar(pID, transitionNumber) in {
-              debuginfo ReceiveMessage self + ": storing messages in: '" + varname + "'"
-              SetMessageSet(MI, varname, msgs)
+          let vName = messageStoreMessagesVar(pID, transitionNumber) in {
+              SetVar(MI, vName, "MessageSet", msgs)
           }
         }
       }
@@ -1577,8 +1619,8 @@ rule PerformEnd(MI, currentStateNumber) =
   }
   else {
     if (MI = 1) then { // terminate subject
-      ClearAllVarInMIForChannel(ch, 0)
-      ClearAllVarInMIForChannel(ch, 1)
+      ClearAllVarInMI(ch, 0)
+      ClearAllVarInMI(ch, 1)
 
       FinalizeInteraction()
 
@@ -1586,7 +1628,7 @@ rule PerformEnd(MI, currentStateNumber) =
       remove self from asmAgents
     }
     else { // terminate only Macro Instance
-      ClearAllVarInMIForChannel(ch, MI)
+      ClearAllVarInMI(ch, MI)
 
       let res = head(stateFunctionArguments(pID, s)) in
       if (res != undef) then
@@ -2370,12 +2412,12 @@ function selectAgentsResult : LIST * NUMBER * NUMBER -> SET
 rule SelectAgentsAction(MI, currentStateNumber, args) =
   let ch = channelFor(self),
        s = currentStateNumber,
-      VName    = nth(args, 1),
+      vName    = nth(args, 1),
       sIDLocal = nth(args, 2),
       countMin = nth(args, 3),
       countMax = nth(args, 4) in
     if (selectAgentsResult(ch, MI, s) != undef) then {
-      SetVar(MI, VName, "ChannelInformation",
+      SetVar(MI, vName, "ChannelInformation",
              selectAgentsResult(ch, MI, s))
       selectAgentsResult(ch, MI, s) := undef
 

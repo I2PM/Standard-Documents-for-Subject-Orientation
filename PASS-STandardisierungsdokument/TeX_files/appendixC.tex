@@ -553,22 +553,23 @@ derived abortState(MI, stateNumber) = return boolres in {
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 rule Behaviour(MI, currentStateNumber) =
+ let s  = currentStateNumber,
  let ch = channelFor(self) in
-  if (initializedState(ch, MI, currentStateNumber) != true) then
-    StartState(MI, currentStateNumber)
-  else if (abortState(MI, currentStateNumber) = true) then
-    AbortState(MI, currentStateNumber)
-  else if (completed(ch, MI, currentStateNumber) != true) then
-    Perform(MI, currentStateNumber)
-  else if (initializedSelectedTransition(ch, MI, currentStateNumber) != true) then
-    StartSelectedTransition(MI, currentStateNumber)
+  if (initializedState(ch, MI, s) != true) then
+    StartState(MI, s)
+  else if (abortState(MI, s) = true) then
+    AbortState(MI, s)
+  else if (completed(ch, MI, s) != true) then
+    Perform(MI, s)
+  else if (initializedSelectedTransition(ch, MI, s) != true) then
+    StartSelectedTransition(MI, s)
   else
-   let transitionNumber = selectedTransition(ch, MI, currentStateNumber) in
-    if (transitionCompleted(ch, MI, transitionNumber) != true) then
-      PerformTransition(MI, currentStateNumber, transitionNumber)
+   let transitionNumber = selectedTransition(ch, MI, s) in
+    if (transitionCompleted(ch, MI, t) != true) then
+      PerformTransition(MI, s, t)
     else {
-      Proceed(MI, currentStateNumber, targetStateNumber(processIDFor(self), transitionNumber))
-      SetExecutionState(MI, currentStateNumber, 1) // DONE, make global update
+      Proceed(MI, s, targetStateNumber(processIDFor(self), t))
+      SetExecutionState(MI, s, 1) // DONE, make global update
     }
 \end{minted}
 \caption{Behaviour}

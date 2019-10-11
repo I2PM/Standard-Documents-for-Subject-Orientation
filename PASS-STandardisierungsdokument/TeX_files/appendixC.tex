@@ -2440,7 +2440,7 @@ rule SelectAgents(MI, currentStateNumber, sIDLocal, min, max) =
      pID = processIDFor(self),
        s = currentStateNumber,
       PI = processInstanceFor(self) in
-  let givenAgents = predefinedAgents(pID, PI, sIDLocal),
+  let predefAgents = predefinedAgents(pID, sIDLocal),
       resolvedInterface = resolveInterfaceSubject(sIDLocal) in
   let resolvedProcessID = nth(resolvedInterface, 1),
       resolvedSubjectID = nth(resolvedInterface, 2) in
@@ -2474,8 +2474,8 @@ rule SelectAgents(MI, currentStateNumber, sIDLocal, min, max) =
 
       SetExecutionState(MI, s, REPEAT)
   }
-  else if(hasSizeWithin(givenAgents, min, max) = true) then {
-    selectAgentsDecision(ch, MI, s) := givenAgents
+  else if(hasSizeWithin(predefAgents, min, max) = true) then {
+    selectAgentsDecision(ch, MI, s) := predefAgents
     SetExecutionState(MI, s, REPEAT)
   }
   else if not(contains(wantInput(ch, MI, s),

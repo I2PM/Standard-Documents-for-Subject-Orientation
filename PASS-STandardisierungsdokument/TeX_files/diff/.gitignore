@@ -1,0 +1,15 @@
+asm-defined_rules.txt
+asm-defined_functions.txt
+asm-defined_derived_functions.txt
+
+tex-defined_rules.txt
+tex-defined_functions.txt
+tex-defined_derived_functions.txt
+
+tex-undefined_rules.txt
+tex-undefined_functions.txt
+tex-undefined_derived_functions.txt
+
+tex-undefined-called_rules.txt
+tex-undefined-called_functions.txt
+tex-undefined-called_derived_functions.txt

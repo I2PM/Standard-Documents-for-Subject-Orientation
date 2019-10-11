@@ -186,7 +186,7 @@ function callMacroChildInstance : LIST * NUMBER * NUMBER -> NUMBER
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-// called form PerformEnd and AbortCallMacro
+// called from PerformEnd and AbortCallMacro
 rule AbortMacroInstance(MIAbort, ignoreState) =
   let ch = channelFor(self) in {
     foreach currentState in activeStates(ch, MIAbort) do {
@@ -201,6 +201,40 @@ rule AbortMacroInstance(MIAbort, ignoreState) =
 \end{listing}
 
 
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule StartProcess(processID, additionalInitializationSubject,
+                             additionalInitializationAgent) =
+  let pID = processID in
+  local PI in
+    seq
+      PI <- GenerateUniqueProcessInstanceID()
+    next {
+      result := PI
+
+      foreach sID in keySet(processSubjects(pID)) do
+        if (sID = additionalInitializationSubject) then
+          let ch = [pID, PI,
+                    sID, additionalInitializationAgent] in
+            InitializeSubject(ch)
+        else if (isStartSubject(pID, sID) = true) then
+          let agentSet = safeSet(predefinedAgents(pID, sID)) in
+          if (|agentSet| = 1) then
+            // shortcut: avoid user interaction
+            let agentName = firstFromSet(agentSet) in
+            let ch = [pID, PI, sID, agentName] in
+              seq
+                InitializeSubject(ch)
+              next
+                StartASMAgent(ch)
+          else
+            SelectAgentAndStartASMAgent(pID, PI, sID)
+    }
+\end{minted}
+\caption{StartProcess}
+\label{lst:asm:StartProcess}
+\end{listing}
 
 
 \begin{listing}[H]
@@ -221,10 +255,28 @@ rule StartASMAgent(ch) =
     channelFor(a) := ch
     program(a)    := @StartMainMacro
   }
+
+rule PrepareReceptionOfMessages(ch) =
+  // might be called multiple times, esp. via SelectAgents
+  if (properTerminated(ch) = undef) then {
+    properTerminated(ch) := true
+
+    inputPoolDefined(ch) := {}
+    inputPoolClosed(ch, undef, undef, undef) := false
+  }
+
+rule FinalizeInteraction =
+  let ch = channelFor(self) in
+  let proper = inputPoolIsEmpty(ch, undef, undef, undef) in
+    properTerminated(ch) := proper
+
+rule InitializeSubject(ch) = PrepareReceptionOfMessages(ch)
 \end{minted}
 \caption{StartASMAgent}
 \label{lst:asm:StartASMAgent}
 \end{listing}
+
+
 
 
 \begin{listing}[H]
@@ -1414,8 +1466,6 @@ rule ReceiveMessage(MI, currentStateNumber, transitionNumber) = {
       sChsVName = messageSubjectVar        (pID, transitionNumber),
       mt          = messageType              (pID, transitionNumber),
       cIDVName  = messageWithCorrelationVar(pID, transitionNumber) in
-  // TODO 2019-02-22: local receivedMessages ? Or is that function used elsewhere?
-  // Alternative: directly return as listres via result in InputPool_Pop?
   local stringres1, // subjectID
       setres1,    // subjectChannels
       stringres2, // messageType
@@ -2241,6 +2291,21 @@ rule Cancel(MI, currentStateNumber, args) =
 \end{listing}
 
 
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule Abort(MI, currentStateNumber) =
+  let pID = processIDFor(self),
+        s = currentStateNumber in
+    case stateType(pID, s) of
+      "function"       : AbortFunction(MI, s)
+      "internalAction" : SetAbortionCompleted(MI, s)
+      "send"           : AbortSend(MI, s)
+      "receive"        : SetAbortionCompleted(MI, s)
+    endcase
+\end{minted}
+\caption{Abort}
+\label{lst:asm:Abort}
+\end{listing}
 
 
 \begin{listing}[H]

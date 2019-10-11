@@ -418,45 +418,29 @@ rule SubjectBehavior = {
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 rule KillBehavior(MI, currentStateNumber) =
- let s = currentStateNumber,
-    ch = channelFor(self) in
+  let ch = channelFor(self),
+       s = currentStateNumber in
   if (initializedState(ch, MI, s) != true) then {
+    // state is not initialized,
+    // remove without further abortion
+
     remove [MI, s] from killStates(ch)
-    remove n from activeStates(ch, MI)
+    remove s from activeStates(ch, MI)
+  }
+  else if (abortionCompleted(ch, MI, s) = true) then {
+    ResetState(MI, s)
+    remove [MI, s] from killStates(ch)
+    remove s from activeStates(ch, MI)
   }
   else seqblock
     executionState(ch, MI, s) := undef
-    addStates(ch, MI, s)       := []
-    removeStates(ch, MI, s)    := []
+    addStates(ch, MI, s)      := []
+    removeStates(ch, MI, s)   := []
 
-    if (abortionCompleted(ch, MI, s) != true) then
-      Abort(MI, s)
-    else {
-      RemoveState(MI, s, MI, s)
-      SetExecutionState(MI, s, DONE)
-    }
-
-    if (executionState(ch, MI, s) != 1) then {
-      Crash()
-    }
-    else if (|addStates(ch, MI, s)| > 0) then {
-      Crash()
-    }
-    else if (|removeStates(ch, MI, s)| > 0) then {
-      if (removeStates(ch, MI, s) != [[MI, s]]) then {
-        Crash()
-      }
-      else {
-        foreach x in removeStates(ch, MI, s) do {
-          let xMI = nth(x, 1),
-            xN  = nth(x, 2) in {
-            remove [xMI, xN] from killStates(ch)
-            ResetState(xMI, xN)
-            remove xN from activeStates(ch, xMI)
-          }
-        }
-      }
-    }
+    // NOTE: no new state must be added.
+    // Also, removeStates should be empty,
+    // as those states should be added to killStates
+    Abort(MI, s)
   endseqblock
 \end{minted}
 \caption{KillBehavior}

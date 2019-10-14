@@ -153,8 +153,10 @@ function receivedMessages : LIST * NUMBER * NUMBER -> SET
 // Channel * MacroInstanceNumber * StateNumber -> Set[Channel]
 function receivers : LIST * NUMBER * NUMBER -> SET
 
-// Channel * MacroInstanceNumber * StateNumber -> STRING
-function messageContent : LIST * NUMBER * NUMBER -> LIST
+// Channel * MacroInstanceNumber * StateNumber
+function messageContent               : LIST * NUMBER * NUMBER -> LIST
+function messageCorrelationID         : LIST * NUMBER * NUMBER -> NUMBER
+function messageReceiverCorrelationID : LIST * NUMBER * NUMBER -> NUMBER
 
 // Channel * MacroInstanceNumber * StateNumber -> Set[Channel]
 function reservationsDone : LIST * NUMBER * NUMBER -> SET
@@ -711,10 +713,12 @@ rule ResetState(MI, stateNumber) =
 
     wantInput(ch, MI, s) := undef
 
-    // StartSend
-    receivers(ch, MI, s) := undef
-    reservationsDone(ch, MI, s) := undef
-    messageContent(ch, MI, s) := undef
+    // from StartSend
+    receivers                   (ch, MI, s) := undef
+    reservationsDone            (ch, MI, s) := undef
+    messageContent              (ch, MI, s) := undef
+    messageCorrelationID        (ch, MI, s) := undef
+    messageReceiverCorrelationID(ch, MI, s) := undef
   }
 \end{minted}
 \caption{ResetState}
@@ -1045,16 +1049,19 @@ rule StartSend(MI, currentStateNumber) = {
     let mcVName = messageContentVar(pID, t) in
       messageContent(ch, MI, s) := loadVar(MI, mcVName)
 
-    let cIDVName = messageNewCorrelationVar(pID, t) in
+    // generate new CorrelationID now, store in Variable once the message(s) are send
+    let cIDVName = messageNewCorrelationVar(processID, transitionNumber) in
       if (cIDVName != undef and cIDVName != "") then {
-        // FIXME: it's a bad idea to save the cID early and read
-        // this variable later: it might get changed in the meantime
-        SetVar(MI, cIDVName, "CorrelationID", nextCorrelationID)
-
+        messageCorrelationID(ch, MI, s) := nextCorrelationID
         nextCorrelationID := nextCorrelationID + 1
         // ensure no other agent increments nextCorrelationID
         nextCorrelationIDUsedBy(nextCorrelationID) := self
       }
+      else
+        messageCorrelationID(ch, MI, s) := 0
+
+    // load receiver IP CorrelationID now, to avoid influences of any changes of that variable
+    messageReceiverCorrelationID(ch, MI, s) := loadCorrelationID(MI, messageWithCorrelationVar(processID, transitionNumber))
   }
 
   SetExecutionState(MI, s, LOWER)
@@ -1218,16 +1225,21 @@ rule PerformTransitionSend(MI, currentStateNumber, t) =
   let ch = channelFor(self),
      pID = processIDFor(self),
        s = currentStateNumber in {
-    let storeVName = messageStoreReceiverVar(pID, t) in
-      if (storeVName != undef and storeVName != "") then
-        SetVar(MI, storeVName, "ChannelInformation",
-          reservationsDone(ch, MI, s))
-
     foreach r in reservationsDone(ch, MI, s) do {
       ReplaceReservation(MI, s, r)
 
       EnsureRunning(r)
     }
+
+    let storeVName = messageStoreReceiverVar(pID, t) in
+      if (storeVName != undef and storeVName != "") then
+        SetVar(MI, storeVName, "ChannelInformation",
+          reservationsDone(ch, MI, s))
+
+    let cIDVName = messageNewCorrelationVar(pID, t) in
+      if (cIDVName != undef and cIDVName != "") then
+        SetVar(MI, cIDVName, "CorrelationID",
+               messageCorrelationID(ch, MI, s))
 
     SetCompletedTransition(MI, s, t)
   }
@@ -1305,8 +1317,8 @@ rule DoReservation(MI, currentStateNumber, receiverChannel) =
         senderChannel      = channelFor(self),
         receiverProcessID  = processIDOf(receiverChannel) in
     let senderSubjectID    = searchSenderSubjectID(pID, subjectIDFor(self), receiverProcessID),
-        msgCorrelationID   = loadCorrelationID(MI, messageNewCorrelationVar(pID, t)),
-        ipCorrelationID    = loadCorrelationID(MI, messageWithCorrelationVar(pID, t)) in
+        msgCorrelationID   = messageCorrelationID(channelFor(self), MI, currentStateNumber),
+        ipCorrelationID    = messageReceiverCorrelationID(channelFor(self), MI, currentStateNumber) in
     let reservationMessage = [senderChannel, messageType(pID, t), {}, msgCorrelationID, true] in
       seq
         // prepare receiver IP
@@ -1343,8 +1355,8 @@ rule CancelReservation(MI, currentStateNumber, receiverChannel) =
       senderChannel      = channelFor(self),
       receiverProcessID  = processIDOf(receiverChannel) in
   let senderSubjectID    = searchSenderSubjectID(pID, subjectIDFor(self), receiverProcessID),
-      msgCorrelationID   = loadCorrelationID(MI, messageNewCorrelationVar(pID, t)),
-      ipCorrelationID    = loadCorrelationID(MI, messageWithCorrelationVar(pID, t)) in
+      msgCorrelationID   = messageCorrelationID(channelFor(self), MI, currentStateNumber),
+      ipCorrelationID    = messageReceiverCorrelationID(channelFor(self), MI, currentStateNumber) in
   let reservationMessage = [senderChannel, messageType(pID, t), {}, msgCorrelationID, true],
       IP = inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) in
     inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) := dropnth(IP, head(indexes(IP, reservationMessage)))
@@ -1364,8 +1376,8 @@ rule ReplaceReservation(MI, currentStateNumber, receiverChannel) = {
       senderChannel      = channelFor(self),
       receiverProcessID  = processIDOf(receiverChannel) in
   let senderSubjectID    = searchSenderSubjectID(pID, subjectIDFor(self), receiverProcessID),
-      msgCorrelationID   = loadCorrelationID(MI, messageNewCorrelationVar(pID, t)),
-      ipCorrelationID    = loadCorrelationID(MI, messageWithCorrelationVar(pID, t)) in
+      msgCorrelationID   = messageCorrelationID(channelFor(self), MI, currentStateNumber),
+      ipCorrelationID    = messageReceiverCorrelationID(channelFor(self), MI, currentStateNumber) in
   let reservationMessage = [senderChannel, messageType(pID, t), {}, msgCorrelationID, true],
       message            = [senderChannel, messageType(pID, t), messageContent(channelFor(self), MI, currentStateNumber), msgCorrelationID, false],
       IP = inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) in {

@@ -1038,7 +1038,7 @@ rule SetCompletedAction(MI, currentStateNumber, res) =
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule StartSend(MI, currentStateNumber) = {
+rule StartSend(MI, currentStateNumber) =
   let ch = channelFor(self),
      pID = processIDFor(self),
        s = currentStateNumber in
@@ -1049,8 +1049,9 @@ rule StartSend(MI, currentStateNumber) = {
     let mcVName = messageContentVar(pID, t) in
       messageContent(ch, MI, s) := loadVar(MI, mcVName)
 
-    // generate new CorrelationID now, store in Variable once the message(s) are send
-    let cIDVName = messageNewCorrelationVar(processID, transitionNumber) in
+    // generate new CorrelationID now, it will be stored
+    // in a Variable once the message(s) are send
+    let cIDVName = messageNewCorrelationVar(pID, t) in
       if (cIDVName != undef and cIDVName != "") then {
         messageCorrelationID(ch, MI, s) := nextCorrelationID
         nextCorrelationID := nextCorrelationID + 1
@@ -1060,12 +1061,14 @@ rule StartSend(MI, currentStateNumber) = {
       else
         messageCorrelationID(ch, MI, s) := 0
 
-    // load receiver IP CorrelationID now, to avoid influences of any changes of that variable
-    messageReceiverCorrelationID(ch, MI, s) := loadCorrelationID(MI, messageWithCorrelationVar(processID, transitionNumber))
-  }
+    // load receiver IP CorrelationID now, to avoid
+    // influences of any changes of that variable
+    let cIDVName = messageWithCorrelationVar(pID, t) in
+    let cID = loadCorrelationID(MI, cIDVName) in
+      messageReceiverCorrelationID(ch, MI, s) := cID
 
-  SetExecutionState(MI, s, LOWER)
-}
+    SetExecutionState(MI, s, LOWER)
+  }
 \end{minted}
 \caption{StartSend}
 \label{lst:asm:StartSend}
@@ -1234,7 +1237,7 @@ rule PerformTransitionSend(MI, currentStateNumber, t) =
     let storeVName = messageStoreReceiverVar(pID, t) in
       if (storeVName != undef and storeVName != "") then
         SetVar(MI, storeVName, "ChannelInformation",
-          reservationsDone(ch, MI, s))
+               reservationsDone(ch, MI, s))
 
     let cIDVName = messageNewCorrelationVar(pID, t) in
       if (cIDVName != undef and cIDVName != "") then

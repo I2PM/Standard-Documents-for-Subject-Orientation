@@ -100,8 +100,8 @@ function transitionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
 derived shouldTimeout(ch, MI, stateNumber) = return boolres in {
   let pID = processIDOf(ch) in {
     if (hasTimeoutTransition(pID, stateNumber) = true and startTime(ch, MI, stateNumber) != undef) then {
-      let transitionNumber = outgoingTimeoutTransition(pID, stateNumber) in
-      let timeout = transitionTimeout(pID, transitionNumber) * 1000 * 1000 * 1000 in {
+      let t = outgoingTimeoutTransition(pID, stateNumber) in
+      let timeout = transitionTimeout(pID, t) * 1000 * 1000 * 1000 in {
         let runningTime = (nanoTime() - startTime(ch, MI, stateNumber)) in
           boolres := (runningTime > timeout)
       }
@@ -601,7 +601,7 @@ rule Behavior(MI, currentStateNumber) =
   else if (initializedSelectedTransition(ch, MI, s) != true) then
     StartSelectedTransition(MI, s)
   else
-   let transitionNumber = selectedTransition(ch, MI, s) in
+   let t = selectedTransition(ch, MI, s) in
     if (transitionCompleted(ch, MI, t) != true) then
       PerformTransition(MI, s, t)
     else {
@@ -1459,94 +1459,28 @@ rule PerformTransitionReceive(MI, currentStateNumber, t) =
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule ReceiveMessage(MI, currentStateNumber, transitionNumber) = {
-  let pID   = processIDFor(self) in
-  let s           = messageSubjectId         (pID, transitionNumber),
-      sChsVName = messageSubjectVar        (pID, transitionNumber),
-      mt          = messageType              (pID, transitionNumber),
-      cIDVName  = messageWithCorrelationVar(pID, transitionNumber) in
-  local stringres1, // subjectID
-      setres1,    // subjectChannels
-      stringres2, // messageType
-      numres1 in  // correlationID
-  seqblock
+rule ReceiveMessage(MI, currentStateNumber, t) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  let sID      = messageSubjectId         (pID, t),
+      mT       = messageType              (pID, t),
+      cIDVName = messageWithCorrelationVar(pID, t),
+      countMin = messageSubjectCountMin   (pID, t),
+      countMax = messageSubjectCountMax   (pID, t) in
+  let cID = loadCorrelationID(MI, cIDVName) in {
+    seq
+      // stores the messages in receivedMessages
+      InputPool_Pop(MI, s, sID, mT, cID, countMin, countMax)
+    next
+      if (messageStoreMessagesVar(pID, t) != undef and
+          messageStoreMessagesVar(pID, t) != "") then
+        let msgs  = receivedMessages(ch, MI, s),
+            vName = messageStoreMessagesVar(pID, t) in
+          SetVar(MI, vName, "MessageSet", msgs)
 
-      debuginfo ReceiveMessage self + ": ReceiveMessage in state " + statePretty(MI, currentStateNumber) + " with transition " + transitionPretty(MI, transitionNumber)
-
-      // TODO/NOTE: same structure as CheckIP. May refactor to reduce duplicated code?
-
-      if (s = "*") then {
-        debuginfo ReceiveMessage self + ": wildcard for subject is ? and not *"
-        Crash()
-      }
-      else if (s = "?") then {
-        stringres1 := undef
-      }
-      else {
-        stringres1 := s
-      }
-
-
-      if (sChsVName = undef or sChsVName = "") then {
-        setres1 := undef
-      }
-      else {
-        seq
-          setres1 := loadChannelsFromVariable(MI, sChsVName, s) // (stringres1 would be fine too)
-        next
-          debuginfo CheckIP self + ": considering only messages from the following channels: " + setres1
-      }
-
-
-      if (mt = "*") then {
-        debuginfo ReceiveMessage self + ": wildcard for message type is ? and not *"
-        Crash()
-      }
-      else if (mt = "?") then {
-        stringres2 := undef
-      }
-      else {
-        stringres2 := mt
-      }
-
-
-      if (cIDVName = "*") then {
-        debuginfo ReceiveMessage self + ": wildcard for cID type is ? and not *"
-        Crash()
-      }
-      else if (cIDVName = "?") then {
-        numres1 := undef
-      }
-      else {
-        numres1 := loadCorrelationID(MI, cIDVName)
-      }
-
-
-
-      let sL    = stringres1,
-        sChsL = setres1,
-        mtL   = stringres2,
-        cL    = numres1,
-        countMinL = messageSubjectCountMin(pID, transitionNumber),
-        countMaxL = messageSubjectCountMax(pID, transitionNumber) in {
-        // InputPool_Pop stores the popped messages in receivedMessages
-        // undef is wildcard
-        InputPool_Pop(MI, currentStateNumber, sL, sChsL, mtL, cL, countMinL, countMaxL)
-      }
-
-      let msgs = receivedMessages(channelFor(self), MI, currentStateNumber) in {
-        debuginfo ReceiveMessage self + ": receivedMessages: " + msgs
-
-        if (messageStoreMessagesVar(pID, transitionNumber) != undef and messageStoreMessagesVar(pID, transitionNumber) != "") then {
-          let vName = messageStoreMessagesVar(pID, transitionNumber) in {
-              SetVar(MI, vName, "MessageSet", msgs)
-          }
-        }
-      }
-
-      SetCompletedTransition(MI, currentStateNumber, transitionNumber) // sets executionState to REPEAT
-  endseqblock
-}
+    SetCompletedTransition(MI, s, t)
+  }
 \end{minted}
 \caption{ReceiveMessage}
 \label{lst:asm:ReceiveMessage}
@@ -1557,16 +1491,16 @@ rule ReceiveMessage(MI, currentStateNumber, transitionNumber) = {
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule CheckIP(MI, currentStateNumber, transitionNumber) = {
+rule CheckIP(MI, currentStateNumber, t) = {
   let pID   = processIDFor(self) in
-  let sID         = messageSubjectId         (pID, transitionNumber),
-      sChsVName = messageSubjectVar        (pID, transitionNumber),
-      mT          = messageType              (pID, transitionNumber),
-      cIDVName  = messageWithCorrelationVar(pID, transitionNumber) in
+  let sID       = messageSubjectId         (pID, t),
+      sChsVName = messageSubjectVar        (pID, t),
+      mT        = messageType              (pID, t),
+      cIDVName  = messageWithCorrelationVar(pID, t) in
   local stringres1, // subjectID
-      setres1,    // subjectChannels
-      stringres2, // messageType
-      numres1 in  // correlationID
+        setres1,    // subjectChannels
+        stringres2, // messageType
+        numres1 in  // correlationID
   seqblock
 
       // TODO/NOTE: same structure as ReceiveMessage. May refactor to reduce duplicated code?
@@ -1614,33 +1548,33 @@ rule CheckIP(MI, currentStateNumber, transitionNumber) = {
         Crash()
       }
       else {
-        numres1 := loadCorrelationID(MI, messageWithCorrelationVar(pID, transitionNumber))
+        numres1 := loadCorrelationID(MI, messageWithCorrelationVar(pID, t))
       }
 
 
       // no reservations, supress multiple channels
       let usedSpace = inputPoolUsedSpace(channelFor(self), stringres1, setres1, stringres2, numres1, true, true) in {
-        if (messageSubjectCountMin(pID, transitionNumber) = 0) then {
+        if (messageSubjectCountMin(pID, t) = 0) then {
           if (usedSpace > |setres1|) then {
               debuginfo CheckIP self + ": WARN: internal error: more messages than expected senders! " + usedSpace + " > " + |setres1|
               Crash()
           }
           else if (usedSpace = |setres1|) then {
               debuginfo CheckIP self + ": enough messages :) " + usedSpace + " = " + |setres1|
-              EnableTransition(MI, transitionNumber)
+              EnableTransition(MI, t)
           }
           else {
               debuginfo CheckIP self + ": Not enough messages: " + usedSpace + " < " + |setres1|
-              DisableTransition(MI, currentStateNumber, transitionNumber)
+              DisableTransition(MI, currentStateNumber, t)
           }
         }
-        else if (usedSpace >= messageSubjectCountMin(pID, transitionNumber)) then {
-          debuginfo CheckIP self + ": enough messages :) " + usedSpace + " >= " + messageSubjectCountMin(pID, transitionNumber)
-          EnableTransition(MI, transitionNumber)
+        else if (usedSpace >= messageSubjectCountMin(pID, t)) then {
+          debuginfo CheckIP self + ": enough messages :) " + usedSpace + " >= " + messageSubjectCountMin(pID, t)
+          EnableTransition(MI, t)
         }
         else {
-          debuginfo CheckIP self + ": Not enough messages: " + usedSpace + " < " + messageSubjectCountMin(pID, transitionNumber)
-          DisableTransition(MI, currentStateNumber, transitionNumber)
+          debuginfo CheckIP self + ": Not enough messages: " + usedSpace + " < " + messageSubjectCountMin(pID, t)
+          DisableTransition(MI, currentStateNumber, t)
         }
       }
   endseqblock
@@ -2241,16 +2175,16 @@ rule CallMacro(MI, currentStateNumber, args) =
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule CheckCancel(MI, currentStateNumber, transitionNumber) =
+rule CheckCancel(MI, currentStateNumber, t) =
   let ch = channelFor(self),
      pID = processIDFor(self) in
-  let tName = transitionLabel(pID, transitionNumber) in
+  let tName = transitionLabel(pID, t) in
   let nCancel = stateNumberFromID(pID, tName) in
   if (contains(activeStates(ch, MI), nCancel) = true) then
     // referenced state is active in this Macro Instance
-    EnableTransition(MI, transitionNumber)
+    EnableTransition(MI, t)
   else
-    DisableTransition(MI, currentStateNumber, transitionNumber)
+    DisableTransition(MI, currentStateNumber, t)
 \end{minted}
 \caption{CheckCancel}
 \label{lst:asm:CheckCancel}

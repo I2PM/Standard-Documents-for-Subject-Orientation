@@ -1448,30 +1448,17 @@ rule PerformReceive(MI, currentStateNumber) =
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 rule PerformTransitionReceive(MI, currentStateNumber, t) =
-  ReceiveMessage(MI, currentStateNumber, t)
-\end{minted}
-\caption{PerformTransitionReceive}
-\label{lst:asm:PerformTransitionReceive}
-\end{listing}
-
-
-
-
-\begin{listing}[H]
-\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule ReceiveMessage(MI, currentStateNumber, t) =
   let ch = channelFor(self),
      pID = processIDFor(self),
        s = currentStateNumber in
   let sID      = messageSubjectId         (pID, t),
       mT       = messageType              (pID, t),
       cIDVName = messageWithCorrelationVar(pID, t),
-      countMin = messageSubjectCountMin   (pID, t),
       countMax = messageSubjectCountMax   (pID, t) in
   let cID = loadCorrelationID(MI, cIDVName) in {
     seq
       // stores the messages in receivedMessages
-      InputPool_Pop(MI, s, sID, mT, cID, countMin, countMax)
+      InputPool_Pop(MI, s, sID, mT, cID, countMax)
     next
       if (messageStoreMessagesVar(pID, t) != undef and
           messageStoreMessagesVar(pID, t) != "") then
@@ -1482,8 +1469,8 @@ rule ReceiveMessage(MI, currentStateNumber, t) =
     SetCompletedTransition(MI, s, t)
   }
 \end{minted}
-\caption{ReceiveMessage}
-\label{lst:asm:ReceiveMessage}
+\caption{PerformTransitionReceive}
+\label{lst:asm:PerformTransitionReceive}
 \end{listing}
 
 
@@ -1491,94 +1478,20 @@ rule ReceiveMessage(MI, currentStateNumber, t) =
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule CheckIP(MI, currentStateNumber, t) = {
-  let pID   = processIDFor(self) in
-  let sID       = messageSubjectId         (pID, t),
-      sChsVName = messageSubjectVar        (pID, t),
-      mT        = messageType              (pID, t),
-      cIDVName  = messageWithCorrelationVar(pID, t) in
-  local stringres1, // subjectID
-        setres1,    // subjectChannels
-        stringres2, // messageType
-        numres1 in  // correlationID
-  seqblock
-
-      // TODO/NOTE: same structure as ReceiveMessage. May refactor to reduce duplicated code?
-
-      if (sID = "?") then {
-        stringres1 := undef
-      }
-      else if (sID = "*") then {
-        debuginfo CheckIP self + ": subject wildcard is '?'"
-        Crash()
-      }
-      else {
-        stringres1 := sID
-      }
-
-
-      if (sChsVName = undef or sChsVName = "") then {
-        setres1 := undef
-      }
-      else {
-        seq
-          setres1 := loadChannelsFromVariable(MI, sChsVName, sID) // (stringres1 would be fine too)
-        next
-          debuginfo CheckIP self + ": considering only messages from the following channels: " + setres1
-      }
-
-
-      if (mT = "?") then {
-        stringres2 := undef
-      }
-      else if (mT = "*") then {
-        debuginfo CheckIP self + ": message type wildcard is '?'"
-        Crash()
-      }
-      else {
-        stringres2 := mT
-      }
-
-
-      if (cIDVName = "?") then {
-        numres1 := undef
-      }
-      else if (cIDVName = "*") then {
-        debuginfo CheckIP self + ": correlationID wildcard is '?'"
-        Crash()
-      }
-      else {
-        numres1 := loadCorrelationID(MI, messageWithCorrelationVar(pID, t))
-      }
-
-
-      // no reservations, supress multiple channels
-      let usedSpace = inputPoolUsedSpace(channelFor(self), stringres1, setres1, stringres2, numres1, true, true) in {
-        if (messageSubjectCountMin(pID, t) = 0) then {
-          if (usedSpace > |setres1|) then {
-              debuginfo CheckIP self + ": WARN: internal error: more messages than expected senders! " + usedSpace + " > " + |setres1|
-              Crash()
-          }
-          else if (usedSpace = |setres1|) then {
-              debuginfo CheckIP self + ": enough messages :) " + usedSpace + " = " + |setres1|
-              EnableTransition(MI, t)
-          }
-          else {
-              debuginfo CheckIP self + ": Not enough messages: " + usedSpace + " < " + |setres1|
-              DisableTransition(MI, currentStateNumber, t)
-          }
-        }
-        else if (usedSpace >= messageSubjectCountMin(pID, t)) then {
-          debuginfo CheckIP self + ": enough messages :) " + usedSpace + " >= " + messageSubjectCountMin(pID, t)
-          EnableTransition(MI, t)
-        }
-        else {
-          debuginfo CheckIP self + ": Not enough messages: " + usedSpace + " < " + messageSubjectCountMin(pID, t)
-          DisableTransition(MI, currentStateNumber, t)
-        }
-      }
-  endseqblock
-}
+rule CheckIP(MI, currentStateNumber, t) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  let sID      = messageSubjectId         (pID, t),
+      mT       = messageType              (pID, t),
+      cIDVName = messageWithCorrelationVar(pID, t),
+      countMin = messageSubjectCountMin   (pID, t) in
+  let cID  = loadCorrelationID(MI, cIDVName) in
+  let msgs = availableMessages(ch, sID, mT, cID) in
+    if (|msgs| >= countMin) then
+      EnableTransition(MI, t)
+    else
+      DisableTransition(MI, s, t)
 \end{minted}
 \caption{CheckIP}
 \label{lst:asm:CheckIP}

@@ -1583,255 +1583,148 @@ rule AbortVarMan(MI, currentStateNumber) = {
   SetAbortionCompleted(MI, currentStateNumber)
 }
 
-rule VarMan(MI, currentStateNumber, args) = {
-  let method = head(args) in {
-      debuginfo VarMan self + ": method: " + method
-      debuginfo VarMan self + ": args: " + tail(args)
+rule VarMan(MI, currentStateNumber, args) =
+ let s = currentStateNumber,
+     method = nth(args, 1),
+     A = nth(args, 2),
+     B = nth(args, 3),
+     C = nth(args, 4),
+     D = nth(args, 5) in
+ case method of
+  "assign"               : VarMan_Assign   (MI, s, A, B)
+  "storeData"            : VarMan_StoreData(MI, s, A, B)
+  "clear"                : VarMan_Clear    (MI, s, A)
 
-      case method of
-        "assign"                : VarMan_Assign               (MI, currentStateNumber, nth(args, 2), nth(args, 3))
-        "storeData"             : VarMan_StoreData            (MI, currentStateNumber, nth(args, 2), nth(args, 3))
-        "clear"                 : VarMan_Clear                (MI, currentStateNumber, nth(args, 2))
+  "concatenation"        : VarMan_Concatenation(MI, s, A, B, C)
+  "intersection"         : VarMan_Intersection (MI, s, A, B, C)
+  "difference"           : VarMan_Difference   (MI, s, A, B, C)
 
-        "concatenation"         : VarMan_Concatenation        (MI, currentStateNumber, nth(args, 2), nth(args, 3), nth(args, 4))
-        "intersection"          : VarMan_Intersection         (MI, currentStateNumber, nth(args, 2), nth(args, 3), nth(args, 4))
-        "difference"            : VarMan_Difference           (MI, currentStateNumber, nth(args, 2), nth(args, 3), nth(args, 4))
+  "extractContent"       : VarMan_ExtractContent      (MI, s, A, B)
+  "extractChannel"       : VarMan_ExtractChannel      (MI, s, A, B)
+  "extractCorrelationID" : VarMan_ExtractCorrelationID(MI, s, A, B)
 
-        "extractContent"        : VarMan_ExtractContent       (MI, currentStateNumber, nth(args, 2), nth(args, 3))
-        "extractChannel"        : VarMan_ExtractChannel       (MI, currentStateNumber, nth(args, 2), nth(args, 3))
-        "extractCorrelationID"  : VarMan_ExtractCorrelationID (MI, currentStateNumber, nth(args, 2), nth(args, 3))
-
-        "selection"             : VarMan_Selection            (MI, currentStateNumber, nth(args, 2), nth(args, 3), nth(args, 4), nth(args, 5))
-      endcase
-  }
-}
+  "selection"            : VarMan_Selection(MI, s, A, B, C, D)
+ endcase
+\end{minted}
+\caption{VarMan}
+\label{lst:asm:VarMan}
+\end{listing}
 
 
-rule VarMan_Assign(MI, currentStateNumber, A, X) = {
+
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule VarMan_Assign(MI, currentStateNumber, A, X) =
   let a = loadVar(MI, A) in {
-      SetVar(MI, X, head(a), last(a))
+    SetVar(MI, X, head(a), last(a))
 
-      SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
+    SetCompletedAction(MI, currentStateNumber, undef)
   }
-}
 
 rule VarMan_StoreData(MI, currentStateNumber, X, A) = {
   SetVar(MI, X, "Data", A)
 
-  SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
+  SetCompletedAction(MI, currentStateNumber, undef)
 }
 
 rule VarMan_Clear(MI, currentStateNumber, X) = {
   ClearVar(MI, X)
 
-  SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-}
-
-rule VarMan_Concatenation(MI, currentStateNumber, A, B, X) = {
-  let a = loadVar(MI, A),
-      b = loadVar(MI, B) in {
-      if (a = undef and b = undef) then {
-        ClearVar(MI, X)
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-      else if (a = undef) then {
-        SetVar(MI, X, head(b), last(b))
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-      else if (b = undef) then {
-        SetVar(MI, X, head(a), last(a))
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-      else if (head(a) != head(b) or not(contains({"MessageSet", "ChannelInformation"}, head(a)))) then {
-        debuginfo VarMan_Concatenation self + ": invalid parameters"
-
-        Crash()
-      }
-      else {
-        let x = (last(a) union last(b)) in {
-          SetVar(MI, X, head(a), x)
-
-          SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-        }
-      }
-  }
-}
-
-rule VarMan_Intersection(MI, currentStateNumber, A, B, X) = {
-  let a = loadVar(MI, A) in
-  let b = loadVar(MI, B) in {
-      if (a = undef or b = undef) then {
-        ClearVar(MI, X)
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-      else if (head(a) != head(b) or not(contains({"MessageSet", "ChannelInformation"}, head(a)))) then {
-        debuginfo VarMan_Intersection self + ": invalid parameters"
-        debuginfo VarMan_Intersection self + ": A = " + undefStr(A)
-        debuginfo VarMan_Intersection self + ": a = " + undefStr(a)
-        debuginfo VarMan_Intersection self + ": B = " + undefStr(B)
-        debuginfo VarMan_Intersection self + ": b = " + undefStr(b)
-
-        Crash()
-      }
-      else {
-        let x = (last(a) intersect last(b)) in {
-          SetVar(MI, X, head(a), x)
-
-          SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-        }
-      }
-  }
-}
-
-rule VarMan_Difference(MI, currentStateNumber, A, B, X) = {
-  let a = loadVar(MI, A) in
-  let b = loadVar(MI, B) in {
-      if (a = undef) then {
-        ClearVar(MI, X)
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-      else if (b = undef) then {
-        SetVar(MI, X, head(a), last(a))
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-      else if (head(a) != head(b) or not(contains({"MessageSet", "ChannelInformation"}, head(a)))) then {
-        debuginfo VarMan_Difference self + ": invalid parameters"
-        debuginfo VarMan_Difference self + ": A = " + undefStr(A)
-        debuginfo VarMan_Difference self + ": a = " + undefStr(a)
-        debuginfo VarMan_Difference self + ": B = " + undefStr(B)
-        debuginfo VarMan_Difference self + ": b = " + undefStr(b)
-
-        Crash()
-      }
-      else {
-        let x = (last(a) diff last(b)) in {
-          SetVar(MI, X, head(a), x)
-
-          SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-        }
-      }
-  }
-}
-
-
-rule VarMan_ExtractContent(MI, currentStateNumber, A, X) = {
-  let a = loadVar(MI, A) in {
-    // TODO: How to deal with empty / undef variables?
-    if (head(a) != "MessageSet") then {
-      debuginfo VarMan_ExtractContent self + ": invalid parameter"
-      debuginfo VarMan_ExtractContent self + ": A = " + undefStr(A)
-      debuginfo VarMan_ExtractContent self + ": a = " + undefStr(a)
-
-      Crash()
-    }
-    else {
-      let messages = last(a) in
-      let messagesContent = map(messages, @msgContent) in {
-        if (| messagesContent | = 0) then {
-          debuginfo VarMan_ExtractContent self + ": no content to extract"
-          Crash()
-        }
-        else if (| messagesContent | = 1) then {
-          let content = firstFromSet(messagesContent) in {
-            debuginfo VarMan_ExtractContent self + ": exact one content to extract: " + content
-            SetVar(MI, X, head(content), last(content))
-          }
-        }
-        else {
-          // check if all contents have the same type, and that the type is union-able
-          let x = firstFromSet(messagesContent) in {
-            if (head(x) = "MessageSet" or head(x) = "ChannelInformation") then {
-              // check if all are the same type
-              if (forall y in messagesContent holds (head(y) = head(x))) then {
-                debuginfo VarMan_ExtractContent self + ": flattening content: " + content
-                SetVar(MI, X, head(x), flattenSet(map(messagesContent, @last)))
-              }
-              else {
-                debuginfo VarMan_ExtractContent self + ": all messages must have the same underlying datatype!"
-                debuginfo VarMan_ExtractContent self + ": messages: " + messages
-                debuginfo VarMan_ExtractContent self + ": messagesContent: " + messagesContent
-
-                Crash()
-              }
-            }
-            else {
-              debuginfo VarMan_ExtractContent self + ": invalid message content type, can not be merged: '" + head(x) + "'"
-
-              Crash()
-            }
-          }
-        }
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-    }
-  }
-}
-
-rule VarMan_ExtractChannel(MI, currentStateNumber, A, X) = {
-  let a = loadVar(MI, A) in {
-    // TODO: How to deal with empty / undef variables?
-    if (head(a) != "MessageSet") then {
-      debuginfo VarMan_ExtractChannel self + ": invalid parameter"
-      debuginfo VarMan_ExtractChannel self + ": A = " + undefStr(A)
-      debuginfo VarMan_ExtractChannel self + ": a = " + undefStr(a)
-
-      Crash()
-    }
-    else {
-      let messages = last(a) in
-      let messagesChannel = map(messages, @msgChannel) in {
-        if (| messagesChannel | = 0) then {
-          debuginfo VarMan_ExtractChannel self + ": no channels to extract"
-          Crash()
-        }
-        else {
-          debuginfo VarMan_ExtractChannel self + ": messagesChannel: " + messagesChannel
-          SetVar(MI, X, "ChannelInformation", messagesChannel)
-        }
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-    }
-  }
-}
-
-rule VarMan_ExtractCorrelationID(MI, currentStateNumber, A, X) = {
-  let a = loadVar(MI, A) in {
-    // TODO: How to deal with empty / undef variables?
-    if (head(a) != "MessageSet") then {
-      debuginfo VarMan_ExtractCorrelationID self + ": invalid parameter"
-      debuginfo VarMan_ExtractCorrelationID self + ": A = " + undefStr(A)
-      debuginfo VarMan_ExtractCorrelationID self + ": a = " + undefStr(a)
-
-      Crash()
-    }
-    else {
-      let messages = last(a) in
-      let messagesCorrelationID = map(messages, @msgCorrelation) in {
-        if (| messagesCorrelationID | != 1) then {
-          debuginfo VarMan_ExtractCorrelationID self + ": a CorrelationID can only be extracted when there is exactly one, got: " + messagesCorrelationID
-          Crash()
-        }
-        else {
-          debuginfo VarMan_ExtractCorrelationID self + ": messagesCorrelationID: " + messagesCorrelationID
-          SetVar(MI, X, "CorrelationID", firstFromSet(messagesCorrelationID))
-        }
-
-        SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
-      }
-    }
-  }
+  SetCompletedAction(MI, currentStateNumber, undef)
 }
 \end{minted}
-\caption{VarMan}
-\label{lst:asm:VarMan}
+\caption{VarMan_Assign}
+\label{lst:asm:VarMan_Assign}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule VarMan_Concatenation(MI, currentStateNumber, A, B, X) =
+  let a = loadVar(MI, A),
+      b = loadVar(MI, B) in {
+    if (a = undef and b = undef) then
+      ClearVar(MI, X)
+    else if (a = undef) then
+      SetVar(MI, X, head(b), last(b))
+    else if (b = undef) then
+      SetVar(MI, X, head(a), last(a))
+    else
+      let x = (last(a) union last(b)) in
+        SetVar(MI, X, head(a), x)
+
+    SetCompletedAction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_Intersection(MI, currentStateNumber, A, B, X) =
+  let a = loadVar(MI, A),
+      b = loadVar(MI, B) in {
+    if (a = undef or b = undef) then
+      ClearVar(MI, X)
+    else
+      let x = (last(a) intersect last(b)) in
+        SetVar(MI, X, head(a), x)
+
+    SetCompletedAction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_Difference(MI, currentStateNumber, A, B, X) =
+  let a = loadVar(MI, A),
+      b = loadVar(MI, B) in {
+    if (a = undef) then
+      ClearVar(MI, X)
+    else if (b = undef) then
+      SetVar(MI, X, head(a), last(a))
+    else
+      let x = (last(a) diff last(b)) in
+        SetVar(MI, X, head(a), x)
+
+    SetCompletedAction(MI, currentStateNumber, undef)
+  }
+\end{minted}
+\caption{VarMan_Concatenation}
+\label{lst:asm:VarMan_Concatenation}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule VarMan_ExtractContent(MI, currentStateNumber, A, X) =
+  let a = loadVar(MI, A) in
+  let messages = last(a) in
+  let messagesContent = map(messages, @msgContent) in
+  let varType = head(firstFromSet(messagesContent)) in {
+    SetVar(MI, X, varType, flattenSet(map(messagesContent, @last)))
+
+    SetCompletedAction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_ExtractChannel(MI, currentStateNumber, A, X) =
+  let a = loadVar(MI, A) in
+  let messages = last(a) in
+  let messagesChannel = map(messages, @msgChannel) in {
+    SetVar(MI, X, "ChannelInformation", messagesChannel)
+
+    SetCompletedAction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_ExtractCorrelationID(MI, currentStateNumber, A, X) =
+  let a = loadVar(MI, A) in
+  let messages = last(a) in
+  let messagesCorrelationID = map(messages, @msgCorrelation) in {
+    SetVar(MI, X, "CorrelationID",
+               firstFromSet(messagesCorrelationID))
+
+    SetCompletedAction(MI, currentStateNumber, undef)
+  }
+\end{minted}
+\caption{VarMan_ExtractContent}
+\label{lst:asm:VarMan_ExtractContent}
 \end{listing}
 
 
@@ -1861,70 +1754,73 @@ rule VarMan_Selection(MI, currentStateNumber, srcVName, dstVName, minimum, maxim
 
     SetVar(MI, dstVName, head(src), res)
 
-    SetCompletedAction(MI, currentStateNumber, undef) // sets executionState to REPEAT
+    SetCompletedAction(MI, currentStateNumber, undef)
   }
 }
 
-rule ResetSelection(MI, currentStateNumber) = {
-  selectionVartype (channelFor(self), MI, currentStateNumber) := undef
-  selectionData    (channelFor(self), MI, currentStateNumber) := undef
-  selectionOptions (channelFor(self), MI, currentStateNumber) := undef
-  selectionMin     (channelFor(self), MI, currentStateNumber) := undef
-  selectionMax     (channelFor(self), MI, currentStateNumber) := undef
-  selectionDecision(channelFor(self), MI, currentStateNumber) := undef
-}
-
-rule Selection(MI, currentStateNumber, src, minimum, maximum) = {
-  if (selectionData(channelFor(self), MI, currentStateNumber) = undef) then {
-      if (head(src) = "MessageSet") then {
-        let l = toList(last(src)) in {
-          selectionData   (channelFor(self), MI, currentStateNumber) := l
-          selectionOptions(channelFor(self), MI, currentStateNumber) := map(l, @msgToString)
-        }
-      }
-      else if (head(src) = "ChannelInformation") then {
-        let l = toList(last(src)) in {
-          selectionData   (channelFor(self), MI, currentStateNumber) := l
-          selectionOptions(channelFor(self), MI, currentStateNumber) := map(l, @chToString)
-        }
-      }
-      else {
-        debuginfo Selection self + ": can not perform selection on datatype '" + head(x) + "'"
-
-        Crash()
-      }
-
-      selectionVartype (channelFor(self), MI, currentStateNumber) := head(src)
-      selectionMin     (channelFor(self), MI, currentStateNumber) := minimum
-      selectionMax     (channelFor(self), MI, currentStateNumber) := maximum
-      selectionDecision(channelFor(self), MI, currentStateNumber) := undef // just to be sure
-
-      SetExecutionState(MI, currentStateNumber, REPEAT)
-  }
-  else if (selectionDecision(channelFor(self), MI, currentStateNumber) = undef) then {
-      if not(contains(wantInput(channelFor(self), MI, currentStateNumber), "SelectionDecision")) then {
-        add "SelectionDecision" to wantInput(channelFor(self), MI, currentStateNumber)
-
-        SetExecutionState(MI, currentStateNumber, DONE)
-      }
-      else {
-        debuginfo Selection self + ": waiting for selectionDecision"
-        SetExecutionState(MI, currentStateNumber, NEXT)
-      }
-  }
-  else {
-      let res = pickItems(selectionData(channelFor(self), MI, currentStateNumber), selectionDecision(channelFor(self), MI, currentStateNumber)) in {
-        selectionResult(channelFor(self), MI, currentStateNumber) := res
-      }
-
-      ResetSelection(MI, currentStateNumber)
-
-      SetExecutionState(MI, currentStateNumber, REPEAT)
-  }
+rule ResetSelection(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+  selectionVartype (ch, MI, s) := undef
+  selectionData    (ch, MI, s) := undef
+  selectionOptions (ch, MI, s) := undef
+  selectionMin     (ch, MI, s) := undef
+  selectionMax     (ch, MI, s) := undef
+  selectionDecision(ch, MI, s) := undef
 }
 \end{minted}
 \caption{VarMan_Selection}
 \label{lst:asm:VarMan_Selection}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule Selection(MI, currentStateNumber, src, minimum, maximum) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  if (selectionData(ch, MI, s) = undef) then {
+    let l = toList(last(src)) in
+    if (head(src) = "MessageSet") then {
+      selectionData   (ch, MI, s) := l
+      selectionOptions(ch, MI, s) := map(l, @msgToString)
+    }
+    else if (head(src) = "ChannelInformation") then {
+      selectionData   (ch, MI, s) := l
+      selectionOptions(ch, MI, s) := map(l, @chToString)
+    }
+
+    selectionVartype (ch, MI, s) := head(src)
+    selectionMin     (ch, MI, s) := minimum
+    selectionMax     (ch, MI, s) := maximum
+    selectionDecision(ch, MI, s) := undef
+
+    SetExecutionState(MI, s, REPEAT)
+  }
+  else if (selectionDecision(ch, MI, s) = undef) then {
+    if not(contains(wantInput(ch, MI, s),
+                    "SelectionDecision")) then {
+      add "SelectionDecision" to wantInput(ch, MI, s)
+
+      SetExecutionState(MI, s, DONE)
+    }
+    else
+      // waiting for selectionDecision
+      SetExecutionState(MI, s, NEXT)
+  }
+  else {
+    let res = pickItems(selectionData(ch, MI, s),
+                        selectionDecision(ch, MI, s)) in
+      selectionResult(ch, MI, s) := res
+
+    ResetSelection(MI, s)
+    SetExecutionState(MI, s, REPEAT)
+  }
+\end{minted}
+\caption{Selection}
+\label{lst:asm:Selection}
 \end{listing}
 
 

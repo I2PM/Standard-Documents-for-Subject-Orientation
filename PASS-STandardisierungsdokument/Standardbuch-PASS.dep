@@ -88,6 +88,9 @@
   *{package}{calc}        {2017/05/25 v4.3}
   *{package}{eso-pic}     {2018/04/12 v2.0h}
   *{file}   {pppdftex.def}{2017/10/31 v0.5l}
+  *{package}{caption}     {2018/10/06 v3.3-154}
+  *{package}{caption3}    {2018/09/12 v1.8c}
+  *{package}{ltcaption}   {2018/08/26 v1.4-95}
   *{package}{minted}      {2017/07/19 v2.5}
   *{package}{fvextra}     {2019/02/04 v1.4}
   *{package}{etoolbox}    {2018/08/19 v2.5f}

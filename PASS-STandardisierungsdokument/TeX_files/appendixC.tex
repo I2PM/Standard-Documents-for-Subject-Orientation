@@ -1318,26 +1318,30 @@ rule DoReservations(MI, currentStateNumber) =
 // result true if hasPlacedReservation, adds to reservationsDone
 rule DoReservation(MI, currentStateNumber, receiverChannel) =
   if (properTerminated(receiverChannel) = true) then
-    let pID = processIDFor(self) in
+    let ch = channelFor(self),
+       pID = processIDFor(self),
+       sID = subjectIDFor(self),
+         s = currentStateNumber in
+    let Rch = receiverChannel,
+       RpID = processIDOf(receiverChannel) in
+    let sIDX = searchSenderSubjectID(pID, sID, RpID) in
+    let msgCID = messageCorrelationID(ch, MI, s),
+        RCID   = messageReceiverCorrelationID(ch, MI, s) in
     // there must be exactly one transition
-    let t   = first_outgoingNormalTransition(pID, currentStateNumber),
-        senderChannel      = channelFor(self),
-        receiverProcessID  = processIDOf(receiverChannel) in
-    let senderSubjectID    = searchSenderSubjectID(pID, subjectIDFor(self), receiverProcessID),
-        msgCorrelationID   = messageCorrelationID(channelFor(self), MI, currentStateNumber),
-        ipCorrelationID    = messageReceiverCorrelationID(channelFor(self), MI, currentStateNumber) in
-    let reservationMessage = [senderChannel, messageType(pID, t), {}, msgCorrelationID, true] in
+    let t  = first_outgoingNormalTransition(pID, s) in
+    let mT = messageType(pID, t) in
+    let resMsg = [ch, mT, {}, msgCID, true] in
       seq
         // prepare receiver IP
-        if (inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) = undef) then {
-          add [senderSubjectID, messageType(pID, t), ipCorrelationID] to inputPoolDefined(receiverChannel)
-          inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) := []
+        if (inputPool(Rch, sIDX, mT, RCID) = undef) then {
+          add [sIDX, mT, RCID] to inputPoolDefined(Rch)
+          inputPool(Rch, sIDX, mT, RCID) := []
         }
       next
-        if (inputPoolIsClosed(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) != true) then
-          if (inputPoolGetFreeSpace(receiverChannel, senderSubjectID, messageType(pID, t)) > 0) then {
-            enqueue reservationMessage into inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID)
-            add receiverChannel to reservationsDone(channelFor(self), MI, currentStateNumber)
+        if (inputPoolIsClosed(Rch, sIDX, mT, RCID) != true) then
+          if (inputPoolGetFreeSpace(Rch, sIDX, mT) > 0) then {
+            enqueue resMsg into inputPool(Rch, sIDX, mT, RCID)
+            add Rch to reservationsDone(ch, MI, s)
             result := true
           }
           else
@@ -1357,16 +1361,21 @@ rule DoReservation(MI, currentStateNumber, receiverChannel) =
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
 rule CancelReservation(MI, currentStateNumber, receiverChannel) =
-  let pID = processIDFor(self) in
-  let t   = first_outgoingNormalTransition(pID, currentStateNumber),
-      senderChannel      = channelFor(self),
-      receiverProcessID  = processIDOf(receiverChannel) in
-  let senderSubjectID    = searchSenderSubjectID(pID, subjectIDFor(self), receiverProcessID),
-      msgCorrelationID   = messageCorrelationID(channelFor(self), MI, currentStateNumber),
-      ipCorrelationID    = messageReceiverCorrelationID(channelFor(self), MI, currentStateNumber) in
-  let reservationMessage = [senderChannel, messageType(pID, t), {}, msgCorrelationID, true],
-      IP = inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) in
-    inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) := dropnth(IP, head(indexes(IP, reservationMessage)))
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+     sID = subjectIDFor(self),
+       s = currentStateNumber in
+  let Rch  = receiverChannel,
+      RpID = processIDOf(receiverChannel) in
+  let t  = first_outgoingNormalTransition(pID, s) in
+  let mT = messageType(pID, t) in
+  let sIDX   = searchSenderSubjectID(pID, sID, RpID),
+      msgCID = messageCorrelationID(ch, MI, s),
+      RCID   = messageReceiverCorrelationID(ch, MI, s) in
+  let resMsg = [ch, mT, {}, msgCID, true],
+      IPold = inputPool(Rch, sIDX, mT, RCID) in
+  let IPnew = dropnth(IPold, head(indexes(IPold, resMsg))) in
+    inputPool(Rch, sIDX, mT, RCID) := IPnew
 \end{minted}
 \caption{CancelReservation}
 \label{lst:asm:CancelReservation}
@@ -1377,21 +1386,23 @@ rule CancelReservation(MI, currentStateNumber, receiverChannel) =
 
 \begin{listing}[H]
 \begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
-rule ReplaceReservation(MI, currentStateNumber, receiverChannel) = {
-  let pID = processIDFor(self) in
-  let t   = first_outgoingNormalTransition(pID, currentStateNumber),
-      senderChannel      = channelFor(self),
-      receiverProcessID  = processIDOf(receiverChannel) in
-  let senderSubjectID    = searchSenderSubjectID(pID, subjectIDFor(self), receiverProcessID),
-      msgCorrelationID   = messageCorrelationID(channelFor(self), MI, currentStateNumber),
-      ipCorrelationID    = messageReceiverCorrelationID(channelFor(self), MI, currentStateNumber) in
-  let reservationMessage = [senderChannel, messageType(pID, t), {}, msgCorrelationID, true],
-      message            = [senderChannel, messageType(pID, t), messageContent(channelFor(self), MI, currentStateNumber), msgCorrelationID, false],
-      IP = inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) in {
-      // TODO: discuss: setnth or dropnth & enqueue?
-      inputPool(receiverChannel, senderSubjectID, messageType(pID, t), ipCorrelationID) := setnth(IP, head(indexes(IP, reservationMessage)), message)
-  }
-}
+rule ReplaceReservation(MI, currentStateNumber, receiverChannel) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+     sID = subjectIDFor(self),
+       s = currentStateNumber in
+  let Rch  = receiverChannel,
+      RpID = processIDOf(receiverChannel) in
+  let t  = first_outgoingNormalTransition(pID, s) in
+  let mT = messageType(pID, t) in
+  let sIDX   = searchSenderSubjectID(pID, sID, RpID),
+      msgCID = messageCorrelationID(ch, MI, s),
+      RCID   = messageReceiverCorrelationID(ch, MI, s) in
+  let resMsg = [ch, mT, {}, msgCID, true],
+      msg    = [ch, mT, messageContent(ch, MI, s), msgCID, false],
+      IPold = inputPool(Rch, sIDX, mT, RCID) in
+  let IPnew = setnth(IPold, head(indexes(IPold, resMsg)), msg) in
+      inputPool(Rch, sIDX, mT, RCID) := IPnew
 \end{minted}
 \caption{ReplaceReservation}
 \label{lst:asm:ReplaceReservation}

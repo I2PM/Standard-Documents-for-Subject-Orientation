@@ -23,8 +23,51 @@ There are also some conceptional differences and limitations:
     \item Observer: different approach: no native support; possible via Modal Split + Receive State with State Priority + following Cancel Function
 \end{itemize}
 
+
+\section{editorial note}
+
+To fit the code onto the pages it has been compacted, for example:
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule Behavior(MI, currentStateNumber) =
+ let s = currentStateNumber,
+    ch = channelFor(self) in
+  if (initializedState(ch, MI, s) != true) then
+    StartState(MI, s)
+  else // ...
+\end{minted}
+\caption{Behavior, compact snippet}
+\label{lst:asm:Behavior_snipped_compact}
+\end{listing}
+
+instead of:
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\small]{lexer.py:CoreASMLexer -x}
+rule Behavior(macroInstanceNumber, currentStateNumber) =
+  if (initializedState(channelFor(self),
+                       macroInstanceNumber,
+                       currentStateNumber) != true) then
+    StartState(macroInstanceNumber, currentStateNumber)
+  else // ...
+\end{minted}
+\caption{Behavior, spread-out snippet}
+\label{lst:asm:Behavior_snipped_spread-out}
+\end{listing}
+
+
+Some elements are intentionally left out in order to preserve space.
+
+For example, the \asminline{rule InputPool_Pop} and
+the \asminline{derived availableMessages}  function
+contain lengthy list traversals, and their definitions contain
+undocumented parameters used in a test environment for debugging.
+
+Other functions like \asminline{derived searchMacro} or \asminline{derived hasTimeoutTransition} should be self-explanatory.
+
+
 % TODO / DISCUSS:
-% InputPool_Pop, availableMessages ausreichend?
 % evtl. doch alle Crash() wieder mitaufnehmen?
 % -> umsetzen als BLOCKED?
 

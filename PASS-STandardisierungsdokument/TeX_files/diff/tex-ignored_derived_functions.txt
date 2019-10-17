@@ -1,3 +1,6 @@
+isStartSubject
+processSubjects
+predefinedAgents
 loadVar
 loadCorrelationID
 loadChannelsFromVariable
@@ -5,8 +8,10 @@ searchMacro
 outgoingNormalTransitions
 outgoingEnabledTransitions
 first_outgoingNormalTransition
+getTransitionByLabel
 transitionIsAuto
 transitionTimeout
+transitionLabel
 resolveInterfaceSubject
 searchSenderSubjectID
 statePriority

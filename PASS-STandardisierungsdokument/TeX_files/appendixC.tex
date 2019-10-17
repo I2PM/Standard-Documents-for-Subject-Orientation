@@ -22,6 +22,7 @@ Additionally to OWL:
 There are also some conceptional differences and limitations:
 \begin{itemize}
     \item the end state is a function, and not an attribute. end states must not have outgoing transitions.
+    \item functions span over a state function and transition function. the state function determines which transitions are enabled and prepares the transition action. example receive function: state function checks IP, transition function removes message from it and stores it in a variable.
     \item only blocking asynchronous send, i.e. IP strategy blocking - no delete / drop. no sync send.
     \item modal split / join instead of ChoiceSegement. only mandatory to start and end / no optional start or optional end.
     \item timeout transitions: designed for interactive process validation -> duration in seconds, no business days. also no reminders.
@@ -763,8 +764,7 @@ rule AbortState(MI, currentStateNumber) =
 rule StartState(MI, currentStateNumber) =
   let ch = channelFor(self),
      pID = processIDFor(self),
-       s = currentStateNumber in
-  let sType     = stateType(pID, s) in seqblock
+       s = currentStateNumber in seqblock
     InitializeCompletion(MI, s)
     abortionCompleted(ch, MI, s) := false
 
@@ -776,7 +776,7 @@ rule StartState(MI, currentStateNumber) =
 
     wantInput(ch, MI, s) := {}
 
-    case sType of
+    case stateType(pID, s) of
       "function"       : StartFunction(MI, s)
       "internalAction" : StartInternalAction(MI, s)
       "send"           : StartSend(MI, s)
@@ -860,7 +860,7 @@ rule Perform(MI, currentStateNumber) =
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule SelectTransition(MI, currentStateNumber) =
   let ch = channelFor(self),
-     s = currentStateNumber in
+       s = currentStateNumber in
   if (|outgoingEnabledTransitions(ch, MI, s)| = 0) then
     // BLOCKED: none to select
     SetExecutionState(MI, s, NEXT)
@@ -913,6 +913,106 @@ rule PerformTransition(MI, currentStateNumber, t) =
 \end{minted}
 \caption{PerformTransition}
 \label{lst:asm:PerformTransition}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartFunction(MI, currentStateNumber) =
+  let pID = processIDFor(self) in
+  let functionName = stateFunction(pID, currentStateNumber) in {
+    StartTimeout(MI, currentStateNumber)
+
+    if (startFunction(functionName) = undef) then
+      skip
+    else
+      call startFunction(functionName) (MI, currentStateNumber)
+
+    SetExecutionState(MI, currentStateNumber, LOWER)
+  }
+\end{minted}
+\caption{StartFunction}
+\label{lst:asm:StartFunction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformFunction(MI, currentStateNumber) =
+  let s = currentStateNumber in
+    if (shouldTimeout(channelFor(self), MI, s) = true) then {
+      SetCompleted(MI, s)
+      ActivateTimeout(MI, s)
+    }
+    else
+      let pID = processIDFor(self) in
+      let functionName = stateFunction(pID, s),
+          args         = stateFunctionArguments(pID, s) in
+        call performFunction(functionName) (MI, s, args)
+\end{minted}
+\caption{PerformFunction}
+\label{lst:asm:PerformFunction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule AbortFunction(MI, currentStateNumber) =
+  let pID = processIDFor(self) in
+  let functionName = stateFunction(pID, currentStateNumber) in
+    if (abortFunction(functionName) = undef) then
+      SetAbortionCompleted(MI, currentStateNumber)
+    else
+      // must set abortionCompleted eventually
+      call abortFunction(functionName) (MI, currentStateNumber)
+\end{minted}
+\caption{AbortFunction}
+\label{lst:asm:AbortFunction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformTransitionFunction(MI, currentStateNumber, t) =
+  let pID = processIDFor(self),
+        s = currentStateNumber in
+  let functionName = stateFunction(pID, s) in
+    if (performTransitionFunction(functionName) = undef) then
+      SetCompletedTransition(MI, s, t)
+    else
+      call performTransitionFunction(functionName) (MI, s, t)
+\end{minted}
+\caption{PerformTransitionFunction}
+\label{lst:asm:PerformTransitionFunction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SetCompletedAction(MI, currentStateNumber, res) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+    if (res = undef) then
+      choose t in outgoingNormalTransitions(pID, s) do
+        selectedTransition(ch, MI, s) := t
+    else
+      let t = getTransitionByLabel(pID, s, res) in
+        selectedTransition(ch, MI, s) := t
+
+    SetCompleted(MI, s)
+  }
+\end{minted}
+\caption{SetCompletedAction}
+\label{lst:asm:SetCompletedAction}
 \end{listing}
 
 
@@ -1043,105 +1143,6 @@ rule PerformInternalAction(MI, currentStateNumber) =
 
 
 
-
-
-\begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-rule StartFunction(MI, currentStateNumber) =
-  let pID = processIDFor(self) in
-  let functionName = stateFunction(pID, currentStateNumber) in {
-    StartTimeout(MI, currentStateNumber)
-
-    if (startFunction(functionName) = undef) then
-      skip
-    else
-      call startFunction(functionName) (MI, currentStateNumber)
-
-    SetExecutionState(MI, currentStateNumber, LOWER)
-  }
-\end{minted}
-\caption{StartFunction}
-\label{lst:asm:StartFunction}
-\end{listing}
-
-
-
-
-\begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-rule PerformFunction(MI, currentStateNumber) =
-  let s = currentStateNumber in
-    if (shouldTimeout(channelFor(self), MI, s) = true) then {
-      SetCompleted(MI, s)
-      ActivateTimeout(MI, s)
-    }
-    else
-      let pID = processIDFor(self) in
-      let functionName = stateFunction(pID, s),
-          args         = stateFunctionArguments(pID, s) in
-        call performFunction(functionName) (MI, s, args)
-\end{minted}
-\caption{PerformFunction}
-\label{lst:asm:PerformFunction}
-\end{listing}
-
-
-
-
-\begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-rule AbortFunction(MI, currentStateNumber) =
-  let pID = processIDFor(self) in
-  let functionName = stateFunction(pID, currentStateNumber) in
-    if (abortFunction(functionName) = undef) then
-      SetAbortionCompleted(MI, currentStateNumber)
-    else
-      // must set abortionCompleted eventually
-      call abortFunction(functionName) (MI, currentStateNumber)
-\end{minted}
-\caption{AbortFunction}
-\label{lst:asm:AbortFunction}
-\end{listing}
-
-
-
-
-\begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-rule PerformTransitionFunction(MI, currentStateNumber, t) =
-  let pID = processIDFor(self),
-        s = currentStateNumber in
-  let functionName = stateFunction(pID, s) in
-    if (performTransitionFunction(functionName) = undef) then
-      SetCompletedTransition(MI, s, t)
-    else
-      call performTransitionFunction(functionName) (MI, s, t)
-\end{minted}
-\caption{PerformTransitionFunction}
-\label{lst:asm:PerformTransitionFunction}
-\end{listing}
-
-
-
-
-\begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-rule SetCompletedAction(MI, currentStateNumber, res) =
-  let ch = channelFor(self),
-       s = currentStateNumber in {
-    if (res = undef) then
-      choose t in outgoingNormalTransitions(pID, s) do
-        selectedTransition(ch, MI, s) := t
-    else
-      let t = getTransitionByLabel(pID, s, res) in
-        selectedTransition(ch, MI, s) := t
-
-    SetCompleted(MI, s)
-  }
-\end{minted}
-\caption{SetCompletedAction}
-\label{lst:asm:SetCompletedAction}
-\end{listing}
 
 
 

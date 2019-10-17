@@ -292,16 +292,19 @@ Transitions connect the source state with the target state (see figure \ref{fig:
 
 This section provides a reduced overview of the ASM semantics given in Appendix~\ref{CoreASM-Reference-Implementation}.
 
-The goal of this section is to provide a minimal set of rules to establish a foundation to understand the ASM semantics,
-without going into their details.
+The goal of this section is to provide a minimal set of reduced rules to establish a foundation to understand the ASM semantics,
+leaving out certain features and implementation details.
 It is therefore just an informal introduction to the topic.
+
+Please note the conceptual differences between the interpreter semantics and the owl structure, presented in \ref{CoreASM-Reference-Implementation-Differences-OWL-Model}.
+Most importantly, the interpreter semantics for interaction support only "IP strategy blocking".
 
 Rules under consideration to be presented:
 \begin{itemize}
     % subject data
-    % macro instacnces, but no execution state -> no observer -> @see appendix
+    % macro instances, but no execution state -> no observer -> @see appendix
     % note: no kill behavior -> not needed, as no call macro / recursion
-	\item \asminline{rule MacroBehavior} % minimal choose, no loop
+	\item \asminline{rule MacroBehavior} % minimal choose, no loop -> no execution state, no priorities
 	\item \asminline{rule Behavior}
 	\item \asminline{rule PerformInternalAction} % ohne wantInput
 	\item Inputpool \& Send Definitions % mit CorrelationID
@@ -313,3 +316,231 @@ Rules under consideration to be presented:
 	\item \asminline{rule CheckIP}
 	\item \asminline{rule PerformEdgeReceive}
 \end{itemize}
+
+\subsection{Foundation}
+
+The interpreter uses asynchronous multi-agent Turbo ASMs.
+It supports the concurrent execution of multiple process models and multiple instances of each process model.
+Each instance has a unique \textit{ProcessInstanceID} (short: \asminline{PI}) assigned.
+Within a process instance multiple instances of a subject can occur (MultiSubject concept).
+Each subject instance has an agent assigned, to distinguish the subject instances.
+This agent is identified by it name.
+We therefore identify a subject instance by the tuple (Process~Model~ID, Process~Instance~ID, Subject~ID, Agent~Name).
+This tuple is called \textit{Channel} (short: \asminline{ch}), as it used in the mobility of channels concept in order to support distributed communication patterns.
+
+In the interpreter, each subject instance has also an ASM Agent assigned, that keeps track of its current state,
+where we mean state in the sense of which subject data is present, the content of the inputpool queues and also the active sbd states.
+This state is stored in ASM functions and assigned to the \textit{Channel}.
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// ASM Agent -> Channel
+function channelFor : Agents -> LIST
+
+derived processIDFor(a)       = processIDOf(channelFor(a))
+derived processInstanceFor(a) = processInstanceOf(channelFor(a))
+derived subjectIDFor(a)       = subjectIDOf(channelFor(a))
+derived agentFor(a)           = agentOf(channelFor(a))
+
+derived processIDOf(ch)       = nth(ch, 1)
+derived processInstanceOf(ch) = nth(ch, 2)
+derived subjectIDOf(ch)       = nth(ch, 3)
+derived agentOf(ch)           = nth(ch, 4)
+\end{minted}
+\caption{Channel definitions}
+\label{lst:shortasm:channelFor}
+\end{listing}
+
+In the \asminlne{function channelFor} the assignment from the ASM Agents to their \textit{Channels} is stored.
+The derived functions are used to lookup certain tuple elements of the channel.
+
+% NOTE: StartProcess and StartASMAgent left out intentionally
+
+% Subject Data
+
+
+
+Analogous to programming languages we call Subject Data \textit{Variables}.
+Their scope is either bound to a Subject or a Macro Instance and can only be
+accessed by the Subject. Variables are identified by their name and have an
+explicit data type and a value.\\
+
+Variables are stored in the \asminline{variable} function which maps from
+the Subject's Channel, the scoped Macro Instance~ID and the Variable's name to
+a pair of the data type and value. For Variables that are not scoped to a Macro
+Instance, and are therefore accessible for any state in any Macro Instance of
+the Subject, the unused Macro Instance~ID~0 is used.
+
+The function \asminline{variableDefined} is used to keep track of Variables
+that are in use, so that their content can be reset upon the termination of a
+Macro Instance or the Subject, respectively.
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel * macroInstanceNumber * varname -> [vartype, content]
+function variable : LIST * NUMBER * STRING -> LIST
+
+// Channel -> Set[(macroInstanceNumber, varname)]
+function variableDefined : LIST -> SET
+\end{minted}
+\caption{variable}
+\label{lst:shortasm:variable}
+\end{listing}
+
+
+
+
+\subsection{Interaction Definitions}\label{sec:InteractionDefinitions}
+
+We implement the interaction between Subjects as asynchronous Message exchange.
+Messages are placed into the Inputpool of the receiver where they are then retrieved from when the receiver is in a Receive state.
+
+
+\subsubsection{Messages}\label{sec:messages}
+
+The message content consists of the actual payload and its data type. As this
+reference implementation is intended only for an abstract process execution we abstract
+the payload / business objects to be just a text given as string.
+
+For the communication with MultiSubjects, i.e. sending the same Message to
+multiple Agents of one Subject, we use an \textit{all-or-none} strategy. This
+is accomplished by separating the sending of a Message into two phases: first
+a reservation Message is placed at each receiver into the Inputpool.
+Only after all reservations could be placed they are then replaced with the
+actual Message.
+
+\subsubsection{Inputpool}\label{sec:Inputpool}
+
+The Inputpool is structured into multiple FIFO queues per Subject~ID of the sender, the Messagetype and the CorrelationID.
+
+The Inputpool can be limited to allow a maximum number of Messages and
+reservations per sender Subject~ID and Messagetype; in case the Inputpool Limit is
+reached no additional reservation can be placed. To support the proper
+termination of a Subject a specific queue (and also the complete Inputpool)
+can be closed, in which case no additional reservation can be placed into it,
+too.
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// receiverChannel * senderSubjID * messageType * correlationID -> [msg1, msg2, ...]
+function inputPool : LIST * STRING * STRING * NUMBER -> LIST
+
+/* store all locations where an inputPool was defined for to allow IPEmpty and receiving from "?" */
+// receiverChannel -> {[senderSubjID, messageType, correlationID], ..}
+function inputPoolDefined : LIST -> SET
+
+// receiverChannel * senderSubjID * messageType * correlationID
+function inputPoolClosed : LIST * STRING * STRING * NUMBER -> BOOLEAN
+\end{minted}
+\caption{inputPool}
+\label{lst:shortasm:inputPool}
+\end{listing}
+
+
+The queues of the Inputpool are stored in the \asminline{inputPool} function.
+The function \asminline{inputPoolDefined} is used to keep track of the
+locations of the queues that are in use, so that their content can be checked
+upon termination. The function \asminline{inputPoolClosed} is used to store
+whether a queue is closed. The special location
+\asminline[breaklines]{inputPoolClosed(ch, undef, undef, undef)} is used to
+store whether the complete Inputpool is closed.
+
+We define the function \asminline[breaklines]{derived availableMessages
+(receiverChannel, senderSubjectID, msgType, ipCorrelationID)} to return the
+Messages from the location \asminline[breaklines]{inputPool(receiverChannel,
+senderSubjectID, msgType, ipCorrelationID)} that can be received, i.e. that it
+filters out reservations and reduces Messages from the same sender to only
+the oldest one.\\
+
+\subsection{Subject Behavior}
+
+
+As depicted in figure~\ref{fig:MainSBPM components}, a Subject Behavior consists at least of one \textit{Main Macro} and might have an arbitrary number of minor Macros, called \textit{Additional Macros}.
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SubjectBehavior =
+  MacroBehavior(1)
+\end{minted}
+\caption{SubjectBehavior}
+\label{lst:shortasm:SubjectBehavior}
+\end{listing}
+
+% Macro Behavior
+
+% NOTE: extemely shortened: no execution state => no remainingStates
+
+
+The \asminline{MacroBehavior} rule controls the evaluation of all active
+states for the given Macro Instance~ID~\asminline{MI}.
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule MacroBehavior(MI) =
+  let ch = channelFor(self),
+     pID = processIDFor(self) in
+  choose stateNumber in activeStates(ch, MI) do
+    Behavior(MI, stateNumber)
+\end{minted}
+\caption{MacroBehavior}
+\label{lst:shortasm:MacroBehavior}
+\end{listing}
+
+From that list a state \asminline{stateNumber} is chosen to be evaluated with the \asminline{Behavior} rule.
+
+% State
+
+
+The evaluation of a state is structured into three main phases: initialization,
+the state function and an optional transition behavior.
+
+The state function is responsible for the selection of an outgoing transition and
+has to supervise the Timeout. It also has to enable and disable its outgoing
+transitions, meaning that transitions can be available depending on some dynamic state,
+for example whether a certain Message is present in the Inputpool.
+Usually the outgoing transition will be selected by the environment, however with
+auto-transitions it is possible that such an transition is automatically selected as soon
+as it becomes enabled and as long as there are no other transitions to select from.
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Behavior(MI, currentStateNumber) =
+ let s = currentStateNumber,
+    ch = channelFor(self) in
+  if (initializedState(ch, MI, s) != true) then
+    StartState(MI, s)
+  else if (abortState(MI, s) = true) then
+    AbortState(MI, s)
+  else if (completed(ch, MI, s) != true) then
+    Perform(MI, s)
+  else if (initializedSelectedTransition(ch, MI, s) != true) then
+    StartSelectedTransition(MI, s)
+  else
+   let t = selectedTransition(ch, MI, s) in
+    if (transitionCompleted(ch, MI, t) != true) then
+      PerformTransition(MI, s, t)
+    else {
+      Proceed(MI, s, targetStateNumber(processIDFor(self), t))
+      SetExecutionState(MI, s, DONE)
+    }
+\end{minted}
+\caption{Behavior}
+\label{lst:shortasm:Behavior}
+\end{listing}
+
+
+In the beginning the \asminline{Behavior} rule initializes the state with the
+\asminline{StartState} rule, which will set \asminline{initializedState} to
+\asminline{true}. If the function should not be aborted the \asminline{Perform}
+rule calls the state behavior of the underlying function until it is
+\asminline{completed}.
+In the next phase the selected transition will be initialized by the
+\asminline{StartSelectedTransition} rule and the transition behavior will be performed with
+the \asminline{PerformTransition} rule until it is completed as well. As last step
+the \asminline{Proceed} rule removes the current state and adds the selected
+transition's target state.
+
+

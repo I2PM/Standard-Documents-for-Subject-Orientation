@@ -77,7 +77,7 @@ Other functions like \asminline{derived searchMacro} or \asminline{derived hasTi
 
 
 \newpage
-\section{Actual Appendix}
+\section{Basic Definitions}
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -183,6 +183,24 @@ function variableDefined : LIST -> SET
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel * macroInstanceNumber -> result
+function macroTerminationResult : LIST * NUMBER -> ELEMENT
+
+// Channel * macroInstanceNumber -> MacroNumber
+function macroNumberOfMI : LIST * NUMBER -> NUMBER
+
+// Channel * macroInstanceNumber * StateNumber -> MacroInstance
+function callMacroChildInstance : LIST * NUMBER * NUMBER -> NUMBER
+\end{minted}
+\caption{macroTerminationResult}
+\label{lst:asm:macroTerminationResult}
+\end{listing}
+
+
+\section{Interaction Definitions}
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
 // receiverChannel * senderSubjID * messageType * correlationID -> [msg1, msg2, ...]
 function inputPool : LIST * STRING * STRING * NUMBER -> LIST
 
@@ -219,39 +237,8 @@ function reservationsDone : LIST * NUMBER * NUMBER -> SET
 
 
 
-\begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-// Channel * macroInstanceNumber -> result
-function macroTerminationResult : LIST * NUMBER -> ELEMENT
+\section{Subject Rules}
 
-// Channel * macroInstanceNumber -> MacroNumber
-function macroNumberOfMI : LIST * NUMBER -> NUMBER
-
-// Channel * macroInstanceNumber * StateNumber -> MacroInstance
-function callMacroChildInstance : LIST * NUMBER * NUMBER -> NUMBER
-\end{minted}
-\caption{macroTerminationResult}
-\label{lst:asm:macroTerminationResult}
-\end{listing}
-
-
-
-
-\begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-// called from PerformEnd and AbortCallMacro
-rule AbortMacroInstance(MIAbort, ignoreState) =
-  let ch = channelFor(self) in {
-    foreach currentState in activeStates(ch, MIAbort) do {
-      add [MIAbort, currentState] to killStates(ch)
-    }
-
-    ClearAllVarInMI(ch, MIAbort)
-  }
-\end{minted}
-\caption{AbortMacroInstance}
-\label{lst:asm:AbortMacroInstance}
-\end{listing}
 
 
 
@@ -379,6 +366,22 @@ rule StartMacro(MI, currentStateNumber, mIDNew, MINew) = {
 \label{lst:asm:StartMacro}
 \end{listing}
 
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// called from PerformEnd and AbortCallMacro
+rule AbortMacroInstance(MIAbort, ignoreState) =
+  let ch = channelFor(self) in {
+    foreach currentState in activeStates(ch, MIAbort) do {
+      add [MIAbort, currentState] to killStates(ch)
+    }
+
+    ClearAllVarInMI(ch, MIAbort)
+  }
+\end{minted}
+\caption{AbortMacroInstance}
+\label{lst:asm:AbortMacroInstance}
+\end{listing}
 
 
 
@@ -698,6 +701,7 @@ rule AbortState(MI, currentStateNumber) =
 
 
 
+\section{State Rules}
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -943,6 +947,7 @@ rule SetCompletedTransition(MI, currentStateNumber, t) = {
 
 
 
+\section{Internal Action}
 
 
 \begin{listing}[H]
@@ -1085,6 +1090,7 @@ rule SetCompletedAction(MI, currentStateNumber, res) =
 
 
 
+\section{Send Function}
 
 
 \begin{listing}[H]
@@ -1457,6 +1463,7 @@ rule ReplaceReservation(MI, currentStateNumber, receiverChannel) =
 
 
 
+\section{Receive Function}
 
 
 \begin{listing}[H]
@@ -1563,6 +1570,7 @@ rule CheckIP(MI, currentStateNumber, t) =
 
 
 
+\section{End Function}
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1608,6 +1616,7 @@ rule PerformEnd(MI, currentStateNumber) =
 
 
 
+\section{Tau Function}
 
 
 
@@ -1637,6 +1646,7 @@ rule Tau(MI, currentStateNumber, args) =
 
 
 
+\section{VarMan Function}
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1886,6 +1896,7 @@ rule Selection(MI, currentStateNumber, src, minimum, maximum) =
 \end{listing}
 
 
+\section{Modal Split \& Modal Join Functions}
 
 
 \begin{listing}[H]
@@ -1944,6 +1955,7 @@ rule ModalJoin(MI, currentStateNumber, args) =
 \end{listing}
 
 
+\section{CallMacro Function}
 
 
 \begin{listing}[H]
@@ -2042,6 +2054,7 @@ rule CallMacro(MI, currentStateNumber, args) =
 \end{listing}
 
 
+\section{Cancel Function}
 
 
 \begin{listing}[H]
@@ -2130,6 +2143,7 @@ rule PerformTransitionCancel(MI, currentStateNumber, t) =
 
 
 
+\section{IP Functions}
 
 
 
@@ -2264,6 +2278,7 @@ rule IsIPEmpty(MI, currentStateNumber, args) =
 \end{listing}
 
 
+\section{SelectAgents Function}
 
 
 \begin{listing}[H]

@@ -451,12 +451,13 @@ We define the function \asminline[breaklines]{derived availableMessages
 Messages from the location \asminline[breaklines]{inputPool(receiverChannel,
 senderSubjectID, msgType, ipCorrelationID)} that can be received, i.e. that it
 filters out reservations and reduces Messages from the same sender to only
-the oldest one.\\
+the oldest one.
 
 \subsection{Subject Behavior}
 
 
-As depicted in figure~\ref{fig:MainSBPM components}, a Subject Behavior consists at least of one \textit{Main Macro} and might have an arbitrary number of minor Macros, called \textit{Additional Macros}.
+As depicted in figure~\ref{fig:MainSBPM components}, a Subject Behavior consists at least of one \textit{Main Macro}
+and might have an arbitrary number of minor Macros, called \textit{Additional Macros}.
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -479,8 +480,7 @@ states for the given Macro Instance~ID~\asminline{MI}.
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule MacroBehavior(MI) =
-  let ch = channelFor(self),
-     pID = processIDFor(self) in
+  let ch = channelFor(self) in
   choose stateNumber in activeStates(ch, MI) do
     Behavior(MI, stateNumber)
 \end{minted}
@@ -522,10 +522,8 @@ rule Behavior(MI, currentStateNumber) =
    let t = selectedTransition(ch, MI, s) in
     if (transitionCompleted(ch, MI, t) != true) then
       PerformTransition(MI, s, t)
-    else {
+    else
       Proceed(MI, s, targetStateNumber(processIDFor(self), t))
-      SetExecutionState(MI, s, DONE)
-    }
 \end{minted}
 \caption{Behavior}
 \label{lst:shortasm:Behavior}

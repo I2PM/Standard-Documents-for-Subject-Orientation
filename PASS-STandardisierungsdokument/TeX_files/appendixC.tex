@@ -13,16 +13,18 @@ This implementation provides more language elements than covered by the OWL desc
 Additionally to OWL:
 \begin{itemize}
     \item Internal Behavior: usage of Subject Data: DataModificationFunction (VarMan: Selection, Concatenation, \ldots), DataMappingFunction (StoreMessage, UseMessageContent, UseCorrelationID).
-    Subject Data can be scoped to Macro Instance.
-    \item Interaction: Subject Restart, Inputpool Functions (CloseIP, OpenIP, \ldots), CorrelationID, Mobility of Channel.
+    Subject Data can be scoped to Macro Instance and passed as macro argument.
+    \item macro exit parameters to influence the outgoing transition of an macrostate
+    \item Interaction: Subject Restart (also: upon termination of a subject it is determined whether it can be restarted), Inputpool Functions (CloseIP, OpenIP, \ldots), CorrelationID, Mobility of Channel.
 \end{itemize}
 
 There are also some conceptional differences and limitations:
 \begin{itemize}
+    \item the end state is a function, and not an attribute. end states must not have outgoing transitions.
     \item only blocking asynchronous send, i.e. IP strategy blocking - no delete / drop. no sync send.
     \item modal split / join instead of ChoiceSegement. only mandatory to start and end / no optional start or optional end.
-    \item timeout transitions: designed for interactive validation -> duration in seconds, no business days. also no reminders.
-    \item Observer: different approach: no native support; possible via Modal Split + Receive State with State Priority + following Cancel Function
+    \item timeout transitions: designed for interactive process validation -> duration in seconds, no business days. also no reminders.
+    \item Observer: different approach: no native support; possible via Modal Split + Receive State with State Priority + following Cancel Function, to overcome limitations of previous specifications.
 \end{itemize}
 
 

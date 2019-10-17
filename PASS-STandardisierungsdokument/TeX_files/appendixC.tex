@@ -231,6 +231,18 @@ function inputPool : LIST * STRING * STRING * NUMBER -> LIST
 /* store all locations where an inputPool was defined for to allow IPEmpty and receiving from "?" */
 // receiverChannel -> {[senderSubjID, messageType, correlationID], ..}
 function inputPoolDefined : LIST -> SET
+
+// receiverChannel * senderSubjID * messageType * correlationID
+function inputPoolClosed : LIST * STRING * STRING * NUMBER -> BOOLEAN
+
+derived inputPoolIsClosed(receiverChannel, senderSubjID, messageType, correlationID) = return boolres in
+  let isClosed = inputPoolClosed(receiverChannel, senderSubjID, messageType, correlationID) in
+    if (isClosed = undef) then {
+      boolres := inputPoolClosed(receiverChannel, undef, undef, undef) // default: global state
+    }
+    else {
+      boolres := isClosed
+    }
 \end{minted}
 \caption{inputPool}
 \label{lst:asm:inputPool}

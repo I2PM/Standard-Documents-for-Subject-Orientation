@@ -23,7 +23,6 @@ subjectMainMacro
 macroStartState
 macroArguments
 targetStateNumber
-inputPoolIsClosed
 inputPoolIsEmpty
 inputPoolGetFreeSpace
 inputPoolUsedSpace

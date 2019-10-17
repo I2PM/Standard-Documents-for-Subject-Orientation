@@ -111,6 +111,30 @@ function activeStates : LIST * NUMBER -> LIST
 \end{listing}
 
 
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// -> PI
+function nextPI : -> NUMBER
+// PI -> Channel
+function nextPIUsedBy : NUMBER -> Agents
+
+// Channel -> Number
+function nextMacroInstanceNumber : LIST -> NUMBER
+
+// Channel -> Boolean
+function properTerminated : LIST -> BOOLEAN
+
+derived anyNonProperTerminated(chs) =
+  exists ch in chs with (properTerminated(ch) = false)
+
+// Channel * MacroInstanceNumber * StateNumber -> Set[String]
+function wantInput : LIST * NUMBER * NUMBER -> SET
+\end{minted}
+\caption{nextPI}
+\label{lst:asm:nextPI}
+\end{listing}
+
+
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -229,6 +253,9 @@ function messageReceiverCorrelationID : LIST * NUMBER * NUMBER -> NUMBER
 
 // Channel * MacroInstanceNumber * StateNumber -> Set[Channel]
 function reservationsDone : LIST * NUMBER * NUMBER -> SET
+
+function nextCorrelationID : -> NUMBER
+function nextCorrelationIDUsedBy : NUMBER -> Agents
 \end{minted}
 \caption{receivedMessages}
 \label{lst:asm:receivedMessages}
@@ -239,6 +266,21 @@ function reservationsDone : LIST * NUMBER * NUMBER -> SET
 
 \section{Subject Rules}
 
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule GenerateUniqueProcessInstanceID = {
+  nextPI := nextPI + 1
+  result := nextPI
+  // ensure that `nextPI` is not used by multiple agents in the
+  // same ASM step. A collision would occur when multiple agents
+  // try to call this rule in the same asm step
+  nextPIUsedBy(nextPI) := self
+}
+\end{minted}
+\caption{GenerateUniqueProcessInstanceID}
+\label{lst:asm:GenerateUniqueProcessInstanceID}
+\end{listing}
 
 
 
@@ -1112,7 +1154,7 @@ rule StartSend(MI, currentStateNumber) =
       if (cIDVName != undef and cIDVName != "") then {
         messageCorrelationID(ch, MI, s) := nextCorrelationID
         nextCorrelationID := nextCorrelationID + 1
-        // ensure no other agent increments nextCorrelationID
+        // ensure no other agent uses this same correlationID
         nextCorrelationIDUsedBy(nextCorrelationID) := self
       }
       else

@@ -289,7 +289,7 @@ Transitions connect the source state with the target state (see figure \ref{fig:
 \section{ASM Definition of Subject Execution}
 
 \setminted{fontsize=\small}
-\setmintedinline{fontsize=\normalsize}
+\setmintedinline{fontsize=\normalsize,breaklines}
 
 % NOTE: DRAFT WOLSKIA
 
@@ -436,12 +436,11 @@ The function \asminline{inputPoolDefined} is used to keep track of the
 locations of the queues that are in use, so that their content can be checked
 upon termination. The function \asminline{inputPoolClosed} is used to store
 whether a queue is closed. The special location
-\asminline[breaklines]{inputPoolClosed(ch, undef, undef, undef)} is used to
+\asminline{inputPoolClosed(ch, undef, undef, undef)} is used to
 store whether the complete Inputpool is closed.
 
-We define the function \asminline[breaklines]{derived availableMessages
-(receiverChannel, senderSubjectID, msgType, ipCorrelationID)} to return the
-Messages from the location \asminline[breaklines]{inputPool(receiverChannel,
+We define the function \asminline{derived availableMessages(receiverChannel, senderSubjectID, msgType, ipCorrelationID)} to return the
+Messages from the location \asminline{inputPool(receiverChannel,
 senderSubjectID, msgType, ipCorrelationID)} that can be received, i.e. that it
 filters out reservations and reduces Messages from the same sender to only
 the oldest one.
@@ -888,7 +887,7 @@ To support sending to an External Subject a translation of the sender's original
 Subject~ID to the Subject~ID used in the External Process is performed by the
 \asminline{searchSenderSubjectID} function.
 
-When the queue at \asminline[breaklines]{inputPool(rCh, xSID, msgType, dstCorr)} was not
+When the queue at \asminline{inputPool(rCh, xSID, msgType, dstCorr)} was not
 created yet a new queue is assigned to that location and remembered in the
 \asminline{inputPoolDefined} function on the receiver's side.
 If the queue is either closed or full no reservation message can be placed,
@@ -1189,7 +1188,7 @@ optionally stores them in the Variable given as transition parameter
 It first determines the location of the queue and passes them to the
 \asminline{InputPool_Pop} rule which removes up to \asminline{countMax}
 of the oldest Messages from the queue at the location
-\asminline[breaklines]{inputPool(ch, xSID, msgType, ipCorr)}
+\asminline{inputPool(ch, xSID, msgType, ipCorr)}
 and stores them temporarily in the \asminline{receivedMessages} function.
 
 
@@ -1462,4 +1461,4 @@ termination without any particular result.
 
 % reset font sizes
 \setminted{fontsize=\normalsize}
-\setmintedinline{fontsize=\normalsize}
+\setmintedinline{fontsize=\normalsize,breaklines=false}

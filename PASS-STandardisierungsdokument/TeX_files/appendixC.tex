@@ -445,32 +445,26 @@ rule AbortMacroInstance(MIAbort, ignoreState) =
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 /*
-0 - REPEAT
-  -* Behavior should be executed again for this state
-  -* results of previous execution will be merged with following execution in one global ASM step
-  -* no other states are allowed to be executed
-1 - DONE
-  -* no other active states are allowed to be executed
-  -* new states are started
-  -* global ASM / LTS step should be done
-2 - NEXT
-  -* nothing changed / waiting for input
-  -* other active states with the same priority can be executed
-  -* active states with lower priority can not be executed
-3 - LOWER
-  -* nothing changed / waiting for input
-  -* other active states, even with lower priority, can be executed
+- REPEAT
+  - Behavior should be executed again for this state
+  - results of previous execution will be merged with following execution in one global ASM step
+  - no other states are allowed to be executed
+- DONE
+  - no other active states are allowed to be executed
+  - new states are started
+  - global ASM / LTS step will be done
+- NEXT
+  - nothing changed / waiting for input
+  - other active states with the same priority can be executed
+  - active states with lower priority can not be executed
+- LOWER
+  - nothing changed / waiting for input
+  - other active states, even with lower priority, can be executed
 */
 
 // ch * MacroInstanceNumber * stateNumber => Int
 function executionState : LIST * NUMBER * NUMBER -> NUMBER
 
-
-/*
-1 - DONE
-2 - NEXT
-3 - LOWER
-*/
 // ch * MacroInstanceNumber => Int
 function macroExecutionState : LIST * NUMBER -> NUMBER
 

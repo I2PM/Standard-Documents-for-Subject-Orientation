@@ -305,7 +305,7 @@ Most importantly, the interpreter semantics for interaction support only "IP str
 simplifications for this chapter:
 \begin{itemize}
 	\item no Observer support => no execution state, no state priorities => Cancel not required
-	\item limited scope to Do, Send, Receive, CallMacro, ModalSplit/ModalJoin, End => no VarMan, Cancel, SelectAgents, Tau
+	\item limited scope to InternalAction, Send, Receive, CallMacro, ModalSplit/ModalJoin, End => no VarMan, Cancel, SelectAgents, Tau
 	\item discuss: proper-termination and CloseIP/OpenIP are motivated from interaction soundness. include? mention? hard-exclude (remove references from code)?
 	\item no KillBehavior (although recursive macros and reservation messages). therefore this will not be sound - but a bit less complicated
 \end{itemize}
@@ -321,8 +321,8 @@ This agent is identified by it name.
 We therefore identify a subject instance by the tuple (Process~Model~ID, Process~Instance~ID, Subject~ID, Agent~Name).
 This tuple is called \textit{Channel} (short: \asminline{ch}), as it used in the mobility of channels concept in order to support distributed communication patterns.
 
-In the interpreter, each subject instance has also an ASM Agent assigned, that keeps track of its current state,
-where we mean state in the sense of which subject data is present, the content of the inputpool queues and also the active sbd states.
+In the interpreter, each subject instance has an ASM Agent assigned, that keeps track of its current state,
+where we mean state in the sense of which subject data is present, the content of the inputpool queues and also the active SBD states.
 This state is stored in ASM functions and assigned to the \textit{Channel}.
 
 \begin{listing}[H]
@@ -344,14 +344,12 @@ derived agentOf(ch)           = nth(ch, 4)
 \label{lst:shortasm:channelFor}
 \end{listing}
 
-In the \asminlne{function channelFor} the assignment from the ASM Agents to their \textit{Channels} is stored.
-The derived functions are used to lookup certain tuple elements of the channel.
+In the function \asminline{channelFor} the assignment from the ASM Agents to their \textit{Channels} is stored.
+The derived functions are used to lookup certain tuple elements of the channel.\\
 
 % NOTE: StartProcess and StartASMAgent left out intentionally
 
 % Subject Data
-
-
 
 Analogous to programming languages we call Subject Data \textit{Variables}.
 Their scope is either bound to a Subject or a Macro Instance and can only be
@@ -1209,8 +1207,6 @@ rule ModalSplit(MI, currentStateNumber, args) =
 
   // remove self
   RemoveState(MI, s, MI, s)
-
-  SetExecutionState(MI, s, DONE)
 }
 \end{minted}
 \caption{ModalSplit}
@@ -1243,7 +1239,6 @@ rule ModalJoin(MI, currentStateNumber, args) =
     if (joinCount(ch, MI, s) < numSplits) then {
       // drop this execution path
       RemoveState(MI, s, MI, s)
-      SetExecutionState(MI, s, DONE)
     }
     else {
       // reset for next iteration

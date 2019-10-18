@@ -538,7 +538,7 @@ transition's target state.
 The environment has full read access to all functions of this semantics and knows
 therefore each running Subject, their Macro Instances and their active states.
 
-To define a homogeneous interface between the Action semantics and the environment we
+To define a homogeneous interface between the Function semantics and the environment we
 define the function \asminline{wantInput} to be written by an Function when it
 requires an external input, for example if an outgoing transition has to be chosen.
 
@@ -593,13 +593,11 @@ Otherwise the requirement is added to the \asminline{wantInput} function.
 \subsection{Internal Action}
 
 
-The \emph{Internal Action} is used to model Subject-internal do-actions and
-decisions. It is labeled with a textual description of the action that the Agent
-should perform. The outgoing transitions are labeled with a textual description of the
-possible execution results. Since the action is performed outside of the
-interpreter all outgoing transitions are enabled from the beginning on and no
-transition rule has to be defined. Therefore the state function only consists of the
-timeout check and transition selection.
+The \emph{Internal Action} is used to model DoStates, Subject-internal activities and decisions.
+It is labeled with a textual description of the activity that the Agent should perform.
+The outgoing transitions are labeled with a textual description of the possible execution results.
+Since the activity is performed outside of the interpreter all outgoing transitions are enabled from the beginning on and no transition rule has to be defined.
+Therefore the state function only consists of the timeout check and transition selection.
 
 
 \begin{listing}[H]
@@ -787,7 +785,7 @@ The Timeout is started only when the \asminline{receivers} and the
 \asminline{messageContent} functions are defined. Until all reservations are
 placed, and if no Timeout occurs, the \asminline{DoReservations} rule attempts
 to place further reservation messages. If all reservations are placed the
-\asminline{TryCompletePerformSend} rule completes the node action, depending
+\asminline{TryCompletePerformSend} rule completes the state function, depending
 on whether no receiver is \textit{non-proper} terminated.
 
 

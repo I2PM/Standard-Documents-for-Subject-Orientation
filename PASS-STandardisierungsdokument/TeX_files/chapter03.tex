@@ -534,12 +534,11 @@ transition's target state.
 %---
 
 The environment has full read access to all functions of this semantics and knows
-therefore each running Subject, their Macro Instances and their active nodes,
-along with their execution state.
+therefore each running Subject, their Macro Instances and their active states.
 
 To define a homogeneous interface between the Action semantics and the environment we
-define the function \asminline{wantInput} to be written by an Action when it
-requires an external input, for example if an outgoing edge has to be chosen.
+define the function \asminline{wantInput} to be written by an Function when it
+requires an external input, for example if an outgoing transition has to be chosen.
 
 
 
@@ -737,14 +736,16 @@ rule StartSend(MI, currentStateNumber) =
 \end{listing}
 
 
-The initialization of the Send Function resets the \asminline{receivers} and
+The initialization of the Send Function resets / initializes the \asminline{receivers} and
 \asminline{reservationsDone} functions.
 If the communication transition has a \asminline{messageContentVar} parameter given the
 content of that Variable is loaded and stored in the \asminline{messageContent}
 function. If it has a \asminline{messageNewCorrelationVar} parameter given
-a new CorrelationID is used and stored in that Variable.
-
-% TODO: include updated semantics: correlationid is stored locally now saved only later on in the variable
+a new CorrelationID is created and stored in the \asminline{messageCorrelationID} function.
+It will be stored in the Variable after the messages have been send.
+If the message that will be send correlates to a previous message from the receiver
+the CorrelationID from the Variable in \asminline{messageWithCorrelationVar} will be loaded
+so that the message is stored in the corresponding inputpool queue of the receiver.
 
 
 \begin{listing}[H]
@@ -819,17 +820,10 @@ function is written by the environment.
 rule DoReservations(MI, currentStateNumber) =
   let ch = channelFor(self),
        s = currentStateNumber in
-  local hasPlacedReservation := false in
   let receiversTodo = (receivers(ch, MI, s) diff
                        reservationsDone(ch, MI, s)) in
   foreach receiver in receiversTodo do
-    local tmp := false in
-      seq
-        // result is true if a reservation was made
-        tmp <- DoReservation(MI, s, receiver)
-      next if (tmp = true) then
-        hasPlacedReservation := true
-    // TODO remove hasPlacedReservation here and in other rules
+    DoReservation(MI, s, receiver)
 \end{minted}
 \caption{DoReservations}
 \label{lst:shortasm:DoReservations}
@@ -839,13 +833,7 @@ rule DoReservations(MI, currentStateNumber) =
 
 The \asminline{DoReservations} rule iterates over all receivers that did not
 already receive a reservation message. The \asminline{DoReservation} rule
-then tries to place a reservation message for a receiver and returns whether
-it was successful or not. This result is stored in the
-\asminline{hasPlacedReservation} function to update the
-\asminline{hasPlacedAnyReservation} function, so that the execution state
-can be determined.
-% TODO: no execution state here in 3.3
-
+then tries to place a reservation message for such receiver.
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -877,14 +865,13 @@ rule DoReservation(MI, currentStateNumber, receiverChannel) =
           if (inputPoolGetFreeSpace(Rch, sIDX, mT) > 0) then {
             enqueue resMsg into inputPool(Rch, sIDX, mT, RCID)
             add Rch to reservationsDone(ch, MI, s)
-            result := true
           }
           else
-            result := false // BLOCKED: no free space!
+            skip // BLOCKED: no free space!
         else
-          result := false // BLOCKED: inputPoolIsClosed
+          skip // BLOCKED: inputPoolIsClosed
   else
-    result := false // BLOCKED: non-properTerminated
+    skip // BLOCKED: non-properTerminated
 \end{minted}
 \caption{DoReservation}
 \label{lst:shortasm:DoReservation}
@@ -897,13 +884,6 @@ the necessary parameters of the queue to use and builds the reservation message.
 To support sending to an External Subject a translation of the sender's original
 Subject~ID to the Subject~ID used in the External Process is performed by the
 \asminline{searchSenderSubjectID} function.
-
-% TODO: Variable is no longer written in StartSend
-If a new CorrelationID was created by the \asminline{StartSend} rule it is
-loaded into \asminline{msgCorr}, otherwise its value is set to 0. If the
-message correlates to a previous Message, given as parameter at the communication transition
-in the \asminline{messageWithCorrelationVar} function, that CorrelationID is
-loaded into \asminline{msgCorr}, otherwise it is set 0 as well.
 
 When the queue at \asminline[breaklines]{inputPool(rCh, xSID, msgType, dstCorr)} was not
 created yet a new queue is assigned to that location and remembered in the
@@ -983,7 +963,8 @@ reservations with the actual Message. The \asminline{EnsureRunning} rule
 (re)starts a receiver if it is not already running.
 If the communication transition has the parameter \asminline{messageStoreReceiverVar} defined
 the used receivers of the Message are stored in that Variable.
-% TODO: also correlationid now saved
+Also, if the communication transition has the parameter \asminline{messageNewCorrelationVar} defined
+the CorrelationID that was created in \asminline{StartSend} and used for the send messages will be stored in the given Variable.
 
 
 \begin{listing}[H]
@@ -1022,9 +1003,8 @@ in the queue with the actual message.
 rule AbortSend(MI, currentStateNumber) =
   let ch = channelFor(self),
        s = currentStateNumber in {
-    foreach r in reservationsDone(ch, MI, s) do {
+    foreach r in reservationsDone(ch, MI, s) do
       CancelReservation(MI, s, r)
-    }
 
     SetAbortionCompleted(MI, s)
   }

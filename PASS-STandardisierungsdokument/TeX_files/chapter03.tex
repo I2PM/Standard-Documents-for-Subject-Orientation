@@ -1268,7 +1268,7 @@ rule ModalJoin(MI, currentStateNumber, args) =
     else {
       // reset for next iteration
       joinCount(ch, MI, s) := undef
-      SetCompletedAction(MI, s, undef)
+      SetCompletedFunction(MI, s, undef)
     }
 \end{minted}
 \caption{ModalJoin}
@@ -1357,9 +1357,9 @@ rule CallMacro(MI, currentStateNumber, args) =
 
       // transport result, if present
       if (childResult = true) then
-        SetCompletedAction(MI, s, undef)
+        SetCompletedFunction(MI, s, undef)
       else
-        SetCompletedAction(MI, s, childResult)
+        SetCompletedFunction(MI, s, childResult)
     }
     else
       // Macro Instance is active, call it

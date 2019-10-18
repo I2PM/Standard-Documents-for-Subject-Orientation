@@ -998,7 +998,7 @@ rule PerformTransitionFunction(MI, currentStateNumber, t) =
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
-rule SetCompletedAction(MI, currentStateNumber, res) =
+rule SetCompletedFunction(MI, currentStateNumber, res) =
   let ch = channelFor(self),
        s = currentStateNumber in {
     if (res = undef) then
@@ -1011,8 +1011,8 @@ rule SetCompletedAction(MI, currentStateNumber, res) =
     SetCompleted(MI, s)
   }
 \end{minted}
-\caption{SetCompletedAction}
-\label{lst:asm:SetCompletedAction}
+\caption{SetCompletedFunction}
+\label{lst:asm:SetCompletedFunction}
 \end{listing}
 
 
@@ -1747,19 +1747,19 @@ rule VarMan_Assign(MI, currentStateNumber, A, X) =
   let a = loadVar(MI, A) in {
     SetVar(MI, X, head(a), last(a))
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 
 rule VarMan_StoreData(MI, currentStateNumber, X, A) = {
   SetVar(MI, X, "Data", A)
 
-  SetCompletedAction(MI, currentStateNumber, undef)
+  SetCompletedFunction(MI, currentStateNumber, undef)
 }
 
 rule VarMan_Clear(MI, currentStateNumber, X) = {
   ClearVar(MI, X)
 
-  SetCompletedAction(MI, currentStateNumber, undef)
+  SetCompletedFunction(MI, currentStateNumber, undef)
 }
 \end{minted}
 \caption{VarMan_Assign}
@@ -1784,7 +1784,7 @@ rule VarMan_Concatenation(MI, currentStateNumber, A, B, X) =
       let x = (last(a) union last(b)) in
         SetVar(MI, X, head(a), x)
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 
 rule VarMan_Intersection(MI, currentStateNumber, A, B, X) =
@@ -1796,7 +1796,7 @@ rule VarMan_Intersection(MI, currentStateNumber, A, B, X) =
       let x = (last(a) intersect last(b)) in
         SetVar(MI, X, head(a), x)
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 
 rule VarMan_Difference(MI, currentStateNumber, A, B, X) =
@@ -1810,7 +1810,7 @@ rule VarMan_Difference(MI, currentStateNumber, A, B, X) =
       let x = (last(a) diff last(b)) in
         SetVar(MI, X, head(a), x)
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 \end{minted}
 \caption{VarMan_Concatenation}
@@ -1829,7 +1829,7 @@ rule VarMan_ExtractContent(MI, currentStateNumber, A, X) =
   let varType = head(firstFromSet(messagesContent)) in {
     SetVar(MI, X, varType, flattenSet(map(messagesContent, @last)))
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 
 rule VarMan_ExtractChannel(MI, currentStateNumber, A, X) =
@@ -1838,7 +1838,7 @@ rule VarMan_ExtractChannel(MI, currentStateNumber, A, X) =
   let messagesChannel = map(messages, @msgChannel) in {
     SetVar(MI, X, "ChannelInformation", messagesChannel)
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 
 rule VarMan_ExtractCorrelationID(MI, currentStateNumber, A, X) =
@@ -1848,7 +1848,7 @@ rule VarMan_ExtractCorrelationID(MI, currentStateNumber, A, X) =
     SetVar(MI, X, "CorrelationID",
                firstFromSet(messagesCorrelationID))
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 \end{minted}
 \caption{VarMan_ExtractContent}
@@ -1882,7 +1882,7 @@ rule VarMan_Selection(MI, currentStateNumber, srcVName, dstVName, minimum, maxim
 
     SetVar(MI, dstVName, head(src), res)
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 }
 
@@ -2003,7 +2003,7 @@ rule ModalJoin(MI, currentStateNumber, args) =
     else {
       // reset for next iteration
       joinCount(ch, MI, s) := undef
-      SetCompletedAction(MI, s, undef)
+      SetCompletedFunction(MI, s, undef)
     }
 \end{minted}
 \caption{ModalJoin}
@@ -2089,9 +2089,9 @@ rule CallMacro(MI, currentStateNumber, args) =
 
       // transport result, if present
       if (childResult = true) then
-        SetCompletedAction(MI, s, undef)
+        SetCompletedFunction(MI, s, undef)
       else
-        SetCompletedAction(MI, s, childResult)
+        SetCompletedFunction(MI, s, childResult)
     }
     else seqblock
       // Macro Instance is active, call it...
@@ -2153,7 +2153,7 @@ rule Cancel(MI, currentStateNumber, args) =
       next
         if (selectedTransition(ch, MI, s) != undef) then
           let t = selectedTransition(ch, MI, s) in
-            SetCompletedAction(MI, s, transitionLabel(pID, t))
+            SetCompletedFunction(MI, s, transitionLabel(pID, t))
         else
           SelectTransition(MI, s)
     else // BLOCKED: no corresponding active states
@@ -2218,7 +2218,7 @@ rule CloseIP(MI, currentStateNumber, args) =
       inputPool(ch, senderSubjID, messageType, correlationID) := []
     }
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 \end{minted}
 \caption{CloseIP}
@@ -2243,7 +2243,7 @@ rule OpenIP(MI, currentStateNumber, args) =
         inputPool(ch, senderSubjID, messageType, correlationID) := []
     }
 
-    SetCompletedAction(MI, currentStateNumber, undef)
+    SetCompletedFunction(MI, currentStateNumber, undef)
   }
 \end{minted}
 \caption{OpenIP}
@@ -2267,7 +2267,7 @@ rule CloseAllIPs(MI, currentStateNumber, args) =
         inputPoolClosed(ch, sID, mT, cID) := true
       }
 
-    SetCompletedAction(MI, s, undef)
+    SetCompletedFunction(MI, s, undef)
   }
 \end{minted}
 \caption{CloseAllIPs}
@@ -2291,7 +2291,7 @@ rule OpenAllIPs(MI, currentStateNumber, args) =
         inputPoolClosed(ch, sID, mT, cID) := false
       }
 
-    SetCompletedAction(MI, s, undef)
+    SetCompletedFunction(MI, s, undef)
   }
 \end{minted}
 \caption{OpenAllIPs}
@@ -2325,9 +2325,9 @@ rule IsIPEmpty(MI, currentStateNumber, args) =
       }
     next
       if inputPoolIsEmpty(ch, senderSubjID, msgType, cID) then
-        SetCompletedAction(MI, s, "true")
+        SetCompletedFunction(MI, s, "true")
       else
-        SetCompletedAction(MI, s, "false")
+        SetCompletedFunction(MI, s, "false")
 \end{minted}
 \caption{IsIPEmpty}
 \label{lst:asm:IsIPEmpty}
@@ -2361,7 +2361,7 @@ rule SelectAgentsAction(MI, currentStateNumber, args) =
              selectAgentsResult(ch, MI, s))
       selectAgentsResult(ch, MI, s) := undef
 
-      SetCompletedAction(MI, s, undef)
+      SetCompletedFunction(MI, s, undef)
     }
     else
       SelectAgents(MI, s, sIDLocal, countMin, countMax)

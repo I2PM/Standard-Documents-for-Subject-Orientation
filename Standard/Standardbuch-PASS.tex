@@ -19,6 +19,10 @@
 \usepackage{enumitem}
 \usepackage{longtable}
 \usepackage{pdfpages}
+\usepackage{minted}
+
+\newmintinline[asminline]{lexer.py:CoreASMLexer -x}{escapeinside=~~}
+\newcommand{\coreinline}{\asminline}
 
 \setlistdepth{9}
 

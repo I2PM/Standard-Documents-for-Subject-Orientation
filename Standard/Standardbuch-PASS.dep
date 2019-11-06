@@ -104,50 +104,41 @@
   *{package}{everysel}    {2011/10/28 v1.2}
   *{package}{pdflscape}   {2016/05/14 v0.11}
   *{file}   {chapter01.tex}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerOrderHandling.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/OrderCustomerChange.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SUbjectObject.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/Introduction/Classes-Properties.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/OrderCustomerOrderHandling.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/OrderCustomerChange.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/SUbjectObject.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/Introduction/Classes-Properties.jpg}{0000/00/00 v0.0}
   *{file}   {chapter02.tex}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/Beispiel-Subject-Interaction.png}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/input-pool-informal.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20171217-PASSProcessModellElement.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181217-PASSProcessModel.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/20181218-Data.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbject-Interaction/OntoGrSubjectInteraction.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectInteraction/Beispiel-Subject-Interaction.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectInteraction/input-pool-informal.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectInteraction/20171217-PASSProcessModellElement.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectInteraction/20181217-PASSProcessModel.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectInteraction/20181218-Data.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectInteraction/OntoGrSubjectInteraction.jpg}{0000/00/00 v0.0}
   *{file}   {chapter03.tex}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/sendState.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SendSTateTimer.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveState.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStateTimer.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ReceiveStateBreak.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Behavior-Symbole.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Vollst-Beispiel.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroBehavior.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/MacroUsage.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/SID-Exception.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ExceptionHandling.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/Extension.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ALternative.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190104-SImple-Elements-and-Modellelement.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190104-Behavior-describing-component.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190109-States.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/20190105-Transitions.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/sendState.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/SendSTateTimer.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/ReceiveState.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/ReceiveStateTimer.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/ReceiveStateBreak.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/Behavior-Symbole.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/Vollst-Beispiel.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/MacroBehavior.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/MacroUsage.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/SID-Exception.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/ExceptionHandling.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/Extension.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/Extension.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/ALternative.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/20190104-SImple-Elements-and-Modellelement.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/20190104-Behavior-describing-component.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/20190109-States.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/20190105-Transitions.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/ASM-Behavior.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Ontology/SubjectExecution/ASM-perform.jpg}{0000/00/00 v0.0}
   *{file}   {appendix.tex}{0000/00/00 v0.0}
   *{file}   {appendixA}   {0000/00/00 v0.0}
-  *{file}   {appendixB}   {0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Behavior.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-perform.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Perform-Bild.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Start.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Try-Run.jpg}{0000/00/00 v0.0}
-  *{file}   {20181026-Ontologie-Bilder/Grafiken-Ontologie/SUbjectExecution/ASM-Interrupt.jpg}{0000/00/00 v0.0}
-  *{file}   {appendixC}   {0000/00/00 v0.0}
-  *{file}   {appendixD}   {0000/00/00 v0.0}
   *{file}   {Standardbuch-PASS.bbl}{0000/00/00 v0.0}
 }

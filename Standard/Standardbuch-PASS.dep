@@ -1,15 +1,14 @@
 \RequireVersions{
-  *{application}{pdfeTeX} {0000/00/00 v0.14020}
-  *{format} {LaTeX2e}     {2019-10-01 v2.e}
-  *{package}{snapshot}    {2012/08/06 v2.13}
+  *{application}{TeX}     {1990/03/25 v3.x}
+  *{format} {LaTeX2e}     {2018-12-01 v2.e}
+  *{package}{snapshot}    {2002/03/05 v1.14}
   *{class}  {memoir}      {2018/12/12 v3.7h}
-  *{package}{ifpdf}       {2019/10/25 v3.4}
-  *{package}{iftex}       {2019/10/24 v1.0a}
-  *{package}{ifetex}      {2019/10/25 v1.3}
-  *{package}{ifxetex}     {2019/10/25 v0.7}
-  *{package}{ifluatex}    {2019/10/25 v1.5}
+  *{package}{ifpdf}       {2018/09/07 v3.3}
+  *{package}{ifetex}      {2018/03/31 v1.2a}
+  *{package}{ifxetex}     {2010/09/12 v0.6}
+  *{package}{ifluatex}    {2016/05/16 v1.4}
   *{file}   {mem11.clo}   {2008/01/30 v0.3}
-  *{package}{array}       {2019/08/31 v2.4l}
+  *{package}{array}       {2018/12/30 v2.4k}
   *{package}{dcolumn}     {2014/10/28 v1.06}
   *{package}{delarray}    {2014/10/28 v1.01}
   *{package}{tabularx}    {2016/02/03 v2.11b}
@@ -23,7 +22,7 @@
   *{package}{alltt}       {1997/06/16 v2.0g}
   *{package}{graphicx}    {2017/06/01 v1.1a}
   *{package}{keyval}      {2014/10/28 v1.15}
-  *{package}{graphics}    {2019/10/08 v1.3c}
+  *{package}{graphics}    {2017/06/25 v1.2c}
   *{package}{trig}        {2016/01/03 v1.10}
   *{file}   {graphics.cfg}{2016/06/04 v1.11}
   *{file}   {pdftex.def}  {2018/01/08 v1.0l}
@@ -34,40 +33,43 @@
   *{package}{pifont}      {2005/04/12 v9.2a}
   *{file}   {upzd.fd}     {2001/06/04 v0.0}
   *{file}   {upsy.fd}     {2001/06/04 v0.0}
-  *{package}{amsmath}     {2019/04/01 v2.17c}
+  *{package}{amsmath}     {2018/12/01 v2.17b}
   *{package}{amstext}     {2000/06/29 v2.01}
   *{package}{amsgen}      {1999/11/30 v2.0}
   *{package}{amsbsy}      {1999/11/29 v1.2d}
   *{package}{amsopn}      {2016/03/08 v2.02}
   *{package}{fontenc}     {0000/00/00 v0.0}
   *{file}   {t1enc.def}   {2018/08/11 v2.0j}
-  *{package}{hyperref}    {2019/09/28 v7.00a}
-  *{package}{hobsub-hyperref}{2019/10/27 v0.0}
-  *{package}{ltxcmds}     {2016/05/16 v1.23}
-  *{package}{ifvtex}      {2019/10/25 v1.7}
-  *{package}{pdftexcmds}  {2019/07/25 v0.30}
+  *{package}{hyperref}    {2018/11/30 v6.88e}
+  *{package}{hobsub-hyperref}{2016/05/16 v1.14}
+  *{package}{hobsub-generic}{2016/05/16 v1.14}
+  *{package}{hobsub}      {2016/05/16 v1.14}
   *{package}{infwarerr}   {2016/05/16 v1.4}
-  *{package}{kvsetkeys}   {2016/05/16 v1.17}
+  *{package}{ltxcmds}     {2016/05/16 v1.23}
+  *{package}{ifvtex}      {2016/05/16 v1.6}
+  *{package}{intcalc}     {2016/05/16 v1.2}
   *{package}{etexcmds}    {2016/05/16 v1.6}
+  *{package}{kvsetkeys}   {2016/05/16 v1.17}
   *{package}{kvdefinekeys}{2016/05/16 v1.4}
+  *{package}{pdftexcmds}  {2018/09/10 v0.29}
   *{package}{pdfescape}   {2016/05/16 v1.14}
-  *{package}{hycolor}     {2016/05/16 v1.8}
-  *{package}{xcolor-patch}{2016/05/16 v0.0}
-  *{package}{hopatch}     {2016/05/16 v1.3}
+  *{package}{bigintcalc}  {2016/05/16 v1.4}
+  *{package}{bitset}      {2016/05/16 v1.2}
+  *{package}{uniquecounter}{2016/05/16 v1.3}
   *{package}{letltxmacro} {2016/05/16 v1.5}
+  *{package}{hopatch}     {2016/05/16 v1.3}
+  *{package}{xcolor-patch}{2016/05/16 v0.0}
+  *{package}{atveryend}   {2016/05/16 v1.9}
+  *{package}{atbegshi}    {2016/06/09 v1.18}
+  *{package}{refcount}    {2016/05/16 v3.5}
+  *{package}{hycolor}     {2016/05/16 v1.8}
   *{package}{auxhook}     {2016/05/16 v1.4}
   *{package}{kvoptions}   {2016/05/16 v3.12}
-  *{file}   {pd1enc.def}  {2019/09/28 v7.00a}
-  *{package}{intcalc}     {2016/05/16 v1.2}
+  *{file}   {pd1enc.def}  {2018/11/30 v6.88e}
   *{file}   {hyperref.cfg}{2002/06/06 v1.2}
-  *{package}{bitset}      {2016/05/16 v1.2}
-  *{package}{bigintcalc}  {2016/05/16 v1.4}
-  *{package}{atbegshi}    {2016/06/09 v1.18}
   *{package}{memhfixc}    {2013/05/30 v1.17}
-  *{file}   {hpdftex.def} {2019/09/28 v7.00a}
-  *{package}{atveryend}   {2016/05/16 v1.9}
+  *{file}   {hpdftex.def} {2018/11/30 v6.88e}
   *{package}{rerunfilecheck}{2016/05/16 v1.8}
-  *{package}{uniquecounter}{2016/05/16 v1.3}
   *{package}{memlays}     {2002/08/10 v1.0}
   *{package}{titlepages}  {2009/07/09 v1.1}
   *{package}{dpfloat}     {2006/10/05 v0.0}
@@ -77,48 +79,46 @@
   *{package}{wrapfig}     {2003/01/31 v3.6}
   *{package}{hyphenat}    {2009/09/02 v2.3c}
   *{package}{lscape}      {2000/10/22 v3.01}
-  *{package}{listings}    {2019/09/10 v1.8c}
-  *{package}{lstmisc}     {2019/09/10 v1.8c}
-  *{file}   {listings.cfg}{2019/09/10 v1.8c}
-  *{package}{enumitem}    {2019/06/20 v3.9}
-  *{package}{longtable}   {2019/02/06 v4.12}
-  *{package}{pdfpages}    {2019/09/21 v0.5n}
+  *{package}{listings}    {2019/02/27 v1.8b}
+  *{package}{lstmisc}     {2019/02/27 v1.8b}
+  *{file}   {listings.cfg}{2019/02/27 v1.8b}
+  *{package}{enumitem}    {2019/02/04 v3.8}
+  *{package}{longtable}   {2014/10/28 v4.11}
+  *{package}{pdfpages}    {2017/10/31 v0.5l}
   *{package}{calc}        {2017/05/25 v4.3}
   *{package}{eso-pic}     {2018/04/12 v2.0h}
-  *{file}   {pppdftex.def}{2019/09/21 v0.5n}
+  *{file}   {pppdftex.def}{2017/10/31 v0.5l}
   *{package}{minted}      {2017/07/19 v2.5}
   *{package}{fvextra}     {2019/02/04 v1.4}
-  *{package}{etoolbox}    {2019/09/21 v2.5h}
-  *{package}{fancyvrb}    {2019/10/22 v0.0}
+  *{package}{etoolbox}    {2018/08/19 v2.5f}
+  *{package}{fancyvrb}    {2019/01/15 v0.0}
   *{package}{upquote}     {2012/04/19 v1.3}
   *{package}{textcomp}    {2018/08/11 v2.0j}
   *{file}   {ts1enc.def}  {2001/06/05 v3.0e}
-  *{file}   {ts1enc.dfu}  {2019/07/11 v1.2j}
+  *{file}   {ts1enc.dfu}  {2018/10/05 v1.2f}
   *{package}{lineno}      {2005/11/02 v4.41}
-  *{package}{shellesc}    {2016/06/07 v0.02b}
+  *{package}{shellesc}    {2016/06/07 v0.02a}
   *{package}{ifplatform}  {2017/10/13 v0.4a}
   *{package}{catchfile}   {2016/05/16 v1.7}
-  *{file}   {"Standardbuch-PASS.w18"}{0000/00/00 v0.0}
+  *{file}   {Standardbuch-PASS.w18}{0000/00/00 v0.0}
   *{package}{xstring}     {2019/02/06 v1.83}
   *{package}{framed}      {2011/10/22 v0.96:}
   *{package}{float}       {2001/11/08 v1.3d}
   *{file}   {ts1cmr.fd}   {2014/09/29 v2.5h}
   *{file}   {t1ppl.fd}    {2001/06/04 v1/ppl.}
-  *{file}   {ts1ppl.fd}   {2001/06/04 v1/ppl.}
-  *{file}   {ulasy.fd}    {1998/08/17 v2.2e}
-  *{-------}{Document-specific files:}{----}
   *{file}   {supp-pdf.mkii}{0000/00/00 v0.0}
   *{package}{epstopdf-base}{2016/05/15 v2.6}
   *{package}{grfext}      {2016/05/16 v1.2}
   *{file}   {epstopdf-sys.cfg}{2010/07/13 v1.3}
-  *{package}{nameref}     {2019/09/16 v2.46}
-  *{package}{refcount}    {2016/05/16 v3.5}
+  *{package}{nameref}     {2016/05/21 v2.44}
   *{package}{gettitlestring}{2016/05/16 v1.5}
   *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
   *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
-  *{package}{ragged2e}    {2019/07/28 v2.2}
+  *{package}{ragged2e}    {2009/05/21 v2.1}
   *{package}{everysel}    {2011/10/28 v1.2}
   *{package}{pdflscape}   {2016/05/14 v0.11}
+  *{file}   {ts1ppl.fd}   {2001/06/04 v1/ppl.}
+  *{file}   {ulasy.fd}    {1998/08/17 v2.2e}
   *{file}   {chapter01.tex}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/OrderCustomerOrderHandling.jpg}{0000/00/00 v0.0}
@@ -167,7 +167,7 @@
   *{file}   {_minted-Standardbuch-PASS/B2796125AC5E95325A2CA7D2D95DB118F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/DA8DCE94FF191FD69FD60B03C0C8BEE1F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/5327CFE7682A6E98DD0D2357C597DD64F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
-  *{file}   {_minted-Standardbuch-PASS/C4D350C8F9FC92B5E89E17844984E542F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
+  *{file}   {_minted-Standardbuch-PASS/F9666BDE465E5F5AC1B3B29174E67CB8F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/3EB65A0401BD8B909EB97BF5A90BEF8D07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/6777FA4A0352F3F83D14FB55C981FF76F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/9A04FD28768EBB853206E0FE2DD8343CF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
@@ -254,7 +254,7 @@
   *{file}   {_minted-Standardbuch-PASS/6149531EAD94E7167E3C704F1F53F8B6F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/688243DA6345EC0BBE87060099F2AAB7F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/4A457C5E4278CF0EA49F146858D4E101F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
-  *{file}   {_minted-Standardbuch-PASS/CD29D8B70B42B01A7D113E45349972CA07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
+  *{file}   {_minted-Standardbuch-PASS/3A39F5C28EF3B955EE5BA197A42CF58F07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/15ECFF1B35D570B2285F7B591965B9CEF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/044097FE932910DF036D8D3DA70F780BF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/79EF206065A2CB2F5616636C7558817EF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
@@ -286,6 +286,6 @@
   *{file}   {_minted-Standardbuch-PASS/1CF9979818F953058C3FB20241D3A73EF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/74D9A83219CABAAB06A69FD318873F33F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {appendix.tex}{0000/00/00 v0.0}
-  *{file}   {appendixA}   {0000/00/00 v0.0}
+  *{file}   {appendixA.tex}{0000/00/00 v0.0}
   *{file}   {Standardbuch-PASS.bbl}{0000/00/00 v0.0}
 }

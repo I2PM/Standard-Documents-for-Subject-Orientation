@@ -287,7 +287,6 @@ Transitions connect the source state with the target state (see figure \ref{fig:
 
 \section{ASM Definition of Subject Execution}
 
-
 \setminted{fontsize=\small}
 \setmintedinline{fontsize=\normalsize,breaklines}
 
@@ -344,8 +343,7 @@ This state is stored in ASM functions and assigned to the \textit{Channel}.
 	\label{lst:shortasm:channelFor}
 \end{listing}
 
-In the function \asminline{channelFor} the assignment from the ASM Agents to their \textit{Channels} is stored.
-The derived functions are used to lookup certain tuple elements of the channel.\\
+In the function \asminline{channelFor} the assignment from the ASM Agents to their \textit{Channels} is stored. The derived functions are used to lookup certain tuple elements of the channel.
 
 % NOTE: StartProcess and StartASMAgent left out intentionally
 
@@ -366,7 +364,6 @@ The function \asminline{variableDefined} is used to keep track of Variables
 that are in use, so that their content can be reset upon the termination of a
 Macro Instance or the Subject, respectively.
 
-
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
 		// Channel * macroInstanceNumber * varname -> [vartype, content]
@@ -379,14 +376,10 @@ Macro Instance or the Subject, respectively.
 	\label{lst:shortasm:variable}
 \end{listing}
 
-
-
-
 \subsection{Interaction Definitions}\label{sec:InteractionDefinitions}
 
 We implement the interaction between Subjects as asynchronous Message exchange.
 Messages are placed into the Inputpool of the receiver where they are then retrieved from when the receiver is in a Receive state.
-
 
 \subsubsection{Messages}\label{sec:messages}
 
@@ -428,7 +421,6 @@ too.
 	\label{lst:shortasm:inputPool}
 \end{listing}
 
-
 The queues of the Inputpool are stored in the \asminline{inputPool} function.
 The function \asminline{inputPoolDefined} is used to keep track of the
 locations of the queues that are in use, so that their content can be checked
@@ -437,17 +429,11 @@ whether a queue is closed. The special location
 \asminline{inputPoolClosed(ch, undef, undef, undef)} is used to
 store whether the complete Inputpool is closed.
 
-We define the function \asminline{derived availableMessages(receiverChannel, senderSubjectID, msgType, ipCorrelationID)} to return the
-Messages from the location \asminline{inputPool(receiverChannel,
-	senderSubjectID, msgType, ipCorrelationID)} that can be received, i.e. that it
-filters out reservations and reduces Messages from the same sender to only
-the oldest one.
+We define the function \asminline{derived availableMessages(receiverChannel, senderSubjectID, msgType, ipCorrelationID)} to return the Messages from the location \asminline{inputPool(receiverChannel, senderSubjectID, msgType, ipCorrelationID)} that can be received, i.e. that it filters out reservations and reduces Messages from the same sender to only the oldest one.
 
 \subsection{Subject Behavior}
 
-
-As depicted in figure~\ref{fig:MainSBPM components}, a Subject Behavior consists at least of one \textit{Main Macro}
-and might have an arbitrary number of minor Macros, called \textit{Additional Macros}.
+As depicted in figure~\ref{fig:MainSBPM components}, a Subject Behavior consists at least of one \textit{Main Macro} and might have an arbitrary number of minor Macros, called \textit{Additional Macros}.
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -462,10 +448,8 @@ and might have an arbitrary number of minor Macros, called \textit{Additional Ma
 
 % NOTE: extemely shortened: no execution state => no remainingStates
 
-
 The \asminline{MacroBehavior} rule controls the evaluation of all active
 states for the given Macro Instance~ID~\asminline{MI}.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -482,7 +466,6 @@ From that list a state \asminline{stateNumber} is chosen to be evaluated with th
 
 % State
 
-
 The evaluation of a state is structured into three main phases: initialization,
 the state function and an optional transition behavior.
 
@@ -493,7 +476,6 @@ for example whether a certain Message is present in the Inputpool.
 Usually the outgoing transition will be selected by the environment, however with
 auto-transitions it is possible that such an transition is automatically selected as soon
 as it becomes enabled and as long as there are no other transitions to select from.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -519,7 +501,6 @@ as it becomes enabled and as long as there are no other transitions to select fr
 	\label{lst:shortasm:Behavior}
 \end{listing}
 
-
 In the beginning the \asminline{Behavior} rule initializes the state with the
 \asminline{StartState} rule, which will set \asminline{initializedState} to
 \asminline{true}. If the function should not be aborted the \asminline{Perform}
@@ -540,8 +521,6 @@ To define a homogeneous interface between the Function semantics and the environ
 define the function \asminline{wantInput} to be written by an Function when it
 requires an external input, for example if an outgoing transition has to be chosen.
 
-
-
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
 		// Channel * MacroInstanceNumber * StateNumber -> Set[String]
@@ -550,7 +529,6 @@ requires an external input, for example if an outgoing transition has to be chos
 	\caption{wantInput}
 	\label{lst:shortasm:wantInput}
 \end{listing}
-
 
 This function is read by our console application for all active states
 to present the user a list of possible decisions that can be made.
@@ -561,7 +539,6 @@ clears the \asminline{wantInput} function of that state.
 
 The \asminline{SelectTransition} rule adds the \asminline{"TransitionDecision"}
 requirement into the \asminline{wantInput} function.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -587,16 +564,13 @@ state can be evaluated by the \asminline{MacroBehavior} rule.
 The same applies if there are no outgoing transitions enabled.
 Otherwise the requirement is added to the \asminline{wantInput} function.
 
-
 \subsection{Internal Action}
-
 
 The \emph{Internal Action} is used to model DoStates, Subject-internal activities and decisions.
 It is labeled with a textual description of the activity that the Agent should perform.
 The outgoing transitions are labeled with a textual description of the possible execution results.
 Since the activity is performed outside of the interpreter all outgoing transitions are enabled from the beginning on and no transition rule has to be defined.
 Therefore the state function only consists of the timeout check and transition selection.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -610,11 +584,8 @@ Therefore the state function only consists of the timeout check and transition s
 	\label{lst:shortasm:StartInternalAction}
 \end{listing}
 
-
-
 The initialization of the InternalAction starts the Timeout and enables all
 outgoing transitions.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -639,11 +610,7 @@ The state function checks if a Timeout should be activated; otherwise the
 \asminline{SelectTransition} rule is called until the \asminline{selectedTransition} function has
 been set.
 
-
-
-
 \subsection{Send Function}
-
 
 The Send Function sends a Message. Disregarding the optional Timeout and Cancel
 transitions it must have exactly one outgoing transition which has to have parameters that
@@ -659,7 +626,6 @@ are replaced with the actual Message.
 To place a reservation in a receiver's Inputpool there must be space available
 in the corresponding queue and the receiver must not be
 \textit{non-proper} terminated.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -684,7 +650,6 @@ in the corresponding queue and the receiver must not be
 	\label{lst:shortasm:receivedMessages}
 \end{listing}
 
-
 The Send Function stores the message content it has to send in the
 \asminline{messageContent} function. The \asminline{receivers} function is
 used to store the required receivers. When a reservation message has been
@@ -695,7 +660,6 @@ The global function \asminline{nextCorrelationID} is used to increment
 CorrelationIDs. To ensure the uniqueness of a CorrelationID the
 \asminline{nextCorrelationIDUsedBy} function is used to store the ASM agent
 that used the given CorrelationIDs.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -733,7 +697,6 @@ that used the given CorrelationIDs.
 	\label{lst:shortasm:StartSend}
 \end{listing}
 
-
 The initialization of the Send Function resets / initializes the \asminline{receivers} and
 \asminline{reservationsDone} functions.
 If the communication transition has a \asminline{messageContentVar} parameter given the
@@ -744,7 +707,6 @@ It will be stored in the Variable after the messages have been send.
 If the message that will be send correlates to a previous message from the receiver
 the CorrelationID from the Variable in \asminline{messageWithCorrelationVar} will be loaded
 so that the message is stored in the corresponding inputpool queue of the receiver.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -771,7 +733,6 @@ so that the message is stored in the corresponding inputpool queue of the receiv
 	\label{lst:shortasm:PerformSend}
 \end{listing}
 
-
 In the state function the \asminline{SelectReceivers} rule is called until
 the \asminline{receivers} have been selected. The \asminline{SelectReceivers} rule
 interacts with the environment through the Selection and SelectAgent Functions
@@ -785,7 +746,6 @@ placed, and if no Timeout occurs, the \asminline{DoReservations} rule attempts
 to place further reservation messages. If all reservations are placed the
 \asminline{TryCompletePerformSend} rule completes the state function, depending
 on whether no receiver is \textit{non-proper} terminated.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -802,15 +762,9 @@ on whether no receiver is \textit{non-proper} terminated.
 	\label{lst:shortasm:SetMessageContent}
 \end{listing}
 
-
-
 The \asminline{SetMessageContent} rule is called if no message content is
 given as parameter on the communication transition until the \asminline{messageContent}
 function is written by the environment.
-
-
-
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -826,8 +780,6 @@ function is written by the environment.
 	\caption{DoReservations}
 	\label{lst:shortasm:DoReservations}
 \end{listing}
-
-
 
 The \asminline{DoReservations} rule iterates over all receivers that did not
 already receive a reservation message. The \asminline{DoReservation} rule
@@ -875,7 +827,6 @@ then tries to place a reservation message for such receiver.
 	\label{lst:shortasm:DoReservation}
 \end{listing}
 
-
 The \asminline{DoReservation} rule does not try to place a reservation message
 if the receiver is \textit{non-proper} terminated. Otherwise it determines
 the necessary parameters of the queue to use and builds the reservation message.
@@ -888,8 +839,6 @@ created yet a new queue is assigned to that location and remembered in the
 \asminline{inputPoolDefined} function on the receiver's side.
 If the queue is either closed or full no reservation message can be placed,
 otherwise it is enqueued at the end.
-
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -918,13 +867,11 @@ otherwise it is enqueued at the end.
 	\label{lst:shortasm:TryCompletePerformSend}
 \end{listing}
 
-
 After all reservations could be placed the \asminline{TryCompletePerformSend}
 rule has to ensure that no receiver terminated \textit{non-proper} in the
 meantime. In that case the Send Function blocks and can only be left by a
 Timeout or Cancel transition. Otherwise the state function is completed and the behavior can
 continue with the transition function.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -955,7 +902,6 @@ continue with the transition function.
 	\label{lst:shortasm:PerformTransitionSend}
 \end{listing}
 
-
 The transition function calls the \asminline{ReplaceReservation} rule to replace all
 reservations with the actual Message. The \asminline{EnsureRunning} rule
 (re)starts a receiver if it is not already running.
@@ -963,7 +909,6 @@ If the communication transition has the parameter \asminline{messageStoreReceive
 the used receivers of the Message are stored in that Variable.
 Also, if the communication transition has the parameter \asminline{messageNewCorrelationVar} defined
 the CorrelationID that was created in \asminline{StartSend} and used for the send messages will be stored in the given Variable.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -989,12 +934,10 @@ the CorrelationID that was created in \asminline{StartSend} and used for the sen
 	\label{lst:shortasm:ReplaceReservation}
 \end{listing}
 
-
 Analogous to the \asminline{DoReservation} rule the
 \asminline{ReplaceReservation} rule has to determine the queue and build both
 the reservation message and the actual Message. It then can replace the reservation
 in the queue with the actual message.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1011,9 +954,7 @@ in the queue with the actual message.
 	\label{lst:shortasm:AbortSend}
 \end{listing}
 
-
 To abort the Send Function all placed reservations have to be removed.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1038,27 +979,22 @@ To abort the Send Function all placed reservations have to be removed.
 	\label{lst:shortasm:CancelReservation}
 \end{listing}
 
-
 Just like the \asminline{ReplaceReservation} rule the
 \asminline{CancelReservation} rule determines the location of the queue and
 rebuilds the reservation message. It then removes the reservation from the
 queue.
 
-
 \subsection{Receive Function}
-
 
 The Receive Function retrieves Messages from the Inputpool. The state function
 updates the enabled outgoing transitions according to the available Messages in
 the corresponding queue. When an outgoing transition is selected the Messages
 are removed from the queue by the transition function.
 
-
 In the beginning of the state function the Timeout is started and then checked
 each time.
 If the Timeout doesn't need to be activated each outgoing transition is either set to
 be enabled or disabled by the \asminline{CheckIP} rule.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1105,15 +1041,9 @@ be enabled or disabled by the \asminline{CheckIP} rule.
 	\label{lst:shortasm:PerformReceive}
 \end{listing}
 
-
-
-
 When exactly one auto transition is enabled, and no transition had been selected, an
 automatic selection for that transition is made. Otherwise a transtion decision from
 the environment is required.
-
-
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1136,7 +1066,6 @@ the environment is required.
 	\label{lst:shortasm:CheckIP}
 \end{listing}
 
-
 The \asminline{CheckIP} rule loads the parameters from the communication transition attributes
 to determine the corresponding queue and the available Messages in it. The
 \asminline{messageSubjectCountMin} argument defines the minimal required
@@ -1147,31 +1076,29 @@ CorrelationID~0 is used.
 When there are sufficient Messages, from different Agents of a MultiSubject,
 available the transition is enabled, otherwise it is set to be disabled.
 
-
-
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
-		rule PerformTransitionReceive(MI, currentStateNumber, t) =
-		let ch = channelFor(self),
-		pID = processIDFor(self),
-		s = currentStateNumber in
-		let sID      = messageSubjectId         (pID, t),
-		mT       = messageType              (pID, t),
-		cIDVName = messageWithCorrelationVar(pID, t),
-		countMax = messageSubjectCountMax   (pID, t) in
-		let cID = loadCorrelationID(MI, cIDVName) in {
-			seq
-			// stores the messages in receivedMessages
-			InputPool_Pop(MI, s, sID, mT, cID, countMax)
-			next
-			if (messageStoreMessagesVar(pID, t) != undef and
-			messageStoreMessagesVar(pID, t) != "") then
-			let msgs  = receivedMessages(ch, MI, s),
-			vName = messageStoreMessagesVar(pID, t) in
-			SetVar(MI, vName, "MessageSet", msgs)
-			
-			SetCompletedTransition(MI, s, t)
-		}
+rule PerformTransitionReceive(MI, currentStateNumber, t) =
+let ch = channelFor(self),
+pID = processIDFor(self),
+s = currentStateNumber in
+let sID      = messageSubjectId         (pID, t),
+mT       = messageType              (pID, t),
+cIDVName = messageWithCorrelationVar(pID, t),
+countMax = messageSubjectCountMax   (pID, t) in
+let cID = loadCorrelationID(MI, cIDVName) in {
+	seq
+	// stores the messages in receivedMessages
+	InputPool_Pop(MI, s, sID, mT, cID, countMax)
+	next
+	if (messageStoreMessagesVar(pID, t) != undef and
+	messageStoreMessagesVar(pID, t) != "") then
+	let msgs  = receivedMessages(ch, MI, s),
+	vName = messageStoreMessagesVar(pID, t) in
+	SetVar(MI, vName, "MessageSet", msgs)
+	
+	SetCompletedTransition(MI, s, t)
+}
 	\end{minted}
 	\caption{PerformTransitionReceive}
 	\label{lst:shortasm:PerformTransitionReceive}
@@ -1187,13 +1114,10 @@ of the oldest Messages from the queue at the location
 \asminline{inputPool(ch, xSID, msgType, ipCorr)}
 and stores them temporarily in the \asminline{receivedMessages} function.
 
-
 \subsection{Modal Split and Modal Join Functions}
-
 
 The ModalSplit Function initiates parallel execution paths that will be joined
 again in a ModalJoin Function.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1213,11 +1137,8 @@ again in a ModalJoin Function.
 	\label{lst:shortasm:ModalSplit}
 \end{listing}
 
-
 It adds the target states of all outgoing transitions to the active states of its
 Macro Instance and removes itself.
-
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1250,7 +1171,6 @@ Macro Instance and removes itself.
 	\label{lst:shortasm:ModalJoin}
 \end{listing}
 
-
 The ModalJoin Function takes the number of execution paths to join as parameter,
 which doesn't need to be modelled explicitly as it could be determined when the Process Model is parsed.
 The \coreinline{joinCount} function is used to count how
@@ -1263,18 +1183,12 @@ execution path reached this state the \coreinline{joinCount} function is reset f
 iteration and the state function is set to completed, so that the Macro Behavior proceeds
 regularly to the next state.
 
-
-
-
-
 \subsection{CallMacro Function}
-
 
 The CallMacro Function creates a new Macro Instance for the Macro~ID given as
 first parameter. It is responsible for the evaluation of that Macro Instance
 and therefore calls the \coreinline{MacroBehavior} rule with the created Macro
 Instance~ID.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1291,8 +1205,6 @@ Instance~ID.
 	\label{lst:shortasm:macroTerminationResult}
 \end{listing}
 
-
-
 The \coreinline{callMacroChildInstance} function stores the Macro Instance~ID
 of the created Macro Instance. The \coreinline{macroTerminationResult}
 function is written, either with the boolean \coreinline{true} or a string to
@@ -1301,8 +1213,6 @@ Macro Instance terminates.
 
 The state function has two phases: in the beginning the Macro Instance is created
 and then in the main phase evaluated.
-
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1344,7 +1254,6 @@ and then in the main phase evaluated.
 	\label{lst:shortasm:CallMacro}
 \end{listing}
 
-
 In the first phase the value of the \coreinline{nextMacroInstanceNumber}
 function is stored in the \coreinline{callMacroChildInstance} function and
 incremented. The \coreinline{activeStates} for the new Macro Instance is
@@ -1361,8 +1270,6 @@ When the Macro Instance has terminated its result is used to select the
 outgoing transition of the CallMacro state and the \coreinline{callMacroChildInstance}
 function is reset for the next iteration. Otherwise the
 \coreinline{MacroBehavior} rule is called for the created Macro Instance~ID.
-
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1384,19 +1291,14 @@ function is reset for the next iteration. Otherwise the
 	\label{lst:shortasm:InitializeMacroArguments}
 \end{listing}
 
-
 The \coreinline{InitializeMacroArguments} rule iterates over all required macro
 parameters. For each parameter it loads the value of the Variable in the current Macro Instance and stores it in the
 new Macro Instance.
-
-
-
 
 \subsection{End Function}
 
 The End Function is used to terminate the current Macro Instance and has no outgoing transitions.
 If the current Macro Instance is the Main Macro Instance the End Function terminates the Subject.
-
 
 \begin{listing}[H]
 	\begin{minted}{lexer.py:CoreASMLexer -x}
@@ -1435,7 +1337,6 @@ If the current Macro Instance is the Main Macro Instance the End Function termin
 	\caption{PerformEnd}
 	\label{lst:shortasm:PerformEnd}
 \end{listing}
-
 
 The \coreinline{PerformEnd} rule calls the \coreinline{AbortMacroInstance} rule
 until no other states are active in the current Macro Instance.

@@ -1,474 +1,2439 @@
-The following tables show the relationships between the PASS ontology and the PASS execution semantics described as ASMs. Because of historical reasons in the ASMs names for entities and relations are different from the names used in the ontology. The tables below show the mapping of the entitiy and relation names in the ontology to the names used in the ASMs.
-
-\section{Mapping of ASM Places to OWL Entities}
-Places are formally also functions or rules, but are used in principle as passive/static storage places.
-
 %appendix in smaller font size
 \footnotesize
 
-\begin{landscape}
-	\begin {longtable} {| p{0.5\textwidth} | p{0.3\textwidth} | p{0.6\textwidth}|}
-	\hline
-	OWL Model element &   ASM interpreter & Description\\
-	\toprule
-	\endhead
-	\hline
-	
-	X - Execution concept – the state the subject is currently in as defined by a \textbf{State} in the model 
-	& \textit{SID\_state} 
-	&  Execution concept – no model representation, Not to be confused by a model “state” in an SBD Diagram. State in the SBD diagram define possible SID\_States.
-	\\
-	\hline
-	
-	\textbf{SubjectBehavior }	– under the assumption that it is complete and sound.
-	& \textit{D} 
-	&  A Diagram that is a completely connected SBD
-	\\
-	\hline
-	
-	\textbf{State}
-	& \textit{node} 
-	&  A specific element of diagram D -	Every node 1:1 to state
-	\\
-	\hline
-	
-	\textbf{State}
-	& \textit{state} 
-	& The current active state of a diagram determined by the nodes of Diagram D
-	\\
-	\hline
-	
-	\textbf{InitialStateOfBehavior, \newline EndState }
-	& \textit{initial state, \newline end state} 
-	& The interpreter expects and SBD Graph D to contain exactly one initial (start) state and at least one end state.
-	\\
-	\hline
-	
-	\textbf{Transition}
-	& \textit{edge / outEdge} 
-	& “Passive Element” of an edge in an SBD-graph
-	\\
-	\hline
-	
-	\textbf{TransitionConditionn}
-	& \textit{ExitCondition} 
-	& Static Concept that represents a Data condition
-	\\
-	\hline
-	
-	Execution Concept – ID of a Subject Carrier responsible possible multiple Instances of according to specific  \textbf{SubjectBehavior}
-	& \textit{subj} 
-	& Identifier for a specific Subject Carrier that may be responsible for multiple Subjects
-	\\
-	\hline
-	
-	Represented in the model with \textbf{InterfaceSubject}
-	& \textit{ExternalSubject} 
-	& A representation of a service execution entity outside of the boundaries of the interpreter
-	(The PASS-OWL Standardization community decided on the new Term of Interface Subject to replace the often-misleading older term of External Subject)
-	
-	\\
-	\hline
-	\textbf{SubjectBehavior} or rather \textbf{SubjectBaseBehavior} as MacroBehaviors and GuardBehaviors are not covered by Börger
-	& \textit{subject-SBD / \newline SBDsubject\textsubscript{subject}} 
-	& Names for completely connected graphs / diagrams representing SBDs
-	\\
-	\hline
-	
-	Object Property: \textbf{\textit{hasFunctionSpecification}} 
-	(linking \textbf{State}, and \textbf{FunctionSpecification} -->(\textbf{State} \textbf{\textit{hasFunctionSpecification }} \textbf{FunctionSpecification})
-	& \textit{service(state) / \newline service(node)} 
-	& Rule/Function that reads/returns the service of function of a given state/node
-	\\
-	\hline
-	
-	\textbf{DoState} \newline \textbf{SendState} \newline \textbf{ReceiveState}
-	& \textit{function state, \newline send state, \newline receive state} 
-	& The ASM spec does not itself contain these terms. The description text, however, uses them to describe states with an according service (e.g. a state in which a (ComAct = Send) service is executed is referred to as a send state)
-	Seen from the other side: a SendState is a state with service(state) = Send)
-	\newline
-	Both send and receive services are a ComAct service.
-	The ComAct service is used to define common rules of these communication services.
-	
-	\\
-	\hline
-	\textbf{CommunicationActs} with sub-classes (\textbf{ReceiveFunction SendFunction}) \newline
-	\textbf{\textit{DefaultFunctionReceive1\_EnvironmentChoice \newline
-			DefaultFunctionReceive2\_AutoReceiveEarliest \newline
-			DefaultFunctionSend }}
-	& \textit{ComAct} 
-	& Specialized version of Perform-ASM Rule for communication, either send or receive. These rules distinguish internally between send and receive.
-	\\
-	\hline
-	
-	
-\end{longtable}
-\end {landscape}
+\captionsetup{font=footnotesize}
+\setminted{fontsize=\footnotesize}
+\setmintedinline{fontsize=\footnotesize}
 
-\section{Main Execution/Interpreting Rules}
-The interpreter ASM Spec has main-function or rules that are being executed while interpreted.
+\section{Conceptual Differences ASM Semantic / OWL Model}
+\label{CoreASM-Reference-Implementation-Differences-OWL-Model}
 
+% Some content might move to Appendix B / replace it.
+
+This implementation provides more language elements than covered by the OWL description and also gives some concrete implementations.
+
+Additionally to OWL:
 \begin{itemize}
-	\item BEHAVIOR(subj,state)
-	\item PROCEED(subj,service(state),state)
-	\item PERFORM(subj,service(state),state)
-	\item START (subj,X, node)
+    \item Internal Behavior: usage of Subject Data: DataModificationFunction (VarMan: Selection, Concatenation, \ldots), DataMappingFunction (StoreMessage, UseMessageContent, UseCorrelationID).
+    Subject Data can be scoped to Macro Instance and passed as macro argument.
+    \item macro exit parameters to influence the outgoing transition of an macrostate
+    \item Interaction: Subject Restart (also: upon termination of a subject it is determined whether it can be restarted), Inputpool Functions (CloseIP, OpenIP, \ldots), CorrelationID, Mobility of Channel.
 \end{itemize}
 
-These make up the main interpreter algorithm for PASS SBDs and therefore have no corresponding model elements but rather are or contain the instructions of how to interpret a model.
+There are also some conceptional differences and limitations:
+\begin{itemize}
+    \item the end state is a function, and not an attribute. end states must not have outgoing transitions.
+    \item functions span over a state function and transition function. the state function determines which transitions are enabled and prepares the transition action. example receive function: state function checks IP, transition function removes message from it and stores it in a variable.
+    \item only blocking asynchronous send, i.e. IP strategy blocking - no delete / drop. no sync send.
+    \item modal split / join instead of ChoiceSegement. only mandatory to start and end / no optional start or optional end.
+    \item timeout transitions: designed for interactive process validation -> duration in seconds, no business days. also no reminders.
+    \item Observer: different approach: no native support; possible via Modal Split + Receive State with State Priority + following Cancel Function, to overcome limitations of previous specifications.
+\end{itemize}
+
+
+\section{editorial note}
+
+To fit the code onto the pages it has been compacted, for example:
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Behavior(MI, currentStateNumber) =
+ let s = currentStateNumber,
+    ch = channelFor(self) in
+  if (initializedState(ch, MI, s) != true) then
+    StartState(MI, s)
+  else // ...
+\end{minted}
+\caption{Behavior, compact snippet}
+\label{lst:asm:Behavior_snipped_compact}
+\end{listing}
+
+instead of:
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Behavior(macroInstanceNumber, currentStateNumber) =
+  if (initializedState(channelFor(self),
+                       macroInstanceNumber,
+                       currentStateNumber) != true) then
+    StartState(macroInstanceNumber, currentStateNumber)
+  else // ...
+\end{minted}
+\caption{Behavior, spread-out snippet}
+\label{lst:asm:Behavior_snipped_spread-out}
+\end{listing}
+
+
+Some elements are intentionally left out in order to preserve space.
+
+For example, the \asminline{rule InputPool_Pop} and
+the \asminline{derived availableMessages}  function
+contain lengthy list traversals, and their definitions contain
+undocumented parameters used in a test environment for debugging.
+
+Other functions like \asminline{derived searchMacro} or \asminline{derived hasTimeoutTransition} should be self-explanatory.
+
+
+% TODO / DISCUSS:
+% evtl. doch alle Crash() wieder mitaufnehmen?
+% -> umsetzen als BLOCKED?
+
+
+\newpage
+\section{Basic Definitions}
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+function channelFor : Agents -> LIST
+
+derived processIDFor(a)       = processIDOf(channelFor(a))
+derived processInstanceFor(a) = processInstanceOf(channelFor(a))
+derived subjectIDFor(a)       = subjectIDOf(channelFor(a))
+derived agentFor(a)           = agentOf(channelFor(a))
+
+derived processIDOf(ch)       = nth(ch, 1)
+derived processInstanceOf(ch) = nth(ch, 2)
+derived subjectIDOf(ch)       = nth(ch, 3)
+derived agentOf(ch)           = nth(ch, 4)
+\end{minted}
+\caption{channelFor}
+\label{lst:asm:channelFor}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel -> List[List[MI, StateNumber]]
+function killStates : LIST -> LIST
+
+// Channel * macroInstanceNumber -> List[StateNumber]
+function activeStates : LIST * NUMBER -> LIST
+\end{minted}
+\caption{activeStates}
+\label{lst:asm:activeStates}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// -> PI
+function nextPI : -> NUMBER
+// PI -> Channel
+function nextPIUsedBy : NUMBER -> Agents
+
+// Channel -> Number
+function nextMacroInstanceNumber : LIST -> NUMBER
+
+// Channel -> Boolean
+function properTerminated : LIST -> BOOLEAN
+
+derived anyNonProperTerminated(chs) =
+  exists ch in chs with (properTerminated(ch) = false)
+
+// Channel * MacroInstanceNumber * StateNumber -> Set[String]
+function wantInput : LIST * NUMBER * NUMBER -> SET
+\end{minted}
+\caption{nextPI}
+\label{lst:asm:nextPI}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel * MacroInstanceNumber * StateNumber -> BOOLEAN
+function initializedState : LIST * NUMBER * NUMBER -> BOOLEAN
+
+// Channel * MacroInstanceNumber * StateNumber -> BOOLEAN
+function completed : LIST * NUMBER * NUMBER -> BOOLEAN
+
+// Channel * MacroInstanceNumber * StateNumber
+function timeoutActive  : LIST * NUMBER * NUMBER -> BOOLEAN
+function cancelDecision : LIST * NUMBER * NUMBER -> BOOLEAN
+
+// Channel * MacroInstanceNumber * StateNumber -> BOOLEAN
+function abortionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
+
+// Channel * MacroInstanceNumber * StateNumber -> ..
+function selectedTransition : LIST * NUMBER * NUMBER -> NUMBER // -> TransitionNumber
+function initializedSelectedTransition : LIST * NUMBER * NUMBER -> BOOLEAN
+function startTime  : LIST * NUMBER * NUMBER -> NUMBER
+
+// can exit
+// Channel * MacroInstanceNumber * TransitionNumber -> BOOLEAN
+function exitCondition : LIST * NUMBER * NUMBER -> BOOLEAN
+// TODO: may rename, possibly transitionEnabled ???
+
+// Channel * MacroInstanceNumber * TransitionNumber -> BOOLEAN
+function transitionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
+\end{minted}
+\caption{initializedState}
+\label{lst:asm:initializedState}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+derived shouldTimeout(ch, MI, stateNumber) = return boolres in {
+  let pID = processIDOf(ch) in {
+    if (hasTimeoutTransition(pID, stateNumber) = true and startTime(ch, MI, stateNumber) != undef) then {
+      let t = outgoingTimeoutTransition(pID, stateNumber) in
+      let timeout = transitionTimeout(pID, t) * 1000 * 1000 * 1000 in {
+        let runningTime = (nanoTime() - startTime(ch, MI, stateNumber)) in
+          boolres := (runningTime > timeout)
+      }
+    }
+    else {
+      boolres := false
+    }
+  }
+}
+\end{minted}
+\caption{shouldTimeout}
+\label{lst:asm:shouldTimeout}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel * macroInstanceNumber * varname -> [vartype, content]
+function variable : LIST * NUMBER * STRING -> LIST
+
+// Channel -> Set[(macroInstanceNumber, varname)]
+function variableDefined : LIST -> SET
+\end{minted}
+\caption{variable}
+\label{lst:asm:variable}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel * macroInstanceNumber -> result
+function macroTerminationResult : LIST * NUMBER -> ELEMENT
+
+// Channel * macroInstanceNumber -> MacroNumber
+function macroNumberOfMI : LIST * NUMBER -> NUMBER
+
+// Channel * macroInstanceNumber * StateNumber -> MacroInstance
+function callMacroChildInstance : LIST * NUMBER * NUMBER -> NUMBER
+\end{minted}
+\caption{macroTerminationResult}
+\label{lst:asm:macroTerminationResult}
+\end{listing}
+
+
+\section{Interaction Definitions}
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// receiverChannel * senderSubjID * messageType * correlationID -> [msg1, msg2, ...]
+function inputPool : LIST * STRING * STRING * NUMBER -> LIST
+
+/* store all locations where an inputPool was defined for to allow IPEmpty and receiving from "?" */
+// receiverChannel -> {[senderSubjID, messageType, correlationID], ..}
+function inputPoolDefined : LIST -> SET
+
+// receiverChannel * senderSubjID * messageType * correlationID
+function inputPoolClosed : LIST * STRING * STRING * NUMBER -> BOOLEAN
+
+derived inputPoolIsClosed(receiverChannel, senderSubjID, messageType, correlationID) = return boolres in
+  let isClosed = inputPoolClosed(receiverChannel, senderSubjID, messageType, correlationID) in
+    if (isClosed = undef) then {
+      boolres := inputPoolClosed(receiverChannel, undef, undef, undef) // default: global state
+    }
+    else {
+      boolres := isClosed
+    }
+\end{minted}
+\caption{inputPool}
+\label{lst:asm:inputPool}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel * MacroInstanceNumber * StateNumber -> Set[Messages]
+function receivedMessages : LIST * NUMBER * NUMBER -> SET
+
+// Channel * MacroInstanceNumber * StateNumber -> Set[Channel]
+function receivers : LIST * NUMBER * NUMBER -> SET
+
+// Channel * MacroInstanceNumber * StateNumber
+function messageContent               : LIST * NUMBER * NUMBER -> LIST
+function messageCorrelationID         : LIST * NUMBER * NUMBER -> NUMBER
+function messageReceiverCorrelationID : LIST * NUMBER * NUMBER -> NUMBER
+
+// Channel * MacroInstanceNumber * StateNumber -> Set[Channel]
+function reservationsDone : LIST * NUMBER * NUMBER -> SET
+
+function nextCorrelationID : -> NUMBER
+function nextCorrelationIDUsedBy : NUMBER -> Agents
+\end{minted}
+\caption{receivedMessages}
+\label{lst:asm:receivedMessages}
+\end{listing}
+
+
+
+
+\section{Subject Rules}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule GenerateUniqueProcessInstanceID = {
+  nextPI := nextPI + 1
+  result := nextPI
+  // ensure that `nextPI` is not used by multiple agents in the
+  // same ASM step. A collision would occur when multiple agents
+  // try to call this rule in the same asm step
+  nextPIUsedBy(nextPI) := self
+}
+\end{minted}
+\caption{GenerateUniqueProcessInstanceID}
+\label{lst:asm:GenerateUniqueProcessInstanceID}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartProcess(processID, additionalInitializationSubject,
+                             additionalInitializationAgent) =
+  let pID = processID in
+  local PI in
+    seq
+      PI <- GenerateUniqueProcessInstanceID()
+    next {
+      result := PI
+
+      foreach sID in keySet(processSubjects(pID)) do
+        if (sID = additionalInitializationSubject) then
+          let ch = [pID, PI,
+                    sID, additionalInitializationAgent] in
+            InitializeSubject(ch)
+        else if (isStartSubject(pID, sID) = true) then
+          let agentSet = safeSet(predefinedAgents(pID, sID)) in
+          if (|agentSet| = 1) then
+            // shortcut: avoid user interaction
+            let agentName = firstFromSet(agentSet) in
+            let ch = [pID, PI, sID, agentName] in
+              seq
+                InitializeSubject(ch)
+              next
+                StartASMAgent(ch)
+          else
+            SelectAgentAndStartASMAgent(pID, PI, sID)
+    }
+\end{minted}
+\caption{StartProcess}
+\label{lst:asm:StartProcess}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// -> SET[ASMAgent]
+function asmAgents : -> SET
+
+derived running(ch) = exists a in asmAgents
+                        with channelFor(a) = ch
+
+rule EnsureRunning(ch) =
+  if (running(ch) != true) then
+    StartASMAgent(ch)
+
+rule StartASMAgent(ch) =
+  extend Agents with a do {
+    add a to asmAgents
+    channelFor(a) := ch
+    program(a)    := @StartMainMacro
+  }
+
+rule PrepareReceptionOfMessages(ch) =
+  // might be called multiple times, esp. via SelectAgents
+  if (properTerminated(ch) = undef) then {
+    properTerminated(ch) := true
+
+    inputPoolDefined(ch) := {}
+    inputPoolClosed(ch, undef, undef, undef) := false
+  }
+
+rule FinalizeInteraction =
+  let ch = channelFor(self) in
+  let proper = inputPoolIsEmpty(ch, undef, undef, undef) in
+    properTerminated(ch) := proper
+
+rule InitializeSubject(ch) = PrepareReceptionOfMessages(ch)
+\end{minted}
+\caption{StartASMAgent}
+\label{lst:asm:StartASMAgent}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}[fontsize=\footnotesize,escapeinside=~~]{lexer.py:CoreASMLexer -x}
+rule StartMainMacro =
+  let ch = channelFor(self),
+     pID = processIDFor(self) in {
+    killStates(ch) := []
+
+    let MI = 0 in { // 0 => global / predefined variables
+      variableDefined(ch) := {[MI, "$self"], [MI, "$empty"]}
+      variable(ch, MI, "$self") := ["ChannelInformation", {ch}]
+      variable(ch, MI, "$empty") := ["Text", ""]
+    }
+
+    let MI  = 1, // 1 => MainMacro Instance
+        mID = subjectMainMacro(pID, subjectIDFor(self)) in
+    let startState = macroStartState(pID, mID) in {
+      macroNumberOfMI(ch, MI) := mID
+
+      nextMacroInstanceNumber(ch) := MI  + 1
+
+      activeStates(ch, MI) := [startState]
+    }
+
+    program(self) := @SubjectBehavior
+  }
+\end{minted}
+\caption{StartMainMacro}
+\label{lst:asm:StartMainMacro}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartMacro(MI, currentStateNumber, mIDNew, MINew) = {
+  let pID = processIDFor(self) in
+  let startState = macroStartState(pID, mIDNew) in {
+    activeStates(channelFor(self), MINew) := []
+    AddState(MI, currentStateNumber, MINew, startState)
+  }
+}
+\end{minted}
+\caption{StartMacro}
+\label{lst:asm:StartMacro}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// called from PerformEnd and AbortCallMacro
+rule AbortMacroInstance(MIAbort, ignoreState) =
+  let ch = channelFor(self) in {
+    foreach currentState in activeStates(ch, MIAbort) do {
+      add [MIAbort, currentState] to killStates(ch)
+    }
+
+    ClearAllVarInMI(ch, MIAbort)
+  }
+\end{minted}
+\caption{AbortMacroInstance}
+\label{lst:asm:AbortMacroInstance}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+/*
+- REPEAT
+  - Behavior should be executed again for this state
+  - results of previous execution will be merged with following execution in one global ASM step
+  - no other states are allowed to be executed
+- DONE
+  - no other active states are allowed to be executed
+  - new states are started
+  - global ASM / LTS step will be done
+- NEXT
+  - nothing changed / waiting for input
+  - other active states with the same priority can be executed
+  - active states with lower priority can not be executed
+- LOWER
+  - nothing changed / waiting for input
+  - other active states, even with lower priority, can be executed
+*/
+
+// ch * MacroInstanceNumber * stateNumber => Int
+function executionState : LIST * NUMBER * NUMBER -> NUMBER
+
+// ch * MacroInstanceNumber => Int
+function macroExecutionState : LIST * NUMBER -> NUMBER
+
+// ch * MacroInstanceNumber * stateNumber => List[(MI, s)]
+function addStates : LIST * NUMBER * NUMBER -> LIST
+
+// ch * MacroInstanceNumber * stateNumber => List[(MI, s)]
+function removeStates : LIST * NUMBER * NUMBER -> LIST
+\end{minted}
+\caption{SetExecutionState}
+\label{lst:asm:SetExecutionState}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule AddState(MI, currentStateNumber, MINew, sNew) = {
+  add [MINew, sNew] to addStates(channelFor(self), MI, currentStateNumber)
+}
+
+rule RemoveState(MI, currentStateNumber, MIOld, sOld) = {
+  add [MIOld, sOld] to removeStates(channelFor(self), MI, currentStateNumber)
+}
+\end{minted}
+\caption{AddState}
+\label{lst:asm:AddState}
+\end{listing}
 
 
 
 
 
-\begin{landscape}
-	\begin {longtable} {| p{0.7\textwidth} | p{0.3\textwidth} | p{0.4\textwidth}|}
-	\hline
-	OWL Model element &   ASM interpreter & Description\\
-	\toprule
-	\endhead
-	\hline
-	
-	Execution concept
-	& \textit{BEHAVIOR(subj;state)} 
-	&  Main interpreter ASM-rule/Method
-	\\
-	\hline
-	
-		Execution concept
-	& \textit{BEHAVIOR(subj;node)}
-	& ASM-Rule to interpret a specific node of Diagram D for a specific subject
-	\\
-	\hline
-	
-		Execution concept
-	& \textbf{Behaviorsubj (D)}
-	&  Set of all ASM rules to interprete all nodes/states in a SBD(iagram) D for a given subj (set of all \textit{BEHAVIOR(subj;node)}
-	\\
-	\hline
-	
-		\textcolor{orange}{\textbf{State}} \textcolor{blue}{\textbf{hasFunctionSpecification}} \textcolor{orange}{\textbf{FunctionSpecification}}
-		\newline
-		Specialized in:
-			\newline
-		\textcolor{orange}{\textbf{DoFunction}} and
-			\newline
-		\textcolor{orange}{\textbf{CommunicationActs}} with
-			\newline
-		\textcolor{orange}{\textbf{ReceiveFunction}}
-			\newline
-		\textcolor{orange}{\textbf{SendFunction}}
-			\newline
-		There exist a few default activities:
-			\newline
-		\textcolor{purple}{\textbf{DefaultFunctionDo1\_EnvoironmentChoice}}
-			\newline
-		\textcolor{purple}{\textbf{DefaultFunctionDo2\_AutomaticEvaluation}}
-	& \textit{PERFORM(subj ; service(state); state)}
-	&  Main interpreter ASM-rule/Method
-	\\
-	\hline
-	
-	\textcolor{orange}{\textbf{CommunicationActs}} with
-	\newline
-	\textcolor{orange}{\textbf{ReceiveFunction}}
-	\newline
-	\textcolor{orange}{\textbf{SendFunction}}
-	\newline
-	\textcolor{purple}{\textbf{DefaultFunctionReceive1\_EnvironmentChoice}}
-	\newline
-	\textcolor{purple}{\textbf{DefaultFunctionReceive2\_AutoReceiveEarliest}}
-	\newline
-	\textcolor{purple}{\textbf{DefaultFunctionSend}}
-	& \textit{PERFORM(subj ;ComAct; state)}
-	&  ASM-Rule specifying the execution of a Comunication act in an according state)
-	\\
-	\hline
-	
-\caption{Main Execution/Interpreting Rules}
-\label{tab:places-Entities}
-\end{longtable}
-\end {landscape}
 
 
-\section{Functions}
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SubjectBehavior = {
+  choose x in killStates(channelFor(self)) do {
+    KillBehavior(nth(x, 1), nth(x, 2))
+  }
+  ifnone seqblock
+    MacroBehavior(1)
 
-Functions return some element. They are activities that can be performed to determine something.
-Dynamic functions can be considered as “variables” known from programming languages, they can be read and written.
-Static functions are initialized before the execution, they can only be read.
-Derived functions "evaluate” other functions, they can only be read. “They may be thought of as a global method with read-only variables” 
-
-\begin{landscape}
-	\begin {longtable} {| p{0.7\textwidth} | p{0.3\textwidth} | p{0.4\textwidth}|}
-	\hline
-	OWL Model element &   ASM interpreter & Description\\
-	\toprule
-	\endhead
-	\hline
-	
-	Function that the return state should correspond to/be derived from one of the multiple \textcolor{orange}{\textbf{State }}in an SBD model
-	& \textit{SID\_state(subj)} 
-	&  Dynamic ASM-Function that stores the current state of a subj
-	\\
-	\hline
-	
-	\textcolor{orange}{\textbf{State }} \textcolor{blue}{\textbf{hasOutgoingTransition }} \textcolor{orange}{\textbf{Transition }}  \newline
-	(input / worked on link  / output (Set of Transition)
-	(linking State with )
-	& \textit{OutEdge(state) \newline
-		OutEdge(state;i)}
-	& Function that returns the set of outgoing edges of a state or a single specific edge i
-	\\
-	\hline
-	
-	Object Property: \textcolor{blue}{\textbf{hasTargetState}}
-	(linking \textcolor{orange}{\textbf{Transition}} and \textcolor{orange}{\textbf{State}} --->\newline
-	 \textcolor{orange}{\textbf{Transition  }}  \textcolor{blue}{\textbf{hasTargetState }} \textcolor{orange}{\textbf{State}}
-	& \textit{target(edge)/ \newline
-	target(outEdge)} /
-	&  Function that returns the follow up state of an outgoing transition (\textit{outEdge} is a special denomination for an \textit{edge}returned by the \textit{outEdge}-Function)
-	\\
-	\hline
-	
-	Object Property: \textcolor{blue}{\textbf{hasSourceState}}
-	(linking \textcolor{orange}{\textbf{Transition}} and \textcolor{orange}{\textbf{State}}-->
-	\textcolor{orange}{\textbf{Transition}} \textcolor{blue}{\textbf{hasSourceState}} \textcolor{orange}{\textbf{State}}
-	(input / worked on link  / output)
-	& \textit{source(edge)}
-	&  Function that returns the source state of an edge
-	\\
-	\hline
-	\multicolumn{3}{c|}{\textbf{Determine Follow up state Mechanic}}
-%	\\
-%	\hline
-%	eee& ZZZZ & nnnn
-	\\
-	\hline
-	Exit conditions in PASS are defined on their corresponding
-	\newline 
-	\textcolor{orange}{\textbf{Transitions}} and therefore are called
-	\newline
-	\textcolor{orange}{\textbf{TransitionCondition}}
-	\newline 
-	\textcolor{orange}{\textbf{Transitions}}  have  (\textcolor{blue}{\textbf{hasTransitionCondition}})
-	(\textcolor{orange}{\textbf{State}} $\rightarrow$
-	\textcolor{blue}{\textbf{hasOutgoingTransition}} $\rightarrow$ \textcolor{orange}{\textbf{Transition }}  $\rightarrow$ \textcolor{blue}{\textbf{hasTransitionCondition}} $\rightarrow$ \textcolor{orange}{\textbf{TransitionCondition}})
-	& \textit{ExitCond(e)}
-	\newline
-	\textit{ExitCond(outEdge)}
-	\newline
-	\textit{ExitCond\_i(e)}
-	\newline
-	\textit{ExitCond(e)(subj,state)}
-	&  Derived Function that evaluates the ExitCondition of a given edge/outgoing edge 
-	\\
-	\hline
-	Execution Concept 
-	& select\textsubscript{Edge}
-	&  ASM Function that determines an edged (transition) to follow.
-	\\
-	\hline
-	Execution Concept (connected to: \textcolor{orange}{\textbf{State}}, and \textcolor{orange}{\textbf{FunctionSpecification}})
-	& \textit{completed(subj ; \newline service(state); state)}
-	&  Function that returns true if the Service of a certain state is complete IF the subject is in that state
-	\\
-	\hline
-	Execution Concept
-	& 
-	&  Rule/Function that gives that returns the service of function of a given state
-	\\
-	\hline
-
-	\caption{Derived Functions}
-	\label{tab:Derived-Functions}
-\end{longtable}
-\end {landscape}
-
-\section{Extended Concepts  – Refinements for the Semantics of Core Actions}
-
-\begin{landscape}
-	\begin {longtable} {| p{0.7\textwidth} | p{0.3\textwidth} | p{0.4\textwidth}|}
-	\hline
-	OWL Model element &   ASM interpreter & Description\\
-	\toprule
-	\endhead
-	\hline
-	
-	Function that the return state should correspond to/be derived from one of the multiple \textcolor{orange}{\textbf{State }}in an SBD model
-	& \textit{SID\_state(subj)} 
-	&  Dynamic ASM-Function that stores the current state of a subj
-	\\
-	\hline
-	
-	\textcolor{orange}{\textbf{State }} \textcolor{blue}{\textbf{hasOutgoingTransition }} \textcolor{orange}{\textbf{Transition }}  \newline
-	(input / worked on link  / output (Set of Transition)
-	(linking State with )
-	& \textit{OutEdge(state) \newline
-		OutEdge(state;i)}
-	& Function that returns the set of outgoing edges of a state or a single specific edge i
-	\\
-	\hline
-	\caption{Refinrments places}
-\label{tab:Refinrments places}
-\end{longtable}
-\end {landscape}
+    // reset
+    macroExecutionState(channelFor(self), 1) := undef
+  endseqblock
+}
+\end{minted}
+\caption{SubjectBehavior}
+\label{lst:asm:SubjectBehavior}
+\end{listing}
 
 
-\section{Input Pool Handling}
 
 
-\begin{landscape}
-	\begin {longtable} {| p{0.7\textwidth} | p{0.3\textwidth} | p{0.4\textwidth}|}
-	\hline
-	OWL Model element &   ASM interpreter & Description\\
-	\toprule
-	\endhead
-	\hline
-	
-	Refers to a set of \textcolor{orange}{\textbf{InputPoolConstraints }} of \textcolor{orange}{\textbf{Subject  }}that has \textcolor{blue}{\textbf{hasInputPoolConstraints}} – for its Input Pool  
-	& \textit{constraintTable(inputPool )} 
-	&  Function that Returns the set of all input Pool constrains
-	\\
-	\hline
-	
-	Execution Concept with evalution relevance for: \textcolor{orange}{\textbf{MessageSenderTypeConstraint}} and
-	\textcolor{orange}{\textbf{SenderTypeConstraint }}
-	& \textit{sender/receiver}
-	& Identifiers for possible subject instances trying to access an input pool
-	\\
-	\hline
-	
-		Refers to a set of \textcolor{orange}{\textbf{InputPoolConstraints }} of \textcolor{orange}{\textbf{Subject  }}that has \textcolor{blue}{\textbf{hasInputPoolConstraints}} – for its Input Pool  
-	& \textit{msgType )} 
-	&  Function that Returns the set of all input Pool constrains
-	\\
-	\hline
-	
-	Execution Concept
-	& \textit{select \textsubscript{MsgKind(subj ;state;alt;i)}} 
-	&  ASM Function that determines the message kind (“message type”) to be received in a given receive state.
-	\\
-	\hline
-	
-	\textcolor{orange}{\textbf{InputPoolContstraintHandlingStrategy  }}
-	\newline
-	And their individual defaultinstances:
-	\newline
-	\textcolor{purple}{\textbf{InputPoolConstraintStrategy-Blocking }}
-	\newline
-	\textcolor{purple}{\textbf{InputPoolConstraintStrategy-DeleteLatest  }}
-	\newline
-	\textcolor{purple}{\textbf{InputPoolConstraintStrategy-DeleteOldest }}
-	\newline
-	\textcolor{purple}{\textbf{InputPoolConstraintStrategy-Drop}}
-	& \textit{/{Blocking; DropYoungest; DropOldest; DropIncoming/}} 
-	&  Default Input Pool handling strategies for 
-	\\
-	\hline
-	
-	Execution Concept – can be restricted by  \textcolor{orange}{\textbf{InputPoolConstraint}} – for its Input Pool  
-	& \textit{P / inputPool} 
-	&  The actual Input Pool
-	\\
-	\hline
-	
-	
-	synchronous communication
-	& \multicolumn{2}{p{9 cm}|}{Definition for an input pool \textbf{constraint set to 0} requiring sender and receiver interpreter to be in the corresponding send and receive states at the same time in order to actually communicate (as messages cannot be passed to an input pool)}
-	\\
-	\hline
-	
-	\caption{Input Pool Handling}
-	\label{tab:Input-Pool-Handling}
-\end{longtable}
-\end{landscape}
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule KillBehavior(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  if (initializedState(ch, MI, s) != true) then {
+    // state is not initialized,
+    // remove without further abortion
 
-\section{Other Functions}
-%
-\begin{landscape}
-	\begin {longtable} {| p{0.6\textwidth} | p{0.4\textwidth} | p{0.4\textwidth}|}
-	\hline
-	OWL Model element &   ASM interpreter & Description\\
-	\toprule
-	\endhead
-	\hline
-	
-	Exit conditions in PASS are defined on their corresponding \textcolor{orange}{\textbf{Transitions }} and therefore are called \textcolor{orange}{\textbf{TransitionCondition}}. Execution Concept: can be set on.
-	Execution Concept: used to determine the correct exit
-	& \textit{NormalExitCond} 
-	&  is used internally to “remember” that neither a timeout nor a user cancel have happened, so that the correct exit transition can be taken.
-	\\
-	\hline
-	In the model to be interpreted the according aspects are captured by \textcolor{orange}{\textbf{TimerTransitions}} that have (\textcolor{blue}{\textbf{hasTransitionCondition}}) a  
-	\textcolor{orange}{\textbf{TimerTransitionCondition}} containing the date. The timeout(state) function should read the information. 
-	&\multicolumn{2}{|p{11 cm}|}{\textbf{Timer/Timeout Mechanic:} The evaluation and handling of timeouts is defined (and refined) with several rules and functions.\textit{OutEdge(timeout(state), Timeout(subj , state, timeout(state)), SetTimeoutClock(subj ; state)}  are used to evaluate the timeout condition, \textit{OutEdge(Interrupt\_service(state)(subj , state)}  is used to define how the corresponding service should be canceled. \textit{OutEdge(TimeoutExitCond)}  is used internally to “remember” that a timeout happened, so that the correct exit transition can be taken.}
-	
+    remove [MI, s] from killStates(ch)
+    remove s from activeStates(ch, MI)
+  }
+  else if (abortionCompleted(ch, MI, s) = true) then {
+    ResetState(MI, s)
+    remove [MI, s] from killStates(ch)
+    remove s from activeStates(ch, MI)
+  }
+  else seqblock
+    executionState(ch, MI, s) := undef
+    addStates(ch, MI, s)      := []
+    removeStates(ch, MI, s)   := []
 
-	\\
-	\hline
-	In PASS models the possibility to arbitrarily cancel the execution of a (receive) function and the possible course of action afterwards may be discerned via a \textcolor{orange}{\textbf{UserCancelTransitions }}
-	&\multicolumn{2}{|p{11 cm}|}{\textbf{User Cancel/Abrupt Mechanic:} The evaluation and handling of user cancels is defined (and refined) with several rules and functions. \textit{UserAbruption(subj, state)} is used to evaluate the user decision, \textit{Abrupt\_service(state)(subj , state)} is used to define how the corresponding service should be abrupted. \textit{AbruptionExitCond} is used internally to “remember” that a user cancel happened, so that the correct exit transition can be taken.}
-	\\
-	\hline
-	With the definition of the data properties \textcolor{green}{\textbf{hasMaximumSubjectInstanceRestriction}}
-	The \textcolor{orange}{\textbf{}MultiSubject } are actually the standard and \textcolor{orange}{\textbf{SingleSubject}} the special case
-	& \textit{MultiRound / mult(alt) / InitializeMultiRoun /
-		ContinueMultiRoundSuccess 
-		(among others}
-	& Definition of Functions and ASM rules for interaction between multiple Subjects at once
-		\\
-	\hline
-	
-	Handling of \textcolor{orange}{\textbf{ChoiceSegment }} \& \textcolor{orange}{\textbf{	ChoiceSegmentPath}}
+    // NOTE: no new state must be added.
+    // Also, removeStates should be empty,
+    // as those states should be added to killStates
+    Abort(MI, s)
+  endseqblock
+\end{minted}
+\caption{KillBehavior}
+\label{lst:asm:KillBehavior}
+\end{listing}
 
-	 \textcolor{blue}{\textbf{hasOutgoingTransition }} \textcolor{orange}{\textbf{Transition }}  \newline
-	(input / worked on link  / output (Set of Transition)
-	(linking State with )
-	& \textit{AltAction /
-		altEntry(D) / altExit(D)
-		AltBehDgm(altSplit)
-		altJoin(altSplit)}
-	& Rules for the semantics/handling of ChoiceSegements 
-		\\
-	\hline
-	\textcolor{orange}{\textbf{State }} \textcolor{blue}{\textbf{hasOutgoingTransition }} \textcolor{orange}{\textbf{Transition }}  \newline
-	(input / worked on link  / output (Set of Transition)
-	(linking State with )
-	& \textit{Compulsory(altEntry(D))} and textit{Compulsory(altExit(D))}
-	& 
-	\\
-	\hline
-	\caption{Other Functions}
-	\label{tab:Other-Functions}
-\end{longtable}
-\end{landscape}
-%
-\section{Elements Not Covered not by Börger (directly)}
-\begin{landscape}
-	\begin {longtable} {| p{0.5\textwidth} | p{0.9\textwidth} | }
-	\hline
-	OWL Model element &    Description\\
-	\toprule
-	\endhead
-	\hline
-\textcolor{orange}{\textbf{ReminderTransition / ReminderEventTransitionCondition  }}
-&This type time-logic-based transitions did not exist when the original ASM interpreter was conceived. They were added to PASS for the OWL Standard. They can be handled by assuming the existence of an implicit calendar subject that sends an interrupt message (reminder) upon a time condition (e.g. reaching of a calendarial date) has been achieved.
-(includes the specialized (\textcolor{orange}{\textbf{CalendarBasedReminderTransition, TimeBasedReminderTransition}}
 
-\\
 
-	\hline
-\textcolor{orange}{\textbf{DataDescribingComponent / DataMappingFunction }}
-&The PASS OWL standard envisions the integration and usage of classic data element (Data Objects) as part of a process model. The Börger Interpreter does not assume the existence of such data elements as part of the model. However, the refinement concept of ASMs could easily been used to integrate according interpretation aspects.
-(Includes Elements such as \textcolor{orange}{\textbf{PayloadDescription }} for Messages or \textcolor{orange}{\textbf{DataMappingFunction }}
 
-\\
-	\hline
-\caption{Other Functions}
-\label{tab:In ASM not covered}
-\end{longtable}
-\end{landscape}
-%\textcolor{orange}{\textbf{Objekte}}\\
-%\textcolor{blue}{Object properties}
-%\textcolor{purple}{\textbf{constraint}}
-%\textcolor{green}{data properties}
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule MacroBehavior(MI) =
+  let ch = channelFor(self),
+     pID = processIDFor(self) in
+  local remainingStates := activeStates(ch, MI) in
+    seq
+      macroExecutionState(ch, MI) := undef
+    next
+      // NOTE: can not be done with foreach, as remainingStates is modified
+      while (|remainingStates| > 0) do
+      let stateNumber = getAnyStateWithHighestPrio(pID, remainingStates) in
+      seqblock
+        executionState(ch, MI, stateNumber) := undef
+        addStates(ch, MI, stateNumber)      := []
+        removeStates(ch, MI, stateNumber)   := []
+
+        Behavior(MI, stateNumber)
+
+        // NOTE: mutates remainingStates!
+        let state = executionState(ch, MI, stateNumber) in
+          UpdateRemainingStates(MI, stateNumber, state, remainingStates)
+
+        UpdateActiveStates(MI, stateNumber)
+      endseqblock
+\end{minted}
+\caption{MacroBehavior}
+\label{lst:asm:MacroBehavior}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule UpdateRemainingStates(MI, stateNumber, exState, remainingStates) =
+  let ch = channelFor(self),
+     pID = processIDFor(self) in
+  if (exState = REPEAT) then {
+    remainingStates := [stateNumber]
+
+    macroExecutionState(ch, MI) := DONE
+
+    // reset
+    executionState(ch, MI, stateNumber) := undef
+  }
+  else if (exState = DONE) then {
+    seq // end loop ...
+      remainingStates := []
+    next
+      // ... but add new states of this MI to initialize them,
+      // so that all states have the same start time
+      foreach x in addStates(ch, MI, stateNumber)
+        with nth(x, 1) = MI do {
+        add nth(x, 2) to remainingStates
+      }
+
+    macroExecutionState(ch, MI) := DONE
+
+    // quasi-reset
+    executionState(ch, MI, stateNumber) := NEXT
+  }
+  else if (exState = NEXT) then {
+    seq
+      remove stateNumber from remainingStates // remove self
+    next
+      // reduce to states with same priority
+      let prio = statePriority(pID, stateNumber) in
+        remainingStates := filterStatesWithSamePrio(pID, remainingStates, prio)
+
+    if (macroExecutionState(ch, MI) != DONE) then
+      macroExecutionState(ch, MI) := NEXT
+  }
+  else if (exState = LOWER) then {
+    remove stateNumber from remainingStates // remove self
+
+    if (macroExecutionState(ch, MI) != DONE
+        and macroExecutionState(ch, MI) != NEXT) then
+      macroExecutionState(ch, MI) := LOWER
+  }
+\end{minted}
+\caption{UpdateRemainingStates}
+\label{lst:asm:UpdateRemainingStates}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule UpdateActiveStates(MI, stateNumber) =
+  // NOTE: everything needs to be sequential,
+  // as activeStates is a list and not a set
+  let ch = channelFor(self) in seqblock
+    foreach x in addStates(ch, MI, stateNumber) do
+      let xMI = nth(x, 1),
+          xN  = nth(x, 2) in {
+        add xN to activeStates(ch, xMI)
+      }
+
+    addStates(ch, MI, stateNumber) := undef
+
+    foreach x in removeStates(ch, MI, stateNumber) do
+      let xMI = nth(x, 1),
+          xN  = nth(x, 2) in {
+        // remove one instance of xN, if any
+        remove xN from activeStates(ch, xMI)
+
+        ResetState(xMI, xN)
+      }
+
+    removeStates(ch, MI, stateNumber) := undef
+  endseqblock
+\end{minted}
+\caption{UpdateActiveStates}
+\label{lst:asm:UpdateActiveStates}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// whether the state should be aborted or not
+derived abortState(MI, stateNumber) =
+  ((timeoutActive(channelFor(self), MI, stateNumber) = true) or
+  (cancelDecision(channelFor(self), MI, stateNumber) = true))
+\end{minted}
+\caption{abortState}
+\label{lst:asm:abortState}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Behavior(MI, currentStateNumber) =
+ let s = currentStateNumber,
+    ch = channelFor(self) in
+  if (initializedState(ch, MI, s) != true) then
+    StartState(MI, s)
+  else if (abortState(MI, s) = true) then
+    AbortState(MI, s)
+  else if (completed(ch, MI, s) != true) then
+    Perform(MI, s)
+  else if (initializedSelectedTransition(ch, MI, s) != true) then
+    StartSelectedTransition(MI, s)
+  else
+   let t = selectedTransition(ch, MI, s) in
+    if (transitionCompleted(ch, MI, t) != true) then
+      PerformTransition(MI, s, t)
+    else {
+      Proceed(MI, s, targetStateNumber(processIDFor(self), t))
+      SetExecutionState(MI, s, DONE)
+    }
+\end{minted}
+\caption{Behavior}
+\label{lst:asm:Behavior}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule AbortState(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  if (abortionCompleted(ch, MI, s) != true) then
+    Abort(MI, s)
+  else {
+    if (cancelDecision(ch, MI, s) = true) then {
+      let t = outgoingCancelTransition(pID, s) in
+      let target = targetStateNumber(pID, t) in {
+        Proceed(MI, s, target)
+      }
+    }
+    else if (timeoutActive(ch, MI, s) = true) then {
+      let t = outgoingTimeoutTransition(pID, s) in
+      let target = targetStateNumber(pID, t) in {
+        Proceed(MI, s, target)
+      }
+    }
+
+    SetExecutionState(MI, s, DONE)
+  }
+\end{minted}
+\caption{AbortState}
+\label{lst:asm:AbortState}
+\end{listing}
+
+
+
+\section{State Rules}
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartState(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in seqblock
+    InitializeCompletion(MI, s)
+    abortionCompleted(ch, MI, s) := false
+
+    ResetTimeout(MI, s)
+    cancelDecision(ch, MI, s) := false
+
+    DisableAllTransitions(MI, s)
+    initializedSelectedTransition(ch, MI, s) := false
+
+    wantInput(ch, MI, s) := {}
+
+    case stateType(pID, s) of
+      "function"       : StartFunction(MI, s)
+      "internalAction" : StartInternalAction(MI, s)
+      "send"           : StartSend(MI, s)
+      "receive"        : SetExecutionState(MI, s, LOWER)
+      "end"            : SetExecutionState(MI, s, REPEAT) // directly to Perform w/o ASM step
+    endcase
+
+    initializedState(ch, MI, s) := true
+  endseqblock
+\end{minted}
+\caption{StartState}
+\label{lst:asm:StartState}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule ResetState(MI, stateNumber) =
+  let ch = channelFor(self),
+       s = stateNumber in {
+    executionState(ch, MI, s) := undef
+
+    initializedState(ch, MI, s) := undef
+
+    completed(ch, MI, s) := undef
+    abortionCompleted(ch, MI, s) := undef
+
+    startTime(ch, MI, s) := undef
+    timeoutActive(ch, MI, s) := undef
+
+    cancelDecision(ch, MI, s) := undef
+
+    selectedTransition(ch, MI, s) := undef
+
+    let pID = processIDFor(self) in
+    forall t in outgoingNormalTransitions(pID, s) do {
+      exitCondition(ch, MI, t) := undef
+      transitionCompleted(ch, MI, t) := undef
+    }
+
+    initializedSelectedTransition(ch, MI, s) := undef
+
+    wantInput(ch, MI, s) := undef
+
+    // from StartSend
+    receivers                   (ch, MI, s) := undef
+    reservationsDone            (ch, MI, s) := undef
+    messageContent              (ch, MI, s) := undef
+    messageCorrelationID        (ch, MI, s) := undef
+    messageReceiverCorrelationID(ch, MI, s) := undef
+  }
+\end{minted}
+\caption{ResetState}
+\label{lst:asm:ResetState}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Perform(MI, currentStateNumber) =
+  let pID = processIDFor(self)
+        s = currentStateNumber in
+  case stateType(pID, s) of
+    "function"       : PerformFunction(MI, s)
+    "internalAction" : PerformInternalAction(MI, s)
+    "send"           : PerformSend(MI, s)
+    "receive"        : PerformReceive(MI, s)
+    "end"            : PerformEnd(MI, s)
+  endcase
+\end{minted}
+\caption{Perform}
+\label{lst:asm:Perform}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SelectTransition(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  if (|outgoingEnabledTransitions(ch, MI, s)| = 0) then
+    // BLOCKED: none to select
+    SetExecutionState(MI, s, NEXT)
+  else if (not(contains(wantInput(ch, MI, s),
+                        "TransitionDecision"))) then {
+    add "TransitionDecision" to wantInput(ch, MI, s)
+    SetExecutionState(MI, s, DONE)
+  }
+  else
+    // waiting for selectedTransition
+    SetExecutionState(MI, s, NEXT)
+\end{minted}
+\caption{SelectTransition}
+\label{lst:asm:SelectTransition}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartSelectedTransition(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+    let t = selectedTransition(ch, MI, s) in {
+      InitializeCompletionTransition(MI, t)
+      initializedSelectedTransition(ch, MI, s) := true
+    }
+
+    SetExecutionState(MI, s, REPEAT)
+  }
+\end{minted}
+\caption{StartSelectedTransition}
+\label{lst:asm:StartSelectedTransition}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformTransition(MI, currentStateNumber, t) =
+  let pID = processIDFor(self),
+        s = currentStateNumber in
+  case stateType(pID, s) of
+    "function"       : PerformTransitionFunction(MI, s, t)
+    "internalAction" : SetCompletedTransition(MI, s, t)
+    "send"           : PerformTransitionSend(MI, s, t)
+    "receive"        : PerformTransitionReceive(MI, s, t)
+  endcase
+\end{minted}
+\caption{PerformTransition}
+\label{lst:asm:PerformTransition}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartFunction(MI, currentStateNumber) =
+  let pID = processIDFor(self) in
+  let functionName = stateFunction(pID, currentStateNumber) in {
+    StartTimeout(MI, currentStateNumber)
+
+    if (startFunction(functionName) = undef) then
+      skip
+    else
+      call startFunction(functionName) (MI, currentStateNumber)
+
+    SetExecutionState(MI, currentStateNumber, LOWER)
+  }
+\end{minted}
+\caption{StartFunction}
+\label{lst:asm:StartFunction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformFunction(MI, currentStateNumber) =
+  let s = currentStateNumber in
+    if (shouldTimeout(channelFor(self), MI, s) = true) then {
+      SetCompleted(MI, s)
+      ActivateTimeout(MI, s)
+    }
+    else
+      let pID = processIDFor(self) in
+      let functionName = stateFunction(pID, s),
+          args         = stateFunctionArguments(pID, s) in
+        call performFunction(functionName) (MI, s, args)
+\end{minted}
+\caption{PerformFunction}
+\label{lst:asm:PerformFunction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule AbortFunction(MI, currentStateNumber) =
+  let pID = processIDFor(self) in
+  let functionName = stateFunction(pID, currentStateNumber) in
+    if (abortFunction(functionName) = undef) then
+      SetAbortionCompleted(MI, currentStateNumber)
+    else
+      // must set abortionCompleted eventually
+      call abortFunction(functionName) (MI, currentStateNumber)
+\end{minted}
+\caption{AbortFunction}
+\label{lst:asm:AbortFunction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformTransitionFunction(MI, currentStateNumber, t) =
+  let pID = processIDFor(self),
+        s = currentStateNumber in
+  let functionName = stateFunction(pID, s) in
+    if (performTransitionFunction(functionName) = undef) then
+      SetCompletedTransition(MI, s, t)
+    else
+      call performTransitionFunction(functionName) (MI, s, t)
+\end{minted}
+\caption{PerformTransitionFunction}
+\label{lst:asm:PerformTransitionFunction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SetCompletedFunction(MI, currentStateNumber, res) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+    if (res = undef) then
+      choose t in outgoingNormalTransitions(pID, s) do
+        selectedTransition(ch, MI, s) := t
+    else
+      let t = getTransitionByLabel(pID, s, res) in
+        selectedTransition(ch, MI, s) := t
+
+    SetCompleted(MI, s)
+  }
+\end{minted}
+\caption{SetCompletedFunction}
+\label{lst:asm:SetCompletedFunction}
+\end{listing}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Proceed(MI, s_from, s_to) = {
+  AddState(MI, s_from, MI, s_to)
+  RemoveState(MI, s_from, MI, s_from)
+}
+\end{minted}
+\caption{Proceed}
+\label{lst:asm:Proceed}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartTimeout(MI, currentStateNumber) = {
+  startTime(channelFor(self), MI, currentStateNumber) := nanoTime()
+  timeoutActive(channelFor(self), MI, currentStateNumber) := false
+}
+
+rule ResetTimeout(MI, currentStateNumber) = {
+  startTime(channelFor(self), MI, currentStateNumber) := undef
+  timeoutActive(channelFor(self), MI, currentStateNumber) := undef
+}
+
+rule ActivateTimeout(MI, currentStateNumber) = {
+  timeoutActive(channelFor(self), MI, currentStateNumber) := true
+}
+
+rule InitializeCompletion(MI, currentStateNumber) = {
+  completed(channelFor(self), MI, currentStateNumber) := false
+}
+
+rule SetCompleted(MI, currentStateNumber) = {
+  SetExecutionState(MI, currentStateNumber, REPEAT)
+  completed(channelFor(self), MI, currentStateNumber) := true
+}
+
+rule SetAbortionCompleted(MI, currentStateNumber) = {
+  SetExecutionState(MI, currentStateNumber, DONE)
+  abortionCompleted(channelFor(self), MI, currentStateNumber) := true
+}
+
+
+rule EnableTransition(MI, t) = {
+  exitCondition(channelFor(self), MI, t) := true
+}
+
+rule EnableAllTransitions(MI, currentStateNumber) = {
+  forall t in outgoingNormalTransitions(processIDFor(self), currentStateNumber) do {
+    EnableTransition(MI, t)
+  }
+}
+
+
+rule DisableTransition(MI, currentStateNumber, t) = {
+  exitCondition(channelFor(self), MI, t) := false
+}
+
+rule DisableAllTransitions(MI, currentStateNumber) = {
+  selectedTransition(channelFor(self), MI, currentStateNumber) := undef
+
+  forall t in outgoingNormalTransitions(processIDFor(self), currentStateNumber) do {
+    DisableTransition(MI, currentStateNumber, t)
+  }
+}
+
+rule InitializeCompletionTransition(MI, t) = {
+  transitionCompleted(channelFor(self), MI, t) := false
+}
+
+
+rule SetCompletedTransition(MI, currentStateNumber, t) = {
+  SetExecutionState(MI, currentStateNumber, REPEAT)
+
+  transitionCompleted(channelFor(self), MI, t) := true
+}
+\end{minted}
+\caption{StartTimeout}
+\label{lst:asm:StartTimeout}
+\end{listing}
+
+
+
+\section{Internal Action}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartInternalAction(MI, currentStateNumber) = {
+  StartTimeout(MI, currentStateNumber)
+
+  EnableAllTransitions(MI, currentStateNumber)
+
+  SetExecutionState(MI, currentStateNumber, LOWER)
+}
+\end{minted}
+\caption{StartInternalAction}
+\label{lst:asm:StartInternalAction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformInternalAction(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+    if (shouldTimeout(ch, MI, s) = true) then {
+      SetCompleted(MI, s)
+      ActivateTimeout(MI, s)
+    }
+    else if (selectedTransition(ch, MI, s) != undef) then
+      SetCompleted(MI, s)
+    else
+      SelectTransition(MI, s)
+\end{minted}
+\caption{PerformInternalAction}
+\label{lst:asm:PerformInternalAction}
+\end{listing}
+
+
+
+
+
+
+
+\section{Send Function}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartSend(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  // there must be exactly one transition
+  let  t = first_outgoingNormalTransition(pID, s) in {
+    receivers(ch, MI, s) := undef
+    reservationsDone(ch, MI, s) := {}
+    let mcVName = messageContentVar(pID, t) in
+      messageContent(ch, MI, s) := loadVar(MI, mcVName)
+
+    // generate new CorrelationID now, it will be stored
+    // in a Variable once the message(s) are send
+    let cIDVName = messageNewCorrelationVar(pID, t) in
+      if (cIDVName != undef and cIDVName != "") then {
+        messageCorrelationID(ch, MI, s) := nextCorrelationID
+        nextCorrelationID := nextCorrelationID + 1
+        // ensure no other agent uses this same correlationID
+        nextCorrelationIDUsedBy(nextCorrelationID) := self
+      }
+      else
+        messageCorrelationID(ch, MI, s) := 0
+
+    // load receiver IP CorrelationID now, to avoid
+    // influences of any changes of that variable
+    let cIDVName = messageWithCorrelationVar(pID, t) in
+    let cID = loadCorrelationID(MI, cIDVName) in
+      messageReceiverCorrelationID(ch, MI, s) := cID
+
+    SetExecutionState(MI, s, LOWER)
+  }
+\end{minted}
+\caption{StartSend}
+\label{lst:asm:StartSend}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformSend(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  if (receivers(ch, MI, s) = undef) then
+    SelectReceivers(MI, s)
+  else if (messageContent(ch, MI, s) = undef) then
+    SetMessageContent(MI, s)
+  else if (startTime(ch, MI, s) = undef) then {
+    StartTimeout(MI, s)
+    SetExecutionState(MI, s, REPEAT)
+  }
+  else if (|receivers(ch, MI, s)| =
+           |reservationsDone(ch, MI, s)|) then
+    TryCompletePerformSend(MI, s)
+  else if (shouldTimeout(ch, MI, s) = true) then {
+    SetCompleted(MI, s)
+    ActivateTimeout(MI, s)
+  }
+  else
+    DoReservations(MI, s)
+\end{minted}
+\caption{PerformSend}
+\label{lst:asm:PerformSend}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule TryCompletePerformSend(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  if (anyNonProperTerminated(receivers(ch, MI, s)) = true) then
+    // BLOCKED: a receiver where a reservation was placed has
+    // terminated non-proper in the meantime, refusing to continue
+    if (shouldTimeout(ch, MI, s) = true) then {
+      SetCompleted(MI, s)
+      ActivateTimeout(MI, s)
+    }
+    else
+      SetExecutionState(MI, s, NEXT)
+  else {
+    // there must be exactly one transition
+    let t = first_outgoingNormalTransition(pID, s) in
+      selectedTransition(ch, MI, s) := t
+
+    SetCompleted(MI, s)
+  }
+\end{minted}
+\caption{TryCompletePerformSend}
+\label{lst:asm:TryCompletePerformSend}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SelectReceivers(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  // there must be exactly one transition
+  let t = first_outgoingNormalTransition(pID, s) in
+  let min = messageSubjectCountMin(pID, t),   // 0 => ALL
+      max = messageSubjectCountMax(pID, t) in // 0 => no limit
+    let recVName = messageSubjectVar(pID, t) in
+    if (recVName != undef and recVName != "") then
+      let rChs = loadChannelsFromVariable(MI, recVName, messageSubjectId(pID, t)) in
+        if (|rChs| = 0 or (min != 0 and |rChs| < min)) then
+          // BLOCKED: not enough receivers given
+          SetExecutionState(MI, s, NEXT)
+        else if (max != 0 and |rChs| > max)  then
+          // too many receivers given -> call VarMan-Selection
+          SelectReceivers_Selection(MI, s, rChs, min, max)
+        else {
+          // receivers fit min/max -> use them
+          receivers(ch, MI, s) := rChs
+          SetExecutionState(MI, s, REPEAT)
+        }
+    else // no variable with receivers -> call SelectAgents
+      if (selectAgentsResult(ch, MI, s) != undef) then
+        let y = selectAgentsResult(ch, MI, s) in {
+          receivers(ch, MI, s) := y
+          selectAgentsResult(ch, MI, s) := undef // reset
+
+          SetExecutionState(MI, s, REPEAT)
+        }
+      else
+        let sIDLocal = messageSubjectId(pID, t) in
+          SelectAgents(MI, s, sIDLocal, min, max)
+\end{minted}
+\caption{SelectReceivers}
+\label{lst:asm:SelectReceivers}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SelectReceivers_Selection(MI, currentStateNumber, rChs, min, max) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  let res = selectionResult(ch, MI, s) in
+  if (res = undef) then
+    let src = ["ChannelInformation", rChs] in
+      Selection(MI, s, src, min, max)
+  else {
+    selectionResult(ch, MI, s) := undef
+    receivers(ch, MI, s) := res
+
+    SetExecutionState(MI, s, REPEAT)
+  }
+\end{minted}
+\caption{SelectReceivers Selection}
+\label{lst:asm:SelectReceivers_Selection}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule AbortSend(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+    foreach r in reservationsDone(ch, MI, s) do {
+      CancelReservation(MI, s, r)
+    }
+
+    SetAbortionCompleted(MI, s)
+  }
+\end{minted}
+\caption{AbortSend}
+\label{lst:asm:AbortSend}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformTransitionSend(MI, currentStateNumber, t) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in {
+    foreach r in reservationsDone(ch, MI, s) do {
+      ReplaceReservation(MI, s, r)
+
+      EnsureRunning(r)
+    }
+
+    let storeVName = messageStoreReceiverVar(pID, t) in
+      if (storeVName != undef and storeVName != "") then
+        SetVar(MI, storeVName, "ChannelInformation",
+               reservationsDone(ch, MI, s))
+
+    let cIDVName = messageNewCorrelationVar(pID, t) in
+      if (cIDVName != undef and cIDVName != "") then
+        SetVar(MI, cIDVName, "CorrelationID",
+               messageCorrelationID(ch, MI, s))
+
+    SetCompletedTransition(MI, s, t)
+  }
+\end{minted}
+\caption{PerformTransitionSend}
+\label{lst:asm:PerformTransitionSend}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SetMessageContent(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+    if not(contains(wantInput(ch, MI, ch),
+                    "MessageContentDecision")) then {
+      add "MessageContentDecision" to wantInput(ch, MI, ch)
+      SetExecutionState(MI, ch, DONE)
+    }
+    else
+      // waiting for messageContent
+      SetExecutionState(MI, ch, NEXT)
+\end{minted}
+\caption{SetMessageContent}
+\label{lst:asm:SetMessageContent}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// handle all receivers
+rule DoReservations(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  local hasPlacedReservation := false in
+    seq
+      let receiversTodo = (receivers(ch, MI, s) diff
+                           reservationsDone(ch, MI, s)) in
+      foreach receiver in receiversTodo do
+        local tmp := false in
+          seq
+            // result is true if a reservation was made
+            tmp <- DoReservation(MI, s, receiver)
+          next if (tmp = true) then
+            hasPlacedReservation := true
+    next
+      if (hasPlacedReservation = true) then
+        // reservation(s) placed, make update
+        SetExecutionState(MI, s, DONE)
+      else
+        // no reservations made, allow other states
+        SetExecutionState(MI, s, NEXT)
+\end{minted}
+\caption{DoReservations}
+\label{lst:asm:DoReservations}
+\end{listing}
+
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// handle single reservation
+// result true if hasPlacedReservation, adds to reservationsDone
+rule DoReservation(MI, currentStateNumber, receiverChannel) =
+  if (properTerminated(receiverChannel) = true) then
+    let ch = channelFor(self),
+       pID = processIDFor(self),
+       sID = subjectIDFor(self),
+         s = currentStateNumber in
+    let Rch = receiverChannel,
+       RpID = processIDOf(receiverChannel) in
+    let sIDX = searchSenderSubjectID(pID, sID, RpID) in
+    let msgCID = messageCorrelationID(ch, MI, s),
+        RCID   = messageReceiverCorrelationID(ch, MI, s) in
+    // there must be exactly one transition
+    let t  = first_outgoingNormalTransition(pID, s) in
+    let mT = messageType(pID, t) in
+    let resMsg = [ch, mT, {}, msgCID, true] in
+      seq
+        // prepare receiver IP
+        if (inputPool(Rch, sIDX, mT, RCID) = undef) then {
+          add [sIDX, mT, RCID] to inputPoolDefined(Rch)
+          inputPool(Rch, sIDX, mT, RCID) := []
+        }
+      next
+        if (inputPoolIsClosed(Rch, sIDX, mT, RCID) != true) then
+          if (inputPoolGetFreeSpace(Rch, sIDX, mT) > 0) then {
+            enqueue resMsg into inputPool(Rch, sIDX, mT, RCID)
+            add Rch to reservationsDone(ch, MI, s)
+            result := true
+          }
+          else
+            result := false // BLOCKED: no free space!
+        else
+          result := false // BLOCKED: inputPoolIsClosed
+  else
+    result := false // BLOCKED: non-properTerminated
+\end{minted}
+\caption{DoReservation}
+\label{lst:asm:DoReservation}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule CancelReservation(MI, currentStateNumber, receiverChannel) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+     sID = subjectIDFor(self),
+       s = currentStateNumber in
+  let Rch  = receiverChannel,
+      RpID = processIDOf(receiverChannel) in
+  let t  = first_outgoingNormalTransition(pID, s) in
+  let mT = messageType(pID, t) in
+  let sIDX   = searchSenderSubjectID(pID, sID, RpID),
+      msgCID = messageCorrelationID(ch, MI, s),
+      RCID   = messageReceiverCorrelationID(ch, MI, s) in
+  let resMsg = [ch, mT, {}, msgCID, true],
+      IPold = inputPool(Rch, sIDX, mT, RCID) in
+  let IPnew = dropnth(IPold, head(indexes(IPold, resMsg))) in
+    inputPool(Rch, sIDX, mT, RCID) := IPnew
+\end{minted}
+\caption{CancelReservation}
+\label{lst:asm:CancelReservation}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule ReplaceReservation(MI, currentStateNumber, receiverChannel) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+     sID = subjectIDFor(self),
+       s = currentStateNumber in
+  let Rch  = receiverChannel,
+      RpID = processIDOf(receiverChannel) in
+  let t  = first_outgoingNormalTransition(pID, s) in
+  let mT = messageType(pID, t) in
+  let sIDX   = searchSenderSubjectID(pID, sID, RpID),
+      msgCID = messageCorrelationID(ch, MI, s),
+      RCID   = messageReceiverCorrelationID(ch, MI, s) in
+  let resMsg = [ch, mT, {}, msgCID, true],
+      msg    = [ch, mT, messageContent(ch, MI, s), msgCID, false],
+      IPold = inputPool(Rch, sIDX, mT, RCID) in
+  let IPnew = setnth(IPold, head(indexes(IPold, resMsg)), msg) in
+      inputPool(Rch, sIDX, mT, RCID) := IPnew
+\end{minted}
+\caption{ReplaceReservation}
+\label{lst:asm:ReplaceReservation}
+\end{listing}
+
+
+
+\section{Receive Function}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformReceive(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  // startTime must be the time of the first attempt to receive
+  // in order to support receiving with timeout=0
+  if (startTime(ch, MI, s) = undef) then {
+    StartTimeout(MI, s)
+    SetExecutionState(MI, s, REPEAT)
+  }
+  else if (shouldTimeout(ch, MI, s) = true) then {
+    SetCompleted(MI, s)
+    ActivateTimeout(MI, s)
+  }
+  else
+    seq
+      forall t in outgoingNormalTransitions(pID, s) do
+        CheckIP(MI, s, t)
+    next
+      let enabledT = outgoingEnabledTransitions(ch, MI, s) in
+      if (|enabledT| > 0) then
+        seq
+          if (selectedTransition(ch, MI, s) != undef) then
+            skip // there is already an transition selected
+          else if (|enabledT| = 1) then
+            let t = firstFromSet(enabledT) in
+            if (transitionIsAuto(pID, t) = true) then
+              // make automatic decision
+              selectedTransition(ch, MI, s) := t
+            else skip // can not make automatic decision
+          else skip // can not make automatic decision
+        next
+          if (selectedTransition(ch, MI, s) != undef) then
+            // the decision was made
+            SetCompleted(MI, s)
+          else
+            // no decision made, waiting for selectedTransition
+            SelectTransition(MI, s)
+      else
+        SetExecutionState(MI, s, LOWER) // BLOCKED: no messages
+\end{minted}
+\caption{PerformReceive}
+\label{lst:asm:PerformReceive}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformTransitionReceive(MI, currentStateNumber, t) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  let sID      = messageSubjectId         (pID, t),
+      mT       = messageType              (pID, t),
+      cIDVName = messageWithCorrelationVar(pID, t),
+      countMax = messageSubjectCountMax   (pID, t) in
+  let cID = loadCorrelationID(MI, cIDVName) in {
+    seq
+      // stores the messages in receivedMessages
+      InputPool_Pop(MI, s, sID, mT, cID, countMax)
+    next
+      if (messageStoreMessagesVar(pID, t) != undef and
+          messageStoreMessagesVar(pID, t) != "") then
+        let msgs  = receivedMessages(ch, MI, s),
+            vName = messageStoreMessagesVar(pID, t) in
+          SetVar(MI, vName, "MessageSet", msgs)
+
+    SetCompletedTransition(MI, s, t)
+  }
+\end{minted}
+\caption{PerformTransitionReceive}
+\label{lst:asm:PerformTransitionReceive}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule CheckIP(MI, currentStateNumber, t) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  let sID      = messageSubjectId         (pID, t),
+      mT       = messageType              (pID, t),
+      cIDVName = messageWithCorrelationVar(pID, t),
+      countMin = messageSubjectCountMin   (pID, t) in
+  let cID  = loadCorrelationID(MI, cIDVName) in
+  let msgs = availableMessages(ch, sID, mT, cID) in
+    if (|msgs| >= countMin) then
+      EnableTransition(MI, t)
+    else
+      DisableTransition(MI, s, t)
+\end{minted}
+\caption{CheckIP}
+\label{lst:asm:CheckIP}
+\end{listing}
+
+
+
+
+
+\section{End Function}
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformEnd(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  if (|activeStates(ch, MI)| > 1) then {
+    // does not remove currentStateNumber
+    AbortMacroInstance(MI, s)
+    SetExecutionState(MI, s, DONE)
+  }
+  else {
+    if (MI = 1) then { // terminate subject
+      ClearAllVarInMI(ch, 0)
+      ClearAllVarInMI(ch, 1)
+
+      FinalizeInteraction()
+
+      program(self) := undef
+      remove self from asmAgents
+    }
+    else { // terminate only Macro Instance
+      ClearAllVarInMI(ch, MI)
+
+      let res = head(stateFunctionArguments(pID, s)) in
+      if (res != undef) then
+        // use parameter as result for CallMacro State
+        macroTerminationResult(ch, MI) := res
+      else
+        // just indicate termination
+        macroTerminationResult(ch, MI) := true
+    }
+
+    // remove self
+    RemoveState(MI, s, MI, s)
+    SetExecutionState(MI, s, DONE)
+  }
+\end{minted}
+\caption{PerformEnd}
+\label{lst:asm:PerformEnd}
+\end{listing}
+
+
+
+\section{Tau Function}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule StartTau(MI, currentStateNumber) =
+  EnableAllTransitions(MI, currentStateNumber)
+
+rule Tau(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+    choose t in outgoingEnabledTransitions(t, MI, s)
+        with (transitionIsAuto(pID, t) = true) do {
+      selectedTransition(t, MI, s) := t
+      SetCompleted(MI, s)
+    }
+    ifnone // WARN: unable to choose auto transition!
+      if (selectedTransition(t, MI, s) != undef) then
+        SetCompleted(MI, s)
+      else
+        SelectTransition(MI, s)
+\end{minted}
+\caption{Tau}
+\label{lst:asm:Tau}
+\end{listing}
+
+
+
+\section{VarMan Function}
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule AbortVarMan(MI, currentStateNumber) = {
+  ResetSelection(MI, currentStateNumber)
+  SetAbortionCompleted(MI, currentStateNumber)
+}
+
+rule VarMan(MI, currentStateNumber, args) =
+ let s = currentStateNumber,
+     method = nth(args, 1),
+     A = nth(args, 2),
+     B = nth(args, 3),
+     C = nth(args, 4),
+     D = nth(args, 5) in
+ case method of
+  "assign"               : VarMan_Assign   (MI, s, A, B)
+  "storeData"            : VarMan_StoreData(MI, s, A, B)
+  "clear"                : VarMan_Clear    (MI, s, A)
+
+  "concatenation"        : VarMan_Concatenation(MI, s, A, B, C)
+  "intersection"         : VarMan_Intersection (MI, s, A, B, C)
+  "difference"           : VarMan_Difference   (MI, s, A, B, C)
+
+  "extractContent"       : VarMan_ExtractContent      (MI, s, A, B)
+  "extractChannel"       : VarMan_ExtractChannel      (MI, s, A, B)
+  "extractCorrelationID" : VarMan_ExtractCorrelationID(MI, s, A, B)
+
+  "selection"            : VarMan_Selection(MI, s, A, B, C, D)
+ endcase
+\end{minted}
+\caption{VarMan}
+\label{lst:asm:VarMan}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule VarMan_Assign(MI, currentStateNumber, A, X) =
+  let a = loadVar(MI, A) in {
+    SetVar(MI, X, head(a), last(a))
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_StoreData(MI, currentStateNumber, X, A) = {
+  SetVar(MI, X, "Data", A)
+
+  SetCompletedFunction(MI, currentStateNumber, undef)
+}
+
+rule VarMan_Clear(MI, currentStateNumber, X) = {
+  ClearVar(MI, X)
+
+  SetCompletedFunction(MI, currentStateNumber, undef)
+}
+\end{minted}
+\caption{VarMan Assign}
+\label{lst:asm:VarMan_Assign}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule VarMan_Concatenation(MI, currentStateNumber, A, B, X) =
+  let a = loadVar(MI, A),
+      b = loadVar(MI, B) in {
+    if (a = undef and b = undef) then
+      ClearVar(MI, X)
+    else if (a = undef) then
+      SetVar(MI, X, head(b), last(b))
+    else if (b = undef) then
+      SetVar(MI, X, head(a), last(a))
+    else
+      let x = (last(a) union last(b)) in
+        SetVar(MI, X, head(a), x)
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_Intersection(MI, currentStateNumber, A, B, X) =
+  let a = loadVar(MI, A),
+      b = loadVar(MI, B) in {
+    if (a = undef or b = undef) then
+      ClearVar(MI, X)
+    else
+      let x = (last(a) intersect last(b)) in
+        SetVar(MI, X, head(a), x)
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_Difference(MI, currentStateNumber, A, B, X) =
+  let a = loadVar(MI, A),
+      b = loadVar(MI, B) in {
+    if (a = undef) then
+      ClearVar(MI, X)
+    else if (b = undef) then
+      SetVar(MI, X, head(a), last(a))
+    else
+      let x = (last(a) diff last(b)) in
+        SetVar(MI, X, head(a), x)
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+\end{minted}
+\caption{VarMan Concatenation}
+\label{lst:asm:VarMan_Concatenation}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule VarMan_ExtractContent(MI, currentStateNumber, A, X) =
+  let a = loadVar(MI, A) in
+  let messages = last(a) in
+  let messagesContent = map(messages, @msgContent) in
+  let varType = head(firstFromSet(messagesContent)) in {
+    SetVar(MI, X, varType, flattenSet(map(messagesContent, @last)))
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_ExtractChannel(MI, currentStateNumber, A, X) =
+  let a = loadVar(MI, A) in
+  let messages = last(a) in
+  let messagesChannel = map(messages, @msgChannel) in {
+    SetVar(MI, X, "ChannelInformation", messagesChannel)
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+
+rule VarMan_ExtractCorrelationID(MI, currentStateNumber, A, X) =
+  let a = loadVar(MI, A) in
+  let messages = last(a) in
+  let messagesCorrelationID = map(messages, @msgCorrelation) in {
+    SetVar(MI, X, "CorrelationID",
+               firstFromSet(messagesCorrelationID))
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+\end{minted}
+\caption{VarMan ExtractContent}
+\label{lst:asm:VarMan_ExtractContent}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// CH * MI * n
+function selectionVartype  : LIST * NUMBER * NUMBER -> STRING
+function selectionData     : LIST * NUMBER * NUMBER -> LIST
+function selectionOptions  : LIST * NUMBER * NUMBER -> LIST
+function selectionMin      : LIST * NUMBER * NUMBER -> NUMBER
+function selectionMax      : LIST * NUMBER * NUMBER -> NUMBER
+function selectionDecision : LIST * NUMBER * NUMBER -> SET
+
+function selectionResult   : LIST * NUMBER * NUMBER -> SET
+
+rule VarMan_Selection(MI, currentStateNumber, srcVName, dstVName, minimum, maximum) = {
+  let src = loadVar(MI, srcVName),
+    res = selectionResult(channelFor(self), MI, currentStateNumber) in
+  if (res = undef) then {
+    // TODO: cancel / timeout transition?
+    Selection(MI, currentStateNumber, src, minimum, maximum)
+  }
+  else {
+    selectionResult(channelFor(self), MI, currentStateNumber) := undef
+
+    SetVar(MI, dstVName, head(src), res)
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+}
+
+rule ResetSelection(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+  selectionVartype (ch, MI, s) := undef
+  selectionData    (ch, MI, s) := undef
+  selectionOptions (ch, MI, s) := undef
+  selectionMin     (ch, MI, s) := undef
+  selectionMax     (ch, MI, s) := undef
+  selectionDecision(ch, MI, s) := undef
+}
+\end{minted}
+\caption{VarMan Selection}
+\label{lst:asm:VarMan_Selection}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Selection(MI, currentStateNumber, src, minimum, maximum) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  if (selectionData(ch, MI, s) = undef) then {
+    let l = toList(last(src)) in
+    if (head(src) = "MessageSet") then {
+      selectionData   (ch, MI, s) := l
+      selectionOptions(ch, MI, s) := map(l, @msgToString)
+    }
+    else if (head(src) = "ChannelInformation") then {
+      selectionData   (ch, MI, s) := l
+      selectionOptions(ch, MI, s) := map(l, @chToString)
+    }
+
+    selectionVartype (ch, MI, s) := head(src)
+    selectionMin     (ch, MI, s) := minimum
+    selectionMax     (ch, MI, s) := maximum
+    selectionDecision(ch, MI, s) := undef
+
+    SetExecutionState(MI, s, REPEAT)
+  }
+  else if (selectionDecision(ch, MI, s) = undef) then {
+    if not(contains(wantInput(ch, MI, s),
+                    "SelectionDecision")) then {
+      add "SelectionDecision" to wantInput(ch, MI, s)
+
+      SetExecutionState(MI, s, DONE)
+    }
+    else
+      // waiting for selectionDecision
+      SetExecutionState(MI, s, NEXT)
+  }
+  else {
+    let res = pickItems(selectionData(ch, MI, s),
+                        selectionDecision(ch, MI, s)) in
+      selectionResult(ch, MI, s) := res
+
+    ResetSelection(MI, s)
+    SetExecutionState(MI, s, REPEAT)
+  }
+\end{minted}
+\caption{Selection}
+\label{lst:asm:Selection}
+\end{listing}
+
+
+\section{Modal Split \& Modal Join Functions}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule ModalSplit(MI, currentStateNumber, args) =
+  let pID = processIDFor(self),
+        s = currentStateNumber in {
+  // start all following states
+  foreach t in outgoingNormalTransitions(pID, s) do
+    let sNew = targetStateNumber(pID, t) in
+      AddState(MI, s, MI, sNew)
+
+  // remove self
+  RemoveState(MI, s, MI, s)
+
+  SetExecutionState(MI, s, DONE)
+}
+\end{minted}
+\caption{ModalSplit}
+\label{lst:asm:ModalSplit}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel * MacroInstanceNumber * joinState -> Number
+function joinCount : LIST * NUMBER * NUMBER -> NUMBER
+
+// number of execution paths have to be provided as argument
+rule ModalJoin(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+       s = currentStateNumber,
+      numSplits = nth(args, 1) in
+  seq // count how often this join has been called
+    if (joinCount(ch, MI, s) = undef) then
+      joinCount(ch, MI, s) := 1
+    else
+      joinCount(ch, MI, s) := joinCount(ch, MI, s) + 1
+  next
+    // can we continue, or remove self and will be called again?
+    if (joinCount(ch, MI, s) < numSplits) then {
+      // drop this execution path
+      RemoveState(MI, s, MI, s)
+      SetExecutionState(MI, s, DONE)
+    }
+    else {
+      // reset for next iteration
+      joinCount(ch, MI, s) := undef
+      SetCompletedFunction(MI, s, undef)
+    }
+\end{minted}
+\caption{ModalJoin}
+\label{lst:asm:ModalJoin}
+\end{listing}
+
+
+\section{CallMacro Function}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule AbortCallMacro(MI, currentStateNumber) =
+  let ch = channelFor(self),
+       s = currentStateNumber in
+  let childInstance = callMacroChildInstance(ch, MI, s) in
+    if (|activeStates(ch, childInstance)| > 0) then {
+      AbortMacroInstance(childInstance, undef)
+      SetExecutionState(MI, s, DONE)
+    }
+    else {
+      callMacroChildInstance(ch, MI, s) := undef
+      SetAbortionCompleted(MI, s)
+    }
+\end{minted}
+\caption{AbortCallMacro}
+\label{lst:asm:AbortCallMacro}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule InitializeMacroArguments(MI, mIDNew, MINew, givenSrcVNames) =
+  local
+      dstVNames := macroArguments(processIDFor(self), mIDNew),
+      srcVNames := givenSrcVNames in
+    while (|dstVNames| > 0) do {
+      let dstVName = head(dstVNames),
+          srcVName = head(srcVNames) in
+      let var = loadVar(MI, srcVName) in
+        SetVar(MINew, dstVName, nth(var, 1), nth(var, 2))
+
+      dstVNames := tail(dstVNames)
+      srcVNames := tail(srcVNames)
+    }
+\end{minted}
+\caption{InitializeMacroArguments}
+\label{lst:asm:InitializeMacroArguments}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule CallMacro(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  let childInstance = callMacroChildInstance(ch, MI, s) in
+  if (childInstance = undef) then
+    // start new Macro Instance
+    let mIDNew = searchMacro(head(args)),
+        MINew  = nextMacroInstanceNumber(ch) in
+    seqblock
+      nextMacroInstanceNumber(ch) := MINew + 1
+      macroNumberOfMI(ch, MINew) := mIDNew
+      callMacroChildInstance(ch, MI, s) := MINew
+
+      if (|macroArguments(ch, mIDNew)| > 0) then
+        InitializeMacroArguments(MI, mIDNew, MINew, tail(args))
+
+      SetExecutionState(MI, s, DONE)
+
+      StartMacro(MI, s, mIDNew, MINew)
+    endseqblock
+  else
+    let childResult = macroTerminationResult(ch, childInstance) in
+    if (childResult != undef) then {
+      callMacroChildInstance(ch, MI, s) := undef
+
+      // transport result, if present
+      if (childResult = true) then
+        SetCompletedFunction(MI, s, undef)
+      else
+        SetCompletedFunction(MI, s, childResult)
+    }
+    else seqblock
+      // Macro Instance is active, call it...
+      MacroBehavior(childInstance)
+
+      // ... and transport its execution state
+      let mState = macroExecutionState(ch, childInstance) in
+        SetExecutionState(MI, s, mState)
+
+      // reset
+      macroExecutionState(ch, childInstance) := undef
+    endseqblock
+\end{minted}
+\caption{CallMacro}
+\label{lst:asm:CallMacro}
+\end{listing}
+
+
+\section{Cancel Function}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule CheckCancel(MI, currentStateNumber, t) =
+  let ch = channelFor(self),
+     pID = processIDFor(self) in
+  let tName = transitionLabel(pID, t) in
+  let nCancel = stateNumberFromID(pID, tName) in
+  if (contains(activeStates(ch, MI), nCancel) = true) then
+    // referenced state is active in this Macro Instance
+    EnableTransition(MI, t)
+  else
+    DisableTransition(MI, currentStateNumber, t)
+\end{minted}
+\caption{CheckCancel}
+\label{lst:asm:CheckCancel}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Cancel(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+  seq
+    forall t in outgoingNormalTransitions(pID, s) do
+      CheckCancel(MI, s, t)
+  next
+    let enabledT = outgoingEnabledTransitions(ch, MI, s) in
+    if (|enabledT| > 0) then
+      seq
+        if (|enabledT| = 1) then
+          let t = firstFromSet(enabledT) in
+          if (transitionIsAuto(pID, t) = true) then
+            selectedTransition(ch, MI, s) := t
+      next
+        if (selectedTransition(ch, MI, s) != undef) then
+          let t = selectedTransition(ch, MI, s) in
+            SetCompletedFunction(MI, s, transitionLabel(pID, t))
+        else
+          SelectTransition(MI, s)
+    else // BLOCKED: no corresponding active states
+      SetExecutionState(MI, s, LOWER)
+\end{minted}
+\caption{Cancel}
+\label{lst:asm:Cancel}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Abort(MI, currentStateNumber) =
+  let pID = processIDFor(self),
+        s = currentStateNumber in
+    case stateType(pID, s) of
+      "function"       : AbortFunction(MI, s)
+      "internalAction" : SetAbortionCompleted(MI, s)
+      "send"           : AbortSend(MI, s)
+      "receive"        : SetAbortionCompleted(MI, s)
+    endcase
+\end{minted}
+\caption{Abort}
+\label{lst:asm:Abort}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule PerformTransitionCancel(MI, currentStateNumber, t) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in
+    let tLabel  = transitionLabel(pID, t) in
+    let nCancel = stateNumberFromID(pID, tLabel) in {
+      cancelDecision(ch, MI, nCancel) := true
+      SetCompletedTransition(MI, s, t)
+    }
+\end{minted}
+\caption{PerformTransitionCancel}
+\label{lst:asm:PerformTransitionCancel}
+\end{listing}
+
+
+
+\section{IP Functions}
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule CloseIP(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+      senderSubjID       = nth(args, 1),
+      messageType        = nth(args, 2),
+      correlationIDVName = nth(args, 3) in
+  let correlationID = loadCorrelationID(MI, correlationIDVName) in {
+    inputPoolClosed(ch, senderSubjID, messageType, correlationID) := true
+
+    if (inputPool(ch, senderSubjID, messageType, correlationID) = undef) then {
+      add [senderSubjID, messageType, correlationID] to inputPoolDefined(ch)
+      inputPool(ch, senderSubjID, messageType, correlationID) := []
+    }
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+\end{minted}
+\caption{CloseIP}
+\label{lst:asm:CloseIP}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule OpenIP(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+      senderSubjID       = nth(args, 1),
+      messageType        = nth(args, 2),
+      correlationIDVName = nth(args, 3) in
+  let correlationID = loadCorrelationID(MI, correlationIDVName) in {
+    inputPoolClosed(ch, senderSubjID, messageType, correlationID) := false
+
+    if (inputPool(ch, senderSubjID, messageType, correlationID) = undef) then {
+        add [senderSubjID, messageType, correlationID] to inputPoolDefined(ch)
+        inputPool(ch, senderSubjID, messageType, correlationID) := []
+    }
+
+    SetCompletedFunction(MI, currentStateNumber, undef)
+  }
+\end{minted}
+\caption{OpenIP}
+\label{lst:asm:OpenIP}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule CloseAllIPs(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+    inputPoolClosed(ch, undef, undef, undef) := true
+
+    forall key in inputPoolDefined(ch) do
+      let sID = nth(key, 1),
+          mT  = nth(key, 2),
+          cID = nth(key, 3) in {
+        inputPoolClosed(ch, sID, mT, cID) := true
+      }
+
+    SetCompletedFunction(MI, s, undef)
+  }
+\end{minted}
+\caption{CloseAllIPs}
+\label{lst:asm:CloseAllIPs}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule OpenAllIPs(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+       s = currentStateNumber in {
+    inputPoolClosed(ch, undef, undef, undef) := false
+
+    forall key in inputPoolDefined(ch) do
+      let sID = nth(key, 1),
+          mT  = nth(key, 2),
+          cID = nth(key, 3) in {
+        inputPoolClosed(ch, sID, mT, cID) := false
+      }
+
+    SetCompletedFunction(MI, s, undef)
+  }
+\end{minted}
+\caption{OpenAllIPs}
+\label{lst:asm:OpenAllIPs}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// correlation can be wildcard (*)
+rule IsIPEmpty(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+       s = currentStateNumber,
+     senderSubjID       = nth(args, 1),
+     msgType            = nth(args, 2),
+     correlationIDVName = nth(args, 3) in
+  local cID in
+    seq
+      if (correlationIDVName = undef or
+          correlationIDVName = 0 or
+          correlationIDVName = "") then {
+        cID := 0
+      }
+      else if (correlationIDVName = "*") then {
+        cID := undef
+      }
+      else {
+        cID := loadCorrelationID(MI, correlationIDVName)
+      }
+    next
+      if inputPoolIsEmpty(ch, senderSubjID, msgType, cID) then
+        SetCompletedFunction(MI, s, "true")
+      else
+        SetCompletedFunction(MI, s, "false")
+\end{minted}
+\caption{IsIPEmpty}
+\label{lst:asm:IsIPEmpty}
+\end{listing}
+
+
+\section{SelectAgents Function}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+// Channel * MacroInstanceNumber * StateNumber -> BOOLEAN
+function selectAgentsDecision : LIST * NUMBER * NUMBER -> SET
+
+function selectAgentsProcessID : LIST * NUMBER * NUMBER -> STRING
+function selectAgentsSubjectID : LIST * NUMBER * NUMBER -> STRING
+function selectAgentsCountMin  : LIST * NUMBER * NUMBER -> NUMBER
+function selectAgentsCountMax  : LIST * NUMBER * NUMBER -> NUMBER
+
+function selectAgentsResult : LIST * NUMBER * NUMBER -> SET
+
+rule SelectAgentsAction(MI, currentStateNumber, args) =
+  let ch = channelFor(self),
+       s = currentStateNumber,
+      vName    = nth(args, 1),
+      sIDLocal = nth(args, 2),
+      countMin = nth(args, 3),
+      countMax = nth(args, 4) in
+    if (selectAgentsResult(ch, MI, s) != undef) then {
+      SetVar(MI, vName, "ChannelInformation",
+             selectAgentsResult(ch, MI, s))
+      selectAgentsResult(ch, MI, s) := undef
+
+      SetCompletedFunction(MI, s, undef)
+    }
+    else
+      SelectAgents(MI, s, sIDLocal, countMin, countMax)
+\end{minted}
+\caption{SelectAgentsAction}
+\label{lst:asm:SelectAgentsAction}
+\end{listing}
+
+
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule SelectAgents(MI, currentStateNumber, sIDLocal, min, max) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber,
+      PI = processInstanceFor(self) in
+  let predefAgents = predefinedAgents(pID, sIDLocal),
+      resolvedInterface = resolveInterfaceSubject(sIDLocal) in
+  let resolvedProcessID = nth(resolvedInterface, 1),
+      resolvedSubjectID = nth(resolvedInterface, 2) in
+  if (selectAgentsDecision(ch, MI, s) != undef) then {
+      local createdChannels := {} in
+      seq
+        foreach agent in selectAgentsDecision(ch, MI, s) do
+          if (resolvedProcessID = pID) then
+            // local process, use own PI
+            let ch = [pID, PI, sIDLocal, agent] in {
+              InitializeSubject(ch)
+              add ch to createdChannels
+            }
+          else // external process, create new PI
+            local newPI in
+            seq
+              newPI <- StartProcess(resolvedProcessID,
+                                    resolvedSubjectID, agent)
+            next
+              add [resolvedProcessID, newPI,
+                   resolvedSubjectID, agent] to createdChannels
+      next
+        selectAgentsResult(ch, MI, s) := createdChannels
+
+      // reset for next iteration
+      selectAgentsDecision (ch, MI, s) := undef
+      selectAgentsCountMin (ch, MI, s) := undef
+      selectAgentsCountMax (ch, MI, s) := undef
+      selectAgentsProcessID(ch, MI, s) := undef
+      selectAgentsSubjectID(ch, MI, s) := undef
+
+      SetExecutionState(MI, s, REPEAT)
+  }
+  else if(hasSizeWithin(predefAgents, min, max) = true) then {
+    selectAgentsDecision(ch, MI, s) := predefAgents
+    SetExecutionState(MI, s, REPEAT)
+  }
+  else if not(contains(wantInput(ch, MI, s),
+                       "SelectAgentsDecision")) then {
+    add "SelectAgentsDecision" to wantInput(ch, MI, s)
+
+    selectAgentsProcessID(ch, MI, s) := resolvedProcessID
+    selectAgentsSubjectID(ch, MI, s) := resolvedSubjectID
+    selectAgentsCountMin (ch, MI, s) := min
+    selectAgentsCountMax (ch, MI, s) := max
+    selectAgentsResult   (ch, MI, s) := undef
+
+    SetExecutionState(MI, s, DONE)
+  }
+  else // waiting for selectAgentsDecision
+    SetExecutionState(MI, s, NEXT)
+\end{minted}
+\caption{SelectAgents}
+\label{lst:asm:SelectAgents}
+\end{listing}
+
+% reset font sizes
+\normalsize
+\captionsetup{font=normalsize}
+\setminted{fontsize=\normalsize}
+\setmintedinline{fontsize=\normalsize}

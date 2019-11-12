@@ -965,13 +965,13 @@ rule ModalJoin(MI, currentStateNumber, args) =
 
 The ModalJoin Function takes the number of execution paths to join as parameter,
 which doesn't need to be modelled explicitly as it could be determined when the Process Model is parsed.
-The \coreinline{joinCount} function is used to count how
+The \asminline{joinCount} function is used to count how
 many times an execution path was already joined and is incremented each time an
 execution path leads to this state.
 
 Until all but one execution paths are joined the current state is removed
 from the list of active states of the current Macro Instance. If the last
-execution path reached this state the \coreinline{joinCount} function is reset for the next
+execution path reached this state the \asminline{joinCount} function is reset for the next
 iteration and the state function is set to completed, so that the Macro Behavior proceeds
 regularly to the next state.
 
@@ -984,7 +984,7 @@ regularly to the next state.
 
 The CallMacro Function creates a new Macro Instance for the Macro~ID given as
 first parameter. It is responsible for the evaluation of that Macro Instance
-and therefore calls the \coreinline{MacroBehavior} rule with the created Macro
+and therefore calls the \asminline{MacroBehavior} rule with the created Macro
 Instance~ID.
 
 
@@ -1005,9 +1005,9 @@ function callMacroChildInstance : LIST * NUMBER * NUMBER -> NUMBER
 
 
 
-The \coreinline{callMacroChildInstance} function stores the Macro Instance~ID
-of the created Macro Instance. The \coreinline{macroTerminationResult}
-function is written, either with the boolean \coreinline{true} or a string to
+The \asminline{callMacroChildInstance} function stores the Macro Instance~ID
+of the created Macro Instance. The \asminline{macroTerminationResult}
+function is written, either with the boolean \asminline{true} or a string to
 indicate which outgoing transition of the MacroState should be selected, when the
 Macro Instance terminates.
 
@@ -1057,22 +1057,22 @@ rule CallMacro(MI, currentStateNumber, args) =
 \end{listing}
 
 
-In the first phase the value of the \coreinline{nextMacroInstanceNumber}
-function is stored in the \coreinline{callMacroChildInstance} function and
-incremented. The \coreinline{activeStates} for the new Macro Instance is
+In the first phase the value of the \asminline{nextMacroInstanceNumber}
+function is stored in the \asminline{callMacroChildInstance} function and
+incremented. The \asminline{activeStates} for the new Macro Instance is
 initialized and the start state will be added later on in the
-\coreinline{MacroBehavior} rule of the current Macro Instance.
+\asminline{MacroBehavior} rule of the current Macro Instance.
 
 The CallMacro Function can have an optional list of Variable names whose values
 are passed into Macro Instance-local Variables of the called Macro Instance with
-the \coreinline{InitializeMacroArguments} rule.
+the \asminline{InitializeMacroArguments} rule.
 
 The second phase evaluates the created Macro Instance.
 
 When the Macro Instance has terminated its result is used to select the
-outgoing transition of the CallMacro state and the \coreinline{callMacroChildInstance}
+outgoing transition of the CallMacro state and the \asminline{callMacroChildInstance}
 function is reset for the next iteration. Otherwise the
-\coreinline{MacroBehavior} rule is called for the created Macro Instance~ID.
+\asminline{MacroBehavior} rule is called for the created Macro Instance~ID.
 
 
 
@@ -1097,7 +1097,7 @@ rule InitializeMacroArguments(MI, mIDNew, MINew, givenSrcVNames) =
 \end{listing}
 
 
-The \coreinline{InitializeMacroArguments} rule iterates over all required macro
+The \asminline{InitializeMacroArguments} rule iterates over all required macro
 parameters. For each parameter it loads the value of the Variable in the current Macro Instance and stores it in the
 new Macro Instance.
 
@@ -1149,19 +1149,19 @@ rule PerformEnd(MI, currentStateNumber) =
 \end{listing}
 
 
-The \coreinline{PerformEnd} rule calls the \coreinline{AbortMacroInstance} rule
+The \asminline{PerformEnd} rule calls the \asminline{AbortMacroInstance} rule
 until no other states are active in the current Macro Instance.
 
 If the current Macro Instance is the Main Macro Instance the Subject terminates.
 To do so the End Function resets all Variables of the Subject and terminates the
 ASM agent.
-Additionally, the \coreinline{FinalizeInteraction} rule is called ... % TODO
+Additionally, the \asminline{FinalizeInteraction} rule is called ... % TODO
 
 Otherwise the Macro Instance was created by a CallMacro Function and only the
 Variables of the current Macro Instance are reset. If the End Function has a
-parameter it is stored in the function \coreinline{macroTerminationResult}, so
+parameter it is stored in the function \asminline{macroTerminationResult}, so
 that the CallMacro Function proceeds with the corresponding outgoing transition.
-If no parameter is given the value is just set to \coreinline{true} to indicate a
+If no parameter is given the value is just set to \asminline{true} to indicate a
 termination without any particular result.
 
 % reset font sizes

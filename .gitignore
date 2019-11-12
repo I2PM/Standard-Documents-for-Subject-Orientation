@@ -533,3 +533,4 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/vim,latex,linux,macos,windows,eclipse,intellij+all,microsoftoffice
 
+*.dep

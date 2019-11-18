@@ -1304,7 +1304,7 @@ rule SelectReceivers_Selection(MI, currentStateNumber, rChs, min, max) =
     SetExecutionState(MI, s, REPEAT)
   }
 \end{minted}
-\caption{SelectReceivers Selection}
+\caption{SelectReceivers\_Selection}
 \label{lst:asm:SelectReceivers_Selection}
 \end{listing}
 
@@ -1757,7 +1757,7 @@ rule VarMan_Clear(MI, currentStateNumber, X) = {
   SetCompletedFunction(MI, currentStateNumber, undef)
 }
 \end{minted}
-\caption{VarMan Assign}
+\caption{VarMan\_Assign}
 \label{lst:asm:VarMan_Assign}
 \end{listing}
 
@@ -1808,7 +1808,7 @@ rule VarMan_Difference(MI, currentStateNumber, A, B, X) =
     SetCompletedFunction(MI, currentStateNumber, undef)
   }
 \end{minted}
-\caption{VarMan Concatenation}
+\caption{VarMan\_Concatenation}
 \label{lst:asm:VarMan_Concatenation}
 \end{listing}
 
@@ -1846,7 +1846,7 @@ rule VarMan_ExtractCorrelationID(MI, currentStateNumber, A, X) =
     SetCompletedFunction(MI, currentStateNumber, undef)
   }
 \end{minted}
-\caption{VarMan ExtractContent}
+\caption{VarMan\_ExtractContent}
 \label{lst:asm:VarMan_ExtractContent}
 \end{listing}
 
@@ -1892,7 +1892,7 @@ rule ResetSelection(MI, currentStateNumber) =
   selectionDecision(ch, MI, s) := undef
 }
 \end{minted}
-\caption{VarMan Selection}
+\caption{VarMan\_Selection}
 \label{lst:asm:VarMan_Selection}
 \end{listing}
 

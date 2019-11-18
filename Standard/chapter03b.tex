@@ -37,7 +37,7 @@ In the interpreter, each subject instance has an ASM Agent assigned, that keeps 
 where we mean state in the sense of which subject data is present, the content of the inputpool queues and also the active SBD states.
 This state is stored in ASM functions and assigned to the \textit{Channel}.
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // ASM Agent -> Channel
 function channelFor : Agents -> LIST
@@ -79,7 +79,7 @@ that are in use, so that their content can be reset upon the termination of a
 Macro Instance or the Subject, respectively.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // Channel * macroInstanceNumber * varname -> [vartype, content]
 function variable : LIST * NUMBER * STRING -> LIST
@@ -124,7 +124,7 @@ termination of a Subject a specific queue (and also the complete Inputpool)
 can be closed, in which case no additional reservation can be placed into it,
 too.
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // receiverChannel * senderSubjID * messageType * correlationID -> [msg1, msg2, ...]
 function inputPool : LIST * STRING * STRING * NUMBER -> LIST
@@ -161,7 +161,7 @@ the oldest one.
 As depicted in figure~\ref{fig:MainSBPM components}, a Subject Behavior consists at least of one \textit{Main Macro}
 and might have an arbitrary number of minor Macros, called \textit{Additional Macros}.
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule SubjectBehavior =
   MacroBehavior(1)
@@ -179,7 +179,7 @@ The \asminline{MacroBehavior} rule controls the evaluation of all active
 states for the given Macro Instance~ID~\asminline{MI}.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule MacroBehavior(MI) =
   let ch = channelFor(self) in
@@ -207,7 +207,7 @@ auto-transitions it is possible that such an transition is automatically selecte
 as it becomes enabled and as long as there are no other transitions to select from.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule Behavior(MI, currentStateNumber) =
  let s = currentStateNumber,
@@ -254,7 +254,7 @@ requires an external input, for example if an outgoing transition has to be chos
 
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // Channel * MacroInstanceNumber * StateNumber -> Set[String]
 function wantInput : LIST * NUMBER * NUMBER -> SET
@@ -275,7 +275,7 @@ The \asminline{SelectTransition} rule adds the \asminline{"TransitionDecision"}
 requirement into the \asminline{wantInput} function.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule SelectTransition(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -310,7 +310,7 @@ Since the activity is performed outside of the interpreter all outgoing transiti
 Therefore the state function only consists of the timeout check and transition selection.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule StartInternalAction(MI, currentStateNumber) = {
   StartTimeout(MI, currentStateNumber)
@@ -328,7 +328,7 @@ The initialization of the InternalAction starts the Timeout and enables all
 outgoing transitions.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule PerformInternalAction(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -373,7 +373,7 @@ in the corresponding queue and the receiver must not be
 \textit{non-proper} terminated.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // Channel * MacroInstanceNumber * StateNumber -> Set[Messages]
 function receivedMessages : LIST * NUMBER * NUMBER -> SET
@@ -409,7 +409,7 @@ CorrelationIDs. To ensure the uniqueness of a CorrelationID the
 that used the given CorrelationIDs.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule StartSend(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -458,7 +458,7 @@ the CorrelationID from the Variable in \asminline{messageWithCorrelationVar} wil
 so that the message is stored in the corresponding inputpool queue of the receiver.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule PerformSend(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -499,7 +499,7 @@ to place further reservation messages. If all reservations are placed the
 on whether no receiver is \textit{non-proper} terminated.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule SetMessageContent(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -524,7 +524,7 @@ function is written by the environment.
 
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // handle all receivers
 rule DoReservations(MI, currentStateNumber) =
@@ -545,7 +545,7 @@ The \asminline{DoReservations} rule iterates over all receivers that did not
 already receive a reservation message. The \asminline{DoReservation} rule
 then tries to place a reservation message for such receiver.
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // handle single reservation
 // result true if hasPlacedReservation, adds to reservationsDone
@@ -603,7 +603,7 @@ otherwise it is enqueued at the end.
 
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule TryCompletePerformSend(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -638,7 +638,7 @@ Timeout or Cancel transition. Otherwise the state function is completed and the 
 continue with the transition function.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule PerformTransitionSend(MI, currentStateNumber, t) =
   let ch = channelFor(self),
@@ -677,7 +677,7 @@ Also, if the communication transition has the parameter \asminline{messageNewCor
 the CorrelationID that was created in \asminline{StartSend} and used for the send messages will be stored in the given Variable.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule ReplaceReservation(MI, currentStateNumber, receiverChannel) =
   let ch = channelFor(self),
@@ -708,7 +708,7 @@ the reservation message and the actual Message. It then can replace the reservat
 in the queue with the actual message.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule AbortSend(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -727,7 +727,7 @@ rule AbortSend(MI, currentStateNumber) =
 To abort the Send Function all placed reservations have to be removed.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule CancelReservation(MI, currentStateNumber, receiverChannel) =
   let ch = channelFor(self),
@@ -772,7 +772,7 @@ If the Timeout doesn't need to be activated each outgoing transition is either s
 be enabled or disabled by the \asminline{CheckIP} rule.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule PerformReceive(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -827,7 +827,7 @@ the environment is required.
 
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule CheckIP(MI, currentStateNumber, t) =
   let ch = channelFor(self),
@@ -861,7 +861,7 @@ available the transition is enabled, otherwise it is set to be disabled.
 
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule PerformTransitionReceive(MI, currentStateNumber, t) =
   let ch = channelFor(self),
@@ -907,7 +907,7 @@ The ModalSplit Function initiates parallel execution paths that will be joined
 again in a ModalJoin Function.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule ModalSplit(MI, currentStateNumber, args) =
   let pID = processIDFor(self),
@@ -931,7 +931,7 @@ Macro Instance and removes itself.
 
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // Channel * MacroInstanceNumber * joinState -> Number
 function joinCount : LIST * NUMBER * NUMBER -> NUMBER
@@ -988,7 +988,7 @@ and therefore calls the \asminline{MacroBehavior} rule with the created Macro
 Instance~ID.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 // Channel * macroInstanceNumber -> result
 function macroTerminationResult : LIST * NUMBER -> ELEMENT
@@ -1016,7 +1016,7 @@ and then in the main phase evaluated.
 
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule CallMacro(MI, currentStateNumber, args) =
   let ch = channelFor(self),
@@ -1076,7 +1076,7 @@ function is reset for the next iteration. Otherwise the
 
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule InitializeMacroArguments(MI, mIDNew, MINew, givenSrcVNames) =
   local
@@ -1110,7 +1110,7 @@ The End Function is used to terminate the current Macro Instance and has no outg
 If the current Macro Instance is the Main Macro Instance the End Function terminates the Subject.
 
 
-\begin{listing}[H]
+\begin{listing}[htbp]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule PerformEnd(MI, currentStateNumber) =
   let ch = channelFor(self),

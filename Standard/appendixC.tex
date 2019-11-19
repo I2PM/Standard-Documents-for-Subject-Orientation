@@ -446,7 +446,8 @@ rule AbortMacroInstance(MIAbort, ignoreState) =
 /*
 - REPEAT
   - Behavior should be executed again for this state
-  - results of previous execution will be merged with following execution in one global ASM step
+  - updates from this execution step will be merged with the
+    following execution step in one global ASM update
   - no other states are allowed to be executed
 - DONE
   - no other active states are allowed to be executed
@@ -461,16 +462,16 @@ rule AbortMacroInstance(MIAbort, ignoreState) =
   - other active states, even with lower priority, can be executed
 */
 
-// ch * MacroInstanceNumber * stateNumber => Int
+// Channel * MacroInstanceNumber * stateNumber
 function executionState : LIST * NUMBER * NUMBER -> NUMBER
 
-// ch * MacroInstanceNumber => Int
+// Channel * MacroInstanceNumber
 function macroExecutionState : LIST * NUMBER -> NUMBER
 
-// ch * MacroInstanceNumber * stateNumber => List[(MI, s)]
+// Channel * MacroInstanceNumber * stateNumber -> List[(MI, s)]
 function addStates : LIST * NUMBER * NUMBER -> LIST
 
-// ch * MacroInstanceNumber * stateNumber => List[(MI, s)]
+// Channel * MacroInstanceNumber * stateNumber -> List[(MI, s)]
 function removeStates : LIST * NUMBER * NUMBER -> LIST
 \end{minted}
 \caption{SetExecutionState}
@@ -482,13 +483,13 @@ function removeStates : LIST * NUMBER * NUMBER -> LIST
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
-rule AddState(MI, currentStateNumber, MINew, sNew) = {
-  add [MINew, sNew] to addStates(channelFor(self), MI, currentStateNumber)
-}
+rule AddState(MI, currentStateNumber, MINew, sNew) =
+  add [MINew, sNew]
+    to addStates(channelFor(self), MI, currentStateNumber)
 
-rule RemoveState(MI, currentStateNumber, MIOld, sOld) = {
-  add [MIOld, sOld] to removeStates(channelFor(self), MI, currentStateNumber)
-}
+rule RemoveState(MI, currentStateNumber, MIOld, sOld) =
+  add [MIOld, sOld]
+    to removeStates(channelFor(self), MI, currentStateNumber)
 \end{minted}
 \caption{AddState}
 \label{lst:asm:AddState}
@@ -502,17 +503,14 @@ rule RemoveState(MI, currentStateNumber, MIOld, sOld) = {
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
-rule SubjectBehavior = {
-  choose x in killStates(channelFor(self)) do {
+rule SubjectBehavior =
+  choose x in killStates(channelFor(self)) do
     KillBehavior(nth(x, 1), nth(x, 2))
-  }
-  ifnone seqblock
-    MacroBehavior(1)
-
-    // reset
-    macroExecutionState(channelFor(self), 1) := undef
-  endseqblock
-}
+  ifnone
+    seqblock
+      MacroBehavior(1)
+    next // reset
+      macroExecutionState(channelFor(self), 1) := undef
 \end{minted}
 \caption{SubjectBehavior}
 \label{lst:asm:SubjectBehavior}

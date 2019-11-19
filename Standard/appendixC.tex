@@ -563,9 +563,11 @@ rule MacroBehavior(MI) =
     seq
       macroExecutionState(ch, MI) := undef
     next
-      // NOTE: can not be done with foreach, as remainingStates is modified
+      // NOTE: can not be done with foreach,
+      // as remainingStates is modified
       while (|remainingStates| > 0) do
-      let stateNumber = getAnyStateWithHighestPrio(pID, remainingStates) in
+      let stateNumber
+        = getAnyStateWithHighestPrio(pID, remainingStates) in
       seqblock
         executionState(ch, MI, stateNumber) := undef
         addStates(ch, MI, stateNumber)      := []
@@ -588,8 +590,9 @@ rule MacroBehavior(MI) =
 
 
 \begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-rule UpdateRemainingStates(MI, stateNumber, exState, remainingStates) =
+\begin{minted}[escapeinside=~~]{lexer.py:CoreASMLexer -x}
+rule UpdateRemainingStates(MI, stateNumber,
+                           exState, remainingStates) =
   let ch = channelFor(self),
      pID = processIDFor(self) in
   if (exState = REPEAT) then {
@@ -601,10 +604,10 @@ rule UpdateRemainingStates(MI, stateNumber, exState, remainingStates) =
     executionState(ch, MI, stateNumber) := undef
   }
   else if (exState = DONE) then {
-    seq // end loop ...
+    seq // end loop ~\ldots~
       remainingStates := []
     next
-      // ... but add new states of this MI to initialize them,
+      // ~\ldots~ but add new states of this MI to initialize them,
       // so that all states have the same start time
       foreach x in addStates(ch, MI, stateNumber)
         with nth(x, 1) = MI do {
@@ -622,7 +625,8 @@ rule UpdateRemainingStates(MI, stateNumber, exState, remainingStates) =
     next
       // reduce to states with same priority
       let prio = statePriority(pID, stateNumber) in
-        remainingStates := filterStatesWithSamePrio(pID, remainingStates, prio)
+        remainingStates
+          := filterStatesWithSamePrio(pID, remainingStates, prio)
 
     if (macroExecutionState(ch, MI) != DONE) then
       macroExecutionState(ch, MI) := NEXT
@@ -773,7 +777,9 @@ rule StartState(MI, currentStateNumber) =
       "internalAction" : StartInternalAction(MI, s)
       "send"           : StartSend(MI, s)
       "receive"        : SetExecutionState(MI, s, LOWER)
-      "end"            : SetExecutionState(MI, s, REPEAT) // directly to Perform w/o ASM step
+
+      // shortcut: directly to PerformEnd w/o ASM step
+      "end"            : SetExecutionState(MI, s, REPEAT)
     endcase
 
     initializedState(ch, MI, s) := true

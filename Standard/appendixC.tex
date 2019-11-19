@@ -1279,9 +1279,10 @@ rule SelectReceivers(MI, currentStateNumber) =
   let t = first_outgoingNormalTransition(pID, s) in
   let min = messageSubjectCountMin(pID, t),   // 0 => ALL
       max = messageSubjectCountMax(pID, t) in // 0 => no limit
-    let recVName = messageSubjectVar(pID, t) in
+  let recVName = messageSubjectVar(pID, t),
+      recSID   = messageSubjectId(pID, t) in
     if (recVName != undef and recVName != "") then
-      let rChs = loadChannelsFromVariable(MI, recVName, messageSubjectId(pID, t)) in
+      let rChs = loadChannelsFromVariable(MI, recVName, recSID) in
         if (|rChs| = 0 or (min != 0 and |rChs| < min)) then
           // BLOCKED: not enough receivers given
           SetExecutionState(MI, s, NEXT)
@@ -1302,8 +1303,7 @@ rule SelectReceivers(MI, currentStateNumber) =
           SetExecutionState(MI, s, REPEAT)
         }
       else
-        let sIDLocal = messageSubjectId(pID, t) in
-          SelectAgents(MI, s, sIDLocal, min, max)
+        SelectAgents(MI, s, recSID, min, max)
 \end{minted}
 \caption{SelectReceivers}
 \label{lst:asm:SelectReceivers}
@@ -1314,7 +1314,8 @@ rule SelectReceivers(MI, currentStateNumber) =
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
-rule SelectReceivers_Selection(MI, currentStateNumber, rChs, min, max) =
+rule SelectReceivers_Selection(MI, currentStateNumber,
+                               rChs, min, max) =
   let ch = channelFor(self),
        s = currentStateNumber in
   let res = selectionResult(ch, MI, s) in
@@ -1738,19 +1739,19 @@ rule VarMan(MI, currentStateNumber, args) =
      C = nth(args, 4),
      D = nth(args, 5) in
  case method of
-  "assign"               : VarMan_Assign   (MI, s, A, B)
-  "storeData"            : VarMan_StoreData(MI, s, A, B)
-  "clear"                : VarMan_Clear    (MI, s, A)
+  "assign"              : VarMan_Assign   (MI, s, A, B)
+  "storeData"           : VarMan_StoreData(MI, s, A, B)
+  "clear"               : VarMan_Clear    (MI, s, A)
 
-  "concatenation"        : VarMan_Concatenation(MI, s, A, B, C)
-  "intersection"         : VarMan_Intersection (MI, s, A, B, C)
-  "difference"           : VarMan_Difference   (MI, s, A, B, C)
+  "concatenation"       : VarMan_Concatenation(MI, s, A, B, C)
+  "intersection"        : VarMan_Intersection (MI, s, A, B, C)
+  "difference"          : VarMan_Difference   (MI, s, A, B, C)
 
-  "extractContent"       : VarMan_ExtractContent      (MI, s, A, B)
-  "extractChannel"       : VarMan_ExtractChannel      (MI, s, A, B)
-  "extractCorrelationID" : VarMan_ExtractCorrelationID(MI, s, A, B)
+  "extractContent"      : VarMan_ExtractContent      (MI, s, A, B)
+  "extractChannel"      : VarMan_ExtractChannel      (MI, s, A, B)
+  "extractCorrelationID": VarMan_ExtractCorrelationID(MI, s, A, B)
 
-  "selection"            : VarMan_Selection(MI, s, A, B, C, D)
+  "selection"           : VarMan_Selection(MI, s, A, B, C, D)
  endcase
 \end{minted}
 \caption{VarMan}
@@ -1843,29 +1844,29 @@ rule VarMan_Difference(MI, currentStateNumber, A, B, X) =
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule VarMan_ExtractContent(MI, currentStateNumber, A, X) =
   let a = loadVar(MI, A) in
-  let messages = last(a) in
-  let messagesContent = map(messages, @msgContent) in
-  let varType = head(firstFromSet(messagesContent)) in {
-    SetVar(MI, X, varType, flattenSet(map(messagesContent, @last)))
+  let msgs = last(a) in
+  let msgsContent = map(msgs, @msgContent) in
+  let varType = head(firstFromSet(msgsContent)) in {
+    SetVar(MI, X, varType, flattenSet(map(msgsContent, @last)))
 
     SetCompletedFunction(MI, currentStateNumber, undef)
   }
 
 rule VarMan_ExtractChannel(MI, currentStateNumber, A, X) =
   let a = loadVar(MI, A) in
-  let messages = last(a) in
-  let messagesChannel = map(messages, @msgChannel) in {
-    SetVar(MI, X, "ChannelInformation", messagesChannel)
+  let msgs = last(a) in
+  let msgsChannel = map(msgs, @msgChannel) in {
+    SetVar(MI, X, "ChannelInformation", msgsChannel)
 
     SetCompletedFunction(MI, currentStateNumber, undef)
   }
 
 rule VarMan_ExtractCorrelationID(MI, currentStateNumber, A, X) =
   let a = loadVar(MI, A) in
-  let messages = last(a) in
-  let messagesCorrelationID = map(messages, @msgCorrelation) in {
+  let msgs = last(a) in
+  let msgsCorrelationID = map(msgs, @msgCorrelation) in {
     SetVar(MI, X, "CorrelationID",
-               firstFromSet(messagesCorrelationID))
+               firstFromSet(msgsCorrelationID))
 
     SetCompletedFunction(MI, currentStateNumber, undef)
   }
@@ -1879,7 +1880,7 @@ rule VarMan_ExtractCorrelationID(MI, currentStateNumber, A, X) =
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
-// CH * MI * n
+// Channel * MI * n
 function selectionVartype  : LIST * NUMBER * NUMBER -> STRING
 function selectionData     : LIST * NUMBER * NUMBER -> LIST
 function selectionOptions  : LIST * NUMBER * NUMBER -> LIST
@@ -1889,21 +1890,20 @@ function selectionDecision : LIST * NUMBER * NUMBER -> SET
 
 function selectionResult   : LIST * NUMBER * NUMBER -> SET
 
-rule VarMan_Selection(MI, currentStateNumber, srcVName, dstVName, minimum, maximum) = {
+rule VarMan_Selection(MI, currentStateNumber, srcVName, dstVName,
+                                              minimum, maximum) =
+  let  ch = channelFor(self) in
   let src = loadVar(MI, srcVName),
-    res = selectionResult(channelFor(self), MI, currentStateNumber) in
-  if (res = undef) then {
-    // TODO: cancel / timeout transition?
+      res = selectionResult(ch, MI, currentStateNumber) in
+  if (res = undef) then
     Selection(MI, currentStateNumber, src, minimum, maximum)
-  }
   else {
-    selectionResult(channelFor(self), MI, currentStateNumber) := undef
+    selectionResult(ch, MI, currentStateNumber) := undef
 
     SetVar(MI, dstVName, head(src), res)
 
     SetCompletedFunction(MI, currentStateNumber, undef)
   }
-}
 
 rule ResetSelection(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -2079,7 +2079,7 @@ rule InitializeMacroArguments(MI, mIDNew, MINew, givenSrcVNames) =
 
 
 \begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
+\begin{minted}[escapeinside=~~]{lexer.py:CoreASMLexer -x}
 rule CallMacro(MI, currentStateNumber, args) =
   let ch = channelFor(self),
      pID = processIDFor(self),
@@ -2102,6 +2102,7 @@ rule CallMacro(MI, currentStateNumber, args) =
       StartMacro(MI, s, mIDNew, MINew)
     endseqblock
   else
+    // perform existing Macro Instance
     let childResult = macroTerminationResult(ch, childInstance) in
     if (childResult != undef) then {
       callMacroChildInstance(ch, MI, s) := undef
@@ -2113,10 +2114,10 @@ rule CallMacro(MI, currentStateNumber, args) =
         SetCompletedFunction(MI, s, childResult)
     }
     else seqblock
-      // Macro Instance is active, call it...
+      // Macro Instance is active, call it ~\ldots~
       MacroBehavior(childInstance)
 
-      // ... and transport its execution state
+      // ~\ldots~ and transport its execution state
       let mState = macroExecutionState(ch, childInstance) in
         SetExecutionState(MI, s, mState)
 

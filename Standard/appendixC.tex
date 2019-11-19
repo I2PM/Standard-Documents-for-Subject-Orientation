@@ -1031,62 +1031,83 @@ rule Proceed(MI, s_from, s_to) = {
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
-rule StartTimeout(MI, currentStateNumber) = {
-  startTime(channelFor(self), MI, currentStateNumber) := nanoTime()
-  timeoutActive(channelFor(self), MI, currentStateNumber) := false
-}
+rule StartTimeout(MI, currentStateNumber) =
+  let ch = channelFor(self) in {
+    startTime(ch, MI, currentStateNumber) := nanoTime()
+    timeoutActive(ch, MI, currentStateNumber) := false
+  }
 
-rule ResetTimeout(MI, currentStateNumber) = {
-  startTime(channelFor(self), MI, currentStateNumber) := undef
-  timeoutActive(channelFor(self), MI, currentStateNumber) := undef
-}
+rule ResetTimeout(MI, currentStateNumber) =
+  let ch = channelFor(self) in {
+    startTime(ch, MI, currentStateNumber) := undef
+    timeoutActive(ch, MI, currentStateNumber) := undef
+  }
 
-rule ActivateTimeout(MI, currentStateNumber) = {
-  timeoutActive(channelFor(self), MI, currentStateNumber) := true
-}
-
-rule InitializeCompletion(MI, currentStateNumber) = {
-  completed(channelFor(self), MI, currentStateNumber) := false
-}
-
-rule SetCompleted(MI, currentStateNumber) = {
-  SetExecutionState(MI, currentStateNumber, REPEAT)
-  completed(channelFor(self), MI, currentStateNumber) := true
-}
-
-rule SetAbortionCompleted(MI, currentStateNumber) = {
-  SetExecutionState(MI, currentStateNumber, DONE)
-  abortionCompleted(channelFor(self), MI, currentStateNumber) := true
-}
+rule ActivateTimeout(MI, currentStateNumber) =
+  let ch = channelFor(self) in
+    timeoutActive(ch, MI, currentStateNumber) := true
+\end{minted}
+\caption{StartTimeout}
+\label{lst:asm:StartTimeout}
+\end{listing}
 
 
-rule EnableTransition(MI, t) = {
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule InitializeCompletion(MI, currentStateNumber) =
+  let ch = channelFor(self) in
+    completed(ch, MI, currentStateNumber) := false
+
+rule SetCompleted(MI, currentStateNumber) =
+  let ch = channelFor(self) in {
+    SetExecutionState(MI, currentStateNumber, REPEAT)
+    completed(ch, MI, currentStateNumber) := true
+  }
+
+rule SetAbortionCompleted(MI, currentStateNumber) =
+  let ch = channelFor(self) in {
+    SetExecutionState(MI, currentStateNumber, DONE)
+    abortionCompleted(ch, MI, currentStateNumber) := true
+  }
+\end{minted}
+\caption{InitializeCompletion}
+\label{lst:asm:InitializeCompletion}
+\end{listing}
+
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule EnableTransition(MI, t) =
   exitCondition(channelFor(self), MI, t) := true
-}
 
-rule EnableAllTransitions(MI, currentStateNumber) = {
-  forall t in outgoingNormalTransitions(processIDFor(self), currentStateNumber) do {
-    EnableTransition(MI, t)
-  }
-}
+rule EnableAllTransitions(MI, currentStateNumber) =
+  let pID = processIDFor(self),
+        s = currentStateNumber in
+    forall t in outgoingNormalTransitions(pID, s) do
+      EnableTransition(MI, t)
 
-
-rule DisableTransition(MI, currentStateNumber, t) = {
+rule DisableTransition(MI, currentStateNumber, t) =
   exitCondition(channelFor(self), MI, t) := false
-}
 
-rule DisableAllTransitions(MI, currentStateNumber) = {
-  selectedTransition(channelFor(self), MI, currentStateNumber) := undef
+rule DisableAllTransitions(MI, currentStateNumber) =
+  let ch = channelFor(self),
+     pID = processIDFor(self),
+       s = currentStateNumber in {
+    forall t in outgoingNormalTransitions(ppID, s) do
+      DisableTransition(MI, s, t)
 
-  forall t in outgoingNormalTransitions(processIDFor(self), currentStateNumber) do {
-    DisableTransition(MI, currentStateNumber, t)
+    selectedTransition(ch, MI, s) := undef
   }
-}
+\end{minted}
+\caption{EnableTransition}
+\label{lst:asm:EnableTransition}
+\end{listing}
 
-rule InitializeCompletionTransition(MI, t) = {
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule InitializeCompletionTransition(MI, t) =
   transitionCompleted(channelFor(self), MI, t) := false
-}
-
 
 rule SetCompletedTransition(MI, currentStateNumber, t) = {
   SetExecutionState(MI, currentStateNumber, REPEAT)
@@ -1094,8 +1115,8 @@ rule SetCompletedTransition(MI, currentStateNumber, t) = {
   transitionCompleted(channelFor(self), MI, t) := true
 }
 \end{minted}
-\caption{StartTimeout}
-\label{lst:asm:StartTimeout}
+\caption{InitializeCompletionTransition}
+\label{lst:asm:InitializeCompletionTransition}
 \end{listing}
 
 

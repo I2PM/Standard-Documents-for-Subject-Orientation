@@ -125,16 +125,18 @@ can be closed, in which case no additional reservation can be placed into it,
 too.
 
 \begin{listing}[htbp]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-// receiverChannel * senderSubjID * messageType * correlationID -> [msg1, msg2, ...]
+\begin{minted}[escapeinside=~~]{lexer.py:CoreASMLexer -x}
+// Channel * senderSubjID * msgType * correlationID
+//   -> [msg1, msg2, ~\ldots~]
 function inputPool : LIST * STRING * STRING * NUMBER -> LIST
 
-/* store all locations where an inputPool was defined for to allow IPEmpty and receiving from "?" */
-// receiverChannel -> {[senderSubjID, messageType, correlationID], ..}
+/* stores all locations where an inputPool was defined */
+// Channel -> {[senderSubjID, msgType, correlationID], ~\ldots~}
 function inputPoolDefined : LIST -> SET
 
-// receiverChannel * senderSubjID * messageType * correlationID
-function inputPoolClosed : LIST * STRING * STRING * NUMBER -> BOOLEAN
+// Channel * senderSubjID * msgType * correlationID
+function inputPoolClosed : LIST * STRING * STRING * NUMBER
+  -> BOOLEAN
 \end{minted}
 \caption{inputPool}
 \label{lst:shortasm:inputPool}
@@ -382,9 +384,10 @@ function receivedMessages : LIST * NUMBER * NUMBER -> SET
 function receivers : LIST * NUMBER * NUMBER -> SET
 
 // Channel * MacroInstanceNumber * StateNumber
-function messageContent               : LIST * NUMBER * NUMBER -> LIST
-function messageCorrelationID         : LIST * NUMBER * NUMBER -> NUMBER
-function messageReceiverCorrelationID : LIST * NUMBER * NUMBER -> NUMBER
+function messageContent       : LIST * NUMBER * NUMBER -> LIST
+function messageCorrelationID : LIST * NUMBER * NUMBER -> NUMBER
+function messageReceiverCorrelationID : LIST * NUMBER * NUMBER
+  -> NUMBER
 
 // Channel * MacroInstanceNumber * StateNumber -> Set[Channel]
 function reservationsDone : LIST * NUMBER * NUMBER -> SET
@@ -616,7 +619,7 @@ rule TryCompletePerformSend(MI, currentStateNumber) =
     }
     else
       // BLOCKED: a receiver where a reservation was placed has
-      // terminated non-proper in the meantime, refusing to continue
+      // terminated non-proper in the meantime
       skip
   else {
     // there must be exactly one transition

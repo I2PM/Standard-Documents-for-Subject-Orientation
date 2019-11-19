@@ -140,7 +140,7 @@ function wantInput : LIST * NUMBER * NUMBER -> SET
 
 
 \begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
+\begin{minted}[escapeinside=~~]{lexer.py:CoreASMLexer -x}
 // Channel * MacroInstanceNumber * StateNumber -> BOOLEAN
 function initializedState : LIST * NUMBER * NUMBER -> BOOLEAN
 
@@ -154,15 +154,14 @@ function cancelDecision : LIST * NUMBER * NUMBER -> BOOLEAN
 // Channel * MacroInstanceNumber * StateNumber -> BOOLEAN
 function abortionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
 
-// Channel * MacroInstanceNumber * StateNumber -> ..
-function selectedTransition : LIST * NUMBER * NUMBER -> NUMBER // -> TransitionNumber
-function initializedSelectedTransition : LIST * NUMBER * NUMBER -> BOOLEAN
+// Channel * MacroInstanceNumber * StateNumber
+function selectedTransition : LIST * NUMBER * NUMBER -> NUMBER
+function initializedSelectedTransition : LIST * NUMBER * NUMBER
+  -> BOOLEAN
 function startTime  : LIST * NUMBER * NUMBER -> NUMBER
 
-// can exit
 // Channel * MacroInstanceNumber * TransitionNumber -> BOOLEAN
 function exitCondition : LIST * NUMBER * NUMBER -> BOOLEAN
-// TODO: may rename, possibly transitionEnabled ???
 
 // Channel * MacroInstanceNumber * TransitionNumber -> BOOLEAN
 function transitionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
@@ -175,20 +174,18 @@ function transitionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
-derived shouldTimeout(ch, MI, stateNumber) = return boolres in {
-  let pID = processIDOf(ch) in {
-    if (hasTimeoutTransition(pID, stateNumber) = true and startTime(ch, MI, stateNumber) != undef) then {
+derived shouldTimeout(ch, MI, stateNumber) = return boolres in
+  let pID = processIDOf(ch) in
+    if (hasTimeoutTransition(pID, stateNumber) = true
+        and startTime(ch, MI, stateNumber) != undef) then
       let t = outgoingTimeoutTransition(pID, stateNumber) in
-      let timeout = transitionTimeout(pID, t) * 1000 * 1000 * 1000 in {
-        let runningTime = (nanoTime() - startTime(ch, MI, stateNumber)) in
-          boolres := (runningTime > timeout)
-      }
-    }
-    else {
+      let timeout = (transitionTimeout(pID, t)
+                     * 1000 * 1000 * 1000) in
+      let runningTime = (nanoTime()
+                         - startTime(ch, MI, stateNumber)) in
+        boolres := (runningTime > timeout)
+    else
       boolres := false
-    }
-  }
-}
 \end{minted}
 \caption{shouldTimeout}
 \label{lst:asm:shouldTimeout}
@@ -227,25 +224,26 @@ function callMacroChildInstance : LIST * NUMBER * NUMBER -> NUMBER
 \section{Interaction Definitions}
 
 \begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-// receiverChannel * senderSubjID * messageType * correlationID -> [msg1, msg2, ...]
+\begin{minted}[escapeinside=~~]{lexer.py:CoreASMLexer -x}
+// Channel * senderSubjID * msgType * correlationID
+//   -> [msg1, msg2, ~\ldots~]
 function inputPool : LIST * STRING * STRING * NUMBER -> LIST
 
-/* store all locations where an inputPool was defined for to allow IPEmpty and receiving from "?" */
-// receiverChannel -> {[senderSubjID, messageType, correlationID], ..}
+/* stores all locations where an inputPool was defined */
+// Channel -> {[senderSubjID, msgType, correlationID], ~\ldots~}
 function inputPoolDefined : LIST -> SET
 
-// receiverChannel * senderSubjID * messageType * correlationID
-function inputPoolClosed : LIST * STRING * STRING * NUMBER -> BOOLEAN
+// Channel * senderSubjID * msgType * correlationID
+function inputPoolClosed : LIST * STRING * STRING * NUMBER
+  -> BOOLEAN
 
-derived inputPoolIsClosed(receiverChannel, senderSubjID, messageType, correlationID) = return boolres in
-  let isClosed = inputPoolClosed(receiverChannel, senderSubjID, messageType, correlationID) in
-    if (isClosed = undef) then {
-      boolres := inputPoolClosed(receiverChannel, undef, undef, undef) // default: global state
-    }
-    else {
-      boolres := isClosed
-    }
+derived inputPoolIsClosed(ch, senderSubjID, msgType, cID) =
+return boolres in
+let isClosed = inputPoolClosed(ch, senderSubjID, msgType, cID) in
+  if (isClosed = undef) then // default: global state
+    boolres := inputPoolClosed(ch, undef, undef, undef)
+  else
+    boolres := isClosed
 \end{minted}
 \caption{inputPool}
 \label{lst:asm:inputPool}
@@ -262,9 +260,10 @@ function receivedMessages : LIST * NUMBER * NUMBER -> SET
 function receivers : LIST * NUMBER * NUMBER -> SET
 
 // Channel * MacroInstanceNumber * StateNumber
-function messageContent               : LIST * NUMBER * NUMBER -> LIST
-function messageCorrelationID         : LIST * NUMBER * NUMBER -> NUMBER
-function messageReceiverCorrelationID : LIST * NUMBER * NUMBER -> NUMBER
+function messageContent       : LIST * NUMBER * NUMBER -> LIST
+function messageCorrelationID : LIST * NUMBER * NUMBER -> NUMBER
+function messageReceiverCorrelationID : LIST * NUMBER * NUMBER
+  -> NUMBER
 
 // Channel * MacroInstanceNumber * StateNumber -> Set[Channel]
 function reservationsDone : LIST * NUMBER * NUMBER -> SET
@@ -1223,7 +1222,7 @@ rule TryCompletePerformSend(MI, currentStateNumber) =
        s = currentStateNumber in
   if (anyNonProperTerminated(receivers(ch, MI, s)) = true) then
     // BLOCKED: a receiver where a reservation was placed has
-    // terminated non-proper in the meantime, refusing to continue
+    // terminated non-proper in the meantime
     if (shouldTimeout(ch, MI, s) = true) then {
       SetCompleted(MI, s)
       ActivateTimeout(MI, s)

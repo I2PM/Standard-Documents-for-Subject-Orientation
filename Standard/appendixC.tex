@@ -2227,15 +2227,15 @@ rule PerformTransitionCancel(MI, currentStateNumber, t) =
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule CloseIP(MI, currentStateNumber, args) =
   let ch = channelFor(self),
-      senderSubjID       = nth(args, 1),
-      messageType        = nth(args, 2),
-      correlationIDVName = nth(args, 3) in
-  let correlationID = loadCorrelationID(MI, correlationIDVName) in {
-    inputPoolClosed(ch, senderSubjID, messageType, correlationID) := true
+      senderSubjID = nth(args, 1),
+      msgType      = nth(args, 2),
+      cIDVName     = nth(args, 3) in
+  let cID = loadCorrelationID(MI, cIDVName) in {
+    inputPoolClosed(ch, senderSubjID, msgType, cID) := true
 
-    if (inputPool(ch, senderSubjID, messageType, correlationID) = undef) then {
-      add [senderSubjID, messageType, correlationID] to inputPoolDefined(ch)
-      inputPool(ch, senderSubjID, messageType, correlationID) := []
+    if (inputPool(ch, senderSubjID, msgType, cID) = undef) then {
+      add [senderSubjID, msgType, cID] to inputPoolDefined(ch)
+      inputPool(ch, senderSubjID, msgType, cID) := []
     }
 
     SetCompletedFunction(MI, currentStateNumber, undef)
@@ -2252,15 +2252,15 @@ rule CloseIP(MI, currentStateNumber, args) =
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule OpenIP(MI, currentStateNumber, args) =
   let ch = channelFor(self),
-      senderSubjID       = nth(args, 1),
-      messageType        = nth(args, 2),
-      correlationIDVName = nth(args, 3) in
-  let correlationID = loadCorrelationID(MI, correlationIDVName) in {
-    inputPoolClosed(ch, senderSubjID, messageType, correlationID) := false
+      senderSubjID = nth(args, 1),
+      msgType      = nth(args, 2),
+      cIDVName     = nth(args, 3) in
+  let cID = loadCorrelationID(MI, cIDVName) in {
+    inputPoolClosed(ch, senderSubjID, msgType, cID) := false
 
-    if (inputPool(ch, senderSubjID, messageType, correlationID) = undef) then {
-        add [senderSubjID, messageType, correlationID] to inputPoolDefined(ch)
-        inputPool(ch, senderSubjID, messageType, correlationID) := []
+    if (inputPool(ch, senderSubjID, msgType, cID) = undef) then {
+        add [senderSubjID, msgType, cID] to inputPoolDefined(ch)
+        inputPool(ch, senderSubjID, msgType, cID) := []
     }
 
     SetCompletedFunction(MI, currentStateNumber, undef)

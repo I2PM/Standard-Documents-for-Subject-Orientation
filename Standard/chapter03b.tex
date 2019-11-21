@@ -22,6 +22,52 @@ simplifications for this chapter:
 	\item no KillBehavior (although recursive macros and reservation messages). therefore this will not be sound - but a bit less complicated
 \end{itemize}
 
+
+\subsection{Architecture}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.7\linewidth]{Figures/CoreASM/ArchitekturKonsoleCoreASM}
+  \caption{Runtime environments and system components. The blue (dark background) components are part of the Java based CoreASM Engine. The yellow (light background) components are developed by us by using the Scala programming language \citep{ecole_polytechnique_federale_scala_2019} and the Akka actor library \citep{lightbend_inc_akka_2019}.}
+  \label{fig:coreasm_architecture}
+\end{figure}
+
+The overall architecture is shown in figure~\ref{fig:coreasm_architecture} and consists on the top level of
+a console application as user interface and the CoreASM engine.
+Both high level components are running in parallel in separate Java Virtual Machine processes.
+The locally stored specification file includes an ASM specification of asynchronous multi-agent ASMs, executing each Subject by one ASM-agent each.
+
+
+The CoreASM engine parses the specification file and executes the rules in the interpreter
+in cooperation with the abstract storage and the scheduler.
+The abstract storage stores the state of the ASM and is also used to support
+TurboASMs and their submachine states.
+
+The scheduler is used to support asynchronous multi-agent ASMs; with
+the \textit{default} scheduling policy it selects
+a random subset of the running ASM agents and calls the
+interpreter for the parallel evaluation of their main rules.
+If the resultant update sets
+are consistent they are applied in the abstract storage, otherwise the scheduler
+selects a different subset of the running ASM agents for a re-evaluation.
+Supplementary the \textit{onebyone} scheduling policy can be used to evaluate
+only a single agent per step and the \textit{allfirst} policy can be used
+to attempt to evaluate all agents at once before falling back
+to the default scheduling policy in case of inconsistencies.
+We use the \textit{allfirst} scheduling policy in our work for performance reasons
+but could use the \textit{default} policy as well.
+
+The Carma application is a simple Java application provided by the CoreASM framework
+to allow the usage of the CoreASM engine as standalone application in a command line.
+
+The console application is developed in Scala.
+A user can load, start and execute locally stored S-BPM Process Models with it.
+The interaction between the console application and the CoreASM engine is realized by Akka actors.
+The Akka actor of the engine has full read and write access to all CoreASM functions by using a Plug-In interface.
+
+
+
+
 \subsection{Foundation}
 
 The interpreter uses asynchronous multi-agent Turbo ASMs.

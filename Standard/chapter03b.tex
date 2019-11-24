@@ -26,16 +26,20 @@ simplifications for this chapter:
 \subsection{Architecture}
 
 \begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.7\linewidth]{Figures/CoreASM/ArchitekturKonsoleCoreASM}
-  \caption{Runtime environments and system components. The blue (dark background) components are part of the Java based CoreASM Engine. The yellow (light background) components are developed by us by using the Scala programming language \citep{ecole_polytechnique_federale_scala_2019} and the Akka actor library \citep{lightbend_inc_akka_2019}.}
+  \centering
+  \includegraphics[width=0.7\linewidth]{Figures/CoreASM/ArchitekturKonsoleCoreASM}
+  \caption{Architecture of the reference implementation}
   \label{fig:coreasm_architecture}
 \end{figure}
 
+% Runtime environments and system components.
+% The blue (dark background) components are existing parts of the Java based CoreASM Engine.
+% The yellow (light background) components are developed for the PASS-interpreter.
+
 The overall architecture is shown in figure~\ref{fig:coreasm_architecture} and consists on the top level of
-a console application as user interface and the CoreASM engine.
+a console application as user interface and the CoreASM engine as execution environment for the PASS-interpreter specification.
 Both high level components are running in parallel in separate Java Virtual Machine processes.
-The locally stored specification file includes an ASM specification of asynchronous multi-agent ASMs, executing each Subject by one ASM-agent each.
+The PASS-interpreter specification file includes an ASM specification of asynchronous multi-agent ASMs, executing each Subject by one ASM-agent each.
 
 
 The CoreASM engine parses the specification file and executes the rules in the interpreter

@@ -8,32 +8,240 @@
 \section{Conceptual Differences ASM Semantic / OWL Model}
 \label{CoreASM-Reference-Implementation-Differences-OWL-Model}
 
+
+
+\definecolor{OWLClass}{RGB}{207, 165, 0}
+\definecolor{OWLObjectProperty}{RGB}{0, 121, 186}
+\definecolor{OWLDataProperty}{RGB}{56, 161, 74}
+\definecolor{OWLIndividual}{RGB}{135, 75, 130}
+
+\newcommand\OWLClass[1]{{\textcolor{OWLClass}{\textbf{#1}}}}
+\newcommand\OWLObjectProperty[1]{{\textcolor{OWLObjectProperty}{\textbf{#1}}}}
+\newcommand\OWLDataProperty[1]{{\textcolor{OWLDataProperty}{\textbf{#1}}}}
+\newcommand\OWLIndividual[1]{{\textcolor{OWLIndividual}{\textbf{#1}}}}
+
+
 % Some content might move to Appendix B / replace it.
 
-This implementation provides more language elements than covered by the OWL description and also gives some concrete implementations.
+This implementation provides more language elements than covered by the OWL description and also gives some concrete implementations, that are left abstract in the OWL description.
 
-Additionally to OWL:
-\begin{itemize}
-    \item Internal Behavior: usage of Subject Data: DataModificationFunction (VarMan: Selection, Concatenation, \ldots), DataMappingFunction (StoreMessage, UseMessageContent, UseCorrelationID).
-    Subject Data can be scoped to Macro Instance and passed as macro argument.
-    \item macro exit parameters to influence the outgoing transition of an macrostate
-    \item Interaction: Subject Restart (also: upon termination of a subject it is determined whether it can be restarted), Inputpool Functions (CloseIP, OpenIP, \ldots), CorrelationID, Mobility of Channel.
-\end{itemize}
+% TODO André: describe tables.
 
-There are also some conceptional differences and limitations:
-\begin{itemize}
-    \item the end state is a function, and not an attribute. end states must not have outgoing transitions.
-    \item functions span over a state function and transition function. the state function determines which transitions are enabled and prepares the transition action. example receive function: state function checks IP, transition function removes message from it and stores it in a variable.
-    \item only blocking asynchronous send, i.e. IP strategy blocking - no delete / drop. no sync send.
-    \item modal split / join instead of ChoiceSegement. only mandatory to start and end / no optional start or optional end.
-    \item timeout transitions: designed for interactive process validation -> duration in seconds, no business days. also no reminders.
-    \item Observer: different approach: no native support; possible via Modal Split + Receive State with State Priority + following Cancel Function, to overcome limitations of previous specifications.
-\end{itemize}
+See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\ref{tbl:asm:concepts_3} for details.
+
+% functions span over a state function and transition function.
+% the state function determines which transitions are enabled and prepares the transition action.
+% example receive function: state function checks IP, transition function removes message from it and stores it in a variable.
+
+
+\begin{table}[htbp]
+    \footnotesize
+	\centering
+    \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
+        \toprule
+        Concept & Reference Implementation & OWL \\
+        \midrule
+
+        End State
+        &
+        Implemented as a \OWLClass{DoState} that \OWLObjectProperty{hasFunctionSpecification} \OWLClass{EndFunction}, cannot be a \OWLClass{ReceiveState}.
+        Forbids any \OWLObjectProperty{hasOutgoingTransition}.
+        &
+        Must either be \OWLClass{DoState} or \OWLClass{ReceiveState}.
+        Allows \OWLObjectProperty{hasOutgoingTransition} for Subject Restart.
+        \\
+
+        Subject Restart
+        &
+        Implicit after \textit{proper termination} when an additional message arrive.
+        &
+        Explicit via \OWLClass{EndState} on a \OWLClass{ReceiveState}, not after termination.
+        \\
+
+        Proper Termination
+        &
+        On termination of a Subject it determines if the InputPool is empty and a Subject Restart is allowed.
+        If the InputPool is not empty further messages are blocked and the Subject is not allowed to restart.
+        &
+        \textit{Absent}.
+        \\
+
+        InputPoolConstraint
+        &
+        Only the \OWLClass{MessageSenderTypeConstraint} with \OWLIndividual{InputPoolConstraintStrategy-Blocking} is supported.
+        Setting the limit to 0 means unlimited. Synchronous send \& receive is not supported.
+        &
+        Allows various combinations of limits set per Sender, MessageType or both.
+        The combination \OWLIndividual{InputPoolConstraintStrategy-Blocking} with the limit of 0 means synchronous send \& receive.
+        Additionally defines the strategies DeleteLatest, DeleteOldest and Drop.
+        \\
+
+        Mobility of Channels
+        &
+        Concept to store and forward at runtime references to other subjects and their agents.
+        &
+        \textit{Absent}.
+        \\
+
+        CorrelationID
+        &
+        Concept to correlate messages, e.g. responses to requests, so that messages can be send and received reliable in a loop.
+        &
+        \textit{Absent}.
+        \\
+
+        Choice Segments
+        &
+        Choice Segments are initiated by an explicit Modal Split State and joined with an explicit Modal Join State.
+        The target State of every outgoing Transition from the Modal Split State is an \OWLClass{InitialStateOfChoiceSegmentPath}.
+        Every Choice Segment Path is therefore mandatory to start. Also, every Choice Segment Path is mandatory to end and must have a Transition to the Modal Join State.
+        &
+        Choice Segment Paths can be optional to start and optional to end.
+        Choice Segment Paths are not connected by Transitions to the \OWLClass{ChoiceSegment} State and its target State.
+        \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Conceptual differences between this reference implementation and the OWL description (1).}
+    \label{tbl:asm:concepts_1}
+\end{table}
+
+
+
+\begin{table}[htbp]
+    \footnotesize
+	\centering
+    \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
+        \toprule
+        Concept & Reference Implementation & OWL \\
+        \midrule
+
+        Subject Data Scope
+        &
+        A \OWLClass{DataObjectDefinition} can be scoped to either the Subject or a \OWLClass{SubjectBehavior}.
+        When it is scoped to a Behavior its value is accessible only within instances of that Behavior, i.e. within a single instance of a Macro Behavior.
+        When it is scoped to the Subject its value is accessible from every SubjectBehavior instance, given there is no locally scoped Data Object Definition with the same ID.
+        &
+        Is always scoped to the Subject.
+        \\
+
+        Macro Data Arguments
+        &
+        A \OWLClass{MacroState} can copy the value of a \OWLClass{DataObjectDefinition} into the scope of another \OWLClass{DataObjectDefinition}, which is scoped to the referenced \OWLClass{MacroBehavior}.
+        &
+        \textit{Absent}.
+        \\
+
+        Data Modification Functions
+        &
+        Data Modification Functions perform operations on Subject Data, e.g. concatenation of objects having a set-valued data type.
+        &
+        \textit{Absent}.
+        \\
+
+        Data Mapping Functions
+        &
+        \OWLClass{StoreMessageFunction} stores the received messages in a local Data Object.
+        \OWLClass{UseMessageContentFunction} uses the value of a Data Object as content of the outgoing message.
+        \OWLClass{UseCorrelationIDFunction} uses the value of a Data Object as CorrelationID of the outgoing message.
+        &
+        \textit{Abstract}.
+        \\
+
+        InputPool Functions
+        &
+        InputPool Functions perform operations on the Subject's InputPool, e.g. close it for some message types or sender Subjects.
+        &
+        \textit{Absent}.
+        \\
+
+        Macro Exit Parameter
+        &
+        Attribute on the End State of a Macro Behavior that selects a corresponding Transition on the \OWLClass{MacroState}.
+        &
+        \textit{Absent}. % FIXME: wirklich? Standard-PASS müsste das doch haben?
+        \\
+
+        Timer Transition
+        &
+        The Timer Transition Condition has to be defined in seconds.
+        &
+        It is possible to define the timeout in arbitrary time durations, including in business days.
+        \\
+
+        Reminder Transition
+        &
+        \textit{Absent}.
+        &
+        A \OWLClass{ReminderTransition} can be traversed if a certain time based event or frequency has been reached.
+        \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Conceptual differences between this reference implementation and the OWL description (2).}
+    \label{tbl:asm:concepts_2}
+\end{table}
+
+
+
+\begin{table}[htbp]
+    \footnotesize
+	\centering
+    \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
+        \toprule
+        Concept & Reference Implementation & OWL \\
+        \midrule
+
+        Cancel Function
+        &
+        Enables the \OWLClass{UserCancelTransition} of a referenced \OWLClass{State}.
+        &
+        \textit{Absent}.
+        \\
+
+        State Priorities
+        &
+        A utility to support the Observer Concept.
+        When multiple states are active only the states with the highest priority can perform.
+        The Function of such states can conditionally allow states with a lower priority to perform.
+        &
+        \textit{Absent}.
+        \\
+
+        Observer
+        &
+        Implicitly supported, requires modelling of a ReceiveState with a high State Priority to interrupt another path.
+        After the exception handling the interrupted behavior can continue, be aborted with the Cancel Function or the Subject can terminate by an EndState.
+        &
+        Explicitly supported. Executes the \OWLClass{GuardBehavior}, not possible to return to the interrupted state.
+        \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Conceptual differences between this reference implementation and the OWL description (3).}
+    \label{tbl:asm:concepts_3}
+\end{table}
+
 
 
 \section{editorial note}
 
-To fit the code onto the pages it has been compacted, for example:
+To fit the code onto the pages it has been compacted. Instead of writing:
+
+\begin{listing}[H]
+\begin{minted}{lexer.py:CoreASMLexer -x}
+rule Behavior(macroInstanceNumber, currentStateNumber) =
+  if (initializedState(channelFor(self),
+                       macroInstanceNumber,
+                       currentStateNumber) != true) then
+    StartState(macroInstanceNumber, currentStateNumber)
+  else // ...
+\end{minted}
+\caption{Behavior, spread-out snippet}
+\label{lst:asm:Behavior_snipped_spread-out}
+\end{listing}
+
+the code blocks are transformed to a more compact notation:
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -48,20 +256,7 @@ rule Behavior(MI, currentStateNumber) =
 \label{lst:asm:Behavior_snipped_compact}
 \end{listing}
 
-instead of:
 
-\begin{listing}[H]
-\begin{minted}{lexer.py:CoreASMLexer -x}
-rule Behavior(macroInstanceNumber, currentStateNumber) =
-  if (initializedState(channelFor(self),
-                       macroInstanceNumber,
-                       currentStateNumber) != true) then
-    StartState(macroInstanceNumber, currentStateNumber)
-  else // ...
-\end{minted}
-\caption{Behavior, spread-out snippet}
-\label{lst:asm:Behavior_snipped_spread-out}
-\end{listing}
 
 
 Some elements are intentionally left out in order to preserve space.

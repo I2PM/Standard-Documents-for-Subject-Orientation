@@ -356,7 +356,7 @@ function initializedSelectedTransition : LIST * NUMBER * NUMBER
 function startTime  : LIST * NUMBER * NUMBER -> NUMBER
 
 // Channel * MacroInstanceNumber * TransitionNumber -> BOOLEAN
-function exitCondition : LIST * NUMBER * NUMBER -> BOOLEAN
+function transitionEnabled : LIST * NUMBER * NUMBER -> BOOLEAN
 
 // Channel * MacroInstanceNumber * TransitionNumber -> BOOLEAN
 function transitionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
@@ -1008,7 +1008,7 @@ rule ResetState(MI, stateNumber) =
 
     let pID = processIDFor(self) in
     forall t in outgoingNormalTransitions(pID, s) do {
-      exitCondition(ch, MI, t) := undef
+      transitionEnabled(ch, MI, t) := undef
       transitionCompleted(ch, MI, t) := undef
     }
 
@@ -1273,7 +1273,7 @@ rule SetAbortionCompleted(MI, currentStateNumber) =
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule EnableTransition(MI, t) =
-  exitCondition(channelFor(self), MI, t) := true
+  transitionEnabled(channelFor(self), MI, t) := true
 
 rule EnableAllTransitions(MI, currentStateNumber) =
   let pID = processIDFor(self),
@@ -1282,7 +1282,7 @@ rule EnableAllTransitions(MI, currentStateNumber) =
       EnableTransition(MI, t)
 
 rule DisableTransition(MI, currentStateNumber, t) =
-  exitCondition(channelFor(self), MI, t) := false
+  transitionEnabled(channelFor(self), MI, t) := false
 
 rule DisableAllTransitions(MI, currentStateNumber) =
   let ch = channelFor(self),

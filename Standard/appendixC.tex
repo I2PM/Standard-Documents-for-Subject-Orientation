@@ -39,8 +39,18 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
 	\centering
     \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
         \toprule
-        Concept & Reference Implementation & OWL \\
+        Concept & Reference Implementation & OWL Description \\
         \midrule
+
+        InputPoolConstraint
+        &
+        Only the \OWLClass{MessageSenderTypeConstraint} with \OWLIndividual{InputPoolConstraintStrategy-Blocking} is supported.
+        Setting the limit to 0 means unlimited. Synchronous send \& receive is not supported.
+        &
+        Allows various combinations of limits set per Sender, MessageType or both.
+        The combination \OWLIndividual{InputPoolConstraintStrategy-Blocking} with the limit of 0 means synchronous send \& receive.
+        Additionally defines the strategies DeleteLatest, DeleteOldest and Drop.
+        \\
 
         End State
         &
@@ -53,7 +63,7 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
 
         Subject Restart
         &
-        Implicit after \textit{proper termination} when an additional message arrive.
+        Implicit after \textit{proper termination} when an additional message arrives.
         &
         Explicit via \OWLClass{EndState} on a \OWLClass{ReceiveState}, not after termination.
         \\
@@ -66,28 +76,18 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
         \textit{Absent}.
         \\
 
-        InputPoolConstraint
+        Timer Transition
         &
-        Only the \OWLClass{MessageSenderTypeConstraint} with \OWLIndividual{InputPoolConstraintStrategy-Blocking} is supported.
-        Setting the limit to 0 means unlimited. Synchronous send \& receive is not supported.
+        The Timer Transition Condition has to be defined in seconds.
         &
-        Allows various combinations of limits set per Sender, MessageType or both.
-        The combination \OWLIndividual{InputPoolConstraintStrategy-Blocking} with the limit of 0 means synchronous send \& receive.
-        Additionally defines the strategies DeleteLatest, DeleteOldest and Drop.
+        It is possible to define the timeout in arbitrary time durations, including in business days.
         \\
 
-        Mobility of Channels
-        &
-        Concept to store and forward at runtime references to other subjects and their agents.
+        Reminder Transition
         &
         \textit{Absent}.
-        \\
-
-        CorrelationID
         &
-        Concept to correlate messages, e.g. responses to requests, so that messages can be send and received reliable in a loop.
-        &
-        \textit{Absent}.
+        A \OWLClass{ReminderTransition} can be traversed if a certain time based event or frequency has been reached.
         \\
 
         Choice Segments
@@ -100,9 +100,16 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
         Choice Segment Paths are not connected by Transitions to the \OWLClass{ChoiceSegment} State and its target State.
         \\
 
+        Macro Exit Parameter
+        &
+        Attribute on the End State of a Macro Behavior that selects a corresponding Transition on the \OWLClass{MacroState}.
+        &
+        \textit{Absent}. % FIXME: wirklich? Standard-PASS müsste das doch haben?
+        \\
+
         \bottomrule
     \end{tabular}
-    \caption{Conceptual differences between this reference implementation and the OWL description (1).}
+    \caption{Conceptual Differences (1)}
     \label{tbl:asm:concepts_1}
 \end{table}
 
@@ -113,7 +120,7 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
 	\centering
     \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
         \toprule
-        Concept & Reference Implementation & OWL \\
+        Concept & Reference Implementation & OWL Description \\
         \midrule
 
         Subject Data Scope
@@ -148,6 +155,20 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
         \textit{Abstract}.
         \\
 
+        Mobility of Channels
+        &
+        Concept to store and forward at runtime references to other subjects and their agents.
+        &
+        \textit{Absent}.
+        \\
+
+        CorrelationID
+        &
+        Concept to correlate messages, e.g. responses to requests, so that messages can be send and received reliable in a loop.
+        &
+        \textit{Absent}.
+        \\
+
         InputPool Functions
         &
         InputPool Functions perform operations on the Subject's InputPool, e.g. close it for some message types or sender Subjects.
@@ -155,30 +176,9 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
         \textit{Absent}.
         \\
 
-        Macro Exit Parameter
-        &
-        Attribute on the End State of a Macro Behavior that selects a corresponding Transition on the \OWLClass{MacroState}.
-        &
-        \textit{Absent}. % FIXME: wirklich? Standard-PASS müsste das doch haben?
-        \\
-
-        Timer Transition
-        &
-        The Timer Transition Condition has to be defined in seconds.
-        &
-        It is possible to define the timeout in arbitrary time durations, including in business days.
-        \\
-
-        Reminder Transition
-        &
-        \textit{Absent}.
-        &
-        A \OWLClass{ReminderTransition} can be traversed if a certain time based event or frequency has been reached.
-        \\
-
         \bottomrule
     \end{tabular}
-    \caption{Conceptual differences between this reference implementation and the OWL description (2).}
+    \caption{Conceptual Differences (2)}
     \label{tbl:asm:concepts_2}
 \end{table}
 
@@ -189,7 +189,7 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
 	\centering
     \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
         \toprule
-        Concept & Reference Implementation & OWL \\
+        Concept & Reference Implementation & OWL Description \\
         \midrule
 
         Cancel Function
@@ -218,7 +218,7 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
 
         \bottomrule
     \end{tabular}
-    \caption{Conceptual differences between this reference implementation and the OWL description (3).}
+    \caption{Conceptual Differences (3)}
     \label{tbl:asm:concepts_3}
 \end{table}
 

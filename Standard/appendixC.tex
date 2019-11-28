@@ -5,7 +5,7 @@
 \setminted{fontsize=\footnotesize}
 \setmintedinline{fontsize=\footnotesize}
 
-\section{Conceptual Differences ASM Semantic / OWL Model}
+\section{Conceptual Differences to the OWL Description}
 \label{CoreASM-Reference-Implementation-Differences-OWL-Model}
 
 
@@ -24,6 +24,10 @@
 % NOTE: Some content might move to Appendix B / replace it.
 % TODO: Introduce history (Börger -> Bandmann -> Wolski)? Explain focus on Interaction Soundness or remove it?
 
+% functions span over a state function and transition function.
+% the state function determines which transitions are enabled and prepares the transition action.
+% example receive function: state function checks IP, transition function removes message from it and stores it in a variable.
+
 This reference implementation has some conceptual differences to the OWL description.
 For example it provides less flexible InputPool constraints and does not support synchronous communication,
 however it supports advanced features that are required for distributed inter-company business processes
@@ -32,7 +36,7 @@ and provides concrete implementations for the usage of Subject Data.
 \begin{table}[htbp]
     \footnotesize
 	\centering
-    \begin{tabular}[t]{@{}l p{0.35\linewidth} p{0.35\linewidth} @{}}
+    \begin{tabular}[t]{@{}p{0.23\linewidth} p{0.35\linewidth} p{0.35\linewidth} @{}}
         \toprule
         Concept & Reference Implementation & OWL Description \\
         \midrule
@@ -105,7 +109,7 @@ Next, the execution of Choice Segment Paths is not controlled by a Choice Segmen
 \begin{table}[htbp]
     \footnotesize
 	\centering
-    \begin{tabular}[t]{@{}l p{0.35\linewidth} p{0.35\linewidth} @{}}
+    \begin{tabular}[t]{@{}p{0.23\linewidth} p{0.35\linewidth} p{0.35\linewidth} @{}}
         \toprule
         Concept & Reference Implementation & OWL Description \\
         \midrule
@@ -142,44 +146,6 @@ Next, the execution of Choice Segment Paths is not controlled by a Choice Segmen
         A \OWLClass{ReminderTransition} can be traversed if a certain time based event or frequency has been reached.
         \\
 
-        \bottomrule
-    \end{tabular}
-    \caption{Further Conceptual Differences}
-    \label{tbl:asm:concepts_2}
-\end{table}
-
-In table~\ref{tbl:asm:concepts_2} further important conceptual differences are listed:
-CorrelationIDs define a relation between messages and allow reliable looped communication patterns.
-CorrelationIDs appear as metadata of a message and as argument to an InputPool queue:
-A CorrelationID is created when a message is send and part of it. A later message, that relates to it, will be send to the InputPool queue of that CorrelationID,
-allowing a receive state to specify that only specific messages can be received.
-With the InputPool Functions queues of the InputPool can be opened and closed, forcing senders to block if they attempt to send to a closed queue.
-Also, the InputPool can be checked if it is empty or not, so that \textit{non-proper termination} can be avoided.
-As this reference implementation targets an interactive process model validation only timeouts in seconds are considered.
-
-Table~\ref{tbl:asm:concepts_3} lists advanced concepts, that are not part of the OWL description.
-With the Mobility of Channels concept it is possible to store runtime references to agents as Subject Data and to communicate those references with other Subjects,
-which enables various distributed communication patterns.
-Macro Exit Parameters allow a Macro State to have multiple outgoing transitions.
-Within the Macro Behavior the End State determines which outgoing transition will be activated.
-
-% TODO: Subject Data & Scope.
-
-% TODO: Observer table~\ref{tbl:asm:concepts_4}
-
-% functions span over a state function and transition function.
-% the state function determines which transitions are enabled and prepares the transition action.
-% example receive function: state function checks IP, transition function removes message from it and stores it in a variable.
-
-
-\begin{table}[htbp]
-    \footnotesize
-	\centering
-    \begin{tabular}[t]{@{}l p{0.35\linewidth} p{0.35\linewidth} @{}}
-        \toprule
-        Concept & Reference Implementation & OWL Description \\
-        \midrule
-
         % included in Chapter 3
         Mobility of Channels
         &
@@ -196,6 +162,78 @@ Within the Macro Behavior the End State determines which outgoing transition wil
         \textit{Absent}. % FIXME: wirklich? Standard-PASS müsste das doch haben?
         \\
 
+        Maximum Subject \par Instances
+        &
+        \textit{Absent}. Every Subject can have an arbitrary amount of instances.
+        &
+        The \OWLDataProperty{hasMaximumSubjectInstanceRestriction} property limits the amount of instances that can be created at runtime of a Subject.
+        \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Further Conceptual Differences}
+    \label{tbl:asm:concepts_2}
+\end{table}
+
+In table~\ref{tbl:asm:concepts_2} further important conceptual differences are listed:
+CorrelationIDs define a relation between messages and allow reliable looped communication patterns.
+CorrelationIDs appear as metadata of a message and as argument to an InputPool queue:
+A CorrelationID is created when a message is send and part of it. A later message, that relates to it, will be send to the InputPool queue of that CorrelationID,
+allowing a receive state to specify that only specific messages can be received.
+With the InputPool Functions queues of the InputPool can be opened and closed, forcing senders to block if they attempt to send to a closed queue.
+Also, the InputPool can be checked if it is empty or not, so that \textit{non-proper termination} can be avoided.
+As this reference implementation targets an interactive process model validation only timeouts in seconds are considered.
+With the Mobility of Channels concept it is possible to store runtime references to agents as Subject Data and to communicate those references with other Subjects,
+which enables various distributed communication patterns.
+Macro Exit Parameters allow a Macro State to have multiple outgoing transitions.
+Within the Macro Behavior the End State determines which outgoing transition will be activated.
+Limiting the number of Subject instances is not possible, which also means that SingleSubjects are not enforced.
+
+Table~\ref{tbl:asm:concepts_3} lists differences in Subject Data concepts.
+Descriptions of the Payload are not supported.
+The Data Types are hardcoded:
+"MessageSet" contains a set of Messages,
+"CorrelationID" contains a single CorrelationID,
+"ChannelInformation" stores Channels and
+"Text" is used for arbitrary contents, that are entered by a user in the abstract process evaluation.
+However, those Data Types are used only at runtime to describe the actual content of a Data Object or a Message.
+
+This reference implementation adds a scope for Data Object Definitions,
+allowing a Data Object to be accessible either "globally" for all states in all behaviors of a Subject or
+only within a single Macro Behavior instance, allowing macros to execute concurrently without influencing each other.
+Further, this enables copying Data Ojects as arguments from the scope of a Macro State into the scope of the called Macro instance.
+
+While the OWL description merely anticipates Data Mapping Functions
+there are concrete implementations to use Data Objects in the Send and Receive Functions.
+Additionally this reference implementation provides Data Modification Functions to perform operations on Data Objects.
+
+
+\begin{table}[htbp]
+    \footnotesize
+	\centering
+    \begin{tabular}[t]{@{}p{0.23\linewidth} p{0.35\linewidth} p{0.35\linewidth} @{}}
+        \toprule
+        Concept & Reference Implementation & OWL Description \\
+        \midrule
+
+        % absent
+        Payload Description
+        &
+        \textit{Absent}.
+        &
+        A \OWLClass{PayloadDescription} describes a \OWLClass{MessageSpecification} further.
+        \\
+
+        % included in Chapter 3
+        Data Types
+        &
+        Hardcoded: MessageSet, CorrelationID, ChannelInformation and Text.
+        The \OWLDataProperty{hasDataType} property on Data Object definitions is ignored.
+        &
+        A \OWLClass{DataTypeDefinition} allows complex definitions, for example XSD Data Types or definitions in OWL or JSON.
+        Data Object definitions and Payload descriptions must have a Data Type specified.
+        \\
+
         % included in Chapter 3
         Subject Data Scope
         &
@@ -207,23 +245,15 @@ Within the Macro Behavior the End State determines which outgoing transition wil
         \\
 
         % included in Chapter 3
-        Macro Data Arguments
+        Macro Data \par Arguments
         &
         A \OWLClass{MacroState} can copy the value of a \OWLClass{DataObjectDefinition} into the scope of another \OWLClass{DataObjectDefinition}, which is scoped to the referenced \OWLClass{MacroBehavior}.
         &
         \textit{Absent}.
         \\
 
-        % not shown in Chapter 3
-        Data Modification Functions
-        &
-        Data Modification Functions perform operations on Subject Data, e.g. concatenation of objects having a set-valued data type.
-        &
-        \textit{Absent}.
-        \\
-
         % included in Chapter 3
-        Data Mapping Functions
+        Data Mapping \par Functions
         &
         \OWLClass{StoreMessageFunction} stores the received messages in a local Data Object.
         \OWLClass{UseMessageContentFunction} uses the value of a Data Object as content of the outgoing message.
@@ -232,18 +262,32 @@ Within the Macro Behavior the End State determines which outgoing transition wil
         \textit{Abstract}.
         \\
 
+        % not shown in Chapter 3
+        Data Modification \par Functions
+        &
+        Data Modification Functions perform operations on Subject Data, e.g. concatenation of objects having a set-valued data type.
+        &
+        \textit{Absent}.
+        \\
+
         \bottomrule
     \end{tabular}
-    \caption{Advanced Conceptual Differences}
+    \caption{Subject Data Conceptual Differences}
     \label{tbl:asm:concepts_3}
 \end{table}
 
+
+As listed in table~\ref{tbl:asm:concepts_4} a substantial conceptional difference to the OWL description is the lack of a discrete Guard Behavior.
+This is compensated by the introduction of State Priorities and the Cancel Function, which allows a transformation to an equivalent behavior:
+The guarded states are modelled in one ChoiceSegmentPath, a second ChoiceSegmentPath uses higher State Priorities and starts with the ReceiveState.
+Once a message can be received in this second path the execution of the first path is paused and the exception can be handled.
+After the exception handling the Subject can be terminated with the End State, the paused state can just continue or the paused state can be aborted with the Cancel Function.
 
 
 \begin{table}[htbp]
     \footnotesize
 	\centering
-    \begin{tabular}[t]{@{}l p{0.35\linewidth} p{0.35\linewidth} @{}}
+    \begin{tabular}[t]{@{}p{0.23\linewidth} p{0.35\linewidth} p{0.35\linewidth} @{}}
         \toprule
         Concept & Reference Implementation & OWL Description \\
         \midrule
@@ -269,12 +313,10 @@ Within the Macro Behavior the End State determines which outgoing transition wil
         % not shown in Chapter 3
         Observer
         &
-        Indiectly supported, requires manual modelling of State Priorities:
-        The guarded state is modelled in one \OWLClass{ChoiceSegmentPath}, a second \OWLClass{ChoiceSegmentPath} starts with a \OWLClass{ReceiveState} that has a high State Priority.
-        Once a message can be received in this second path the execution of the first path is paused and the exception can be handled.
-        After the exception handling the subject can terminate, the paused state can continue or the paused state can be aborted with the Cancel Function.
+        Indiectly supported, requires a manual transformation with two \OWLClass{ChoiceSegmentPaths}, where one path starts with a \OWLClass{ReceiveState} and uses higher State Priorities than the other.
+        Returning to the interrupted behavior is implicitly supported, alternatively it can be aborted with the Cancel Function.
         &
-        Explicitly supported. Executes the \OWLClass{GuardBehavior}, not possible to return to the interrupted state.
+        Explicitly supported. The \OWLClass{GuardBehavior} has a reference to the observed States or Behaviors. A return to the interrupted state possible with the \OWLClass{GenericReturnToOriginReference} State.
         \\
 
         \bottomrule

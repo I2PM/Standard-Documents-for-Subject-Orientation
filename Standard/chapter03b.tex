@@ -3,24 +3,23 @@
 \setminted{fontsize=\small}
 \setmintedinline{fontsize=\normalsize,breaklines}
 
-% NOTE: DRAFT WOLSKIA
+This section provides a commented overview of the CoreASM PASS Reference Implementation provided in Appendix~\ref{CoreASM-Reference-Implementation}.
+Only a reduced set of language elements are shown here, advanced Functions and implementation details are left out,
+which allowed it to shorten various rules for a focus on their core semantics.
+Therefore all contents of this section are a non-normative introduction to the topic of formal execution semantics.
 
-This section provides a reduced overview of the ASM semantics given in Appendix~\ref{CoreASM-Reference-Implementation}.
+There are some conceptional differences between the reference implementation and the OWL description.
+The End State is a distinguished state instead a property on a Do State or Receive State.
+Choice Segment Paths are always both mandatory to start and end, also they have to be started with the Modal Split Function and joined with the Modal Join Function.
+Furthermore the reference implementation supports advanced features that are not covered by the OWL description, for example the Mobility of Channels concept and CorrelationIDs.
+A complete comparision of the conceptual differences is given in~\ref{CoreASM-Reference-Implementation-Differences-OWL-Model}.
 
-The goal of this section is to provide a minimal set of reduced rules to establish a foundation to understand the ASM semantics,
-leaving out certain features and implementation details.
-It is therefore just an informal introduction to the topic.
-
-Please note the conceptual differences between the interpreter semantics and the owl structure, presented in \ref{CoreASM-Reference-Implementation-Differences-OWL-Model}.
-Most importantly, the interpreter semantics for interaction support only "IP strategy blocking".
-
-simplifications for this chapter:
-\begin{itemize}
-	\item no Observer support => no execution state, no state priorities => Cancel not required
-	\item limited scope to InternalAction, Send, Receive, CallMacro, ModalSplit/ModalJoin, End => no VarMan, Cancel, SelectAgents, Tau
-	\item discuss: proper-termination and CloseIP/OpenIP are motivated from interaction soundness. include? mention? hard-exclude (remove references from code)?
-	\item no KillBehavior (although recursive macros and reservation messages). therefore this will not be sound - but a bit less complicated
-\end{itemize}
+%simplifications for this chapter:
+%- no Observer support => no execution state, no state priorities => Cancel Function not required
+%- limited scope to InternalAction, Send, Receive, CallMacro, ModalSplit/ModalJoin, End to provide a closed set of features
+%  => no VarMan, Cancel, SelectAgents, Tau
+%- discuss: proper-termination and CloseIP/OpenIP are motivated from interaction soundness. include? mention? hard-exclude (remove references from code)?
+%- no KillBehavior (although recursive macros and reservation messages). therefore this will not be sound - but a bit less complicated
 
 
 \subsection{Architecture}

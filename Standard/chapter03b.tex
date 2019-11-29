@@ -24,66 +24,29 @@ A complete comparision of the conceptual differences is given in~\ref{CoreASM-Re
 
 \subsection{Architecture}
 
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.7\linewidth]{Figures/CoreASM/ArchitekturKonsoleCoreASM}
-  \caption{Architecture of the reference implementation}
-  \label{fig:coreasm_architecture}
-\end{figure}
-
-% Runtime environments and system components.
-% The blue (dark background) components are existing parts of the Java based CoreASM Engine.
-% The yellow (light background) components are developed for the PASS-interpreter.
-
-The overall architecture is shown in figure~\ref{fig:coreasm_architecture} and consists on the top level of
-a console application as user interface and the CoreASM engine as execution environment for the PASS-interpreter specification.
-Both high level components are running in parallel in separate Java Virtual Machine processes.
-The PASS-interpreter specification file includes an ASM specification of asynchronous multi-agent ASMs, executing each Subject by one ASM-agent each.
-
-
-The CoreASM engine parses the specification file and executes the rules in the interpreter
-in cooperation with the abstract storage and the scheduler.
-The abstract storage stores the state of the ASM and is also used to support
-TurboASMs and their submachine states.
-
-The scheduler is used to support asynchronous multi-agent ASMs; with
-the \textit{default} scheduling policy it selects
-a random subset of the running ASM agents and calls the
-interpreter for the parallel evaluation of their main rules.
-If the resultant update sets
-are consistent they are applied in the abstract storage, otherwise the scheduler
-selects a different subset of the running ASM agents for a re-evaluation.
-Supplementary the \textit{onebyone} scheduling policy can be used to evaluate
-only a single agent per step and the \textit{allfirst} policy can be used
-to attempt to evaluate all agents at once before falling back
-to the default scheduling policy in case of inconsistencies.
-We use the \textit{allfirst} scheduling policy in our work for performance reasons
-but could use the \textit{default} policy as well.
-
-The Carma application is a simple Java application provided by the CoreASM framework
-to allow the usage of the CoreASM engine as standalone application in a command line.
-
-The console application is developed in Scala.
-A user can load, start and execute locally stored S-BPM Process Models with it.
-The interaction between the console application and the CoreASM engine is realized by Akka actors.
-The Akka actor of the engine has full read and write access to all CoreASM functions by using a Plug-In interface.
-
-
+The reference implementation is composed by three main components.
+The specification of the execution semantics is defined with Abstract State Machines (ASM) % TODO: ref Börger?
+and written in the CoreASM dialect.
+The specification is interpreted by the CoreASM Engine,
+which is part of the open-source CoreASM Framework and written for the Java Virtual Machine. % TODO: ref?
+The third component is a console application that is connected to the CoreASM Engine
+and enables an interactive abstract process evaluation.
+A detailed description of the architecture is given in~\ref{CoreASM-Reference-Implementation-Architecture}.
 
 
 \subsection{Foundation}
 
-The interpreter uses asynchronous multi-agent Turbo ASMs.
+The specification makes use of asynchronous multi-agent Turbo ASMs, executing each Subject instance with one ASM-agent each.
 It supports the concurrent execution of multiple process models and multiple instances of each process model.
 Each instance has a unique \textit{ProcessInstanceID} (short: \asminline{PI}) assigned.
 Within a process instance multiple instances of a subject can occur (MultiSubject concept).
 Each subject instance has an agent assigned, to distinguish the subject instances.
 This agent is identified by it name.
-We therefore identify a subject instance by the tuple (Process~Model~ID, Process~Instance~ID, Subject~ID, Agent~Name).
+Therefore a subject instance is identified by the tuple (Process~Model~ID, Process~Instance~ID, Subject~ID, Agent~Name).
 This tuple is called \textit{Channel} (short: \asminline{ch}), as it used in the mobility of channels concept in order to support distributed communication patterns.
 
 In the interpreter, each subject instance has an ASM Agent assigned, that keeps track of its current state,
-where we mean state in the sense of which subject data is present, the content of the inputpool queues and also the active SBD states.
+where the meaning of state is in the sense of which subject data is present, the content of the inputpool queues and also the active SBD states.
 This state is stored in ASM functions and assigned to the \textit{Channel}.
 
 \begin{listing}[htbp]
@@ -110,9 +73,9 @@ The derived functions are used to lookup certain tuple elements of the channel.\
 
 % NOTE: StartProcess and StartASMAgent left out intentionally
 
-% Subject Data
+% Subject Data / Data Objects
 
-Analogous to programming languages we call Subject Data \textit{Variables}.
+Analogous to programming languages Data Objects are called \textit{Variables}.
 Their scope is either bound to a Subject or a Macro Instance and can only be
 accessed by the Subject. Variables are identified by their name and have an
 explicit data type and a value.
@@ -145,18 +108,18 @@ function variableDefined : LIST -> SET
 
 \subsection{Interaction Definitions}\label{sec:InteractionDefinitions}
 
-We implement the interaction between Subjects as asynchronous Message exchange.
+The interaction between Subjects is implemented as asynchronous Message exchange.
 Messages are placed into the Inputpool of the receiver where they are then retrieved from when the receiver is in a Receive state.
 
 
 \subsubsection{Messages}\label{sec:messages}
 
-The message content consists of the actual payload and its data type. As this
-reference implementation is intended only for an abstract process execution we abstract
-the payload / business objects to be just a text given as string.
+The message content consists of the actual payload and its data type. As the
+reference implementation is intended only for an abstract process execution
+the payload / business objects are abstracted to be just a text given as string.
 
 For the communication with MultiSubjects, i.e. sending the same Message to
-multiple Agents of one Subject, we use an \textit{all-or-none} strategy. This
+multiple Agents of one Subject, the \textit{all-or-none} strategy is used. This
 is accomplished by separating the sending of a Message into two phases: first
 a reservation Message is placed at each receiver into the Inputpool.
 Only after all reservations could be placed they are then replaced with the
@@ -200,7 +163,7 @@ whether a queue is closed. The special location
 \asminline{inputPoolClosed(ch, undef, undef, undef)} is used to
 store whether the complete Inputpool is closed.
 
-We define the function \asminline{derived availableMessages(receiverChannel, senderSubjectID, msgType, ipCorrelationID)} to return the
+The function \asminline{derived availableMessages(receiverChannel, senderSubjectID, msgType, ipCorrelationID)} returns the
 Messages from the location \asminline{inputPool(receiverChannel,
 senderSubjectID, msgType, ipCorrelationID)} that can be received, i.e. that it
 filters out reservations and reduces Messages from the same sender to only
@@ -208,8 +171,7 @@ the oldest one.
 
 \subsection{Subject Behavior}
 
-
-As depicted in figure~\ref{fig:MainSBPM components}, a Subject Behavior consists at least of one \textit{Main Macro}
+The Subject Behavior consists at least of one \textit{Main Macro}
 and might have an arbitrary number of minor Macros, called \textit{Additional Macros}.
 
 \begin{listing}[htbp]
@@ -412,7 +374,7 @@ The Send Function sends a Message. Disregarding the optional Timeout and Cancel
 transitions it must have exactly one outgoing transition which has to have parameters that
 define at least the Messagetype and the receiver's Subject~ID.
 
-We use an \textit{all-or-none} strategy to send Messages to MultiSubjects,
+An \textit{all-or-none} strategy is used to send Messages to MultiSubjects,
 which means that the actual Message is only send when all receivers are able
 to store it in their Inputpool. Therefore the Send Function is structured into
 two phases: in the first phase, realized as state function, reservation Messages

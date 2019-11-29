@@ -3,7 +3,7 @@
 
 \captionsetup{font=footnotesize}
 \setminted{fontsize=\footnotesize}
-\setmintedinline{fontsize=\footnotesize}
+\setmintedinline{fontsize=\footnotesize,breaklines}
 
 \section{Conceptual Differences to the OWL Description}
 \label{CoreASM-Reference-Implementation-Differences-OWL-Model}
@@ -99,7 +99,7 @@ and provides concrete implementations for the usage of Subject Data.
     \label{tbl:asm:concepts_1}
 \end{table}
 
-The most important differences are listed in table~\ref{tbl:asm:concepts_1}:
+The most important differences are listed in Table~\ref{tbl:asm:concepts_1}:
 while the OWL description offers both synchronous and asynchronous communication, different InputPool limits and handling strategies
 this reference implementation adresses only asynchronous communication with a blocking strategy.
 Conceptionally the End State is not a property of a state, but provides a distinguished function specification
@@ -175,7 +175,7 @@ Next, the execution of Choice Segment Paths is not controlled by a Choice Segmen
     \label{tbl:asm:concepts_2}
 \end{table}
 
-In table~\ref{tbl:asm:concepts_2} further important conceptual differences are listed:
+In Table~\ref{tbl:asm:concepts_2} further important conceptual differences are listed:
 CorrelationIDs define a relation between messages and allow reliable looped communication patterns.
 CorrelationIDs appear as metadata of a message and as argument to an InputPool queue:
 A CorrelationID is created when a message is send and part of it. A later message, that relates to it, will be send to the InputPool queue of that CorrelationID,
@@ -277,7 +277,7 @@ Additionally this reference implementation provides Data Modification Functions 
 \end{table}
 
 
-As listed in table~\ref{tbl:asm:concepts_4} a substantial conceptional difference to the OWL description is the lack of a discrete Guard Behavior.
+As listed in Table~\ref{tbl:asm:concepts_4} a substantial conceptional difference to the OWL description is the lack of a discrete Guard Behavior.
 This is compensated by the introduction of State Priorities and the Cancel Function, which allows a transformation to an equivalent behavior:
 The guarded states are modelled in one ChoiceSegmentPath, a second ChoiceSegmentPath uses higher State Priorities and starts with the ReceiveState.
 Once a message can be received in this second path the execution of the first path is paused and the exception can be handled.
@@ -326,10 +326,60 @@ After the exception handling the Subject can be terminated with the End State, t
 \end{table}
 
 
+\section{Architecture}
+\label{CoreASM-Reference-Implementation-Architecture}
 
-\section{editorial note}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\linewidth]{Figures/CoreASM/ArchitekturKonsoleCoreASM}
+  \caption{Architecture of the reference implementation}
+  \label{fig:coreasm_architecture}
+\end{figure}
 
-To fit the code onto the pages it has been compacted. Instead of writing:
+% Runtime environments and system components.
+% The blue (dark background) components are existing parts of the Java based CoreASM Engine.
+% The yellow (light background) components are developed for the PASS-interpreter.
+
+The overall architecture is shown in figure~\ref{fig:coreasm_architecture} and consists on the top level of
+a console application as user interface and the CoreASM Engine as execution environment for the PASS-interpreter specification.
+Both high level components are running in parallel in separate Java Virtual Machine processes.
+The PASS-interpreter specification file includes an ASM specification of asynchronous multi-agent ASMs, executing each Subject instance by one ASM-agent each.
+
+
+The CoreASM Engine parses the specification file and executes the rules in the interpreter
+in cooperation with the abstract storage and the scheduler.
+The abstract storage stores the state of the ASM and is also used to support
+TurboASMs and their submachine states.
+
+The scheduler is used to support asynchronous multi-agent ASMs; with
+the \textit{default} scheduling policy it selects
+a random subset of the running ASM agents and calls the
+interpreter for the parallel evaluation of their main rules.
+If the resultant update sets
+are consistent they are applied in the abstract storage, otherwise the scheduler
+selects a different subset of the running ASM agents for a re-evaluation.
+Supplementary the \textit{onebyone} scheduling policy can be used to evaluate
+only a single agent per step and the \textit{allfirst} policy can be used
+to attempt to evaluate all agents at once before falling back
+to the default scheduling policy in case of inconsistencies.
+The reference implementation uses the \textit{allfirst} scheduling policy for performance reasons,
+but the \textit{default} policy could be used as well.
+
+The Carma application is a simple Java application provided by the CoreASM framework
+to allow the usage of the CoreASM engine as standalone application in a command line.
+
+The console application is developed in Scala.
+A user can load, start and execute locally stored PASS process model files with it.
+The interaction between the console application and the CoreASM engine is realized by Akka actors.
+The Akka actor of the engine has full read and write access to all CoreASM functions by using a Plug-In interface.
+
+
+
+\section{Editorial Note}
+
+To improve the typography the code blocks in this appendix have been compacted.
+Instead of writing the \asminline{rule Behavior} spread-out like in Listing~\ref{lst:asm:Behavior_snipped_spread-out}
+the code blocks are transformed to a more compact notation as shown in Listing~\ref{lst:asm:Behavior_snipped_compact}.
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -343,8 +393,6 @@ rule Behavior(macroInstanceNumber, currentStateNumber) =
 \caption{Behavior, spread-out snippet}
 \label{lst:asm:Behavior_snipped_spread-out}
 \end{listing}
-
-the code blocks are transformed to a more compact notation:
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -363,12 +411,10 @@ rule Behavior(MI, currentStateNumber) =
 
 
 Some elements are intentionally left out in order to preserve space.
-
 For example, the \asminline{rule InputPool_Pop} and
-the \asminline{derived availableMessages}  function
+the \asminline{derived availableMessages} function
 contain lengthy list traversals, and their definitions contain
-undocumented parameters used in a test environment for debugging.
-
+undocumented parameters used in the test environment for debugging.
 Other functions like \asminline{derived searchMacro} or \asminline{derived hasTimeoutTransition} should be self-explanatory.
 
 
@@ -2759,4 +2805,4 @@ rule SelectAgents(MI, currentStateNumber, sIDLocal, min, max) =
 \normalsize
 \captionsetup{font=normalsize}
 \setminted{fontsize=\normalsize}
-\setmintedinline{fontsize=\normalsize}
+\setmintedinline{fontsize=\normalsize,breaklines=false}

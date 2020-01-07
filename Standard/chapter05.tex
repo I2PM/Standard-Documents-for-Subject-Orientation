@@ -1,0 +1,259 @@
+\chapter{Aspects for further standardisation activities}
+
+
+
+\section{Subjects and Shared Input Pools}
+
+
+\section{Structuring Complex Systems}
+
+\section{Business Activity Monitoring for S-BPM}
+
+\subsection{Architecture }  
+A BAM environment supported by Complex Event Processing consists of several elements necessary at build time and at runtime (see \ref{fig:BAMArchitecture}) [27, 8, 15]. At build time a modeling environment should provide tools for designing processes (e.g. Metasonic Build) and defining process performance indicators (PPIs), BAM events, rules, thresholds etc. as well as parameters for their visualization in report and on dashboards. At runtime there are (1) event producers like a process engine (e.g. Metasonic Flow) or an ERP system (e.g. SAP) which feed events into an event cloud or stream (chronologically ordered). (2) Event Processing Agents (EPA) form the event processing logic. They process events based on metrics, event patterns, rules and other parameters specified at design time. Their basic logical functions include filtering and transforming events and detecting patterns among them. Global state elements allow them accessing data from outside the application (e.g. from an ERP system). EPAs put the results of their processing (also to be understood as events) out to Event Consumers (3) like dashboards or process engines. Input and Output Adapters (IA, OA) transform event data between different formats of system elements as necessary. All system elements involved form an Event Processing Network (EPN), in which events are exchanged by communication mechanisms.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Integrated-BAM-CEP-Architecture-27.jpg}
+	\caption[Integrated BAM/CEP Architecture 27]{Integrated BAM/CEP Architecture [27]}
+	\label{fig:BAMArchitecture}
+\end{figure}
+
+
+
+\subsection{Modeling BAM Parameters at Build Time}
+As mentioned in the last section it is necessary not only to model the processes, but also numerous pieces of information relevant for a sound process monitoring in the sense of Business Activity Monitoring (BAM model). These can be derived from answers to questions like what, when, how and how often should be measured by whom [25]. The information should also include how single metrics are to be aggregated in order to determine Process Performance Indicators (PPIs). For systematically collecting and documenting the necessary information fact sheets or templates for metrics and performance indicators have been developed [17, 20]. \ref{tbl:Fact-Sheet} shows an extract of a sample fact sheet defined for the average processing time of activities (see also [31, 23]). Definitions like this are in part basis for the reports presented in section 2.2. They can be considered to be a first model for describing BAM parameters.
+
+
+\begin{table}[htbp]
+	\footnotesize
+	\centering
+	\begin{tabular}[t]{@{}l p{0.5\linewidth} p{0.3\linewidth} @{}}
+		\toprule
+		\textbf{Attribute} & \textbf{Content}  \\
+		\midrule
+		 & \textbf{Characteristics}
+		\\
+		Identifier & Average activity time
+		\\
+		Description & Average time of a process activity within a certain period
+		\\
+		To-be value/unit & tbd specifically (min.)
+		\\
+		Tolerance range/unit & tbd specifically (\%)
+		\\
+		Escalation Rules/ Actions & In case of violation alert the process owner and start escalation process (tbd specifically)
+		\\
+		Addressees & Process Owner, Middle Mangement, Accountants (tbd specifically)
+		Responsibility	Process Owner (tbd specifically)
+		\\
+		&  &
+		\\
+		& \textbf{Measuring and Computing}
+		\\
+		Measuring Object & All instances of the process 'Purchase Order'
+		\\
+		(Single) Metrics & Start time and end time of all activities of the process
+		\\
+		Measuring Method & Read time stamps for beginning and end of activities written by Metasonic Flow 
+		\\
+		Measuring Frequency & For every single instance as it occurs
+		\\
+		Algorithms & For computing period:     ……….
+		\\
+		Data Sources (general) & Tables in the database of Metasonic Suite:
+		RT\_PROCDESC, RT\_PROCINST, REC\_PARADESC, REC\_RECTRANS, UM\_USER
+		\\
+		Data Sources (specific) & Activity processing time (for one instance):\newline
+		\textbf{SELECT} TIMESTAMP1  \newline
+		(\textbf{SELECT} STARTTIME \newline
+		\textbf{FROM} RT\_PROCINST \newline
+		\textbf{WHERE} RT\_PROCDESC = \textit{process (purchase order)}\newline
+		\textbf{AND} ID = \textit{instance (9)}\newline
+		\textbf{FROM} REC\_RECTRANS\newline
+		\textbf{WHERE} RT\_STDESC = \textit{\textit{state (fill\_in\_form)}}\newline
+		\textbf{AND} RT\_PROCINST = \textit{instance (9)}
+		Completed instances: see separate fact sheet .
+		\\
+		Computing Period (time, no. of inst.) & Daily
+		\\
+		& &
+		\\
+		& \textbf{Presentation}
+		\\
+		Presentation Style & As-is value and to-be value in combination with a spark line showing the historical development, deviation from to-be value in \%
+		\\
+		Presentation Frequency & Weekly and in case of escalation
+		\\
+		Archiving & Stored in additional database table, linked with RT\_PROCDESC
+		\\
+		
+\bottomrule
+\end{tabular}
+\caption{Fact Sheet for a PPI (extract)}
+\label{tbl:Fact-Sheet}
+\end{table}
+
+Replacing the content column by more formal ontology-based linguistic patterns as suggested by Del-Río-Ortega et al. (see table 2) could help relating PPIs to elements of the process model, performing automated analysis [5] and implementing the measurement at runtime. 
+
+
+
+
+Table. 2.  PPI Template based on Linguistic Patterns [5]
+
+\begin{table}[htbp]
+	\footnotesize
+	\centering
+	\begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.4\linewidth} p{0.5\linewidth} @{}}
+		\toprule
+		\textbf{Attribute} & \textbf{Linguistic Pattern}  & \textbf{Example}\\
+		\midrule
+		PPI-<ID> & <PPI descriptive name> & PPI-001 Average time of RFC analysis
+		\\
+		Process	& <process ID the PPI is related to> & Request for change (RFC)
+		\\
+		Goals & <strategic or operational goals the PPI is related to> & BG-002: Improve customer satisfaction \newline
+		BG-014: Reduce RFC time to response
+		\\
+		Definition & The PPI is defined as { \newline
+			<DurationMeasure> | <CountMeasure> | <ConditionMeasure> |
+			<DataMeasure> | <DerivedMeasure> | <AggregatedMeasure> }
+		[expressed in <unit of measure>] & The PPI is defined as the average of Duration of Analyse RFC activity
+		\\
+		Target & The PPI value must { \newline
+			be {greater | lower} than [or equal to] <bound> | \newline
+			be between <lower bound> and <upper bound> [inclusive] |\newline
+			fulfil the following constraint: <target constraint> } & The PPI value must be slower than or equal to 1 working day
+		\\
+		Scope & The process instances considered for this PPI are {
+			the last <n> ones |
+			those in the analysis period <AP-x> } & The process instances considered for this PPI are the last 100 ones
+		\\
+		Source & <source from which the PPI measure can be obtained> &	Event logs of BPMS
+		\\
+		Responsible & { <role> | <department> | <organization> | <person> } &	Planning and quality manager
+		\\
+		Informed &{ <role> | <department> | <organization> | <person> } & CIO
+		\\
+		Comments & <additional comments about the PPI> & Most RFCs are created after 12:00
+		\\
+\bottomrule
+\end{tabular}
+\caption{Fact Sheet for a PPI (extract)}
+\label{tbl:Fact-Sheet}
+\end{table}
+
+
+Friedenstab et al. argue that such linguistic patterns do not fit to the usually graphical modeling of processes which makes integration difficult [12]. The authors discuss some more approaches to BAM modeling. With regard to the limitations revealed, they present a BAM-related extension of the graphical Business Process Model & Notation (BPMN) [12].
+Using an abstract language syntax based on the Unified Modeling Language (UML) they started defining meta models for language constructs needed for BAM as there are Duration, Frequency, Composed Basic Measure, Aggregated Measure, Filter, Target Definition, Actions, Measure-based Expressions and Dashboard. Figure 8 depicts the example for the duration of elements on different levels of detail, where the grey colored parts indicate references to the BPMN specification.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Meta-Mode-fo-Duration-relate-to-BPMN-1.jpg}
+	\caption[Meta Model for Duration (related to BPMN) 12]{Meta Model for Duration (related to BPMN) [12]}
+	\label{fig:Meta-Model}
+\end{figure}
+
+
+In a second step Friedenstab et al. developed a concrete syntax allowing for modeling the abstract language elements with graphical symbols and text labels. Parts of it are visible in figure 9. The example shows the BAM model for determining the cycle times of a purchase order process modeled in BPMN (lower part). The upmost part for example expresses the fact that the overall cycle time (Duration) for the last 50 instances (Filter) has to be determined and displayed on the dashboard (Dashboard). Monitoring the average of the overall cycle time for completed instances controls the modeled business logic of the process. If it is above 48 hours goods are delivered with an express shipping if the average cycle time is more than. Otherwise standard shipping is carried out. A deviation also leads to an alert sent to the process owner, while in any case the average is to be presented on the dashboard. The latter is also valid for the third time-related metric in the example, the partial cycle-time for the company-internal part of the process, which is set into relation with the overall cycle time.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/BAM Model for Cycle Times.jpg}
+	\caption[BAM Model for Cycle Times of a Purchase Order Process based on BPMN 12]{BAM Model for Cycle Times of a Purchase Order Process based on BPMN [12]}
+	\label{fig:Model-Cycle-Times}
+\end{figure}
+
+
+The concept presented by Friedenstab et al. is thoroughly thought-out and clearly and precisely elaborated. The idea now is to adapt it to Subject-oriented Business Process Management and relate the abstract syntax to the S-BPM meta model instead of BPMN. Due to S-BPM being a more precise and comprehensive notation than BPMN [2] the mapping should be possible without problems. Table 3 compares the BPMN specification elements used by [12] with the ones appropriate in S-BPM [9].
+Table 3.  BPMN and S-BPM Specifications used in BAM Constructs
+BAM Language Syntax Construct	Used BPMN Specification Element 	Suitable S-BPM Specification Element 
+Duration
+(Time-Consuming Element)	Process, Activity, Flow Nodes	Process, Subject Behaviour States (Function, Send, Receive, Start, End)
+Frequency
+(Countable Element)	Process, Activity, Data Objects, Data States	Process, Subject Behaviour States (Function, Send, Receive), Business Objects and their States
+Actions	Process	Process
+Measure-based Expressions	Expression, Sequence Flow	Incoming Message
+
+The remaining constructs as well as the extensions do not depend on the process modeling language and thus are not included in the table.
+On the other hand S-BPM, following its paradigm of regarding subjects, predicates and objects as equally important parts of a process, offers the subject as an additional specification element to add . In figure 10 we modified the picture of figure 8 by replacing the BPMN by S-BPM elements and adding the subject. This allows modeling the determination of the overall time a subject (respectively the allocated resource(s)) spends on working on a process instance. This is of interest for cost-related analysis (see section 2.3).
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Meta-Mode-fo-Duration-relate- to-SBPM.jpg}
+	\caption[Meta Model for Duration (related to S-BPM)]{Meta Model for Duration (related to S-BPM)}
+	\label{fig:Meta-Model-S_BPM}
+\end{figure}
+
+
+
+Fig. 10. Meta Model for Duration (related to S-BPM)
+
+In order to show how the BAM language syntax constructs can be related to subject-oriented models we designed the purchase order process in S-BPM. Due to missing information in the BPM model some assumptions were necessary like who performs the process steps (subjects). We then added the BAM modeling symbols to create a monitoring model similar to that in figure 9.
+The result is depicted in the following graph. In the lower part it includes the subject interaction diagram (SID) of the process. The SID shows the subjects involved and how they coordinate themselves in the course of action by exchanging messages. In the monitoring model in the upper part a difference can be seen. The partial cycle time for the company-internal activities can be modeled by just relating the clock symbol to the subject ‘Sales’. In the example this subject represents all steps carried out within the organization. In the same way we can determine the cycle time for the other subjects.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/BAM-Model-fo- Cycle-Times-of-a-Purchase-Order-Process-based-on-S-BPM.png}
+	\caption[BAM Model for Cycle Times of a Purchase Order Process based on S-BPM]{BAM Model for Cycle Times of a Purchase Order Process based on S-BPM}
+	\label{fig:Cycle-Time-SBPM}
+\end{figure}
+
+
+Fig. 11. BAM Model for Cycle Times of a Purchase Order Process based on S-BPM
+Given a special information demand a more granular modeling of BAM parameters is possible on the subject behavior level. Figure 12 for example details the behavior of ‘Sales’ including all receive, send and functional states walked through by the subject. The symbols indicate that the average cycle time between order reception and confirming the order to the customer should be measured. In the same way cycle times between states in behaviours of different subjects can be modelled.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/BAM-Model-for-Cycle-Time-of-a-Process-Section-based-on-S-BPM.jpg}
+	\caption[BAM Model for Cycle Time of a Process Section based on S-BPM]{BAM Model for Cycle Time of a Process Section based on S-BPM}
+	\label{fig:BAM-Cycle-Time}
+\end{figure}
+
+\ref{fig:BAM-Cycle-Time}Fig. 12. BAM Model for Cycle Time of a Process Section based on S-BPM
+Back on the level of subject interaction diagram we could also model to determine the overall time for receiving (waiting), sending and doing, both by process and by subject. Modeling on the two diagram levels reduces complexity.
+4   Conclusion and future Work
+This contribution systematized Business Process Monitoring and shed some light on the current state of monitoring in the context of S-BPM. Starting there we emphasized Business Activity Monitoring and took a closer look to the modelling of BAM parameters. We showed that the approach for BPMN presented by Friedenstab et al. can be adapted to S-BPM with little effort and that S-BPM shows additional potential to further develop the concept.
+This is where future work needs to continue. The first step to go should be elaborating, detailing and tailoring the modeling language for the needs of S-BPM in order define a comprehensive basis for the succeeding task of developing easy-to-use software tool support. These could be pursued as parts of the Open S-BPM Initiative, which is underway to develop – among other artifacts - a process modeling and a process execution software for S-BPM, both based on the Eclipse Ecore meta model (see [11, 14] and http://www.i2pm.net/open-s-bpm/projects). The BAM modeling tool should make use of the model data created by the process modeling tool and add its results to a combined model base both for process execution and BAM. The third step would then be to build BAM functionality which at runtime processes events according to the subject-oriented BAM models. There is some evidence that S-BPM provides good premises to support event processing [10], e.g. by integration of a CEP Engine or single Event Processing Agents as subjects into processes. This has to be proven by a thorough investigation of the interrelationship and integration potential of CEP and S-BPM concepts and solutions. Generating code for BAM functionality out of the BAM model is another challenge to tackle [12]. With the clear formal semantic of its underlying process algebra the S-BPM modeling language allows this for process models [9]. Consequently it seems to be worthwhile to investigate the possibilities of code generation out of BAM models too. 
+
+In such an environment a S-BPM-based process engine like Metasonic Flow would not only be event producer and event consumer, but also part of the event processing logic, communicating with other elements by message exchange (see figure 7).
+References
+1.	Accorsi, R., Ulrich, M., Van der Aalst, W.: Process Mining, Informatik Spektrum, Band 35, Heft 5, 2012, pp. 354-359.
+2.	Börger, E.: Approaches to modeling business processes: a critical analysis of BPMN, workflow patterns and YAWL, Journal of Software and Systems Modeling, Vol. 11 (3) 2012, pp. 305-318.
+3.	Chandy, K., Schulte, W.: Event Processing: Designing IT Systems for Agile Companies, New York, 2010.
+4.	DeFee, J., Harmon, P.: Business Activity Monitoring and Simulation, in: Fischer, L. (ed.), Workflow Handbook, Future Strategies Inc., Lighthouse Point, 2005, pp.53-74.
+5.	Del-Río-Ortega, A., De Reyna, M., Durán Toro, A., Ruiz-Cortés, A.: Defining Process Performance Indicators by Using Templates and Patterns, in: Barros, A., Gal, A., Kindler, E. (eds.): BPM 2012, LNCS 7481, Springer, Berlin Heidelberg, 2012, pp. 223-228.
+6.	Dinter, B., Bucher, T.: Business Performance Management, in: Chamoni, P., Gluchowski, P. (Eds.), Analytische Informationssysteme, 3rd Ed., Springer, Berlin Heidelberg, 2006, pp. 23-50.
+7.	Eckert, M., Bry, F.: Complex Event Processing (CEP), Informatik Spektrum, Band 32, Heft 2, 2009, pp. 163-167.
+8.	Etzion O., Niblett P.: Event Processing in Action, Manning Publications, Stamford, 2011.
+9.	Fleischmann, A., Schmidt, W., Stary, C., Obermeier, S., Börger, E.: Subject-oriented Business Process Management, Springer, Berlin Heidelberg, 2012.
+10.	Fleischmann, A., Schmidt, W., Stary, C., Strecker, F.: Nondeterministic Events in Business Processes, Proceedings of the 6th International Workshop on Event-driven Business Process Management (edBPM2012), co-located with BPM 2012, Tallinn/Estonia, Lecture Notes in Business Information Processing (LNBIP), Springer, Berlin Heidelberg, 2012
+11.	Fleischmann, A., Schmidt, W., Stary: Open S-BPM, in: Fischer, H., Schneeberger, J. (Eds.), Proceedings of the 5th International Conference S-BPM ONE 2013, Communications in Computer and Information Sciences (CCIS) No. xxx, Springer, Berlin Heidelberg 2013.
+12.	Friedenstab, J.-P., Janiesch, C., Matzner, M., Müller, O.: Extending BPMN for Business Activity Monitoring, 45th Hawaii International Conference on System Sciences, 2012, pp. 4158-4167.
+13.	Heß, H.: Von der Unternehmensstrategie zur Prozess-Performance – Was kommt nach Business Intelligence? in: Scheer, A.-W., Jost, W., Heß, H. und Kronz, A., Corporate Performance Management, Berlin, 2005, pp. 7-29.
+14.	Institute of Innovative Process Management (I2PM), www.i2pm.net.
+15.	Janiesch, C., Matzner, M., Müller, O.: A Blueprint for Event-driven Business Activity Management, in: Rinderle, S., Toumani, F., and Wolf, K. (Eds.), 9th International Conference on Business Process Management (BPM). LNCS 6896, Springer, Berlin Heidelberg, 2011, pp. 17-28.
+16.	Kang, J., Kwan, H.: A Business Monitoring System Supporting Real-Time Business Performance Management, Proceedings of the 2008 Third International Conference on Convergence and Hybrid Information Technology (ICCIT '08) Vol. 1, Washington DC 2008, pp. 473-478.
+17.	Kütz, M.: Kennzahlen in der IT: Werkzeuge für Controlling und Management. 3. Aufl., dpunkt, Heidelberg, 2009.
+18.	Luckham, D., Schulte, R. (Eds.): Event Processing Glossary Version 2.0/2011, Event Processing Technical Society, http://www.complexevents.com/2011/08/23/ event-processing-glossary-version-2-0/, last access 2012-07-25.
+19.	Luckham, D.: The Power of Events: An Introduction to Complex Event Processing in Distributed Enterprise Systems, Amsterdam, 2002.
+20.	Marx Gómez, J., Junker, H., Odebrecht, S.: IT-Controlling, Erich Schmidt Verlag, Berlin 2009.
+21.	Metasonic Flow, User Manual V4.4, Metasonic AG, www.metasonic.com, Pfaffenhofen, 2012.
+22.	Panagos, E., Rabinovich, M.: Predictive Workflow Management, Proceedings of the 3rd International Workshop on Next Generation Information Technologies and Systems, 1997, pp. 193-197.
+23.	Pehlke, A.: Aufbau eines Business Activity Monitoring für den subjektorientierten Ansatz des Business Process Managements (S-BPM), Bachelor Thesis, University of Applied Sciences Ingolstadt, Ingolstadt 2012.
+24.	Petzel, E., Czaja, R., Simulation-based Process Optimization, in: Fischer, H., Schneeberger, J. (Eds.), Proceedings of the 5th International Conference S-BPM ONE 2013, Communications in Computer and Information Sciences (CCIS) No. xxx, Springer, Berlin Heidelberg 2013.
+25.	Schmelzer, H., Sesselmann, W.: Geschäftsprozessmanagement in der Praxis, 7. Auflage, Hanser, München, 2010.
+26.	Schmidt, W., Fleischmann, A. und Gilbert, O.: Subjektorientiertes Geschäftsprozess-management, HMD – Praxis der Wirtschaftsinformatik, Heft 266, 2009, pp. 52-62.
+27.	Schmidt, W.: Business Activity Monitoring, in: Rausch, P., Sheeta, A., Ayesh, A., Business Intelligence and Performance Management - Theory, Systems and Industrial Applications, Springer UK, 2013.
+28.	Schulte, W., Gassman, B.: Business Activity Monitoring, in: Dixon, J. (ed.): Hype Cycle for Business Process Management 2012. Gartner Inc. 2012, pp. 92-94.
+29.	Van der Aalst, W.: Process Mining, Springer, Berlin Heidelberg, 2011.
+30.	Von Ammon, R. Ertlmaier, T., Etzion, O., Kofman, A., Paulus, T.: Integrating Complex Events for Collaborating and Dynamically Changing Business Processes in: Dan, A., Gittler, F. and Toumani, F. (Eds.): ICSOC/ServiceWave 2009, LNCS 6275, Springer, Berlin Heidelberg, 2010, pp. 370–384.
+31.	Zehbold, C., Schmidt, W., Fleischmann, A.: Activity-Based Costing for S-BPM, in: Fischer, H., Schneeberger, J. (Eds.), Proceedings of the 5th International Conference S-BPM ONE 2013, Communications in Computer and Information Sciences (CCIS) No. xxx, Springer, Berlin Heidelberg 2013.
+32.	Zehbold, C.: Controllingansatz für S-BPM, Working Papers Series of the University of Applied Sciences Ingolstadt, No. 25, Ingolstadt, 2012.
+
+
+\section{Subject Oriented Project Management}
+
+\section{Subject Oriented Project Management}
+

@@ -3,9 +3,9 @@
 
 \captionsetup{font=footnotesize}
 \setminted{fontsize=\footnotesize}
-\setmintedinline{fontsize=\footnotesize}
+\setmintedinline{fontsize=\footnotesize,breaklines}
 
-\section{Conceptual Differences ASM Semantic / OWL Model}
+\section{Conceptual Differences to the OWL Description}
 \label{CoreASM-Reference-Implementation-Differences-OWL-Model}
 
 
@@ -21,68 +21,100 @@
 \newcommand\OWLIndividual[1]{{\textcolor{OWLIndividual}{\textbf{#1}}}}
 
 
-% Some content might move to Appendix B / replace it.
-
-This implementation provides more language elements than covered by the OWL description and also gives some concrete implementations, that are left abstract in the OWL description.
-
-% TODO André: describe tables.
-
-See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\ref{tbl:asm:concepts_3} for details.
+% NOTE: Some content might move to Appendix B / replace it.
+% TODO: Introduce history (Börger -> Bandmann -> Wolski)? Explain focus on Interaction Soundness or remove it?
 
 % functions span over a state function and transition function.
 % the state function determines which transitions are enabled and prepares the transition action.
 % example receive function: state function checks IP, transition function removes message from it and stores it in a variable.
 
+This reference implementation has some conceptual differences to the OWL description.
+For example it provides less flexible InputPool constraints and does not support synchronous communication,
+however it supports advanced features that are required for distributed inter-company business processes
+and provides concrete implementations for the usage of Subject Data.
 
 \begin{table}[htbp]
     \footnotesize
 	\centering
-    \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
+    \begin{tabular}[t]{@{}p{0.23\linewidth} p{0.35\linewidth} p{0.35\linewidth} @{}}
         \toprule
-        Concept & Reference Implementation & OWL \\
+        Concept & Reference Implementation & OWL Description \\
         \midrule
 
-        End State
+        % included in Chapter 3
+        InputPool
         &
-        Implemented as a \OWLClass{DoState} that \OWLObjectProperty{hasFunctionSpecification} \OWLClass{EndFunction}, cannot be a \OWLClass{ReceiveState}.
-        Forbids any \OWLObjectProperty{hasOutgoingTransition}.
+        Exactly one limit has to be defined for each Subject, the value 0 means the InputPool is not limited.
+        The limit applies to each pair of (Sender, MessageType).
+        Only \OWLIndividual{InputPoolConstraintStrategy-Blocking} is supported, synchronous send \& receive is not supported.
         &
-        Must either be \OWLClass{DoState} or \OWLClass{ReceiveState}.
-        Allows \OWLObjectProperty{hasOutgoingTransition} for Subject Restart.
-        \\
-
-        Subject Restart
-        &
-        Implicit after \textit{proper termination} when an additional message arrive.
-        &
-        Explicit via \OWLClass{EndState} on a \OWLClass{ReceiveState}, not after termination.
-        \\
-
-        Proper Termination
-        &
-        On termination of a Subject it determines if the InputPool is empty and a Subject Restart is allowed.
-        If the InputPool is not empty further messages are blocked and the Subject is not allowed to restart.
-        &
-        \textit{Absent}.
-        \\
-
-        InputPoolConstraint
-        &
-        Only the \OWLClass{MessageSenderTypeConstraint} with \OWLIndividual{InputPoolConstraintStrategy-Blocking} is supported.
-        Setting the limit to 0 means unlimited. Synchronous send \& receive is not supported.
-        &
-        Allows various combinations of limits set per Sender, MessageType or both.
+        Allows exact limits for different Subjects and MessageTypes.
         The combination \OWLIndividual{InputPoolConstraintStrategy-Blocking} with the limit of 0 means synchronous send \& receive.
         Additionally defines the strategies DeleteLatest, DeleteOldest and Drop.
         \\
 
-        Mobility of Channels
+        % included in Chapter 3
+        Subject Restart
         &
-        Concept to store and forward at runtime references to other subjects and their agents.
+        Implicit when an additional message arrives on a Subject that is \textit{proper terminated}.
+        &
+        Explicit via \OWLClass{EndState} on a \OWLClass{ReceiveState} and outgoing transitions.
+        \\
+
+        % included in Chapter 3
+        Proper Termination
+        &
+        When a Subject terminates and its InputPool is empty it is \textit{proper terminated} and can be restarted.
+        %On termination of a Subject it determines if the InputPool is empty and a Subject Restart is allowed.
+        %If the InputPool is not empty further messages are blocked and the Subject is not allowed to restart.
         &
         \textit{Absent}.
         \\
 
+        % included in Chapter 3
+        End State
+        &
+        Implemented as a distinguished state. % that \OWLObjectProperty{hasFunctionSpecification} \OWLClass{EndFunction}
+        It cannot be a \OWLClass{ReceiveState} and forbids any outgoing transitions.
+        &
+        Must either be \OWLClass{DoState} or \OWLClass{ReceiveState}.
+        Allows outgoing transitions to restart the Subject.
+        \\
+
+        % included in Chapter 3
+        Choice Segments
+        &
+        A Choice Segment begins with a Modal Split state. The paths are joined in a Modal Join state.
+        The target State of every outgoing Transition from the Modal Split State is an \OWLClass{InitialStateOfChoiceSegmentPath}.
+        Every Choice Segment Path is mandatory to start and mandatory to end.
+        &
+        A Choice Segment is a single State.
+        Choice Segment Paths can be both optional to start and optional to end.
+        Choice Segment Paths are not connected by Transitions to the \OWLClass{ChoiceSegment} state. % or its target State.
+        \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Key Conceptual Differences}
+    \label{tbl:asm:concepts_1}
+\end{table}
+
+The most important differences are listed in Table~\ref{tbl:asm:concepts_1}:
+while the OWL description offers both synchronous and asynchronous communication, different InputPool limits and handling strategies
+this reference implementation adresses only asynchronous communication with a blocking strategy.
+Conceptionally the End State is not a property of a state, but provides a distinguished function specification
+to terminate a Subject and determine the \textit{proper terminaion}, which is required for the verification on interaction soundness.
+Next, the execution of Choice Segment Paths is not controlled by a Choice Segment State, but those paths have to be started with a Modal Split Function and joined in a Modal Join Function.
+
+\begin{table}[htbp]
+    \footnotesize
+	\centering
+    \begin{tabular}[t]{@{}p{0.23\linewidth} p{0.35\linewidth} p{0.35\linewidth} @{}}
+        \toprule
+        Concept & Reference Implementation & OWL Description \\
+        \midrule
+
+        % included in Chapter 3
         CorrelationID
         &
         Concept to correlate messages, e.g. responses to requests, so that messages can be send and received reliable in a loop.
@@ -90,32 +122,119 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
         \textit{Absent}.
         \\
 
-        Choice Segments
+        % included in Chapter 3
+        InputPool Functions
         &
-        Choice Segments are initiated by an explicit Modal Split State and joined with an explicit Modal Join State.
-        The target State of every outgoing Transition from the Modal Split State is an \OWLClass{InitialStateOfChoiceSegmentPath}.
-        Every Choice Segment Path is therefore mandatory to start. Also, every Choice Segment Path is mandatory to end and must have a Transition to the Modal Join State.
+        InputPool Functions perform operations on the Subject's InputPool, e.g. close it for some message types or sender Subjects.
         &
-        Choice Segment Paths can be optional to start and optional to end.
-        Choice Segment Paths are not connected by Transitions to the \OWLClass{ChoiceSegment} State and its target State.
+        \textit{Absent}.
+        \\
+
+        % not shown in Chapter 3
+        Timer Transition
+        &
+        The Timer Transition Condition has to be defined in seconds.
+        &
+        It is possible to define the timeout in arbitrary time durations, including in business days.
+        \\
+
+        % not shown in Chapter 3
+        Reminder Transition
+        &
+        \textit{Absent}.
+        &
+        A \OWLClass{ReminderTransition} can be traversed if a certain time based event or frequency has been reached.
+        \\
+
+        % included in Chapter 3
+        Mobility of Channels
+        &
+        Concept to store and forward at runtime references to other subjects and their agents.
+        &
+        \textit{Absent}.
+        \\
+
+        % included in Chapter 3
+        Macro Exit Parameter
+        &
+        Attribute on the End State of a Macro Behavior that selects a corresponding Transition on the \OWLClass{MacroState}.
+        &
+        \textit{Absent}. % FIXME: wirklich? Standard-PASS müsste das doch haben?
+        \\
+
+        Maximum Subject \par Instances
+        &
+        \textit{Absent}. Every Subject can have an arbitrary amount of instances.
+        &
+        The \OWLDataProperty{hasMaximumSubjectInstanceRestriction} property limits the amount of instances that can be created at runtime of a Subject.
         \\
 
         \bottomrule
     \end{tabular}
-    \caption{Conceptual differences between this reference implementation and the OWL description (1).}
-    \label{tbl:asm:concepts_1}
+    \caption{Further Conceptual Differences}
+    \label{tbl:asm:concepts_2}
 \end{table}
 
+In Table~\ref{tbl:asm:concepts_2} further important conceptual differences are listed:
+CorrelationIDs define a relation between messages and allow reliable looped communication patterns.
+CorrelationIDs appear as metadata of a message and as argument to an InputPool queue:
+A CorrelationID is created when a message is send and part of it. A later message, that relates to it, will be send to the InputPool queue of that CorrelationID,
+allowing a receive state to specify that only specific messages can be received.
+With the InputPool Functions queues of the InputPool can be opened and closed, forcing senders to block if they attempt to send to a closed queue.
+Also, the InputPool can be checked if it is empty or not, so that \textit{non-proper termination} can be avoided.
+As this reference implementation targets an interactive process model validation only timeouts in seconds are considered.
+With the Mobility of Channels concept it is possible to store runtime references to agents as Subject Data and to communicate those references with other Subjects,
+which enables various distributed communication patterns.
+Macro Exit Parameters allow a Macro State to have multiple outgoing transitions.
+Within the Macro Behavior the End State determines which outgoing transition will be activated.
+Limiting the number of Subject instances is not possible, which also means that SingleSubjects are not enforced.
+
+Table~\ref{tbl:asm:concepts_3} lists differences in Subject Data concepts.
+Descriptions of the Payload are not supported.
+The Data Types are hardcoded:
+"MessageSet" contains a set of Messages,
+"CorrelationID" contains a single CorrelationID,
+"ChannelInformation" stores Channels and
+"Text" is used for arbitrary contents, that are entered by a user in the abstract process evaluation.
+However, those Data Types are used only at runtime to describe the actual content of a Data Object or a Message.
+
+This reference implementation adds a scope for Data Object Definitions,
+allowing a Data Object to be accessible either "globally" for all states in all behaviors of a Subject or
+only within a single Macro Behavior instance, allowing macros to execute concurrently without influencing each other.
+Further, this enables copying Data Ojects as arguments from the scope of a Macro State into the scope of the called Macro instance.
+
+While the OWL description merely anticipates Data Mapping Functions
+there are concrete implementations to use Data Objects in the Send and Receive Functions.
+Additionally this reference implementation provides Data Modification Functions to perform operations on Data Objects.
 
 
 \begin{table}[htbp]
     \footnotesize
 	\centering
-    \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
+    \begin{tabular}[t]{@{}p{0.23\linewidth} p{0.35\linewidth} p{0.35\linewidth} @{}}
         \toprule
-        Concept & Reference Implementation & OWL \\
+        Concept & Reference Implementation & OWL Description \\
         \midrule
 
+        % absent
+        Payload Description
+        &
+        \textit{Absent}.
+        &
+        A \OWLClass{PayloadDescription} describes a \OWLClass{MessageSpecification} further.
+        \\
+
+        % included in Chapter 3
+        Data Types
+        &
+        Hardcoded: MessageSet, CorrelationID, ChannelInformation and Text.
+        The \OWLDataProperty{hasDataType} property on Data Object definitions is ignored.
+        &
+        A \OWLClass{DataTypeDefinition} allows complex definitions, for example XSD Data Types or definitions in OWL or JSON.
+        Data Object definitions and Payload descriptions must have a Data Type specified.
+        \\
+
+        % included in Chapter 3
         Subject Data Scope
         &
         A \OWLClass{DataObjectDefinition} can be scoped to either the Subject or a \OWLClass{SubjectBehavior}.
@@ -125,21 +244,16 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
         Is always scoped to the Subject.
         \\
 
-        Macro Data Arguments
+        % included in Chapter 3
+        Macro Data \par Arguments
         &
         A \OWLClass{MacroState} can copy the value of a \OWLClass{DataObjectDefinition} into the scope of another \OWLClass{DataObjectDefinition}, which is scoped to the referenced \OWLClass{MacroBehavior}.
         &
         \textit{Absent}.
         \\
 
-        Data Modification Functions
-        &
-        Data Modification Functions perform operations on Subject Data, e.g. concatenation of objects having a set-valued data type.
-        &
-        \textit{Absent}.
-        \\
-
-        Data Mapping Functions
+        % included in Chapter 3
+        Data Mapping \par Functions
         &
         \OWLClass{StoreMessageFunction} stores the received messages in a local Data Object.
         \OWLClass{UseMessageContentFunction} uses the value of a Data Object as content of the outgoing message.
@@ -148,50 +262,37 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
         \textit{Abstract}.
         \\
 
-        InputPool Functions
+        % not shown in Chapter 3
+        Data Modification \par Functions
         &
-        InputPool Functions perform operations on the Subject's InputPool, e.g. close it for some message types or sender Subjects.
-        &
-        \textit{Absent}.
-        \\
-
-        Macro Exit Parameter
-        &
-        Attribute on the End State of a Macro Behavior that selects a corresponding Transition on the \OWLClass{MacroState}.
-        &
-        \textit{Absent}. % FIXME: wirklich? Standard-PASS müsste das doch haben?
-        \\
-
-        Timer Transition
-        &
-        The Timer Transition Condition has to be defined in seconds.
-        &
-        It is possible to define the timeout in arbitrary time durations, including in business days.
-        \\
-
-        Reminder Transition
+        Data Modification Functions perform operations on Subject Data, e.g. concatenation of objects having a set-valued data type.
         &
         \textit{Absent}.
-        &
-        A \OWLClass{ReminderTransition} can be traversed if a certain time based event or frequency has been reached.
         \\
 
         \bottomrule
     \end{tabular}
-    \caption{Conceptual differences between this reference implementation and the OWL description (2).}
-    \label{tbl:asm:concepts_2}
+    \caption{Subject Data Conceptual Differences}
+    \label{tbl:asm:concepts_3}
 \end{table}
 
+
+As listed in Table~\ref{tbl:asm:concepts_4} a substantial conceptional difference to the OWL description is the lack of a discrete Guard Behavior.
+This is compensated by the introduction of State Priorities and the Cancel Function, which allows a transformation to an equivalent behavior:
+The guarded states are modelled in one ChoiceSegmentPath, a second ChoiceSegmentPath uses higher State Priorities and starts with the ReceiveState.
+Once a message can be received in this second path the execution of the first path is paused and the exception can be handled.
+After the exception handling the Subject can be terminated with the End State, the paused state can just continue or the paused state can be aborted with the Cancel Function.
 
 
 \begin{table}[htbp]
     \footnotesize
 	\centering
-    \begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.3\linewidth} @{}}
+    \begin{tabular}[t]{@{}p{0.23\linewidth} p{0.35\linewidth} p{0.35\linewidth} @{}}
         \toprule
-        Concept & Reference Implementation & OWL \\
+        Concept & Reference Implementation & OWL Description \\
         \midrule
 
+        % not shown in Chapter 3
         Cancel Function
         &
         Enables the \OWLClass{UserCancelTransition} of a referenced \OWLClass{State}.
@@ -199,34 +300,86 @@ See table~\ref{tbl:asm:concepts_1}, table~\ref{tbl:asm:concepts_2} and table~\re
         \textit{Absent}.
         \\
 
-        State Priorities
+        % not shown in Chapter 3
+        State Priority
         &
-        A utility to support the Observer Concept.
+        A utility to support the Observer concept.
         When multiple states are active only the states with the highest priority can perform.
         The Function of such states can conditionally allow states with a lower priority to perform.
         &
         \textit{Absent}.
         \\
 
+        % not shown in Chapter 3
         Observer
         &
-        Implicitly supported, requires modelling of a ReceiveState with a high State Priority to interrupt another path.
-        After the exception handling the interrupted behavior can continue, be aborted with the Cancel Function or the Subject can terminate by an EndState.
+        Indirectly supported, requires a manual transformation with two \OWLClass{ChoiceSegmentPaths}, where one path starts with a \OWLClass{ReceiveState} and uses higher State Priorities than the other.
+        Returning to the interrupted behavior is implicitly supported, alternatively it can be aborted with the Cancel Function.
         &
-        Explicitly supported. Executes the \OWLClass{GuardBehavior}, not possible to return to the interrupted state.
+        Explicitly supported. The \OWLClass{GuardBehavior} has a reference to the observed States or Behaviors. A return to the interrupted state is possible with the \OWLClass{GenericReturnToOriginReference} State.
         \\
 
         \bottomrule
     \end{tabular}
-    \caption{Conceptual differences between this reference implementation and the OWL description (3).}
-    \label{tbl:asm:concepts_3}
+    \caption{Observer Concept Differences}
+    \label{tbl:asm:concepts_4}
 \end{table}
 
 
+\section{Architecture}
+\label{CoreASM-Reference-Implementation-Architecture}
 
-\section{editorial note}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\linewidth]{Figures/CoreASM/ArchitekturKonsoleCoreASM}
+  \caption{Architecture of the reference implementation}
+  \label{fig:coreasm_architecture}
+\end{figure}
 
-To fit the code onto the pages it has been compacted. Instead of writing:
+% Runtime environments and system components.
+% The blue (dark background) components are existing parts of the Java based CoreASM Engine.
+% The yellow (light background) components are developed for the PASS-interpreter.
+
+The overall architecture is shown in figure~\ref{fig:coreasm_architecture} and consists on the top level of
+a console application as user interface and the CoreASM Engine as execution environment for the PASS-interpreter specification.
+Both high level components are running in parallel in separate Java Virtual Machine processes.
+The PASS-interpreter specification file includes an ASM specification of asynchronous multi-agent ASMs, executing each Subject instance by one ASM-agent each.
+
+
+The CoreASM Engine parses the specification file and executes the rules in the interpreter
+in cooperation with the abstract storage and the scheduler.
+The abstract storage stores the state of the ASM and is also used to support
+TurboASMs and their submachine states.
+
+The scheduler is used to support asynchronous multi-agent ASMs; with
+the \textit{default} scheduling policy it selects
+a random subset of the running ASM agents and calls the
+interpreter for the parallel evaluation of their main rules.
+If the resultant update sets
+are consistent they are applied in the abstract storage, otherwise the scheduler
+selects a different subset of the running ASM agents for a re-evaluation.
+Supplementary the \textit{onebyone} scheduling policy can be used to evaluate
+only a single agent per step and the \textit{allfirst} policy can be used
+to attempt to evaluate all agents at once before falling back
+to the default scheduling policy in case of inconsistencies.
+The reference implementation uses the \textit{allfirst} scheduling policy for performance reasons,
+but the \textit{default} policy could be used as well.
+
+The Carma application is a simple Java application provided by the CoreASM framework
+to allow the usage of the CoreASM engine as standalone application in a command line.
+
+The console application is developed in Scala.
+A user can load, start and execute locally stored PASS process model files with it.
+The interaction between the console application and the CoreASM engine is realized by Akka actors.
+The Akka actor of the engine has full read and write access to all CoreASM functions by using a Plug-In interface.
+
+
+
+\section{Editorial Note}
+
+To improve the typography the code blocks in this appendix have been compacted.
+Instead of writing the \asminline{rule Behavior} spread-out like in Listing~\ref{lst:asm:Behavior_snipped_spread-out}
+the code blocks are transformed to a more compact notation as shown in Listing~\ref{lst:asm:Behavior_snipped_compact}.
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -240,8 +393,6 @@ rule Behavior(macroInstanceNumber, currentStateNumber) =
 \caption{Behavior, spread-out snippet}
 \label{lst:asm:Behavior_snipped_spread-out}
 \end{listing}
-
-the code blocks are transformed to a more compact notation:
 
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
@@ -260,12 +411,10 @@ rule Behavior(MI, currentStateNumber) =
 
 
 Some elements are intentionally left out in order to preserve space.
-
 For example, the \asminline{rule InputPool_Pop} and
-the \asminline{derived availableMessages}  function
+the \asminline{derived availableMessages} function
 contain lengthy list traversals, and their definitions contain
-undocumented parameters used in a test environment for debugging.
-
+undocumented parameters used in the test environment for debugging.
 Other functions like \asminline{derived searchMacro} or \asminline{derived hasTimeoutTransition} should be self-explanatory.
 
 
@@ -356,7 +505,7 @@ function initializedSelectedTransition : LIST * NUMBER * NUMBER
 function startTime  : LIST * NUMBER * NUMBER -> NUMBER
 
 // Channel * MacroInstanceNumber * TransitionNumber -> BOOLEAN
-function exitCondition : LIST * NUMBER * NUMBER -> BOOLEAN
+function transitionEnabled : LIST * NUMBER * NUMBER -> BOOLEAN
 
 // Channel * MacroInstanceNumber * TransitionNumber -> BOOLEAN
 function transitionCompleted : LIST * NUMBER * NUMBER -> BOOLEAN
@@ -1008,7 +1157,7 @@ rule ResetState(MI, stateNumber) =
 
     let pID = processIDFor(self) in
     forall t in outgoingNormalTransitions(pID, s) do {
-      exitCondition(ch, MI, t) := undef
+      transitionEnabled(ch, MI, t) := undef
       transitionCompleted(ch, MI, t) := undef
     }
 
@@ -1273,7 +1422,7 @@ rule SetAbortionCompleted(MI, currentStateNumber) =
 \begin{listing}[H]
 \begin{minted}{lexer.py:CoreASMLexer -x}
 rule EnableTransition(MI, t) =
-  exitCondition(channelFor(self), MI, t) := true
+  transitionEnabled(channelFor(self), MI, t) := true
 
 rule EnableAllTransitions(MI, currentStateNumber) =
   let pID = processIDFor(self),
@@ -1282,7 +1431,7 @@ rule EnableAllTransitions(MI, currentStateNumber) =
       EnableTransition(MI, t)
 
 rule DisableTransition(MI, currentStateNumber, t) =
-  exitCondition(channelFor(self), MI, t) := false
+  transitionEnabled(channelFor(self), MI, t) := false
 
 rule DisableAllTransitions(MI, currentStateNumber) =
   let ch = channelFor(self),
@@ -2656,4 +2805,4 @@ rule SelectAgents(MI, currentStateNumber, sIDLocal, min, max) =
 \normalsize
 \captionsetup{font=normalsize}
 \setminted{fontsize=\normalsize}
-\setmintedinline{fontsize=\normalsize}
+\setmintedinline{fontsize=\normalsize,breaklines=false}

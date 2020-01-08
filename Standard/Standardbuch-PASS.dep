@@ -154,7 +154,6 @@
   *{file}   {Figures/Ontology/SubjectExecution/20190109-States.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/20190105-Transitions.jpg}{0000/00/00 v0.0}
   *{file}   {chapter03b.tex}{0000/00/00 v0.0}
-  *{file}   {Figures/CoreASM/ArchitekturKonsoleCoreASM.pdf}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/default-pyg-prefix.pygstyle}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/default.pygstyle}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/ACE70051CCE442D0B654F713F9FEEF2DF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
@@ -291,16 +290,30 @@
   *{file}   {chapter04.tex}{0000/00/00 v0.0}
   *{file}   {Figures/Implementation/Implementation-steps.jpg}{0000/00/00 v0.0}
   *{file}   {chapter05.tex}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Integrated-BAM-CEP-Architecture-27.jpg}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Meta-Mode-fo-Duration-relate-to-BPMN-1.jpg}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/BAM Model for Cycle Times.jpg}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Meta-Mode-fo-Duration-relate- to-SBPM.jpg}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/BAM-Model-fo- Cycle-Times-of-a-Purchase-Order-Process-based-on-S-BPM.png}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/BAM-Model-for-Cycle-Time-of-a-Process-Section-based-on-S-BPM.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figuresshared/SharedInputPoolExample.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figuresshared/SharedInputPoolEvent.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Level1.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Leve2.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Lev3.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Lev4.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Lev5.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Lev6.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Lev8.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Lev9.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Lev10.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Monitoring/Approach-Performance-Mgmt.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Monitoring/Integrated-BAM-CEP-Architecture-27.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Monitoring/Meta-Mode-fo-Duration-relate-to-BPMN-1.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Monitoring/BAM Model for Cycle Times.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Monitoring/Meta-Mode-fo-Duration-relate- to-SBPM.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Monitoring/BAM-Model-fo- Cycle-Times-of-a-Purchase-Order-Process-based-on-S-BPM.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Monitoring/BAM-Model-for-Cycle-Time-of-a-Process-Section-based-on-S-BPM.jpg}{0000/00/00 v0.0}
   *{file}   {appendix.tex}{0000/00/00 v0.0}
   *{file}   {appendixA.tex}{0000/00/00 v0.0}
   *{file}   {appendixB.tex}{0000/00/00 v0.0}
   *{file}   {appendixC.tex}{0000/00/00 v0.0}
+  *{file}   {Figures/CoreASM/ArchitekturKonsoleCoreASM.pdf}{0000/00/00 v0.0}
+  *{file}   {_minted-Standardbuch-PASS/951F6EA6EC0AFC5D34AA5F845341FB98F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/E283408AA2110430D0F91C04DD00904507B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/08171A41E0A3E1B7C0A9DDF880F008BC07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/8F7FDABCC8D06D9CFFF6738E185F713AF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
@@ -310,7 +323,7 @@
   *{file}   {_minted-Standardbuch-PASS/94B759FD5936A47C3B678305C76982AB07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/307B246F34A087772DEAED0FE8793CEA07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/943A404A20FC761184429CAFA1F5991007B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
-  *{file}   {_minted-Standardbuch-PASS/99076EA0B510D41AEBCE25AC922CC30DF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
+  *{file}   {_minted-Standardbuch-PASS/F7EEEFBB96F9D62E7951BF60CD2CEB5CF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/31EE213C53C91D43125008AC1EBF435F07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/C585581166145C0A09ED44ADFBB658A107B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/32BB297FB60A3B1D075B1336F5F8AA4B07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
@@ -334,7 +347,7 @@
   *{file}   {_minted-Standardbuch-PASS/A81D239C5190FAF7518F2AB129465E9907B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/ECFA9038C808EB87B1F0FE54212E86B907B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/DDFAB11B94039F8C9F2A7CF3F0C1A1B007B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
-  *{file}   {_minted-Standardbuch-PASS/28B20F36B0B0B1346D1F5EE2437831CA07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
+  *{file}   {_minted-Standardbuch-PASS/E28FCBCF709381939A6E997DCA54FD6D07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/FED2375FAADAB13E6FD1B681A03C8E4307B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/9382BA2B715F8824A35B549120DBBFE307B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/EF2D6BB527C5703D2F25346CDF30728407B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
@@ -347,7 +360,7 @@
   *{file}   {_minted-Standardbuch-PASS/0F37A2A8007D0CBEBBFB3FF57A95472407B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/57C7E7401E5ECF9E0ED467AFA24A90A507B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/D78D4C023F594C4A80467CBA87677FFD07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
-  *{file}   {_minted-Standardbuch-PASS/DC955B00768DE03FB60A845D9A0F5AFB07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
+  *{file}   {_minted-Standardbuch-PASS/0CA80FD7D0D09CC33EAD93C153E20BE007B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/A3FABA4AE35EEEF013166E098C5D69A007B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/7708A2881B4C31EC535A384D71C8741107B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/0F127E81F0D33877849DA1641155CE3307B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}

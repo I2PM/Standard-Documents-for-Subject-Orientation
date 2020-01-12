@@ -2,7 +2,7 @@
 In this chapterr various aspects of the subject oriented modelling and programming concept are outlined. These aspects are already published on different confernces. The following sections are based on these publications.
 The concepts described in theses sections will be part of future standardisation activities.
 The following sections are based on following publications:\\
-\begin{list}{-}{spacing}
+\begin{list}{-}
 	\item Subjects and Shared Input Pools:
 	\item Hierarchies in Communication Oriented Business Process Models:
 	\item Business Activity Monitoring for S-BPM:
@@ -74,6 +74,21 @@ Subject add messages to the shared input pool and other subjects want to read th
 	\label{fig:sharedblockchain}
 \end{figure}
 
+\subsection {Conclusion}
+The more the Internet of Things (IoT) propagates into domain-specific applications, the more stakeholders get involved with respect to business and user requirements. They expect omnipresent use and adaptation on demand. Ensuring robust and semantically correct operation in dynamically networked IoT environments requires tools and development methods to handle complex patterns of interactions due to the different components and capabilities of actors.\\
+These patterns refer to the (reactive) flow of control and correct exchange of data. We have proposed an integrated approach based on subject-oriented process models. These role-specific representations allow behavior abstractions on various levels of granularity and can be enriched with a mechanism for handling complex events and sharing data. The data handling mechanism is bound to exchanging messages and a blackboard-like structure. Its behavior can be implemented through blockchain technologies, in case a single point of failure in system operation should be inhibited. The latter is of crucial importance, once the data exchange between IoT-system elements should be trustworthy and traceable.\\
+The presented approach should facilitate transparent development and stakeholder understanding of (complex) IoT systems in dynamic settings, due to the implementation-independent representation on a mainly diagrammatic level based on a minimalistic notation, stemming from subject-oriented modeling. Abstractions and decomposition into IoT system components encapsulate behavior. The overall behavior of an IoT system is determined by a set of interactions that integrates the control flow with data exchange patterns from a semantic process perspective. Application design can be understood as top-down approach with the functionality specific to the IoT application residing on an edge operating system. Platform services implement all functional requirements, and are backed by communication and information processing technologies. Cross-functional issues, such as secure operation, business-relevant standardization, and critical event handling can be explicated on an implementation-independent level due to the semantic process representation scheme. The resulting models are executable and thus, can be adapted dynamically.
+
+
+\subsection{Future Work}
+Due to the novel conceptual integration addressed, several aspects and topics need to be addressed by future research:
+\begin{list}{-}{spacing}
+\item From an application perspective, the results need to be aligned with novel industry 4.0 concepts (cf. [29]), since there not only existing standards are framed by business processes, but also distributed operation of production-relevant processes and real-time sharing of data.
+\item From an implementation perspective, our approach requires a (prototypical) realization of an appropriate block chain mechanism for managing shared input pools meeting all requirements in section 4.
+\item From an industry perspective, performance evaluations might lead to reconsider our conceptual findings, e.g., how to manage a shared input pools of a distributed system in real time.
+\item Definition of structural semantics in OWL
+\item Definition of execution semantics in ASM
+\end{list}
 
 \section{Hierarchies in Communication Oriented Business Process Models}
 PASS  offers powerful possibilities for structuring complex process systems. The ways to do that are demonstrated with an example.
@@ -260,7 +275,7 @@ As mentioned in the last section it is necessary not only to model the processes
 		\\
 		Data Sources (specific) & Activity processing time (for one instance):\newline
 		\textbf{SELECT} TIMESTAMP1  \newline
-		(\textbf{SELECT} STARTTIME \newline
+		\hspace (\textbf{SELECT} STARTTIME \newline
 		\textbf{FROM} RT\_PROCINST \newline
 		\textbf{WHERE} RT\_PROCDESC = \textit{process (purchase order)}\newline
 		\textbf{AND} ID = \textit{instance (9)}\newline
@@ -422,48 +437,69 @@ The BAM modeling tool should make use of the model data created by the process m
 
 \section{Subject Oriented Project Management}
 
-In our global economy enterprises cooperate around the globe in order to create services or manufacture products for customers which are also distributed all over the world. The challenge of the cooperating partners as a federation of independent systems (virtual enterprise, VE) is to establish smooth cross-enterprise communication to reach the common objectives [1]. Information and communication technologies (ICT) are essential to create a federation of independent software systems suitable to execute business processes across the involved companies. 
+Subject orientation is focused on networks of indeppendent systems, which coordinate their cooperation by exchanging messages. The involved system may belong to different organisations.
+In our global economy enterprises cooperate around the globe in order to create services or manufacture products for customers which are also distributed all over the world. The challenge of the cooperating partners as a federation of independent systems (virtual enterprise, VE) is to establish smooth cross-enterprise communication to reach the common objectives \cite{article:VirtualEnterprise}. Information and communication technologies (ICT) are essential to create a federation of independent software systems suitable to execute business processes across the involved companies. 
 \\
-Figure 1 shows an example of an order-to-cash scenario where federated applications support a cross-company business process. A dog food store sells its products via internet. It commissions a transportation service provider to deliver the ordered products to the customer, who confirms the reception of the goods. The store deducts the money from the customer’s bank account. The process steps are facilitated by several independent software applications and message exchanges (order, order confirmation, delivery notification etc.) enabled by respective communication systems.
+Figure \ref{fig:DogFoodShop} shows an example of an order-to-cash scenario where federated applications support a cross-company business process. A dog food store sells its products via internet. It commissions a transportation service provider to deliver the ordered products to the customer, who confirms the reception of the goods. The store deducts the money from the customer's bank account. The process steps are facilitated by several independent software applications and message exchanges (order, order confirmation, delivery notification etc.) enabled by respective communication systems.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Project/DogFoodShop.jpg}
+	\caption[Order-to-cash scenario in a federation of enterprises and applications (simplified)]{Order-to-cash scenario in a federation of enterprises and applications (simplified)}
+	\label{fig:DogFoodShop}
+\end{figure}
+
 \\
-Figure 1: Order-to-cash scenario in a federation of enterprises and applications (simplified)
-Developing such a mutually adjusted solution by a federation of independent enterprises requires an approach different from traditional software development projects taking a process perspective (cf. [2]). Therefore our focus is on how to implement loosely coupled systems for exchanging information between independent partners, rather than tightly coupled solutions for sharing information or other resources.
-The article is structured as follows. In section II we first take a look at virtual enterprises, federations of enterprise information systems, and their peculiarities, as they form the conceptual background of the proposal. Then, software development methodology and its elements are reviewed with respect to developing federated systems. This leads to section III, containing our proposal of a software development approach for federated systems based on subject orientation. We conclude in section IV.
+
+Developing such a mutually adjusted solution by a federation of independent enterprises requires a project management approach different from traditional software development projects taking a process perspective (cf. \cite{book:ProjectHistory}). Therefore our focus is on how to implement loosely coupled systems for exchanging information between independent partners, rather than tightly coupled solutions for sharing information or other resources.
+The section is structured as follows. First software development methodology and its elements are reviewed with respect to developing federated systems. This leads to our proposal of a software development approach for federated systems based on subject orientation. 
 \\
-II.	BACKGROUND
-A.	Recommendations for creating federated systems
-When independent enterprises develop a federated system a lot of managerial and technological aspects have to be considered, particularly with respect to managing collaborative business processes. This is reflected in the following recommendations (cf. [3], [4]):
-1.	Start the foundation of a federation and identify members.
-2.	Identify and describe the business services that organizations can provide or they need from partners in service level agreements.
-3.	Harmonize the enactment of collaboration by coordinating the participating organizations according to defined business processes and identify the systems required for the federation.
-4.	Integrate the identified and implemented services/systems into the intended application. 
-5.	Maximize the autonomy of organizations when collaborating, thereby ensuring organizations to benefit most from their own business objectives.
-6.	Represent the partnerships between collaborating organizations when collaborating, and update changes in partnership.
-7.	Guarantee the business privacy of organizations in the course of collaboration.
-8.	Allow partners and other third parties to monitor, measure, and oversee the execution of business processes.
+\subsection{Background}
+
+\subsubsection{\textbf{Recommendations for creating federated systems}}
+When independent enterprises develop a federated system a lot of managerial and technological aspects have to be considered, particularly with respect to managing collaborative business processes. This is reflected in the following recommendations (cf. \cite{book:PMThirdWave} , \cite{ChallengesDistPM} ):
+\begin{enumerate}
+	\item Start the foundation of a federation and identify members.
+	\item Identify and describe the business services that organizations can provide or they need from partners in service level agreements.
+	\item Harmonize the enactment of collaboration by coordinating the participating organizations according to defined business processes and identify the systems required for the federation.
+	\item Integrate the identified and implemented services/systems into the intended application. 
+	\item Maximize the autonomy of organizations when collaborating, thereby ensuring organizations to benefit most from their own business objectives.
+	\item Represent the partnerships between collaborating organizations when collaborating, and update changes in partnership.
+	\item Guarantee the business privacy of organizations in the course of collaboration.
+	\item Allow partners and other third parties to monitor, measure, and oversee the execution of business processes.
+\end{enumerate}
 \\
-B.	Federation of enterprise information systems
-[1] define virtual enterprises and federations of enterprise information systems as follows: “The Enterprise partners’ Virtual Enterprise (EP VE) is the federation of partners in the community that come together to achieve the goal of a federated distributed system environment, sharing their resources, and collaborating to achieve a common goal: the Federated System VE (FS VE). The partners in the federation retain autonomy over their resources, deciding which resources (personnel, resource dollars, equipment, etc.) are sharable for achieving this goal. The results of this VE are then useable by the partners in furthering their individual systems. The FS VE is seen to be a virtual system of distributed processing components (hardware and software), which are physically implemented and managed by the partners. It is a federation of the partners’ systems, where each system retains its autonomy over all processing system components and sharable data/information. Retaining autonomy means defining which data or information and software/hardware assets will participate in the federation and be accessible and usable by other systems in the federation.”
+\subsubsection{\textbf{Federation of enterprise information systems}}
+\cite{article:VirtualEnterprise} define virtual enterprises and federations of enterprise information systems as follows: "\textit{The Enterprise partners' Virtual Enterprise (EP VE) is the federation of partners in the community that come together to achieve the goal of a federated distributed system environment, sharing their resources, and collaborating to achieve a common goal: the Federated System VE (FS VE). The partners in the federation retain autonomy over their resources, deciding which resources (personnel, resource dollars, equipment, etc.) are sharable for achieving this goal. The results of this VE are then useable by the partners in furthering their individual systems. The FS VE is seen to be a virtual system of distributed processing components (hardware and software), which are physically implemented and managed by the partners. It is a federation of the partners' systems, where each system retains its autonomy over all processing system components and sharable data/information. Retaining autonomy means defining which data or information and software/hardware assets will participate in the federation and be accessible and usable by other systems in the federation.}"\\
 The definition shows that the focus is on sharable resources. This means when setting up a federation the VE members need to clarify ownership of the shared resources as well as access rights and the rights to change those. Such an approach often implies tight coupling of the involved enterprises and the related resources. Entities leaving a federation then cause difficulties with respect to separating involved systems (changing access rights) and sorting out ownership of information.
 Alternatively, information can be exchanged between the partners by messages, implying only a loose coupling of the involved systems. In this case the partners only need to agree upon structure and meaning of the data, e.g., using XML schemes, and upon the implementation of the message exchange, e.g., by web services. 
 \\
-C.	Software development methodology
-“A software development methodology is a collection of procedures, techniques, tools and documentation aids which help developers to implement software systems” [5]. It may include modeling concepts, tools for model-driven architecture, integrated development environments (IDEs) etc. The so-called magic triangle (see figure 2) summarizes the various aspects of a software development methodology [6].
+\subsubsection{\textbf{Software development methodology}}
+\textit{"A software development methodology is a collection of procedures, techniques, tools and documentation aids which help developers to implement software systems"}  \cite{book:ISDevelopment}. It may include modeling concepts, tools for model-driven architecture, integrated development environments (IDEs) etc. The so-called magic triangle (see figure \ref{fig:Triangle}) summarizes the various aspects of a software development methodology \cite{book:SoftEng}.
 
-Figure 2: Magic triangle of software development methodologies
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Project/Triangle.jpg}
+	\caption[Magic triangle of software development methodologies]{Magic triangle of software development methodologies}
+	\label{fig:Triangle}
+\end{figure}
+
 Concepts and Techniques are used to create models of the software to be implemented, and are thus significantly influencing which languages, procedures and tools are utilized. The applied concept implies the artifacts to be produced, of which the executable software system is the most important one. The Language is used to create the artifacts and tools. Procedures describe the sequence in which the activities for creating the various artifacts are executed. While languages and tools can be replaced without impacting concepts and procedures, the latter are decisively determining the shape of a software development environment.
 \\
-D.	Modeling concepts
-Developing a federated system like the one described in section I requires modeling cross-company business processes and the entities performing activities in these processes.
-1)	Business process modeling
+\subsubsection{\textbf{Modeling concepts}}
+Developing a federated system like the dog food store requires modeling cross-company business processes and the entities performing activities in these processes.
+\paragraph{Business process modeling} \newline
+\newline
 There are various approaches for specifying business process models. IT implementations of those models are called process-controlled applications [7] or workflows. The modeling approaches can be distinguished in three classes: (i) Control flow-based specifications put the focus on the activities. (ii) Object-based models mainly describe business objects and the sequence of operations to manipulate them. (iii) Communication-based models focus on the active entities in a process which exchange messages in order to coordinate their work.
 By their nature the latter are promising candidates for modeling federations of systems. Business Process Model and Notation (BPMN), the currently most widely discussed modeling language, contains elements for the description of control flows and communication in business processes. In the following we discuss its communication-oriented features.
 To model communication BPMN provides so-called pools, each representing a process that can exchange messages with processes in other pools. Conversation diagrams are the means to describe this mechanism: However, they do not allow specifying the sequence in which messages are exchanged. Although the sequence can be captured by collaboration diagrams, the semantics of sending and receiving messages is not precisely defined. For instance, it remains unclear whether messages are exchanged synchronously or asynchronously. Additionally a certain message from a pool can only be received in a single activity state, but not in other states. Choreography diagrams in BPMN also define the allowed message sequence between pools. [8] describe a choreography-based tool for specifying global processes. The problem is that choreography specifications cannot contain data. As a consequence a modeler can only describe message sequences being covered by regular expressions, which is the lowest level in the Chomsky hierarchy. This fact makes it impossible to model a behavior like the following: Pool S sends n messages of a type X to pool R. After that S sends a message Y to R. Subsequently S expects m messages of type A from pool R, which received the n messages of type X. The reason for that is that the messages cannot be counted, because data are not allowed in BPMN choreographies.
 Given these properties of BPMN this notation has significant draw backs for modeling communication, hindering the precise development of federations of systems.
-2)	Multi-agent systems modeling
+
+\paragraph{Multi-agent systems modeling}
 The term agent has multiple meanings. We follow the definition given in [9]: An agent is an entity that performs a specific activity in an environment of which it is aware and that can respond to changes. A multi-agent system (MAS) is a system where several, perhaps all, of the connected entities are agents. The most important property of agents is their controlled autonomy: They independently execute their role-specific behavior, and in multi-agent systems they communicate with each other. These properties are alike those of federated systems which therefore can be considered as multi-agent systems. This means that software development methodologies for agent-oriented software (for an overview see [8]) can help developing federations of applications.
 \\
-E.	Procedures
+\subsubsection{Procedures}
 Software Life Cycles (SLC) build a framework for software development procedures. All software development projects follow a series of phases. While software life cycles can be defined in many different ways, each of them comprises the following generic activities:
 •	Project conception or initiation
 •	Planning
@@ -471,16 +507,17 @@ Software Life Cycles (SLC) build a framework for software development procedures
 •	Termination
 In the traditional waterfall approach these activities are performed in the sequence shown above. Other life cycle concepts propose overlapping the development steps, suggest alternatives like the V model or agile development procedures like Extreme Programming and Scrum. [10], [6] and [5] give an overview of the various approaches.
 \\
-F.	Work break down structure (WBS)
+\subsubsection{Work break down structure (WBS)}
 The work break-down structure describes the work to be done in a project in a hierarchical way. A work break-down structure element may be a product, data, service, or activity contained in the software life cycle or any combination thereof. A WBS also provides the necessary framework for detailed cost estimating and control along with guidance for schedule development and control. The top level of the WBS should identify the major phases and milestones of the project in a summative fashion. Consequently, the phases used in the top level depend on the software development methodology applied in a project. The first level can either represent the phases used in the software life cycle or the major artifacts of the system to be developed. In case the top level is SLC-oriented it might be built by requirement specification, software architecture, programming, test etc. In the case of an evolutionary life cycle there will be topics like Release 1, Release 2 etc., followed by headlines like requirement specification on the second level.
 Another alternative is to use top level headlines corresponding to artifacts created by modeling activities, such as ‘create communication structure’ or ‘describe subject behavior’ (see section III.D).
 The WBS is created during the planning phase of a project life cycle. During this phase the project manager works with the project team to make sure that the client's needs are addressed and the project is planned completely and approved by the client prior to any sort of production beginning on the project.
-G.	Organisational break down structure and software architecture
+
+\subsubsection{Organisational break down structure and software architecture}
 An organizational breakdown structure (OBS) complements the WBS and resource breakdown structure of a project. Project organizations can be broken down in much the same way as the work or product. The OBS is created to reflect the strategy for managing the various aspects of the project and shows the hierarchical breakdown of the management structure. Hence, the work break down structure has a significant impact on the organizational structure of the project team. The same holds for the phases of the software life cycle and the system architecture influencing the work break down structure. Conway’s law states “organizations which design systems ... are constrained to produce designs which are copies of the communication structures of these organizations” [11]. A variation of Conway’s law can be found in [12]. "If the parts of an organization (e.g., teams, departments, or subdivisions) do not closely reflect the essential parts of the product, or if the relationship between organizations do not reflect the relationships between product parts, then the project will be in trouble... Therefore: Make sure the organization is compatible with the product architecture” [12].
 As we look at developing federations of systems with a federation of independent project teams, the system architecture needs to be aligned with the multiple project team structure.
 \\
 
-III.	SOFTWARE DEVELOPMENT METHODOLOGY FOR FEDERATED SYSTEMS
+\subsection{SOFTWARE DEVELOPMENT METHODOLOGY FOR FEDERATED SYSTEMS}
 The software development methodology for federated systems proposed here is based on Subject-oriented Business Process Management (S-BPM) as the most straightforward enabler of communication-oriented BPM [16]. Therefore we first outline this approach the way being used in many industrial projects successfully (for examples see [13], [14], [15]). We then explain all activities and steps of the development cycle for describing and implementing a federated system using the dog food order-to-cash example. The sample case starts with having the idea to create a solution and ends with a running application.
 \\
 A.	Subject-oriented business process models

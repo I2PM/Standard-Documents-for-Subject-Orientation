@@ -14,7 +14,7 @@ The following sections are based on following publications:\\
 Shared input pools have the same structure like subject-specific ones, and thus, the same properties like the standard input pool. The only difference is that different subjects can deposit in or remove messages from a shared input pool. Subjects that want to send a message via a shared input pool do not use a subject name as addressee of a message, but the name of a shared input pool instead. In a distributed system several shared input pools for different purposes can be used. Figure 7 shows the slightly changed structure of the traffic management system when operating it with a shared input pool. The subject "Car detection" represents the shared input pool.
 
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Chapter5/figuresshared/SharedInputPoolExample.jpg}
 	\caption[Traffic Management System with Shared Input Pool]{Traffic Management System with Shared Input Pool}
@@ -28,7 +28,7 @@ The messages of an input pool can be analyzed with respect to certain patterns o
 In the example, the subject "CEP pollution analyzer" can analyze the time between cars passing the intersection in a certain time period. It can identify the events "low traffic" or "high traffic" and send it to the subject "Environment management". In case of tunnels, the subject "Environment management" might react to this information in a different way compared to open air settings. 
 
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Chapter5/figuresshared/SharedInputPoolEvent.jpg}
 	\caption[Shared Input Pools and Complex Event Processing]{Shared Input Pools and Complex Event Processing}
@@ -67,7 +67,7 @@ Subject add messages to the shared input pool and other subjects want to read th
 
 
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Chapter5/figuresshared/Block-Chain.jpg}
 	\caption[Utilizing block chain patterns Oracle and Reverse Oracle]{Utilizing block chain patterns Oracle and Reverse Oracle}
@@ -102,7 +102,7 @@ Rectangles represent processes. Each process has a name. Processes consists of o
 Figure \ref{fig:car-service-level1} shows the highest process level of the car break down service. In the "car use" process the event "car break down" happens. In order to organize support an interaction is initiated with process "car break down service" . Between these processes messages are exchanged which are elements of the communication channel "Car break down handling".\\
 
 
-\begin{figure}[ph]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Level1.jpg}
 	\caption[High level structure of car break down service]{High level structure of car break down service}
@@ -114,7 +114,7 @@ Figure \ref{fig:car-service-level1} shows the highest process level of the car b
 Figure \ref{fig:car-service-leve2} shows the next process structure level of the process "car break down ser-vice". In this level the process "Car break down service" is separated in 10 processes. The processes "Bank", "Insurance service", "Car repair workshop", "Incident Management","Mobility Manage-ment" and "Towing Management" have a communication channel to the prcess "Car usage". This means the communication channel "Car break down handling" is separated into five communica-tion channels. Each of them covers the communication with the relared process, e.g. the communi-cation channel "Accident notification Car break down" is the communication channel between the processes "Car usage" and "Incident Management".\\
 
 
-\begin{figure*}
+\begin{figure*}[htbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Leve2}
 	\caption[Structure of the Emmergency Call Handling Process]{Structure of the Emmergency Call Handling Process}
@@ -125,7 +125,7 @@ Figure \ref{fig:car-service-leve2} shows the next process structure level of the
 
 Inside a process there can be also processes. This means that levels of processes can be built. Figure \ref{fig:car-service-lev3} shows the next deeper level of our process hierarchy. The process "Car repair workshop" is structured in six processes. According to this separation the communication sets are also splitted e.g. the communication set "Handling repair service" is splitted into three parts, one part is han-dled by the process "Service scheduling" the other by the process "Car droping" and the third one by the process "Customer Satisfaction".\\
 
-\begin{figure*}
+\begin{figure*}[htbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Lev3}
 	\caption[Details of the "Car repair workshop" Process]{Details of the "Car repair workshop" Process}
@@ -134,7 +134,7 @@ Inside a process there can be also processes. This means that levels of processe
 
 As already mentioned, processes cannot communicate directly with each other. The active entities of a process, the subjects communicate with each other. This means messages from one process are sent to an other process are reveived by a subject inside of that process. Messages belonging to a channel are assigned to a sending or receiving subject at the lowest level of an process architecture. This lowest level of a process description is the subject interaction diagram (SID) which shows the involved subjects of a process and the messages they exchange. In the following we consider the process incident management in more detail. This process does not contain other processes like the process "Car Repair Shop". The process "Incident management" contains a Subject Interaction Diagram. Some of the subjects of a process communicate with subjects in other processes. These subjects are called border subjects because they are at the border of a process to other prcesses. Figure \ref{fig:car-service-lev4} shows the process "Incident management" with its border subjects. There is a border subject "Help agent" which communicates with the processes "Towing service", "Mobility ser-vice"and  "Car repair workshop", precisely it communicates with a subject in one of these process-es. Another border subject of the process "Incident management" which is called "Help desk"communicates with the process "Car usage".\\
 
-\begin{figure}[ph]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Lev4}
 	\caption[Neighbors of the "Incident Manaement Process"]{Neighbors of the "Incident Manaement Process"}
@@ -143,7 +143,7 @@ As already mentioned, processes cannot communicate directly with each other. The
 
 The border subjects of the process "Incident management" must have a coresponding border sub-ject at the neighbour processes. The border subjects "Call agent" communicates with the border subject "Help requestor" of process "Car usage" and the border subject "Help agent" communi-cates with border subjects of the processes "Car repair workshop", "Towing service and "Mobility service". The process "Incident management" with all the border subjects is shown in  figure \ref{fig:car-service-lev5}.\\
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Lev5}
 	\caption[Border subjects of the "Incident Management" Process]{Border subjects of the "Incident Management" Process}
@@ -157,7 +157,7 @@ From the perspective of the subjects inside of the process "Incident managent" a
 \subsection{Behavioral Interface}
 Processes to which a considered process has communication relationships are called process neighbours or for short neighbours. Now we want to consider the details of the communication relationships between two neighbours. The interface between two processes is defined by the related border subjects and the allowed sequences in which the messages a communication channel are exchanged between them. As already described above each message is defined by a name and the data which are transported the so-called payload. A border subject observes the behavior of the border subject of the neighbour process and vice versa. Figure \ref{fig:car-service-lev8} shows the border subject "Help desk" of the processes "Incident Management" which communicates with the border subject of process "Car usage".\\
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=1.0\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Lev6}
 	\caption[Subject Interaction Diagram of the Process "Incident Management"]{Subject Interaction Diagram of the Process "Incident Management"}
@@ -166,7 +166,7 @@ Processes to which a considered process has communication relationships are call
 
 Because we consider the process "Incident management" the border subject "Caller" of the process "Car usage" becomes an interface subject in the SID (details about interface subjects can be found in \cite{Flei12}) of the process “Incident Management”. Figure \ref{fig:car-service-lev8} shows the detailed subject interaction diagram around the subject help desk. \\
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Lev8}
 	\caption[Subject Interaction around the subject “Help desk”]{Subject Interaction around the subject “Help desk”}
@@ -178,7 +178,7 @@ If the customer data are valid with that data the subject "Help desk" creates a 
 
 
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Lev9}
 	\caption[Part of the Behavior Diagramm of the subject “Help desk”]{Part of the Behavior Diagramm of the subject “Help desk”}
@@ -189,7 +189,7 @@ If the customer data are valid with that data the subject "Help desk" creates a 
 The behavior described in the figure above contains the communication with all neighbor subjects of subject "Help desk" including the communication with the interface sub-ject "Caller". From the perspective of this subject the communication of the subject "Help desk" with its other neighbor subjects is not relevant. For the subject "Caller" only the commumication sequence between itself and the subject "Help desk" is relevant. These allowed communication sequences are called the behavioral interface.\\
 The behavioral interface between two subjects can be derived from the complete behavior of a subject by deleting the interactions with all the other subjects . Figure \ref{fig:car-service-lev10} shows how the communication sequence relevant for the communication be-tween the subject "Help Desk" and "Caller" is derived from the complete behavior of subject "Help desk".
 
-\begin{figure}
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=1.0\linewidth]{Figures/Chapter5/figures-hierarchy/Car-Service-Lev10}
 	\caption[Deriving the Behavioral Interface from the Subject Behavior]{Deriving the Behavioral Interface from the Subject Behavior}
@@ -208,7 +208,7 @@ By feeding back information for completed and running instances to analysis moni
 \\
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{Figures/Chapter5/Monitoring/Approach-Performance-Mgmt.jpg}
 	\caption[Closed-loop Approach to Performance Management]{Closed-loop Approach to Performance Management \cite{book:AnalytInfSys}}
@@ -220,7 +220,7 @@ By feeding back information for completed and running instances to analysis moni
 \subsection{Architecture }  
 A Business Activity Monitoring (BAM) environment supported by Complex Event Processing consists of several elements necessary at build time and at runtime (see figure \ref{fig:BAMArchitecture}) and \cite{book:processmonitoring}, \cite{book:CEPinAction} , \cite{article:BlueprintEventBPM}). At build time a modeling environment should provide tools for designing processes (e.g. Metasonic Build) and defining process performance indicators (PPIs), BAM events, rules, thresholds etc. as well as parameters for their visualization in report and on dashboards. At runtime there are (1) event producers like a process engine (e.g. Metasonic Flow) or an ERP system (e.g. SAP) which feed events into an event cloud or stream (chronologically ordered). (2) Event Processing Agents (EPA) form the event processing logic. They process events based on metrics, event patterns, rules and other parameters specified at design time. Their basic logical functions include filtering and transforming events and detecting patterns among them. Global state elements allow them accessing data from outside the application (e.g. from an ERP system). EPAs put the results of their processing (also to be understood as events) out to Event Consumers (3) like dashboards or process engines. Input and Output Adapters (IA, OA) transform event data between different formats of system elements as necessary. All system elements involved form an Event Processing Network (EPN), in which events are exchanged by communication mechanisms.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Monitoring/Integrated-BAM-CEP-Architecture-27.jpg}
 	\caption[Integrated BAM/CEP Architecture 27]{Integrated BAM/CEP Architecture \cite{book:processmonitoring}}
@@ -275,7 +275,7 @@ As mentioned in the last section it is necessary not only to model the processes
 		\\
 		Data Sources (specific) & Activity processing time (for one instance):\newline
 		\textbf{SELECT} TIMESTAMP1  \newline
-		\hspace (\textbf{SELECT} STARTTIME \newline
+		(\textbf{SELECT} STARTTIME \newline
 		\textbf{FROM} RT\_PROCINST \newline
 		\textbf{WHERE} RT\_PROCDESC = \textit{process (purchase order)}\newline
 		\textbf{AND} ID = \textit{instance (9)}\newline
@@ -285,8 +285,6 @@ As mentioned in the last section it is necessary not only to model the processes
 		Completed instances: see separate fact sheet .
 		\\
 		Computing Period (time, no. of inst.) & Daily
-		\\
-		& &
 		\\
 		& \textbf{Presentation}
 		\\
@@ -303,7 +301,7 @@ As mentioned in the last section it is necessary not only to model the processes
 \label{tbl:Fact-Sheet}
 \end{table}
 
-Replacing the content column by more formal ontology-based linguistic patterns as suggested by Del-Río-Ortega et al. (see table \ref{tbl:Fact-Sheet-PPI}) could help relating PPIs to elements of the process model, performing automated analysis \cite{article:ProcessPerfInd} and implementing the measurement at runtime. 
+Replacing the content column by more formal ontology-based linguistic patterns as suggested by Del-Rio-Ortega et al. (see table \ref{tbl:Fact-Sheet-PPI}) could help relating PPIs to elements of the process model, performing automated analysis \cite{article:ProcessPerfInd} and implementing the measurement at runtime. 
 
 \begin{table}[htbp]
 	\footnotesize
@@ -346,12 +344,10 @@ Replacing the content column by more formal ontology-based linguistic patterns a
 \caption{PPI Template based on Linguistic Patterns \cite{article:ProcessPerfInd}}
 \label{tbl:Fact-Sheet-PPI}
 \end{table}
-
-
 Friedenstab et al. argue that such linguistic patterns do not fit to the usually graphical modeling of processes which makes integration difficult \cite{article:BPMNActivityMon}. The authors discuss some more approaches to BAM modeling. With regard to the limitations revealed, they present a BAM-related extension of the graphical Business Process Model & Notation (BPMN) \cite{article:BPMNActivityMon}.
 Using an abstract language syntax based on the Unified Modeling Language (UML) they started defining meta models for language constructs needed for BAM as there are Duration, Frequency, Composed Basic Measure, Aggregated Measure, Filter, Target Definition, Actions, Measure-based Expressions and Dashboard. Figure \ref{fig:Meta-Model} depicts the example for the duration of elements on different levels of detail, where the grey colored parts indicate references to the BPMN specification.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Monitoring/Meta-Mode-fo-Duration-relate-to-BPMN-1.jpg}
 	\caption[Meta Model for Duration (related to BPMN) 12]{Meta Model for Duration (related to BPMN) \cite{article:BPMNActivityMon}}
@@ -361,7 +357,7 @@ Using an abstract language syntax based on the Unified Modeling Language (UML) t
 
 In a second step Friedenstab et al. developed a concrete syntax allowing for modeling the abstract language elements with graphical symbols and text labels. Parts of it are visible in figure \ref{fig:Model-Cycle-Times}. The example shows the BAM model for determining the cycle times of a purchase order process modeled in BPMN (lower part). The upmost part for example expresses the fact that the overall cycle time (Duration) for the last 50 instances (Filter) has to be determined and displayed on the dashboard (Dashboard). Monitoring the average of the overall cycle time for completed instances controls the modeled business logic of the process. If it is above 48 hours goods are delivered with an express shipping if the average cycle time is more than. Otherwise standard shipping is carried out. A deviation also leads to an alert sent to the process owner, while in any case the average is to be presented on the dashboard. The latter is also valid for the third time-related metric in the example, the partial cycle-time for the company-internal part of the process, which is set into relation with the overall cycle time.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Monitoring/BAM Model for Cycle Times.jpg}
 	\caption[BAM Model for Cycle Times of a Purchase Order Process based on BPMN 12]{BAM Model for Cycle Times of a Purchase Order Process based on BPMN \cite{article:BPMNActivityMon}}
@@ -397,7 +393,7 @@ The concept presented by Friedenstab et al. is thoroughly thought-out and clearl
 The remaining constructs as well as the extensions do not depend on the process modeling language and thus are not included in the table.
 On the other hand S-BPM, following its paradigm of regarding subjects, predicates and objects as equally important parts of a process, offers the subject as an additional specification element to add . In figure \ref{fig:Meta-Model-S_BPM} we modified the picture of figure \ref{fig:Meta-Model} by replacing the BPMN by S-BPM elements and adding the subject. This allows modeling the determination of the overall time a subject (respectively the allocated resource(s)) spends on working on a process instance. This is of interest for cost-related analysis.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Monitoring/Meta-Mode-fo-Duration-relate- to-SBPM.jpg}
 	\caption[Meta Model for Duration (related to S-BPM)]{Meta Model for Duration (related to S-BPM)}
@@ -408,7 +404,7 @@ On the other hand S-BPM, following its paradigm of regarding subjects, predicate
 In order to show how the BAM language syntax constructs can be related to subject-oriented models we designed the purchase order process in S-BPM. Due to missing information in the BPM model some assumptions were necessary like who performs the process steps (subjects). We then added the BAM modeling symbols to create a monitoring model similar to that in figure \ref{fig:Meta-Model-S_BPM}.
 The result is depicted in the following graph. In the lower part it includes the subject interaction diagram (SID) of the process. The SID shows the subjects involved and how they coordinate themselves in the course of action by exchanging messages. In the monitoring model in the upper part a difference can be seen. The partial cycle time for the company-internal activities can be modeled by just relating the clock symbol to the subject "Sales". In the example this subject represents all steps carried out within the organization. In the same way we can determine the cycle time for the other subjects.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Monitoring/BAM-Model-fo- Cycle-Times-of-a-Purchase-Order-Process-based-on-S-BPM.png}
 	\caption[BAM Model for Cycle Times of a Purchase Order Process based on S-BPM]{BAM Model for Cycle Times of a Purchase Order Process based on S-BPM}
@@ -418,7 +414,7 @@ The result is depicted in the following graph. In the lower part it includes the
 Given a special information demand a more granular modeling of BAM parameters is possible on the subject behavior level. Figure \ref{fig:BAM-Cycle-Time} for example details the behavior of "Sales" including all receive, send and functional states walked through by the subject. The symbols indicate that the average cycle time between order reception and confirming the order to the customer should be measured. In the same way cycle times between states in behaviours of different subjects can be modelled.
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{Figures/Chapter5/Monitoring/BAM-Model-for-Cycle-Time-of-a-Process-Section-based-on-S-BPM.jpg}
 	\caption[BAM Model for Cycle Time of a Process Section based on S-BPM]{BAM Model for Cycle Time of a Process Section based on S-BPM}
@@ -443,14 +439,12 @@ In our global economy enterprises cooperate around the globe in order to create 
 Figure \ref{fig:DogFoodShop} shows an example of an order-to-cash scenario where federated applications support a cross-company business process. A dog food store sells its products via internet. It commissions a transportation service provider to deliver the ordered products to the customer, who confirms the reception of the goods. The store deducts the money from the customer's bank account. The process steps are facilitated by several independent software applications and message exchanges (order, order confirmation, delivery notification etc.) enabled by respective communication systems.
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Project/DogFoodShop.jpg}
 	\caption[Order-to-cash scenario in a federation of enterprises and applications (simplified)]{Order-to-cash scenario in a federation of enterprises and applications (simplified)}
 	\label{fig:DogFoodShop}
 \end{figure}
-
-\\
 
 Developing such a mutually adjusted solution by a federation of independent enterprises requires a project management approach different from traditional software development projects taking a process perspective (cf. \cite{book:ProjectHistory}). Therefore our focus is on how to implement loosely coupled systems for exchanging information between independent partners, rather than tightly coupled solutions for sharing information or other resources.
 The section is structured as follows. First software development methodology and its elements are reviewed with respect to developing federated systems. This leads to our proposal of a software development approach for federated systems based on subject orientation. 
@@ -469,7 +463,8 @@ When independent enterprises develop a federated system a lot of managerial and 
 	\item Guarantee the business privacy of organizations in the course of collaboration.
 	\item Allow partners and other third parties to monitor, measure, and oversee the execution of business processes.
 \end{enumerate}
-\\
+
+
 \subsubsection{\textbf{Federation of enterprise information systems}}
 \cite{article:VirtualEnterprise} define virtual enterprises and federations of enterprise information systems as follows: "\textit{The Enterprise partners' Virtual Enterprise (EP VE) is the federation of partners in the community that come together to achieve the goal of a federated distributed system environment, sharing their resources, and collaborating to achieve a common goal: the Federated System VE (FS VE). The partners in the federation retain autonomy over their resources, deciding which resources (personnel, resource dollars, equipment, etc.) are sharable for achieving this goal. The results of this VE are then useable by the partners in furthering their individual systems. The FS VE is seen to be a virtual system of distributed processing components (hardware and software), which are physically implemented and managed by the partners. It is a federation of the partners' systems, where each system retains its autonomy over all processing system components and sharable data/information. Retaining autonomy means defining which data or information and software/hardware assets will participate in the federation and be accessible and usable by other systems in the federation.}"\\
 The definition shows that the focus is on sharable resources. This means when setting up a federation the VE members need to clarify ownership of the shared resources as well as access rights and the rights to change those. Such an approach often implies tight coupling of the involved enterprises and the related resources. Entities leaving a federation then cause difficulties with respect to separating involved systems (changing access rights) and sorting out ownership of information.
@@ -478,7 +473,7 @@ Alternatively, information can be exchanged between the partners by messages, im
 \subsubsection{\textbf{Software development methodology}}
 \textit{"A software development methodology is a collection of procedures, techniques, tools and documentation aids which help developers to implement software systems"}  \cite{book:ISDevelopment}. It may include modeling concepts, tools for model-driven architecture, integrated development environments (IDEs) etc. The so-called magic triangle (see figure \ref{fig:Triangle}) summarizes the various aspects of a software development methodology \cite{book:SoftEng}.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Project/Triangle.jpg}
 	\caption[Magic triangle of software development methodologies]{Magic triangle of software development methodologies}
@@ -489,8 +484,7 @@ Concepts and Techniques are used to create models of the software to be implemen
 \\
 \subsubsection{\textbf{Modeling concepts}}
 Developing a federated system like the dog food store requires modeling cross-company business processes and the entities performing activities in these processes.
-\paragraph{Business process modeling} \newline
-\newline
+\paragraph{Business process modeling} 
 There are various approaches for specifying business process models. IT implementations of those models are called process-controlled applications [7] or workflows. The modeling approaches can be distinguished in three classes: (i) Control flow-based specifications put the focus on the activities. (ii) Object-based models mainly describe business objects and the sequence of operations to manipulate them. (iii) Communication-based models focus on the active entities in a process which exchange messages in order to coordinate their work.
 By their nature the latter are promising candidates for modeling federations of systems. Business Process Model and Notation (BPMN), the currently most widely discussed modeling language, contains elements for the description of control flows and communication in business processes. In the following we discuss its communication-oriented features.
 To model communication BPMN provides so-called pools, each representing a process that can exchange messages with processes in other pools. Conversation diagrams are the means to describe this mechanism: However, they do not allow specifying the sequence in which messages are exchanged. Although the sequence can be captured by collaboration diagrams, the semantics of sending and receiving messages is not precisely defined. For instance, it remains unclear whether messages are exchanged synchronously or asynchronously. Additionally a certain message from a pool can only be received in a single activity state, but not in other states. Choreography diagrams in BPMN also define the allowed message sequence between pools. [8] describe a choreography-based tool for specifying global processes. The problem is that choreography specifications cannot contain data. As a consequence a modeler can only describe message sequences being covered by regular expressions, which is the lowest level in the Chomsky hierarchy. This fact makes it impossible to model a behavior like the following: Pool S sends n messages of a type X to pool R. After that S sends a message Y to R. Subsequently S expects m messages of type A from pool R, which received the n messages of type X. The reason for that is that the messages cannot be counted, because data are not allowed in BPMN choreographies.
@@ -499,158 +493,92 @@ Given these properties of BPMN this notation has significant draw backs for mode
 \paragraph{Multi-agent systems modeling}
 The term agent has multiple meanings. We follow the definition given in [9]: An agent is an entity that performs a specific activity in an environment of which it is aware and that can respond to changes. A multi-agent system (MAS) is a system where several, perhaps all, of the connected entities are agents. The most important property of agents is their controlled autonomy: They independently execute their role-specific behavior, and in multi-agent systems they communicate with each other. These properties are alike those of federated systems which therefore can be considered as multi-agent systems. This means that software development methodologies for agent-oriented software (for an overview see [8]) can help developing federations of applications.
 \\
-\subsubsection{Procedures}
+\subsubsection{\textbf{Procedures}}
 Software Life Cycles (SLC) build a framework for software development procedures. All software development projects follow a series of phases. While software life cycles can be defined in many different ways, each of them comprises the following generic activities:
-•	Project conception or initiation
-•	Planning
-•	Execution with specification and implementation activities
-•	Termination
-In the traditional waterfall approach these activities are performed in the sequence shown above. Other life cycle concepts propose overlapping the development steps, suggest alternatives like the V model or agile development procedures like Extreme Programming and Scrum. [10], [6] and [5] give an overview of the various approaches.
+\begin{list}{-}{spacing}
+	\item Project conception or initiation
+	\item Planning
+	\item Execution with specification and implementation activities
+	\item Termination
+\end{list}
+
+In the traditional waterfall approach these activities are performed in the sequence shown above. Other life cycle concepts propose overlapping the development steps, suggest alternatives like the V model or agile development procedures like Extreme Programming and Scrum. \cite{article:ObjectOrientedSWdev}, \cite{book:SoftEng} and \cite{book:ISDevelopment} give an overview of the various approaches.
 \\
-\subsubsection{Work break down structure (WBS)}
-The work break-down structure describes the work to be done in a project in a hierarchical way. A work break-down structure element may be a product, data, service, or activity contained in the software life cycle or any combination thereof. A WBS also provides the necessary framework for detailed cost estimating and control along with guidance for schedule development and control. The top level of the WBS should identify the major phases and milestones of the project in a summative fashion. Consequently, the phases used in the top level depend on the software development methodology applied in a project. The first level can either represent the phases used in the software life cycle or the major artifacts of the system to be developed. In case the top level is SLC-oriented it might be built by requirement specification, software architecture, programming, test etc. In the case of an evolutionary life cycle there will be topics like Release 1, Release 2 etc., followed by headlines like requirement specification on the second level.
-Another alternative is to use top level headlines corresponding to artifacts created by modeling activities, such as ‘create communication structure’ or ‘describe subject behavior’ (see section III.D).
+\subsubsection{\textbf{Work break down structure (WBS)}}
+The work break-down structure describes the artifacts to be created in a project in a hierarchical way. A work break-down structure element may be a product, data, service, or any activity results contained in the software life cycle or any combination thereof. A WBS also provides the necessary framework for detailed cost estimating and control along with guidance for schedule development and control. The top level of the WBS should identify the major phases and milestones of the project in a summative fashion. Consequently, the phases used in the top level depend on the software development methodology applied in a project. The first level can either represent the phases used in the software life cycle or the major artifacts of the system to be developed. In case the top level is SLC-oriented it might be built by requirement specification, software architecture, programming, test etc. In the case of an evolutionary life cycle there will be topics like Release 1, Release 2 etc., followed by headlines like requirement specification on the second level.
+Another alternative is to use top level headlines corresponding to artifacts created by modeling activities, such as 'create communication structure' or 'describe subject behavior'. 
+\\
 The WBS is created during the planning phase of a project life cycle. During this phase the project manager works with the project team to make sure that the client's needs are addressed and the project is planned completely and approved by the client prior to any sort of production beginning on the project.
 
 \subsubsection{Organisational break down structure and software architecture}
-An organizational breakdown structure (OBS) complements the WBS and resource breakdown structure of a project. Project organizations can be broken down in much the same way as the work or product. The OBS is created to reflect the strategy for managing the various aspects of the project and shows the hierarchical breakdown of the management structure. Hence, the work break down structure has a significant impact on the organizational structure of the project team. The same holds for the phases of the software life cycle and the system architecture influencing the work break down structure. Conway’s law states “organizations which design systems ... are constrained to produce designs which are copies of the communication structures of these organizations” [11]. A variation of Conway’s law can be found in [12]. "If the parts of an organization (e.g., teams, departments, or subdivisions) do not closely reflect the essential parts of the product, or if the relationship between organizations do not reflect the relationships between product parts, then the project will be in trouble... Therefore: Make sure the organization is compatible with the product architecture” [12].
+An organizational breakdown structure (OBS) complements the WBS and resource breakdown structure of a project. Project organizations can be broken down in much the same way as the work or product. The OBS is created to reflect the strategy for managing the various aspects of the project and shows the hierarchical breakdown of the management structure. Hence, the work break down structure has a significant impact on the organizational structure of the project team. The same holds for the phases of the software life cycle and the system architecture influencing the work break down structure. Conway’s law states “organizations which design systems ... are constrained to produce designs which are copies of the communication structures of these organizations” \cite{article:ConwaysLaw}. A variation of Conway’s law can be found in [12]. "If the parts of an organization (e.g., teams, departments, or subdivisions) do not closely reflect the essential parts of the product, or if the relationship between organizations do not reflect the relationships between product parts, then the project will be in trouble... Therefore: Make sure the organization is compatible with the product architecture” \cite{book:OrgPatternsAgile}.
 As we look at developing federations of systems with a federation of independent project teams, the system architecture needs to be aligned with the multiple project team structure.
 \\
 
-\subsection{SOFTWARE DEVELOPMENT METHODOLOGY FOR FEDERATED SYSTEMS}
-The software development methodology for federated systems proposed here is based on Subject-oriented Business Process Management (S-BPM) as the most straightforward enabler of communication-oriented BPM [16]. Therefore we first outline this approach the way being used in many industrial projects successfully (for examples see [13], [14], [15]). We then explain all activities and steps of the development cycle for describing and implementing a federated system using the dog food order-to-cash example. The sample case starts with having the idea to create a solution and ends with a running application.
-\\
-A.	Subject-oriented business process models
-1)	Subjects, messages, and business objects
-Subject-oriented business process management includes a modeling language for describing processes as a system of independent entities which organize their work by exchanging messages. Each entity is autonomous in the sense that it decides by itself when it sends messages, receives messages and executes internal actions. These entities are called subjects and can be interpreted as roles in a process to be implemented. Each subject has its local data which can be changed by local actions or by receiving messages. These data are called the business objects of a subject. Each message has a name, similar to a name of a method in object-oriented systems, and related business objects, which are send or received with it. If a message is sent it transmits the values of the business object. If a subject accepts a message by picking it up from the input pool (see section III.A.3), the values of the incoming business object are copied into a corresponding local business object of the receiving subject.
-Physical things like a can of dog food can also be a business object. In general physical business objects are accompanied by data-oriented ones like a delivery slip. Consequently, a can of dog food together with the data of a delivery slip may form a combined business object. In the model data and physical entities are considered in the same logical way. The physical aspect of a business object is considered as implementation aspect. Such an understanding allows creating a model on a logical level independent from implementation details. These are added later on.
-The sequence in which messages are sent, received, or internal actions are executed, is defined by the subject behavior (for details see section II.A.4).
-2)	Subjects and agents
-In order to execute subjects they will be assigned to agents or actors. An agent in that context is a human or non-human entity which is capable to execute actions. Details about the relationship between subjects and agents/actors can be found in [16]. This distinction allows to specify a federated system independent from a special environment. The subjects represent the members of a federation, and subjects can be assigned to another agent once the business relationship changes. Subject-oriented models are therefore independent from special members of a federation. For details about the deployment of subjects see [16] and [17] .
-3)	Communication structure and message exchange
-A communication structure shows which subjects are involved in a process and which messages they exchange. Figure 3 depicts the communication structure of the dog food order-to-cash application in the so-called subject interaction diagram (SID). It describes the system on a logical layer. What it does not show, is sending the message “deliver dog food” that is implemented by a truck transporting dog food cans together with a delivery slip. As we will see later on the exchange of all other messages are implemented using information and communication technology, and thus considered as aspects only relevant for implementation, but not for modeling (i.e. designing).
+\subsection{Software Development Methodology For Federated Systems}
+The software development methodology for federated systems proposed here is based on Subject-oriented Business Process Management (S-BPM)  
 
-Figure 3: Communication structure of dog food order-to-cash application
-The specification of the communication structure includes the business objects of each subject. It also defines which business object values are transported by which messages. The maximum number of messages which can be deposited in an input pool determines its size, independent on the size of the business objects coming with a message. In case the size limit is reached sending will be blocked until the receiving subject removes a message from its input pool. Alternatively, the incoming message replaces the most recent or message received initially in the pool, according to the chosen strategy. Details about message transfer and the related synchronization mechanisms are explained in [17].
-A subject can receive certain messages by checking the input pool on their availability and removing those it finds. On removal the values of the transmitted business object are copied into a local business object. 
-Figure 4 depicts the input pools of the subjects in our example. Since each subject sends one message to other subjects and then waits for an answer, all input pools have a maximum size of one.
 
-Figure 4: Message exchange via input pools
-4)	Subject behavior
-Each subject executes send, receive and internal operations in a certain sequence. The allowed sequence is defined in a subject behavior diagram (SBD). Figure 5 shows the SBD of the subject “dog food store”. In the start state “wait for…” the subject waits for the message “order” from subject “customer”. After that the message “get money” is sent to the subject “bank”. If the message “money” comes from the subject “bank” the message “order confirmation” is sent to the customer. Then, the internal operation “prepare order” is executed. 
-This function includes activities like checking the availability of the ordered goods, preparing the dog food, and all accompanying documents for shipment and updating the inventory. If the goods are not on stock the customer gets an order confirmation indicating a delay. In case of availability the message “Transfer order” is sent to the subject “shipment company”. It contains data (delivery slip) and physical business objects (cans with food). According to the behavior specification the subject then waits until the delivery confirmation arrives from the shipment company and subsequently terminates processing the instance. 
-\\
-B.	Development as a multiple-team structure
+\subsubsection{Development as a multiple-team structure}
 We now assume that the dog food order-to-cash scenario does not yet exist. The store wants to extend its services for the customers by offering online shopping and home delivery. In order to reach this business objective it takes the initiative to found a federation of enterprises which combine their services and develop a corresponding federation of systems.
-Each federated enterprise establishes a project team, working on their parts of the solution independent from each other. This leads to a multiple-team project on the federation level [18]. As the teams belong to different, independent companies they all have their own development culture and methodology.
+Each federated enterprise establishes a project team, working on their parts of the solution independent from each other. This leads to a multiple-team project on the federation level \cite{book:OrgPatternsAgile}. As the teams belong to different, independent companies they all have their own development culture and methodology.
 Since there is no single line management who can assign an overall project manager, the federation members need to agree on a project leader and the competencies related to this role. As the initiator of a federation has the most interest in the development of the federated solution it might be helpful that this company, in our case the store, recruits the leader.
 
+His or her major task is to ensure smooth communication between the independent teams, respectively their managers. The project teams needs to coordinate how the systems they are developing communicate with each other. Their major communication paths are predefined by the communication structure of the system federation. This strategy leads to a high socio-technical-congruence. Figure \ref{Multiple-team}shows the team and communication structure of the dog food order-to-cash federation.
 
-Figure 5: Behavior of the dog food store (clipped)
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Project/MultipleTeam.jpg}
+	\caption[Multiple-team project and its communication structure]{Multiple-team project and its communication structure}
+	\label{fig:Multiple-team}
+\end{figure}
 
-His or her major task is to ensure smooth communication between the independent teams, respectively their managers. The project teams needs to coordinate how the systems they are developing communicate with each other. Their major communication paths are predefined by the communication structure of the system federation. This strategy leads to a high socio-technical-congruence. Figure 6 shows the team and communication structure of the dog food order-to-cash federation.
-
-Figure 6: Multiple-team project and its communication structure
 Beside that top-level communication implied by the problem structure, each team can use services offered by other enterprises. Figure 6 reveals that the shipment company uses the service of carriers and forwarding agents, in order to implement the transportation service offered to the dog food shop. This communication relation is of no interest for other federation members and thus should not be visible to the top level teams. It belongs to the internal issues of the shipment project team.
 \\
-C.	Development process for federated systems
-In section III.A. the method for defining the functional requirements of a federated system was outlined. The artifacts to be created according to the method need to be developed by the federation of teams.
-1)	Specification of the communication structure
-The communication between the various members of the federation needs to be specified in more detail. This is done by assigning a subject to each member of the federation and defining the messages exchanged between the subjects. Consequently, a first version of the communication structure as described in section III.A.3 emerges. Together with the data transported by the messages a communication model of the system federation is defined. The advantage of the subject-oriented approach is that the system communication structure is directly in line with the communication structure of the corresponding developing teams. The result of that step is the subject interaction diagram (SID) as shown in Figure 3. 
-2)	Specification of the subject behaviour
-After defining the communication structure the behavior of each subject is specified. The modelers describe the allowed sequence of messages exchanged on top level and the internal functions of the individual systems. These internal functions represent the services executed by the corresponding federation partner either directly or supported by other service providers. They also encapsulate the communication with those sub-contractors as it is of no interest on the top level of the federation.
-The behavior of a subject is mainly defined by the corresponding project team, however, in close coordination with the teams responsible for the partner subjects. The teams only need to make sure a message sent to a partner has a receive state in the corresponding subject behavior and vice versa. This pairwise coupling means, e.g., that the behavior description of the shipment company has to contain a state for receiving the “Transfer order” message, transmitted by the related send state in the behavior diagram of the dog food store subject (see figure 5). In order to correctly model these interactions the responsible project teams need also to agree on the interaction sequence of the subjects. However, their internal task behavior (i.e. sequence of functions for task accomplishment) might not become visible to others, as is specified decentralized and might not be shared at all. 
-3)	Implementation of the input pool
+\subsubsection{Development process for federated systems}
+ The artifacts to be created according to subject orientation need to be developed by a federation of teams related to the subject interaction structure.
+ 
+\paragraph{Specification of the communication structure}\
+The communication between the various members of the federation needs to be specified in more detail. This is done by assigning a subject to each member of the federation and defining the messages exchanged between the subjects. Together with the data transported by the messages a communication model of the system federation is defined. The advantage of the subject-oriented approach is that the system communication structure is directly in line with the communication structure of the corresponding developing teams. The result of that step is the subject interaction diagram (SID). 
+
+\paragraph{Specification of the subject behaviour}\
+After defining the communication structure the behavior of each subject is specified. The modelers describe the allowed sequence of messages exchanged on top level and the internal functions of the individual systems. These internal functions represent the services executed by the corresponding federation partner either directly or supported by other service providers. They also encapsulate the communication with those sub-contractors as it is of no interest on the top level of the federation.\\
+The behavior of a subject is mainly defined by the corresponding project team, however, in close coordination with the teams responsible for the partner subjects. The teams only need to make sure a message sent to a partner has a receive state in the corresponding subject behavior and vice versa. This pairwise coupling means, e.g., that the behavior description of the shipment company has to contain a state for receiving the “Transfer order” message, transmitted by the related send state in the behavior diagram of the dog food store subject. In order to correctly model these interactions the responsible project teams need also to agree on the interaction sequence of the subjects. However, their internal task behavior (i.e. sequence of functions for task accomplishment) might not become visible to others, as is specified decentralized and might not be shared at all. 
+
+\paragraph{Implementation of the input pool}\
 The input pool is the abstract concept for defining the semantics of message exchange. Partners exchanging messages need to agree on how they implement the input pool semantics. Sending requires the sending subject to execute a function to deposit a message in the input pool of the receiver. For each subject doing so an implementation agreement is necessary. Since an input pool is owned by exactly one subject, the functionality for accessing it is local and does not need to be coordinated with the partners. In most cases input pools are implemented as web services.
-4)	Implementation of subject behaviour
-Each team has to implement the behavior of its subject. This means they have to ensure that depositing and removing messages (including business objects) in or from the input pool are executed and internal functions are invoked in the specified sequence. Workflow engines are appropriate tools for implementing that functionality.
-5)	Implementation of internal functions
+
+\paragraph{Implementation of subject behaviour}\
+Each team has to implement the behavior of its subject. This means they have to ensure that depositing and removing messages (including business objects) in or from the input pool are executed and internal functions are invoked in the specified sequence. Workflow engines are appropriate tools for implementing that functionality.\
+
+\paragraph{Implementation of internal functions}\
 The internal functions realize the kernel of the service contributed by a partner to a federated application. Messages are the means to cause the invocation of an internal function, and they transport its result to a partner subject. Internal functions can be based on existing systems, e.g., an SAP client.  They also can be implemented using another federated solution, or being developed from scratch. The way an internal function is realized is a local decision taken by the corresponding project team.
-6)	Operation of a federated system
+
+\paragraph{Operation of a federated system}\
 Beside the development and deployment the non-functional aspects of a federated system need to be agreed upon by the contributing partners. For this purpose they negotiate service level agreements (SLA) defining response time, down time, reaction time in error cases etc. The SLA also includes business aspects like costs and regulations for exceptional situations like a member leaving the federation and bringing in another one.
-D.	Federated work break down structure
-The various activities described so far can be organized in a federated work break-down structure as shown in figure 7.
 
-Figure 7: Work break down structure for the development of a federated system 
-The tasks can be divided into three types:
-Joint work concerns the top level of the federation and therefore is done collaboratively by all members of a federation. The major issue on this level is to agree on communication structure and behavior of the entire system, while the behavior of each subject can be described individually by the corresponding member of the federation.
-Some work can be done bilateral. Communicating partners, e.g., agree on the coding of the business objects and the implementation of the input pool. They also define the service level agreements.
-Local work comprises activities of the development teams which do need to be coordinated with teams of other federation members. A major example in this context is the set of internal functions of each subject, being a local matter, and developed following the particular culture and methodology of the respective team.
-\\
-E.	Continuous alignment by communication
+\subsubsection{\textbf{Federated work break down structure}}
+The various activities described so far can be organized in a federated work break-down structure as shown in figure \ref{fig:WBSDog}.
 
-Although development can be split in joint, bilateral and local tasks accomplishment continuous communication is essential for the sustainable success of the resulting federated system.
-The overall project leader and the team managers need to swiftly exchange all relevant information in order to maintain the solution according to the changing requirements of the partners.
-\\
-F.	Validation
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Project/WBSDog.jpg}
+	\caption[Work break down structure for the development of a federated system]{Work break down structure for the development of a federated system}
+	\label{fig:WBSDog}
+\end{figure}
 
-The described development methodology has been partially applied in several cross-organizational industry projects. The organizations belonged to the same enterprise, which allowed a central project management. Due to restrictive permission regulation of the industry partners the publication of experiences is not possible so far. Hence, we have set up a field study to deepen our practical experiences with the presented approach. 
-The case deals with establishing novel services for co-housing activities, namely to support groups of people to design and implement a common housing project (see also www.tsibutsang.at, www.artsliving.at). For each housing project a project leader needs to be established, stemming either from the co-housing support provider or another project partner, e.g., a construction company. He/She ensures communication and coordination of parallel and distributed activities. For each project, various company procedures have to be aligned and a federated system has to be established. 
+The tasks can be divided into three types:\\
+\textbf{Joint work} concerns the top level of the federation and therefore is done collaboratively by all members of a federation. The major issue on this level is to agree on communication structure and behavior of the entire system, while the behavior of each subject can be described individually by the corresponding member of the federation.\\
+\textbf{Some work can be done bilateral}. Communicating partners, e.g., agree on the coding of the business objects and the implementation of the input pool. They also define the service level agreements.\\
+\textbf{Local work} comprises activities of the development teams which do need to be coordinated with teams of other federation members. A major example in this context is the set of internal functions of each subject, being a local matter, and developed following the particular culture and methodology of the respective team.
 \\
-1)	Specification of the communication structure
-In a workshop, the communication between the various members of the federation is specified. This step is supported by holomapping (www.vernaallee.com), as it allows identifying functional roles in a straightforward way.  Once having determined them as set of holomap nodes, a subject can be assigned to each member of the federation – in the case of co-housing the cohousing service provider, the co-housing group (customer), architect (for planning), and an engineering company (for building). Moreover, the tangible relationships of holomaps represent deliverables and as such, messages exchanged between the subjects. These relationships also indicate the data transported by the messages, thus facilitating the specification of business objects, such as contracts that need to be set between the various co-housing parties.
-\\
-2)	Specification of the subject behaviour  
-Each contributing co-housing project partner (subject) has a certain behavior that needs to be detailed not only in terms of exchanging messages (i.e. the communication structure) but in terms of concrete activities (internal functions). For instance, the co-housing provider needs to arrange rooms for meetings, schedule social activities and prepare for documenting results of negotiations. These activities are mainly executed by functions provided by the cohousing providers’ platform http://tsibutsang.mixxt.org/. In this case, mixxt is that federation partner’s service provider. The project leader needs to ensure the completion of behavior specifications, in particular when adaptations of standard procedures, such as contracting for taking over land before authority clearance, are required,. Upon completion, the co-housing project is operationalized in terms of complete send-receive interactions between all project parties. 
-\\
-3)	Implementation of the input pool
-In that step project-specific semantics of message exchange is defined. For instance, , a message in the input pool of the co-housing support provider is based on the implementation agreement that each partner (engineering company, co-housing group) can send request messages  any time with a fixed max. response time of 2 workdays. Such an agreement is due to the eventuality of social conflicts that should be addressed promptly. 
-\\
-4)	Implementation of subject behaviour
-Since in our field study workflow management systems are not being used, each involved organization needs to ensure the negotiated communication pattern with its partners. The co-housing support provider is using its mixxt-platform to trigger the (internal) project coordinator of the respective project. Hence, for each project, a dedicated workspace is established including a corresponding input pool thus enabling a dedicated communication pattern and set of business objects for each project.
-\\
-5)	Implementation of internal functions
 
-Typical internal functions in the field study are requests triggering further communication or processing data by the addressed subject (project partner). For instance, a meeting of a co-housing group needs to be established, once all biddings for a certain completion step have arrived from the engineering company. Meetings are arranged invoking www.doodle.com  from the meeting space of the mixxt-platform.
-\\
-6)	Operation of a federated system
-Typical non-functional aspects of a federated system in co-housing concern the agreement to set up a task force in case of unforeseen events, selecting relevant partners to resolve all issues related to these events. Other agreements concern costs and results from regulation checks influencing original co-housing plans. Finally, changing the federation’s structure in terms of membership and responsibilities is also regulated by dedicated agreements.
 
-IV.	CONCLUSION AND FURTHER WORK
+\subsection{Conjclusion and Further Work}
 We have presented an approach for developing federated systems. The concept considers the characteristics of virtual enterprises combining the services of the partners to satisfy customer needs while keeping legal, organizational, technological and cultural independence.
 Our communication-oriented view follows the idea that the decentralized structure of federated systems needs to be reflected in the organizational structure of multiple project teams for developing such systems. Those teams belong to separate enterprises and are mutually independent with respect to methodology, technology etc. they use to develop their individual part of the federated system. 
 The proposed approach establishes a layer above the enterprise-specific environments. It helps building coherence on the top level of the federated system solution, while the teams, system elements etc. on the individual level of each federation member keep the highest degree of independence.
 \\
-REFERENCES
-\\
-[1] 	J. Putman and S. Strong, "A Federated Virtual Enterprise (VE) of Partners, Creating a Federated VE of Systems," IEEE Proceedings of Compsac, 1998. 
-\\
-[2] 	V. Gruhn, „Process-centered software engineering environments, a brief history and future challenges,“ Anals of Software Engineering, pp. 363-382, 14(1-4) 2002. 
-\\
-[3] 	H. F. P. Smith, Business process management—The third Wave, Meghan-Kiffer Press, 2003. 
-\\
-[4] 	L. Chengfei, L. Qing and Z. Xiahui, "Challenges and opportunities in collaborative business process management: Overview of recent advances and introduction to the special issue," Information Systems Frontiers, pp. 201-209, 11 2009. 
-\\
-[5] 	D. E. Avison and G. Fitzgerald, Information Systems Development: Methodologies, Techniques and Tools, New York, NY.: 3rd ed. McGraw-Hill, 2003. 
-\\
-[6] 	J. Ludewig und H. Lichter, Software Engineering, 3. Edition, Heidelberg: d-punkt Verlag, 2013. 
-\\
-[7] 	V. Stiehl, Prozessgesteuerte Anwendungen entwickeln und ausführen mit BPMN, Heidelberg: d-punkt Verlag, 2013. 
-\\
-[8] 	R. Cognini and et. al., "HawkEye: A tool for collaborative Business Process modelling and verification," in SAC’13, Coimbra, Portugal, 2013. 
-\\
-[9] 	L. S. Sterling and K. Taveter, The Art of Agent-Oriented Modeling, Cambridge, Massachusetts: The MIT Press, 2009. 
-\\
-[10] 	R. Ramsin and R. F. Paige, "Process-centered Review of Object Oriented Software Development Methodologies," ACM Computing Surveys, Vols. Volume-40, Number 1, 2008. 
-\\
-[11] 	M. E. Conway, "How do Committees Invent?," vol. 14, 1968.
-\\ 
-[12] 	J. O. Coplien and N. B. Harrison, Organizational Patterns of Agile Software Development, Prentice Hall International, 2004. 
-\\
-[13] 	T. Walke and et. al., "Case Study @ Swisscom (Schweiz) AG: iPhone 5 Self-Service Order App and Process-Workflows," in H. Fischer, J. Schneeberger (Ed.), S-BPM ONE - 2013, CCIS Vol. 360, Heidelberg, Springer Verlag, 2013. 
-\\
-[14] 	G. Konjack, „Case Study: AST Order Control Processing,“ in H. Buchwald et.al. (Eds.), S-BPM ONE - Setting the stage for Subject Oriented Process Management, CICS Vol. 85, Heidelberg, SPringer Verlag, 2010. 
-\\
-[15] 	S. Nakamura and e. al., "CGAA/EES at NEC Corporation, Powered by S-BPM: The Subject-Oriented BPM Development Technique Using Top-Down Approach," in W. Schmidt (Ed.), S-BPM ONE - Learning by Doing - Doing by Learning, CCIS Vol. 213,, Heidelberg, Springer Verlag, 2011. 
-\\
-[16] 	A. Fleischmann, U. Kannengiesser, W. Schmidt and C. Stary, "Subject-Oriented Modeling and Execution of Multi-Agent Business Processes," Atlanta, 2013. 
-\\
-[17] 	A. Fleischmann, W.Schmidt, C. Stary, S. Obermeier and E.Börger, Subject Oiented Business Process Management, Berlin, Heidelberg: Springer, 2012. 
-\\
-[18] 	R. K. Wysocki, Effective Project Management, Seventh Edition, Indianapolis: John Wileys & Sons, 2014. 
-\\
-[19] 	E. Yu und et. al., Social Modeling for Requirements Engineering, Cambridge, Massachusetts: The MIT Press, 2011. 
-
 
 
 

@@ -5,8 +5,10 @@ The following sections are based on following publications:\\
 \begin{list}{-}
 	\item Subjects and Shared Input Pools:
 	\item Hierarchies in Communication Oriented Business Process Models:
-	\item Business Activity Monitoring for S-BPM:
+	\item Business Activity Monitoring for S-BPM: \cite{article:SBPMCosting}
 	\item Subject Oriented Project Management:
+	\item Subject-oriented Fog Computing: \cite{article:FogComp}
+	\item Activity based Costing \cite{article:SBPMCosting}
 \end{list}
 
 \section{Subjects and Shared Input Pools}
@@ -580,6 +582,273 @@ Our communication-oriented view follows the idea that the decentralized structur
 The proposed approach establishes a layer above the enterprise-specific environments. It helps building coherence on the top level of the federated system solution, while the teams, system elements etc. on the individual level of each federation member keep the highest degree of independence.
 \\
 
+\section{Subject Oriented Fog Computing}
+
+Many scenarios related to digitalization increasingly (i) require an easy-to-customize development environment, (ii) capture on-the-edge systems or devices under the control of users or responsible stakeholders. Typical examples are home support systems in healthcare, maker environments producing local goods, and intelligent transport control systems for smart regions. Developing such applications requires architectures that allow to network or compose systems in a modular, while effective and efficient way \cite{article:SurveyCompConcepts}. During the last years, with the advent of advanced equipment and technologies, such as production devices for the private consumer market, networked applications have become common. As a consequence of this trend, a significant issue also appears, namely the increases in the demand of both communication and execution capability. New applications, such as home care support systems, all deal with complex interaction operations, which should be understood by users, and thus require a high level of abstraction \cite{article:FogHealthcare},\cite{article:MobilecloudComp}. 
+\\
+Such demands pose significant challenges to existing development paradigms, particularly in terms of edge computing and stakeholder-oriented communication capacities (cf. \cite{article:SurveyCompConcepts},\cite{article:FogHealthcare}]). Using behavior abstractions aligning stakeholder needs with communication and processing capabilities in this context is an appealing idea. For instance, in-situ care support devices can be utilized to handle the tasks of preparing the pharmacy order or they can be employed to collaborate with each other to transmitting maintenance messages and sharing resources \cite{article:FogHealthcare}. Besides network technologies, mobile cloud computing is a typical enabler for this demand \cite{article:MobilecloudComp}.\\ 
+However, according to Syed et al. \cite{article:FogPattern} purely cloud-based systems typically require low latency, support for heterogeneity, mobility, geographical distribution, location awareness, etc. Consequently, Fog Computing (FC) as a near-the-edge-computing paradigm has been defined as a collection of various small distributed clouds deployed closer to the systems or devices at the edge of a communication network (ibid.). Fog applications can be structured along several dimensions, either directly or indirectly referring to stakeholder interaction \cite{article:OoTAnalytics}:
+\begin{list}{-}{spacing}
+	\item Geo-distribution: wide (across region) and dense - high population of events, such as ramp accesses in traffic, sensor systems in production halls, clustering medical devices in home healthcare application development
+	\item Low/predictable latency: tight within the scope of a certain location - intersection, production isle, treatment room
+	\item Fog-cloud interplay: data at different time scales - sensors at intersection/traffic info at diverse collection points, supply chain monitoring/production control in process industry, monitoring body condition/treatment planning procedure in healthcare
+	\item Multi-agencies orchestration: Agencies that run the system coordinate policy implementation at the same time, e.g., traffic authority runs light system while controlling law policies in real time; active elements for production control implement also governance regulations; home healthcare support is effective with respect to medical treatment and personal well-being.
+	\item Consistency: adjusting demands and capabilities, such as getting the traffic landscape demands a degree of consistency between collection points, aligning engineering with production processes, or ensuring well-being while adapting medication to patient needs.
+\end{list}
+
+In this contribution, we present Subject-oriented Fog Computing (SFC), a choreographic approach and multi-layered infrastructure for Fog Computing. Separating modeling from organizational and technical implementation along a staged procedure it aims for supporting system architects, designers, and developers, who are interested in stakeholder interactions when building Fog Computing solutions. We propose a development and software architecture scheme without platform dependencies, open for various networked settings. It is based on behavior abstractions termed subjects that integrate a socio-technical design perspective, and allows composing applications from a stakeholder perspective (cf. [6-8]).
+In section II we review related research to developing fog applications according to stakeholder needs in various domains. Section III introduces SFC based on a System-of-Systems perspective, and provides an exemplary case from developing home healthcare support systems. Section IV concludes the paper summarizing SFC and indicating further research. 
+
+\subsection{Fog Computing and Subjects}
+
+We introduce Fog actors by starting with the encoded System-of-System perspective, sketching the federated nature of choreographic ecosystems (subsection above). We then provide the basic modeling notation and exemplify Fog actors as subjects for a home healthcare scenario. Finally, the corresponding Fog runtime system is sketched in terms of its application along the organizational and technical development phases. 
+
+\subsubsection{Federated Systems}
+When considering Fog Computing as an addition to cloud ecosystems we expand software architectures to include systems outside the software system which interact with the software system \cite{article:FogPattern}. Each component of the ecosystem can be represented as a system using behavior models. Thereby, cloud ecosystems can serve as service providers for the nodes of the network (of applications). The Fog network enriches the cloud ecosystem, e.g., for specific purpose like home healthcare with domain-specific models.\
+
+Since these enrichments are compound systems, a System-of-Systems (SoS) perspective helps conceptualizing the construction and development of Fog applications \cite{article:SyS}. SoS have as essential properties 'autonomy, coherence, permanence, and organization' (ibid, p.1) and are constituted 'by many components interacting in a network structure', with most often physically and functionally heterogeneous components. For instance, home healthcare applications comprise support systems for dementia, blood pressure measurement, and pharmacy shopping, and need to be adaptable on-the-fly in case of changing operational conditions (cf. \cite{article:DesignHealth}).\
+
+Since users tend to develop applications incrementally, their specifications are adapted to changes dynamically. Once these specifications in terms of SoS models become executable, users can interactively bootstrap their modifications. Behavior can be deployed, once being specified and validated. Utilizing subject-oriented modeling and execution capabilities (cf. \cite{Flei12}), systems or subjects are viewed as emerging from both the interaction between subjects and their specific behaviors encapsulated within the individual subjects. Like in reality, subjects as systems can operate in parallel and exchange messages asynchronously or synchronously.
+
+\subsubsection{Subject-oriented Representation}
+According to the SoS perspective, Fog applications operate as autonomous, concurrent behaviors of distributed Fog actors. A Fog actor or subject is a behavioral role assumed by some entity that is capable of performing actions. The entity can be a human, a piece of software, a machine (e.g., a robot), a device (e.g., a sensor), or a combination of these, such as intelligent sensor systems.
+\\
+When subject-oriented concepts and development techniques are applied, SoS subjects can execute local actions that do not involve interacting with other subjects (e.g., calculating a threshold value for medical intervention and storing a pharmacy address), and communicative actions that are concerned with exchanging messages between subjects, i.e. sending and receiving messages. Subjects are one of five core symbols used in specifying designs. Based on these symbols, two types of diagrams can be produced to conjointly represent a system: Subject Interaction Diagrams (SIDs) and Subject Behavior Diagrams (SBDs).
+\\
+SIDs provide an integrated view of a Fog SoS, comprising the subjects involved and the messages they exchange. The SID of a home healthcare support process is shown in Figure \real{fig:homeCare}. The aim of such systems is not only to support patients when needing healthcare at home, but also to profit from networked services, in particular, getting drugs in time from pharmacy, receiving in-situ service when required, and intelligent networking of local devices, while being scheduled for managing everyday life and being reminded of individual caretaking activities (cf. \cite{article:DesignHealth}).  
+\\
+Home healthcare comprises several subjects involved in near-edge communication: A Personal Scheduler coordinating all activities wherever a patient is located (traditionally available on a mobile device), a Medication Handler taking care of providing the correct medication at any time and location, Blood Pressure Measurement sensing the medical condition of the patient, and Shopping Collector as container for all items to be provided for home health care. In the figure the messages to be exchanged between the subjects are represented along the links between the subjects (rectangles).
+\\
+In-situ, and thus near-edge communication is required for delivering Blood Pressure Measurement data to the Personal Scheduler and the Medication Handler, as the patient handles the measurement device at home and needs to know, when to activate it and whether further measurements need to be taken. Another need for near-edge communication is given through the Shopping Collector: It receives requests from both, the Medication Handler when drugs are required from the pharmacy, physician, or hospital, and the Personal Scheduler, in case further shopping for the patient is required. As such, the Shopping Collector serves as an interface subject for shopping services to the homecare environment.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Fog/homeCare.jpg}
+	\caption[Example of home care support (SID)]{Example of home care support (SID)}
+	\label{fig:homeCare}
+\end{figure}
+
+
+As usual Subject Behavior Diagrams (SBDs) provide a local view of the process from the perspective of individual subjects. 
+\\
+Given these capabilities, SoS Fog designs are characterized by (i) simple communication protocols (using SIDs for a process overview) and thus, (ii) standardized behavior structures (enabled by send-receive pairs between SBDs), which (iii) scale in terms of complexity and scope. 
+\\
+Subject-oriented Fog Computing (SFC) allows meeting ad-hoc and domain-specific requirements. As validated behavior specifications can be executed without further model transformation, stakeholders can guide the implementation of specification, representing domain-specific task flows, and make ad-hoc changes by replacing individual subject behavior specifications during runtime. Due to the distributed nature and loose coupling of subject-oriented representations, the ultimate stage of scalability could be reached through dynamic and situation-sensitive formation of edge systems.
+\\
+SFC structures SoS, e.g., when federating a blood pressure measurement device with a personal health scheduling systems, according to their communicating with each other. When these devices need to communicate directly with the cloud, e.g., as required in case of maintenance, or calling a specialist for medication, this link is encoded in the diagrams and executed during runtime after technical implementation. On the modeling layer the activity is a request sent to another subject, waiting until an answer is received, and processing the received answer. 
+
+\subsubsection{Execution}
+Once a Subject Behavior Diagram, e.g., for the Blood Pressure Measurement subject is instantiated, it has to be decided (i) whether a human or a digital device (organizational implementation) and (ii) which actual device is assigned to the subject, acting as technical subject carrier (technical implementation) (cf. \cite{Flei12}). Typical subjects as edge devices are smart devices, which can have Internet connectivity, including smart phones, tablets, laptops, healthcare devices, etc. The subject-oriented runtime engine \cite{article:StakeHolderCentered} is then a Fog Computing infrastructure providing low-latency virtualized services and is linked with the Cloud Computing infrastructure by the same subject interaction mechanism. As there can be a variety of edge devices, such a Fog Computing platform also needs to manage and control these devices (see also foglets described below). 
+\\
+Size, storage capacity, processing capabilities, and latency increase as we move closer to cloud computing. The subject-oriented Fog acts as an intermediate layer between the edge devices and the cloud. Edge devices request computing, storage and communication services from the Fog according to the subject-oriented communication scheme. The Fog provides local, low latency response to these requests and forwards relevant data for computationally intensive processing, long-term analytics and persistent storage over to the cloud. Figure 4 provides a schematic visualization of this constellation, as it can be used for implementing the sample home healthcare support system.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Fog/FogArch.jpg}
+	\caption[Fog Computing Architecture]{Fog Computing Architecture}
+	\label{fig:FogArch}
+\end{figure}
+
+With respect to the home-healthcare example, a typical infrastructure comprises local devices and their interconnected services, such as linking the Blood Pressure Measurement to the Personal Scheduler. These subjects can be either linked to an IoT SoS, e.g., coupling several sensor systems, or to Cloud services, as for accessing public databases when checking reference or availability data, depending on the state of affairs in the home healthcare setting.
+\\
+Fog nodes are subject carriers representing resources including hardware (computing, networking and storage) capabilities. They provide ‘local’ real-time data processing capabilities, and, despite multi-tenancy, can execute applications in isolation to prevent unwanted interference from other processes. Policies to control service orchestration, filtering, and for adding security can be implemented dedicating a specific control subject, since the primary scheme of control is choreography.
+\\
+The approach scales, due to the decentralized management mechanisms allowing to setup, and configure a large number of devices in the Fog. In this context, subjects correspond to foglets (cf. \cite{article:OoTAnalytics}), i.e. software agents for each fog node, monitoring the state of the node and services. A subject can use abstraction tier APIs to monitor the state associated with (physical) devices and services deployed on this device. It analyses the entire information (encoded in an SBD), and delivers it to receivers linked through messages for further processing. These subjects can also perform lifecycle activities. As demanded by Vaquero et al. \cite{article:FiningwayFog}, SFC comprising a fog abstraction layer provides uniform programmable interfaces for resource control and management. 
+\\
+According to the S-BPM concepts, normalization can be used to abstract essential behavior patterns. For instance, in case Blood Pressure Management requires a machine-dependent procedure, its action behavior (performing functions) as a subject can in principle contain many internal functions which are performed in sequence, in order to accomplish an assigned task. In these sequences of internal functions, no sending and receiving nodes are included. Accordingly, extensive and therefore confusing behavior diagrams can be avoided. Since these sequences of internal functions are not important for communication, model representations can be simplified, and normalized behavior can lead to larger functions by hiding functional details. Actually, for the sake of understanding the home healthcare setting, the subjects shown in Figure \ref{fig:homeCare} have been normalized.
+\\
+In case the communication patterns are generalized, the process-network feature of S-BPM facilitates representation. For instance, when the Shopping Collector needs to collect sensor data from various storage devices, such as a refrigerator or a food isle, its communication requests and the respective replies can be denoted in a summative way. In SFC this feature helps representing mutually dependent processes, i.e., when subjects of a near-edge process communicate with subjects of other (near-edge) processes. As shown in Figure 5 the Home care near-edge process interacts with the Goods delivery process through the Personal Scheduler. In this case, the interaction is not further detailed, rather indicated through directed links. The same holds for the interaction between the Shopping Collector and the Medication Handler, which helps ensuring the quality of drug support in the Medicare process.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth] {Figures/Chapter5/Fog/InteractionHomeCare.jpg}
+	\caption[Extended subject interaction diagram for the process ‘home care’]{Extended subject interaction diagram for the process 'home care'}
+	\label{fig:InteractionHomeCare}
+\end{figure}
+
+
+For SFC implementation the open source engine UeberFlow \cite{DynamicPerspective} can be used. Hereby, SFC actions or tasks are ordered in the sequence as defined through SBDs and SIDs. The Workflow Specification of UeberFlow represents an entirely executable model of an application, given the subject actions and communication with others. It acts as container for so-called WorkflowUnits that are created for each subject, and captures all activities (WorkflowSteps). In addition, WorkflowUnit manages the data processed by the WorkflowSteps and its WorkflowFunctions. Consequently, Fog applications are executed through WorkflowSteps. 
+\\
+Thereby, the WorkflowFunctions are the most fine-grained units of execution in the UeberFlow Language meta-model, and define the actual execution logic of a WorkflowStep, its prerequisites and results. Once a step is triggered, a specific sequence of WorkflowFunctions is executed. The WorkflowFunctions can be one of 6 different types. For each of them an Actor has been implemented utilizing the Akka framework (http://akka.io/). Hence, an instance in UeberFlow is equivalent to all actor instances created in the context of this particular workflow instance. All of those actor instances are aggregated using the actor structuring and supervision mechanisms by defining a root actor representing the entire instance.
+
+\subsection{Conclusion}
+Fog Computing (FC) as a near-the-edge-computing paradigm has the potential to improve user support. When defined as a collection of various small distributed clouds deployed closer to the systems or devices at the edge of a communication network subject-oriented applications support 
+\begin{list}{-}{spacing}
+\item wide and dense geo-distribution due to their behavior abstraction, as e.g., required for home healthcare support systems, linking not only (medical) devices at home, but also medical infrastructure (physician, pharmacy, nursing services etc.) from the region
+\item low or predictable latency due to the runtime concept of parallel processing 
+\item cloud interplay of Fog nodes, due to separating specification from technical implementation which allows for processing data at different time scales, e.g., when monitoring body condition and supporting a patient treatment planning procedure 
+\item multi-agencies choreography, loosening the need for orchestration, due to the inherent concept of choreography in subject-oriented architecting. Hence, Fog actors or subjects only need to be synchronized as tight as required, e.g., when a running monitor subject requires coordination with healthcare policy implementation at the same time
+\item consistency, due to mapping all respective requirements to corresponding interaction patterns. Hence, demands and capabilities can be adjusted specifying message exchange patterns, in order to ensure overall consistent system states, either through subjects working in parallel, or through information distribution triggering further subject behavior.
+\end{list}
+Our future research will focus on including network configuration information into the subject-oriented behavior abstractions, in order to optimize FC applications. The objective is to qualify end users for fine tuning their setting according to their needs and available Fog actors. Once they are able to edit and validate the subject behavior models, they also can deal with organizational and technical implementation details, allowing them to adapt an entire application as System-of-System dynamically. Adaptation to new policies can be implemented in this way (cf. \cite{article:SecurityMgmt}), leading to more situation-sensitive Fog applications (cf. \cite{article:FogSimToolKit}). 
+
+
+\section{Activity Based Costing}
+
+1   Introduction
+Since the 1980ies the importance of process orientation in business is steadily growing. In a study on the status quo of business process management (BPM) conducted in Germany and Austria in 2011 the authors conclude though ‘The enterprises highly value BPM, but its implementation is, critically, still in its childhood’. Current focus is on systematically documenting business processes, which is an important first step, but still far from reaching the objective. Only a few companies consequently perform process performance measurement with well-defined key figures, being the sole base for continuous process improvement.’[14, p. 10].
+Facts like this motivated our contribution elaborating a concept to integrate process controlling functionality into the methodology of Subject-oriented BPM (S-BPM) and into software supporting the approach. The focus is on providing cost information about processes [19].
+After this introduction in chapter 2 we briefly introduce process controlling and the concept of Activity-Based Costing (ABC) before we present S-BPM as a supplier of raw data to generate management information from. The example in chapter 3 illustrates how the so far developed ideas could be implemented. The contribution ends with a short summary and some thoughts of future work.
+2   Basic Concepts
+2.1   Process Controlling
+Process controlling has both a strategic and an operational dimension [cf. e.g. 15, p. 229 ff.]. We concentrate on methods and techniques for planning, designing and coordinating the supply of information necessary to allow continuous operational process controlling with key figures as indicated in the closed-loop approach to performance management (see lower part of figure 1). As operational process controlling aims for post-execution analysis of business process instances it can be complemented by Business Activity Monitoring (BAM) which, based on event processing concepts, observes instances during execution and sets alerts or triggers actions in real-time or near real-time according to the particular situations identified [cf. 16, 10].
+
+
+Fig. 1 Closed-loop Approach to Performance Management [5]
+
+The major question is how to measure process performance. A typical parameter for the evaluation of process effectivity is customer satisfaction while process time, quality and cost and adherence to schedules are suitable to assess efficiency [cf. e.g. 15 p. 229 ff.]. As these parameters have high significance for the competitive position they are crucial for process controlling. While the assessment of customer satisfaction and maturity levels of processes usually are matters of periodic monitoring activities there might be other, more technical parameters needed to be watched permanently, like the response time of application systems. Those aspects are especially relevant if processes are extensively supported by IT.
+Figure 2 gives a conceptual overview of a key figure-based operational process controlling, split into continuous and periodic or occasional controlling activities, like it could be set up successively for the S-BPM approach.
+The integrated collection and analysis of common managerial data allows for a cohesive evaluation and control in terms of process controlling [cf. 15 p. 248 ff., 1 p. 385 ff., 7 p. 158 ff.]. It feeds back results to take decisions and actions, fostering a steadily growth of experience regarding the interdependencies between cost, quality and time (organizational learning).
+
+
+Fig. 2.  Operational Process Controlling
+
+In this paper we focus on cost figures. Calculating them is more difficult than assessing those for time and quality. S-BPM allows determining cost figures for processes and process steps as well as for the occupation of cost centers and organizational units with little additional effort though. The reason is that S-BPM specifies subjects as actors in a process, their interaction and their assignment to elements of the organizational structure (organizational units, positions, roles) (see section 2.3). 
+The basic methodology to integrate such cost information into process controlling is Activity-Based Costing (ABC).
+2.2   Methodology of Activity-Based Costing
+The concept of Activity-Based Costing origins in the work of Miller and Vollmann [12] and Cooper and Kaplan [3] and was established in the German-speaking community by Horvath und Mayer [9].
+ABC roots in a simple fact: producing and delivering a product or service involves many activities within cost centers and across boundaries of cost centers or functional areas, all causing costs. Major factors influencing these costs (cost drivers) usually are measures of the activity quantity, e.g. the number of purchasing orders being processed in procurement.
+Step 1: Analysing activities
+Starting point for ABC is an analysis of activities performed in the cost centers, using common methods like interviews, questionnaires, self-monitoring, third-party observation, document analysis or multi-moment recording. This analysis is essential for bordering cost center internal process steps and main processes running across cost center boundaries. Self-monitoring and multi-moment recording can bring up time standards for the execution of processes and their steps, but needs high effort. In order to ease the investigation of times, controllers instead often conduct interviews to find out what share of work force capacity the process steps occupy in a cost center.
+The analysis results in a transparent, hierarchical process structure showing the assignment of activities to process steps, the assignment of process steps to cost centers and the aggregation of process steps to main processes (cf. figure 3)
+
+
+
+Fig. 3.  Process Structure
+
+This first step of Activity-Based Costing can be based on the results of the activity bundles analysis and modeling in S-BPM [6]. ABC-relevant information on subjects, their activities and the business objects being worked on are contained in the S-BPM process model (see section 2.3).
+Step 2: Determining cost drivers
+Horvath und Mayer differentiate between activity quantity induced (aqi) and activity quantity neutral (aqi) processes [9]. The latter (e.g. leading a department) cause costs independent from the activity quantity (e.g. the salary of the department leader). In activity quantity induced processes (e.g. purchasing goods) resource consumption and related costs vary with the activity quantity. Hereby process costs incurring depend on the number of cost drivers and there is need to determine measures for those as a second step in ABC. Cost drivers serve as an allocation base for resource utilization and thus also for causing costs.
+Cost drivers need to meet some requirements in order to make cost dependence transparent:
+
+•	Process costs should, at least in the long term, vary with the activity quantity
+•	Cost driver values should be easy to assess and to understand.
+•	Input of resources should be approximately the same for all process instances, otherwise processes and cost drivers need to be further differentiated.
+
+Usually ideas of what the major cost driver is already come up during the activity analysis and the activity quantity can be determined simultaneously then.
+Step 3: Determining process costs
+In practice it is often difficult to only assign the major cost driver to the main processes, because a main process can consist of process steps with different cost drivers not being proportionally related.
+In a given organizational and cost accounting context resources and costs are planned and actual costs are recorded on cost center level. This means planning and assessing process costs initially is also related to cost centers.
+Although theory suggests to plan process costs analytically and by cost type like in direct costing, practitioners prefer more simple concepts. One alternative is to only plan labor costs analytically and to allocate all other cost types proportionally. Another option would be to assign to the analyzed processes the capacities they consume and the related costs. In any case the accountants usually assume the labor cost to be the major cost element. Process costs then can be computed by multiplying a qualified estimate of the number of employees involved in the process by their average wage. If need be activity quantity neutral costs also can be passed on proportionally. In case there are more activity quantity induced costs with a significant extent they need to be considered in addition to labor costs. Even then the described procedure is still easy to handle.
+Step 4: Determining process cost rate
+In a last step, for the purpose of job order costing or product calculation, a simple division results in a process cost rate similar to the computation of a machine hour rate.
+As shown Activity-Based Costing can be implemented in various ways. The identified problem of different cost drivers that cannot be aggregated can be solved by using time-related allocation bases [2 p. 23].
+The concrete process times can be computed if a workflow engine writes time stamps for begin and end events of the process steps. In order to have the engine processing a workflow at runtime, process activities must be assigned to concrete actors. Both kinds of information are needed for establishing ABC as elaborated in chapter 3.
+2.3   S-BPM as Data Supplier
+Subject-oriented Business Process Management (S-BPM) focuses on the acting elements (actors) and their interactions as they drive a process. Its modeling notation includes all building blocks of a complete sentence in natural language as there are subject, predicate and object. The clear formal semantic of the underlying process algebra makes it possible to automatically generate code and makes subject-oriented process descriptions executable at a finger tip [6, 18].
+Major parts of the model are subject interaction diagrams, describing the subjects involved in the process and the messages they exchange, and subject behavior diagrams, specifying subject activities as there are sending and receiving messages and other functions (e.g. manipulating business objects). The ladder means that at a time subjects can either be in a send, receive or functional state. 
+Transforming the model into a workflow and integrating IT solutions (e.g. ERP functionality) to support particular activities is subject to the embedding of the process into IT. Assigning subjects to elements of the existing organizational structure (organizational units, positions, roles) being responsible for carrying out the activities as defined in the model, is called embedding the process (model) into the organization. Existing directory services based on Lightweight Directory Access Protocol (e.g. Active Directory) can ease the assignment of subjects to roles, groups and people as implemented in Metasonic Suite.
+A process engine like Metasonic Flow interprets the model at runtime, instantiates process instances and controls their execution. According to the defined behavior the engine involves users and IT services or applications as subject representatives. It also controls the handling of business objects included the in subject behavior (creation, modification, deletion, exchange through messages). During execution the engine can capture many single pieces of data relevant for process controlling, especially by setting time stamps for state transitions and by counting instances. Examples are 
+
+•	begin time and end time of every single instance,
+•	begin time and end time of the single steps within an instance or
+•	number of instances of a certain process per time unit.
+
+Using such raw data suitable software can compute key figures like
+
+•	waiting time of an instance from the moment it appeared in the in-box of an actor until he or she takes it out for processing (per case, on average) and
+•	processing time from taking the instance out of the in-box until putting the result into the out-box (per case, on average).
+
+This means the workflow system generates a valuable data basis for a meaningful Activity-Based Costing. This data needs to be categorized though and the key figures need to be defined precisely and unique in order to derive useful management information (see example in section 3).
+3   Example for Estimating Process Costs in S-BPM
+Effective process controlling, allowing to turn such decisions into the right actions additionally requires information about cost dimensions in processes and cost-related consequences of processes for cost centers. Cost information enables monetary valuation of the enterprise performance as well as identifying weak points in operations and valuating their economic impact.
+We exemplify the determination of process costs using an order process. Figure 4 depicts the behavior diagram for the subject ‘purchaser’ enriched with some time information. These are times recorded as time stamps for state transitions by the process engine and stored in its event log [17]. For clarity reasons in the figure we only added time stamps for one state and just added the duration for the others.
+
+Fig. 4.  Calculating Processing Time of the Subject ‘Purchaser’
+In the example the processing time of the subject ‘purchaser’ in case of the sunshine path (goods are on stock) can be computed by adding up the differences between start and end time of the functional states ‘create order request’ and ‘check delivery’. The sunshine path sequence is as follows: After creating the request the purchaser sends it to the approver and then waits for an answer. If the request is denied the instance ends (right column in figure 4). Otherwise the purchaser forwards the request to the warehouse (left column), waits for them to announce the delivery date and checks it (second to left). Finally he waits for the delivery and checks it after reception, before the instance comes to an end (third to left). As a simplification we assume the subject representatives to work permanently when performing functions (being in a functional state). We did not insert times for send and receive states because message exchange is considered to be accomplished electronically with no latency for sending, transmission and receiving. Applying this procedure to all subjects could lead to the result in table 1.
+Table 1.  Processing Times
+Subject	Processing time
+Purchaser	35 min.
+Approver	10 min.
+Warehouse	30 min.
+Invoice verification	5 min.
+Accounting/Book keeping	5 min.
+Total	85 min.
+
+For estimating the costs of the process we need an hourly or minute-related rate of wage for the people being assigned to the subjects. It is also possible to provide those values aggregated on group or role level. In Figure 5 we visualized how the subjects in our example are mapped to persons, while table 2 gives an overview of the rates for the employees involved as subject representatives.
+
+
+
+Fig. 5.  Embedding the Subjects into the Organization
+Table 2.  Hourly Wage Rates
+Employee	Wage rate
+Miller, Laurel, Schulz	200 €/hour
+Ployer, Schmidt, Doe, Keweling	100 €/hour
+Weber, Wagner, Kramer, Meier, Switch, Lampe, Smith, Stuart, Buchner, Richards, Thorwald, Regal, Mustermann, Jones	50 €/hour
+
+Having these time and wage values available it is a simple multiplication to determine the personnel-related process costs for every single instance (cf. table 3). Considering a sufficient number of instances over a representative period of time allows computing a valid average cost value.
+Table 3.  Personnel-related Process Costs
+Subject	Employee	Costs
+Purchaser	Kramer	35 Min. x 50 €/60 min.  =  29,17 €
+Approver	Ployer	10 Min. x 100 €/60 min. =  16,67 €
+Warehouse	Lampe	30 Min. x 50 €/60 min.  =  25,00 €
+Invoice verification	Regal	5 Min. x 50 €/60 min.    =    4,17 €
+Accounting/Book keeping	Regal	5 Min. x 50 €/60 min.    =    4,17 €
+Total		79,18 €
+
+Assigning employees as subject representatives embeds the subjects into the organizational structure, because people belong to organizational units. As cost centers usually also are assigned to organizational units it is now possible to determine the costs of a process incurring in a certain cost center. From the cost center perspective it is also possible to see how its total costs are distributed over the processes and process steps it is involved in. Table 4 shows examples for cost figures which can be computed.
+Table 4.  Cost Figures
+Key figure (€)	Computation (e.g. for 10 work days)
+Process costs per process step/process	Multiply all processing times by the appropriate wage rate and aggregate the products over all instances occurring during the observation period
+Process costs per cost center	Multiply all processing times incurring in the cost center by the appropriate wage rate and aggregate the products over all instances occurring during the observation period
+
+As mentioned before key figures need to be defined carefully and precisely. A useful instrument helping to assure this are structured fact sheets being filled in with all necessary information [cf. 11]. Table 5 depicts such a fact sheet created for our purposes [cf. 13]. A more formal structure can be found in [4].
+Table 5.  Fact Sheet for the Key Figure ‘Average costs of a process activity’
+Attribute	Content
+Characteristics
+Description	Average costs of a process activity for a certain period
+To-be value/unit	tbd specifically (€)
+Tolerance range/unit	tbd specifically (%)
+Escalation rule	In case of violation alert the process owner and start escalation process (tbd specifically)
+Responsibility	Process Owner (tbd specifically)
+Measuring and Computing
+Measurement	Read time stamps written by Metasonic Flow, compute processing time as difference between time stamps for beginning and end, multiply processing time by hourly wage rate, divide product by number of completed instance
+Algorithms	∑ Processing time * hourly wage rate
+∑ completed instances
+Data sources
+(general)	Tables in the database of Metasonic Suite:
+RT_PROCDESC, RT_PROCINST, REC_PARADESC, REC_RECTRANS, UM_USER
+Data sources
+(specific)	Processing time:
+SELECT TIMESTAMP1 – 
+(SELECT STARTTIME
+FROM RT_PROCINST
+WHERE RT_PROCDESC = process
+AND ID = instance
+FROM REC_RECTRANS
+WHERE RT_STDESC = state
+AND RT_PROCINST = instance
+Hourly wage rate: UM_USER (manually enriched by hourly wage rates)
+Completed instances: see separate fact sheet
+Frequency	weekly
+Presentation
+Addressees	Process Owner, Middle Management, Accountants (tbd specifically)
+Presentation	As-is value and to-be value in combination with a sparkline showing the historical development, deviation from to-be value in %
+Archiving	Stored in additional database table, linked with RT_PROCDESC
+4   Conclusion and Future Work
+With the example in chapter 3 we could show that it is relatively easy to integrate cost information into S-BPM. Focusing on personnel costs as suggested avoids the problematic proportioning of costs and therefore is particularly suited for people-intensive areas with a high degree of indirect costs as it is characteristic for services.
+A more detailed investigation of how the implementation of Activity-Based Costing can benefit from a preceding S-BPM implementation seems to be promising. Exploiting the conceptual particularities coming with and the data collected by S-BPM seems to bear considerable potential of savings when introducing ABC. Processes are defined and modeled and as-is process quantities per period are available as well as the distribution of the overall capacity of the cost centers over the process steps. These parameters allow determining a standard time for processes which lays the ground for planning process costs.
+Next steps could be to extend the example by determining and specifying more key figures and testing them with representative numbers of instances of different processes. Learning from this could help to further elaborate the ABC concept for S-BPM.
+References
+1.	Allweyer, T., Geschäftsprozessmanagement – Strategie, Entwurf, Implementierung, Controlling, Witten, 2009.
+2.	Becker, W., Sahl, N.: Erfüllbarkeit bedeutsamer Rechenzwecke durch die Prozess¬kosten-rechnung – dargestellt am Beispiel der Wirtschaftlichkeitskontrolle in administrative Leistungsbereichen, Bamberger betriebswirtschaftliche Beiträge Nr. 117, 1997.
+3.	Cooper, R., Kaplan, R.S.: Measure Costs Right: Make the Right Decisions, in: Harvard Business Review 66 (1988) No. 5, pp. 96-103.
+4.	Del-Río-Ortega, A., De Reyna, M., Durán Toro, A., Ruiz-Cortés, A.: Defining Process Performance Indicators by Using Templates and Patterns, in: Barros, A., Gal, A., Kindler, E. (eds.): BPM 2012, LNCS 7481, Springer, Berlin Heidelberg, 2012, pp. 223-228.
+5.	Dinter, B., Bucher, T., Business Performance Management, in: Chamoni, P., Gluchowski, P. (Eds.), Analytische Informationssysteme, 3rd Ed., Springer, Berlin, Heidelberg, pp. 23-50 (2006).
+6.	Fleischmann, A., Schmidt, W., Stary, C., Obermeier, S., Börger, E.: Subject-oriented Business Process Management, Springer, Berlin Heidelberg, 2012.
+7.	Göppel, R.: Praxiswissen Prozessmanagement, Stuttgart 2010.
+8.	Hess, T., Matt, C.: Zur Rolle der Informations- und Kommunikationstechnologie in der Prozessgestaltung, in: ZfCM (2011) Sonderheft 2, S. 11-13.
+9.	Horvath, P., Mayer, R.: Prozesskostenrechnung – Der neue Weg zu mehr Kosten-transparenz und wirkungsvolleren Unternehmensstrategien, in: Controlling (1989) Nr. 4, S. 214-219.
+10.	Janiesch, C., Matzner, M., Müller, O., A Blueprint for Event-driven Business Activity Management, in: Rinderle, S., Toumani, F., and Wolf, K. (Eds.), 9th International Conference on Business Process Management (BPM). LNCS 6896, Springer, Berlin Heidelberg, 2011, pp. 17-28.
+11.	Kütz, M. Kennzahlen in der IT: Werkzeuge für Controlling und Management. 3. Aufl., dpunkt, Heidelberg, 2009.
+12.	Miller, J.G., Vollmann, T.E.: The hidden factory, in: Harvard Business Review 63 (1985) No. 5, pp. 142-150.
+13.	Pehlke, A.: Aufbau eines Business Activity Monitoring für den subjektorientierten Ansatz des Business Process Managements (S-BPM), Bachelor Thesis, University of Applied Sciences Ingolstadt, Ingolstadt 2012.
+14.	PricewaterhouseCoopers AG Wirtschaftsprüfungsgesellschaft: Zukunftsthema Geschäfts-prozessmanagement, 2011; http://www.pwc.de/ de_DE/ de/prozessoptimierung/assets/ PwC-GPM-Studie.pdf, last access on 2012-04-01:
+15.	Schmelzer, H., Sesselmann, W.: Geschäftsprozessmanagement in der Praxis, 7. Auflage, München, 2010.
+16.	Schmidt, W.: Business Activity Monitoring, in: Rausch, P., Sheta, A., Ayesh, A., Business Intelligence and Performance Management - Theory, Systems and Industrial Applications, Springer UK, appears in March 2013.
+17.	Schmidt, W., Fleischmann, A.: Business Process Monitoring with S-BPM, in: Fischer, H., Schneeberger, J. (Eds.), Proceedings of the 5th International Conference S-BPM ONE 2013, Communications in Computer and Information Sciences (CCIS), No. 360, Springer, Berlin Heidelberg 2013.
+18.	Schmidt, W., Fleischmann, A. und Gilbert, O.: Subjektorientiertes Geschäftsprozess-management, HMD – Praxis der Wirtschaftsinformatik, Heft 266, 2009, pp. 52-62.
+19.	Zehbold, C.: Controllingansatz für S-BPM, Working Papers Series of the University of Applied Sciences Ingolstadt, No. 25, Ingolstadt, 2012.
 
 
 

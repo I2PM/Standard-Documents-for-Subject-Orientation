@@ -238,62 +238,81 @@ As mentioned in the last section it is necessary not only to model the processes
 \begin{table}[htbp]
 	\footnotesize
 	\centering
-	\begin{tabular}[t]{@{}l p{0.5\linewidth} p{0.3\linewidth} @{}}
+	\begin{tabular}[t]{p{0.3\linewidth} p{0.6\linewidth}}
 		\toprule
 		\textbf{Attribute} & \textbf{Content}  \\
 		\midrule
 		 & \textbf{Characteristics}
 		\\
+		\hline
 		Identifier & Average activity time
 		\\
+		\hline
 		Description & Average time of a process activity within a certain period
 		\\
+		\hline
 		To-be value/unit & tbd specifically (min.)
 		\\
+		\hline
 		Tolerance range/unit & tbd specifically (\%)
 		\\
+		\hline
 		Escalation Rules/ Actions & In case of violation alert the process owner and start escalation process (tbd specifically)
 		\\
+		\hline
 		Addressees & Process Owner, Middle Mangement, Accountants (tbd specifically)
 		Responsibility	Process Owner (tbd specifically)
 		\\
+		\hline
 		&  &
 		\\
+		\hline
 		& \textbf{Measuring and Computing}
 		\\
+		\hline
 		Measuring Object & All instances of the process 'Purchase Order'
 		\\
+		\hline
 		(Single) Metrics & Start time and end time of all activities of the process
 		\\
+		\hline
 		Measuring Method & Read time stamps for beginning and end of activities written by Metasonic Flow 
 		\\
+		\hline
 		Measuring Frequency & For every single instance as it occurs
 		\\
-		Algorithms & For computing period: Sum of processing time of all activities divided by number of instances
-
+		\hline
+		Algorithms & \newline For computing period:\newline  
+		\hspace*{40mm} {\large  $ \frac{\sum activity processing time} {\sum completed instances}\cdots \ldots$ } \tiny \newline
 		\\
+		\hline
 		Data Sources (general) & Tables in the database of Metasonic Suite:
 		RT\_PROCDESC, RT\_PROCINST, REC\_PARADESC, REC\_RECTRANS, UM\_USER
 		\\
+		\hline
 		Data Sources (specific) & Activity processing time (for one instance):\newline
 		\textbf{SELECT} TIMESTAMP1  \newline
-		(\textbf{SELECT} STARTTIME \newline
-		\textbf{FROM} RT\_PROCINST \newline
-		\textbf{WHERE} RT\_PROCDESC = \textit{process (purchase order)}\newline
-		\textbf{AND} ID = \textit{instance (9)}\newline
+		\hspace*{4mm}(\textbf{SELECT} STARTTIME \newline
+		\hspace*{4mm}\textbf{FROM} RT\_PROCINST \newline
+		\hspace*{4mm}\textbf{WHERE} RT\_PROCDESC = \textit{process (purchase order)}\newline
+		\hspace*{4mm}\textbf{AND} ID = \textit{instance (9)}\newline
 		\textbf{FROM} REC\_RECTRANS\newline
 		\textbf{WHERE} RT\_STDESC = \textit{\textit{state (fill\_in\_form)}}\newline
-		\textbf{AND} RT\_PROCINST = \textit{instance (9)}
+		\hspace*{4mm}\textbf{AND} RT\_PROCINST = \textit{instance (9)}
 		Completed instances: see separate fact sheet .
 		\\
+		\hline
 		Computing Period (time, no. of inst.) & Daily
 		\\
+		\hline
 		& \textbf{Presentation}
 		\\
 		Presentation Style & As-is value and to-be value in combination with a spark line showing the historical development, deviation from to-be value in \%
 		\\
+		\hline
 		Presentation Frequency & Weekly and in case of escalation
 		\\
+		\hline
 		Archiving & Stored in additional database table, linked with RT\_PROCDESC
 		\\
 		
@@ -308,22 +327,26 @@ Replacing the content column by more formal ontology-based linguistic patterns a
 \begin{table}[htbp]
 	\footnotesize
 	\centering
-	\begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.4\linewidth} p{0.5\linewidth} @{}}
+	\begin{tabular}[t]{ p{0.1\linewidth} p{0.6\linewidth} p{0.3\linewidth}}
 		\toprule
 		\textbf{Attribute} & \textbf{Linguistic Pattern}  & \textbf{Example}\\
 		\midrule
 		PPI-<ID> & <PPI descriptive name> & PPI-001 Average time of RFC analysis
 		\\
+		\hline
 		Process	& <process ID the PPI is related to> & Request for change (RFC)
 		\\
+		\hline
 		Goals & <strategic or operational goals the PPI is related to> & BG-002: Improve customer satisfaction \newline
 		BG-014: Reduce RFC time to response
 		\\
+		\hline
 		Definition & The PPI is defined as { \newline
 			<DurationMeasure> | <CountMeasure> | <ConditionMeasure> |
 			<DataMeasure> | <DerivedMeasure> | <AggregatedMeasure> }
 		[expressed in <unit of measure>] & The PPI is defined as the average of Duration of Analyse RFC activity
 		\\
+		\hline
 		Target & The PPI value must { \newline
 			be {greater | lower} than [or equal to] <bound> | \newline
 			be between <lower bound> and <upper bound> [inclusive] |\newline
@@ -333,12 +356,16 @@ Replacing the content column by more formal ontology-based linguistic patterns a
 			the last <n> ones |
 			those in the analysis period <AP-x> } & The process instances considered for this PPI are the last 100 ones
 		\\
+		\hline
 		Source & <source from which the PPI measure can be obtained> &	Event logs of BPMS
 		\\
+		\hline
 		Responsible & { <role> | <department> | <organization> | <person> } &	Planning and quality manager
 		\\
+		\hline
 		Informed &{ <role> | <department> | <organization> | <person> } & CIO
 		\\
+		\hline
 		Comments & <additional comments about the PPI> & Most RFCs are created after 12:00
 		\\
 \bottomrule

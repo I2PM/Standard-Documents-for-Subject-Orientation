@@ -1,6 +1,12 @@
 \section{Informal Description of Subject Behavior and its Execution}
 
-The execution of the subject means sending and receiving messages and executing internal activities in the defined order. In the following sections, it is described what sending and receiving messages and executing internal functions means.
+% CS: I would expect from a standard, that execution elements do not contain diagrammatic elements,although the execution might follow the presented logic. We should clarify the term execution, as it might contain optimization or runtime elements that are part of modeling tasks.
+
+% CS:auch hier Bindestriche kontrollieren für pdf-Ausdruck.
+
+% CS: SID, SBD immer mit Grossbuchstaben beginnen, wenn ausgeschrieben im Text, da Eigenname
+
+% The execution of the subject means sending and receiving messages and executing internal activities in the defined order. In the following sections, it is described what sending and receiving messages and executing internal functions means.
 
 \subsection{Sending Messages}
 
@@ -157,7 +163,7 @@ A cancellation message can be received by the employee either while filling out 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Figures/Ontology/SubjectExecution/ExceptionHandling}
-	\caption[Handling the cancelation message using existing constructs]{Handling the cancelation message using existing constructs}
+	\caption[Handling the cancellation message using existing constructs]{Handling the cancellation message using existing constructs}
 	\label{fig:exceptionhandling}
 \end{figure}
 
@@ -181,7 +187,7 @@ Messages, like 'service cancellation', that lead to exception handling always ha
 Since now additional messages can be exchanged between subjects, it may be necessary to adjust the corresponding conditions for the input-pool structure. In particular, the input-pool conditions should allow storing an interrupt message in the input pool. To meet organizational dynamics, exception handling and extensions are required. They allow taking not only discrepancies but also new patterns of behavior, into account.
 
 \textbf{Behavior Extensions}---
-When exceptions occur, currently running operations are interrupted. This can lead to inconsistencies in the processing of business objects. For example, the completion of the business trip form is interrupted once a cancelation message is received, and the business trip application is only partially completed. Such consequences are considered acceptable, due to the urgency of cancelation messages. In less urgent cases, the modeler would like to extend the behavior of subjects in a similar way, however, without causing inconsistencies. This can be achieved by using a notation analogous to exception handling. Instead of denoting the corresponding diagram with 'exception', it is labeled with 'extension'.
+When exceptions occur, currently running operations are interrupted. This can lead to inconsistencies in the processing of business objects. For example, the completion of the business trip form is interrupted once a cancellation message is received, and the business trip application is only partially completed. Such consequences are considered acceptable, due to the urgency of cancellation messages. In less urgent cases, the modeler would like to extend the behavior of subjects in a similar way, however, without causing inconsistencies. This can be achieved by using a notation analogous to exception handling. Instead of denoting the corresponding diagram with 'exception', it is labeled with 'extension'.
 
 Behavior extensions enrich a subject's behavior with behavior sequences that can be reached from several states equivocally.
 
@@ -200,14 +206,14 @@ In case the employee decides to withdraw the business trip request in the state 
 
 So far, the behavior of subjects has been regarded as a distinct sequence of internal functions, send and receive activities. In many cases, however, the sequence of internal execution is not important.
 
-Certain sequences of actions can be executed overlapping. We are talking about freedom of choice when accomplishing tasks. In this case, the modeler does not specify a strict sequence of activities. Rather, a subject (or concrete entity assigned to a subject) will organize to a particular extent its own behavior at runtime.
+Certain sequences of actions can be executed overlapping (CS: interleaving?). We are talking about freedom of choice when accomplishing tasks. In this case, the modeler does not specify a strict sequence of activities. Rather, a subject (or concrete entity assigned to a subject) will organize to a particular extent its own behavior at runtime.
 
 The freedom of choice with respect to behavior is described as a set of alternative clauses which outline several parallel paths. At the beginning and end of each alternative, switches are used: A switch set at the beginning means that this alternative path is mandatory to get started, a switch set at the end means that this alternative path must be completely traversed. This leads to the following constellations:
 
 \begin{itemize}
 	\item Beginning is set/end is set: Alternative needs to be processed to the end.
 	\item Beginning is set/end is open: Alternative must be started but does not need to be finished. 
-	\item Beginning is open/end is set: Alternative may be processed, but if so must be completed.
+	\item Beginning is open/end is set: Alternative may be processed, and in case of doing so, it must be completed.
 	\item Beginning is open/end is open: Alternative may be processed but does not have to be completed.
 \end{itemize}
 
@@ -226,7 +232,7 @@ Figure \ref{fig:alternative} shows an example for modeling alternative clauses. 
 
 The other two sequences may, but do not have to be, started. However, in case the middle sequence is started, i.e., the message 'order arrived' is sent to the sales department, it must be processed to the end. This is defined by an appropriate marking in the end symbol of the alternatives ('X' in the lower gray bar as the endpoint of the alternatives). The rightmost path can be started but does not need to be completed.
 
-The individual actions in the alternative paths of an alternative clause may be arbitrarily executed in parallel and overlapping, or in other words: A step can be executed in an alternative sequence, and then be followed by an action in any other sequence. This gives the performer of a subject the appropriate freedom of choice while executing his actions.
+The individual actions in the alternative paths of an alternative clause may be arbitrarily executed in parallel and overlapping (CS: interleving?), or in other words: A step can be executed in an alternative sequence, and then be followed by an action in any other sequence. This gives the performer of a subject the appropriate freedom of choice while executing his actions.
 
 In the example, the order can thus first be updated, and then the message 'order arrived' sent to sales. Now, either the message 'deliver order' can be sent to the warehouse or one of the internal functions, 'update sales status' or 'collect data for statistics', can be executed.
 
@@ -247,7 +253,7 @@ Each subject has a base behavior (see property 202 in \ref{fig:20190104-simple-e
 
 \subsection{Behavior Describing Component}
 
-The following figure shows the details of the class \texttt{BehaviorDescribingComponent}. This class has the subclasses State, Transition and \texttt{TranssitionCondition} (see figure \ref{fig:20190104-behavior-describing-component}). The subclasses of the state represent the various types of states (class relations 025, 014 und 024 in \ref{fig:20190104-behavior-describing-component}). The standard states \texttt{DoSTates}, \texttt{SendState} and \texttt{ReceiveState} are subclasses of the class \texttt{StandardPASSState} (class relations 114, 115 und 116 in \ref{fig:20190104-behavior-describing-component}). The subclass relations 104 and 020 allow that there exist a start state (class \texttt{InitialStatOfBehavior} in \ref{fig:20190104-behavior-describing-component}) and none or several end states (see subclass relation 020 in figure\ref{fig:20190104-behavior-describing-component}) The fact that there must be at least one start state and none or several end states is defined by so called axioms which are not shown in figure \ref{fig:20190104-behavior-describing-component}.
+The following figure shows the details of the class \texttt{BehaviorDescribingComponent}. This class has the subclasses State, Transition and \texttt{TranssitionCondition} (see figure \ref{fig:20190104-behavior-describing-component}). The subclasses of the state represent the various types of states (class relations 025, 014 and 024 in \ref{fig:20190104-behavior-describing-component}). The standard states \texttt{DoSTates}, \texttt{SendState} and \texttt{ReceiveState} are subclasses of the class \texttt{StandardPASSState} (class relations 114, 115 and 116 in \ref{fig:20190104-behavior-describing-component}). The subclass relations 104 and 020 allow that there exists a start state (class \texttt{InitialStatOfBehavior} in \ref{fig:20190104-behavior-describing-component}) and none or several end states (see subclass relation 020 in figure\ref{fig:20190104-behavior-describing-component}) The fact that there must be at least one start state and none or several end states is defined by so called axioms which are not shown in figure \ref{fig:20190104-behavior-describing-component}.
 
 \begin{figure}[htbp]
 	\centering
@@ -269,11 +275,11 @@ As shown in figure \ref{fig:20190109-states} the class state has a subclass \tex
 	\label{fig:20190109-states}
 \end{figure}
 
-More complex states are choice segments (subclass relation 014). A choice segment contains choice segment paths (subclass 015 and property 200). Each choice segment path can be of one of four types. If a segment path is started than it must be finished or not or a segment path must be started and must be finished or not (subclass relations 16, 17, 18 and 19).
+More complex states are choice segments (subclass relation 014). A choice segment contains choice segment paths (subclass 015 and property 200). Each choice segment path can be of one of four types. If a segment path is started then it must be finished or not, or a segment path must be started and must be finished or not (subclass relations 16, 17, 18 and 19).
 
 \subsubsection{Transitions}
 
-Transitions connect the source state with the target state (see figure \ref{fig:20190104-behavior-describing-component}). A transition can be executed if the transition condition is valid. This means the state of a behavior changes from the current state which is the source state to the target state. In PASS there are two basic types of transitions, \texttt{DoTransitions} and \texttt{CommunicationTranstions} (subclasses 34 and 31 in figure \ref{fig:20190105-transitions}). The class \texttt{CommunicationTransition} is divided into the subclasses \texttt{ReceiveTransition} and \texttt{SendTransition} (subclasses 32 and 33 in figure \ref{fig:20190105-transitions}). Each transition has depending from its type a corresponding transition condition (property 231 in figure  \ref{fig:20190105-transitions}) which defines a data condition which must be valid in in order to execute a transition.
+Transitions connect the source state with the target state (see figure \ref{fig:20190104-behavior-describing-component}). A transition can be executed if the transition condition is valid. This means the state of a behavior changes from the current state which is the source state to the target state. In PASS there are two basic types of transitions, \texttt{DoTransitions} and \texttt{CommunicationTranstions} (subclasses 34 and 31 in figure \ref{fig:20190105-transitions}). The class \texttt{CommunicationTransition} is divided into the subclasses \texttt{ReceiveTransition} and \texttt{SendTransition} (subclasses 32 and 33 in figure \ref{fig:20190105-transitions}). Each transition has depending from its type a corresponding transition condition (property 231 in figure  \ref{fig:20190105-transitions}) which defines a data condition which must be valid in order to execute a transition.
 
 \begin{figure}[htbp]
 	\centering

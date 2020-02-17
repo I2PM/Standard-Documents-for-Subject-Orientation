@@ -1,5 +1,9 @@
 % !TeX spellcheck = en_US
 
+% Review Christian Stary January 2020
+
+
+
 \RequirePackage{snapshot}
 
 \documentclass[11pt, showtrims, final]{memoir}
@@ -21,7 +25,7 @@
 \usepackage{pdfpages}
 \usepackage{caption}
 \usepackage{minted}
-\usepackage{amsmath}
+
 
 
 \newmintinline[asminline]{lexer.py:CoreASMLexer -x}{escapeinside=~~}
@@ -73,9 +77,12 @@
 
 \checkandfixthelayout[lines]
 
-\title{Standard for the Subject-oriented\\ Specification of Systems}
+\title{Draft Standard for the Subject-oriented\\ Specification of Systems}
 \author{Stephan Borgert, Matthes Elstermann, Albert Fleischmann, \\ Reinhard Gniza, Herbert Kindermann, Florian Krenn, \\  Werner Schmidt, Robert Singer, Christian Stary, Florian Strecker, Andr\'e Wolski, Conny Zebold}
 
+% CS: GENERAL COMMENTS: If going to be pulished with ISBN or ISSN or DOI all copyrights need to be cleared, in order to avoid legal troubles for i2pm.
+
+% CS: Glossary required for standardized terms.
 % ToC down to subsections
 \settocdepth{subsection}
 % Numbering down to subsections as well

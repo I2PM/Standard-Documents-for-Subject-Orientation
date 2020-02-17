@@ -1,5 +1,10 @@
+% Review Christian Stary January 2020
+
 \chapter{Aspects for further standardisation activities}
-In this chapterr various aspects of the subject oriented modelling and programming concept are outlined. These aspects are already published on different confernces. The following sections are based on these publications.
+
+CS: Hochkommas und - im pdf falsch gedruckt.
+
+In this chapterr various aspects of the subject oriented modelling and programming concept are outlined. These aspects have already been published on different conferences. The following sections are based on these publications. CS: They contain original text parts and thus, the conclusions need to be aligned to the standardization effor, as tried for Fog Computing.
 The concepts described in theses sections will be part of future standardisation activities.
 The following sections are based on following publications:\\
 \begin{list}{-}
@@ -13,7 +18,7 @@ The following sections are based on following publications:\\
 
 \section{Subjects and Shared Input Pools}
 
-Shared input pools have the same structure like subject-specific ones, and thus, the same properties like the standard input pool. The only difference is that different subjects can deposit in or remove messages from a shared input pool. Subjects that want to send a message via a shared input pool do not use a subject name as addressee of a message, but the name of a shared input pool instead. In a distributed system several shared input pools for different purposes can be used. Figure 7 shows the slightly changed structure of the traffic management system when operating it with a shared input pool. The subject "Car detection" represents the shared input pool.
+Shared input pools have the same structure like subject-specific ones, and thus, the same properties like the standard input pool. The only difference is that different subjects can deposit in or remove messages from a shared input pool. Subjects that want to send a message via a shared input pool do not use a subject name as addressee of a message, but the name of a shared input pool instead. In a distributed system several shared input pools for different purposes can be used. Figure 7 shows the slightly changed structure of the traffic management system when operating it with a shared input pool CS: hier fehlt das originäre Beispiel als Bezugspunkt. The subject "Car detection" represents the shared input pool.
 
 
 \begin{figure}[htbp]
@@ -57,13 +62,13 @@ In order to ensure dependable sharing of data, these basic properties of blockch
 \end{enumerate}
 
 Traditionally data received from "things" are not very complex. These data are mainly values as measured by sensors, or binary signals. This may lead to a paradox situation: If such simple data are to be stored in a blockchain, the fee to be paid for adding blocks containing simple data is larger than the value being transferred. 
-One way to solve the resulting incentive problem is to use permissioned block chains instead of open block chains: Blockchain for dedicated distributed application are not open blockchains like the ones implementing the management of digital currencies. 
+One way to solve the resulting incentive problem is to use permissioned block chains instead of open block chains: Blockchains for dedicated distributed application are not open blockchains like the ones implementing the management of digital currencies. 
 \\
 For the implementation of shared input pools, we suggest managed or permissioned blockchains. For instance, Hyperledger Fabric \cite{article:hyperledger} is an open source implementation of a permissioned blockchain. Unlike to a public permissionless network, the participants are known to each other, rather than staying anonymous and interacting untrusted. It means, while the participants may not fully trust one another, e.g., in case of being competitors in the same industry sector, a network can be operated under a governance model that is built on the extent of trust existing between participants, such as a legal agreement or framework for handling disputes. When building a business process with known participants, such type of a blockchain implementation would be sufficient. Consensus algorithms for permissioned blockchains are faster and do need much less energy than permissionless blockchain networks. 
 \\
-In \cite{article:Blockbench} it is reported that hyperledger fabric is the fastest available permissioned blockchain. The transaction throughput could even increased from 3,000 to 20,000 transactions per second \cite{article:hyperledgerfabric}.
+In \cite{article:Blockbench} it is reported that hyperledger fabric is the fastest available permissioned blockchain. The transaction throughput could even be increased from 3,000 to 20,000 transactions per second \cite{article:hyperledgerfabric}.
 \\
-When using Hyperledger to create blockchain networks of that kind, a hyperledger blockchain network provides a technical infrastructure offering ledger and smart contract (chaincode) services to applications. Primarily, smart contracts are used to generate transactions which are subsequently distributed to every peer node in the network where they are immutably recorded on their copy of the ledger. The users of applications can be users of client applications or blockchain network administrators.
+When using Hyperledger to create blockchain networks of that kind, a hyperledger blockchain network provides a technical infrastructure offering ledger and smart contract (chaincode) services to applications. Primarily, smart contracts are used to generate transactions which are subsequently distributed to each peer node in the network where they are immutably recorded on their copy of the ledger. The users of applications can be users of client applications or blockchain network administrators.
 \\
 Subject add messages to the shared input pool and other subjects want to read these messages. If a shared input pool is implemented as a blockchain it is necessary that the chain code (smart contract in Ethereum) realizing the functions of the shared input pool must interact with the world outside the block chain. In hyper ledger fabric (including Ethereum), this problem is solved by so called oracles. We suggest using the blockchain patterns Oracle and Reverse Oracle as described in \cite{book:Blockchainapplications}. For flexibility reasons we prefer off chain oracles - see figure \ref{fig:sharedblockchain}.
 
@@ -87,14 +92,14 @@ Due to the novel conceptual integration addressed, several aspects and topics ne
 \begin{list}{-}{spacing}
 \item From an application perspective, the results need to be aligned with novel industry 4.0 concepts (cf. [29]), since there not only existing standards are framed by business processes, but also distributed operation of production-relevant processes and real-time sharing of data.
 \item From an implementation perspective, our approach requires a (prototypical) realization of an appropriate block chain mechanism for managing shared input pools meeting all requirements in section 4.
-\item From an industry perspective, performance evaluations might lead to reconsider our conceptual findings, e.g., how to manage a shared input pools of a distributed system in real time.
+\item From an industry perspective, performance evaluations might lead to reconsider our conceptual findings, e.g., how to manage a shared input pool of a distributed system in real time.
 \item Definition of structural semantics in OWL
 \item Definition of execution semantics in ASM
 \end{list}
 
 \section{Hierarchies in Communication Oriented Business Process Models}
 PASS  offers powerful possibilities for structuring complex process systems. The ways to do that are demonstrated with an example.
-As an example we will consider a process for realizing a car break down service. This service con-sists of several connected processes. There is the main process for handling the car accident and supporting e.g. processes for organising towing and repair shop services. Insurance companies may be involved for covering damages, the customer gets an invoice, uses money transfer services or banks for paying the invoice. These processes are executed by various organisations like help desk service companies, towing service companies, car repair workshops banks etc.. In most business process projects not complete processes are described in detail only a certain part is considered e.g. only the help desk process has to be considered in detail but to do that we have to considere the whole environment in which a considered process is embedded. We have to know which rela-tions exists to these other processes. It is necessary to know which inputs are rquired by neighbour processes and which results they deliver. A help desk process which organizes the towing services has to know how the towing service is requested and which further interactions are required. For instance it must be agreed whether the towing service informs the client about the arrival time of the towing truck or the help desk does it.
+As an example we will consider a process for realizing a car break down service. This service consists of several connected processes. There is the main process for handling the car accident and supporting e.g. processes for organising towing and repair shop services. Insurance companies may be involved for covering damages, the customer gets an invoice, uses money transfer services or banks for paying the invoice. These processes are executed by various organisations like help desk service companies, towing service companies, car repair workshops banks etc.. In most business process projects not all parts of processes are described in detail. Only a certain part is considered, e.g. only the help desk process has to be considered in detail. In order to do so we have to consider the whole environment in which a considered process is embedded. We have to know which relations exists to these other processes. It is necessary to know which inputs are rquired by neighbour processes and which results they deliver. A help desk process which organizes the towing services has to know how the towing service is requested and which further interactions are required. For instance it must be agreed whether the towing service informs the client about the arrival time of the towing truck or the help desk does it.
 
 
 \subsection{Process Architecture}
@@ -113,7 +118,7 @@ Figure \ref{fig:car-service-level1} shows the highest process level of the car b
 
 
 
-Figure \ref{fig:car-service-leve2} shows the next process structure level of the process "car break down ser-vice". In this level the process "Car break down service" is separated in 10 processes. The processes "Bank", "Insurance service", "Car repair workshop", "Incident Management","Mobility Manage-ment" and "Towing Management" have a communication channel to the prcess "Car usage". This means the communication channel "Car break down handling" is separated into five communica-tion channels. Each of them covers the communication with the relared process, e.g. the communi-cation channel "Accident notification Car break down" is the communication channel between the processes "Car usage" and "Incident Management".\\
+Figure \ref{fig:car-service-leve2} shows the next process structure level of the process "car break down ser-vice". In this level the process "Car break down service" is spltid in 10 processes. The processes "Bank", "Insurance service", "Car repair workshop", "Incident Management","Mobility Manage-ment" and "Towing Management" have a communication channel to the prcess "Car usage". This means the communication channel "Car break down handling" is split into five communica-tion channels. Each of them covers the communication with the relared process, e.g. the communi-cation channel "Accident notification Car break down" is the communication channel between the processes "Car usage" and "Incident Management".\\
 
 
 \begin{figure*}[htbp]
@@ -134,7 +139,7 @@ Inside a process there can be also processes. This means that levels of processe
 	\label{fig:car-service-lev3}
 \end{figure*}
 
-As already mentioned, processes cannot communicate directly with each other. The active entities of a process, the subjects communicate with each other. This means messages from one process are sent to an other process are reveived by a subject inside of that process. Messages belonging to a channel are assigned to a sending or receiving subject at the lowest level of an process architecture. This lowest level of a process description is the subject interaction diagram (SID) which shows the involved subjects of a process and the messages they exchange. In the following we consider the process incident management in more detail. This process does not contain other processes like the process "Car Repair Shop". The process "Incident management" contains a Subject Interaction Diagram. Some of the subjects of a process communicate with subjects in other processes. These subjects are called border subjects because they are at the border of a process to other prcesses. Figure \ref{fig:car-service-lev4} shows the process "Incident management" with its border subjects. There is a border subject "Help agent" which communicates with the processes "Towing service", "Mobility ser-vice"and  "Car repair workshop", precisely it communicates with a subject in one of these process-es. Another border subject of the process "Incident management" which is called "Help desk"communicates with the process "Car usage".\\
+As already mentioned, processes cannot communicate directly with each other. The active entities of a process, the subjects communicate with each other. This means messages from one process are sent to an other process are reveived by a subject inside of that process. Messages belonging to a channel are assigned to a sending or receiving subject at the lowest level of a process architecture. This lowest level of a process description is the subject interaction diagram (SID) which shows the involved subjects of a process and the messages they exchange. In the following we consider the process incident management in more detail. This process does not contain other processes like the process "Car Repair Shop". The process "Incident management" contains a Subject Interaction Diagram. Some of the subjects of a process communicate with subjects in other processes. These subjects are called border subjects because they are at the border of a process to other prcesses. Figure \ref{fig:car-service-lev4} shows the process "Incident management" with its border subjects. There is a border subject "Help agent" which communicates with the processes "Towing service", "Mobility ser-vice"and  "Car repair workshop", precisely it communicates with a subject in one of these processes. Another border subject of the process "Incident management" which is called "Help desk"communicates with the process "Car usage".\\
 
 \begin{figure}[htbp]
 	\centering
@@ -153,11 +158,11 @@ The border subjects of the process "Incident management" must have a corespondin
 \end{figure}
 
 The border subjects of the processes "Mobility service", "Towing service" and "Car repair work-shop" have the same name “Service agent” but these are different subjets because they belong to different processes. Because the process "Car repair workshop" consists of several layers the corre-sponding border subject can be in a process which is part of process "Car repair workshop" in a lower level.\\
-From the perspective of the subjects inside of the process "Incident managent" are the border subjects of the processes "Mobility service", "Towing service" and "Car repair workshop" interfaces to these processes, therefore they are called interface subjects in the subject interaction diegram of a process. Figure \ref{fig:car-service-lev6}shows the subject interaction diagram of the process incident management.\\
+From the perspective of the subjects inside of the process "Incident managent" are the border subjects of the processes "Mobility service", "Towing service" and "Car repair workshop" interfaces to these processes, therefore they are called interface subjects in the Subject Interaction Diegram of a process. Figure \ref{fig:car-service-lev6}shows the Subject Interaction Diagram of the process incident management.\\
 
 
 \subsection{Behavioral Interface}
-Processes to which a considered process has communication relationships are called process neighbours or for short neighbours. Now we want to consider the details of the communication relationships between two neighbours. The interface between two processes is defined by the related border subjects and the allowed sequences in which the messages a communication channel are exchanged between them. As already described above each message is defined by a name and the data which are transported the so-called payload. A border subject observes the behavior of the border subject of the neighbour process and vice versa. Figure \ref{fig:car-service-lev8} shows the border subject "Help desk" of the processes "Incident Management" which communicates with the border subject of process "Car usage".\\
+Processes to which a considered process has communication relationships are called process neighbours or for short neighbours. Now we want to consider the details of the communication relationships between two neighbours. The interface between two processes is defined by the related border subjects and the allowed sequences in which the messages are exchanged between them in a communication channel. As already described above each message is defined by a name and the data which are transported the so-called payload. A border subject observes the behavior of the border subject of the neighbour process and vice versa. Figure \ref{fig:car-service-lev8} shows the border subject "Help desk" of the processes "Incident Management" which communicates with the border subject of process "Car usage".\\
 
 \begin{figure}[htbp]
 	\centering
@@ -166,7 +171,7 @@ Processes to which a considered process has communication relationships are call
 	\label{fig:car-service-lev6}
 \end{figure}
 
-Because we consider the process "Incident management" the border subject "Caller" of the process "Car usage" becomes an interface subject in the SID (details about interface subjects can be found in \cite{Flei12}) of the process “Incident Management”. Figure \ref{fig:car-service-lev8} shows the detailed subject interaction diagram around the subject help desk. \\
+Because we consider the process "Incident management" the border subject "Caller" of the process "Car usage" becomes an interface subject in the SID (details about interface subjects can be found in \cite{Flei12}) of the process “Incident Management”. Figure \ref{fig:car-service-lev8} shows the detailed Subject Interaction Diagram around the subject help desk. \\
 
 \begin{figure}[htbp]
 	\centering
@@ -188,7 +193,7 @@ If the customer data are valid with that data the subject "Help desk" creates a 
 \end{figure}
 
 
-The behavior described in the figure above contains the communication with all neighbor subjects of subject "Help desk" including the communication with the interface sub-ject "Caller". From the perspective of this subject the communication of the subject "Help desk" with its other neighbor subjects is not relevant. For the subject "Caller" only the commumication sequence between itself and the subject "Help desk" is relevant. These allowed communication sequences are called the behavioral interface.\\
+The behavior described in the figure above contains the communication with all neighbor subjects of subject "Help desk" including the communication with the interface subject "Caller". From the perspective of this subject the communication of the subject "Help desk" with its other neighbor subjects is not relevant. For the subject "Caller" only the commumication sequence between itself and the subject "Help desk" is relevant. These allowed communication sequences are called the behavioral interface.\\
 The behavioral interface between two subjects can be derived from the complete behavior of a subject by deleting the interactions with all the other subjects . Figure \ref{fig:car-service-lev10} shows how the communication sequence relevant for the communication be-tween the subject "Help Desk" and "Caller" is derived from the complete behavior of subject "Help desk".
 
 \begin{figure}[htbp]
@@ -238,81 +243,62 @@ As mentioned in the last section it is necessary not only to model the processes
 \begin{table}[htbp]
 	\footnotesize
 	\centering
-	\begin{tabular}[t]{p{0.3\linewidth} p{0.6\linewidth}}
+	\begin{tabular}[t]{@{}l p{0.5\linewidth} p{0.3\linewidth} @{}}
 		\toprule
 		\textbf{Attribute} & \textbf{Content}  \\
 		\midrule
 		 & \textbf{Characteristics}
 		\\
-		\hline
 		Identifier & Average activity time
 		\\
-		\hline
 		Description & Average time of a process activity within a certain period
 		\\
-		\hline
 		To-be value/unit & tbd specifically (min.)
 		\\
-		\hline
 		Tolerance range/unit & tbd specifically (\%)
 		\\
-		\hline
 		Escalation Rules/ Actions & In case of violation alert the process owner and start escalation process (tbd specifically)
 		\\
-		\hline
 		Addressees & Process Owner, Middle Mangement, Accountants (tbd specifically)
 		Responsibility	Process Owner (tbd specifically)
 		\\
-		\hline
 		&  &
 		\\
-		\hline
 		& \textbf{Measuring and Computing}
 		\\
-		\hline
 		Measuring Object & All instances of the process 'Purchase Order'
 		\\
-		\hline
 		(Single) Metrics & Start time and end time of all activities of the process
 		\\
-		\hline
 		Measuring Method & Read time stamps for beginning and end of activities written by Metasonic Flow 
 		\\
-		\hline
 		Measuring Frequency & For every single instance as it occurs
 		\\
-		\hline
-		Algorithms & \newline For computing period:\newline  
-		\hspace*{40mm} {\large  $ \frac{\sum activity processing time} {\sum completed instances}\cdots \ldots$ } \tiny \newline
+		Algorithms & For computing period: Sum of processing time of all activities divided by number of instances
+
 		\\
-		\hline
 		Data Sources (general) & Tables in the database of Metasonic Suite:
 		RT\_PROCDESC, RT\_PROCINST, REC\_PARADESC, REC\_RECTRANS, UM\_USER
 		\\
-		\hline
 		Data Sources (specific) & Activity processing time (for one instance):\newline
 		\textbf{SELECT} TIMESTAMP1  \newline
-		\hspace*{4mm}(\textbf{SELECT} STARTTIME \newline
-		\hspace*{4mm}\textbf{FROM} RT\_PROCINST \newline
-		\hspace*{4mm}\textbf{WHERE} RT\_PROCDESC = \textit{process (purchase order)}\newline
-		\hspace*{4mm}\textbf{AND} ID = \textit{instance (9)}\newline
+		(\textbf{SELECT} STARTTIME \newline
+		\textbf{FROM} RT\_PROCINST \newline
+		\textbf{WHERE} RT\_PROCDESC = \textit{process (purchase order)}\newline
+		\textbf{AND} ID = \textit{instance (9)}\newline
 		\textbf{FROM} REC\_RECTRANS\newline
 		\textbf{WHERE} RT\_STDESC = \textit{\textit{state (fill\_in\_form)}}\newline
-		\hspace*{4mm}\textbf{AND} RT\_PROCINST = \textit{instance (9)}
+		\textbf{AND} RT\_PROCINST = \textit{instance (9)}
 		Completed instances: see separate fact sheet .
 		\\
-		\hline
 		Computing Period (time, no. of inst.) & Daily
 		\\
-		\hline
 		& \textbf{Presentation}
 		\\
 		Presentation Style & As-is value and to-be value in combination with a spark line showing the historical development, deviation from to-be value in \%
 		\\
-		\hline
 		Presentation Frequency & Weekly and in case of escalation
 		\\
-		\hline
 		Archiving & Stored in additional database table, linked with RT\_PROCDESC
 		\\
 		
@@ -327,26 +313,22 @@ Replacing the content column by more formal ontology-based linguistic patterns a
 \begin{table}[htbp]
 	\footnotesize
 	\centering
-	\begin{tabular}[t]{ p{0.1\linewidth} p{0.6\linewidth} p{0.3\linewidth}}
+	\begin{tabular}[t]{@{}l p{0.3\linewidth} p{0.4\linewidth} p{0.5\linewidth} @{}}
 		\toprule
 		\textbf{Attribute} & \textbf{Linguistic Pattern}  & \textbf{Example}\\
 		\midrule
 		PPI-<ID> & <PPI descriptive name> & PPI-001 Average time of RFC analysis
 		\\
-		\hline
 		Process	& <process ID the PPI is related to> & Request for change (RFC)
 		\\
-		\hline
 		Goals & <strategic or operational goals the PPI is related to> & BG-002: Improve customer satisfaction \newline
 		BG-014: Reduce RFC time to response
 		\\
-		\hline
 		Definition & The PPI is defined as { \newline
 			<DurationMeasure> | <CountMeasure> | <ConditionMeasure> |
 			<DataMeasure> | <DerivedMeasure> | <AggregatedMeasure> }
 		[expressed in <unit of measure>] & The PPI is defined as the average of Duration of Analyse RFC activity
 		\\
-		\hline
 		Target & The PPI value must { \newline
 			be {greater | lower} than [or equal to] <bound> | \newline
 			be between <lower bound> and <upper bound> [inclusive] |\newline
@@ -356,16 +338,12 @@ Replacing the content column by more formal ontology-based linguistic patterns a
 			the last <n> ones |
 			those in the analysis period <AP-x> } & The process instances considered for this PPI are the last 100 ones
 		\\
-		\hline
 		Source & <source from which the PPI measure can be obtained> &	Event logs of BPMS
 		\\
-		\hline
 		Responsible & { <role> | <department> | <organization> | <person> } &	Planning and quality manager
 		\\
-		\hline
 		Informed &{ <role> | <department> | <organization> | <person> } & CIO
 		\\
-		\hline
 		Comments & <additional comments about the PPI> & Most RFCs are created after 12:00
 		\\
 \bottomrule
@@ -553,7 +531,7 @@ We now assume that the dog food order-to-cash scenario does not yet exist. The s
 Each federated enterprise establishes a project team, working on their parts of the solution independent from each other. This leads to a multiple-team project on the federation level \cite{book:OrgPatternsAgile}. As the teams belong to different, independent companies they all have their own development culture and methodology.
 Since there is no single line management who can assign an overall project manager, the federation members need to agree on a project leader and the competencies related to this role. As the initiator of a federation has the most interest in the development of the federated solution it might be helpful that this company, in our case the store, recruits the leader.
 
-His or her major task is to ensure smooth communication between the independent teams, respectively their managers. The project teams needs to coordinate how the systems they are developing communicate with each other. Their major communication paths are predefined by the communication structure of the system federation. This strategy leads to a high socio-technical-congruence. Figure \ref{Multiple-team}shows the team and communication structure of the dog food order-to-cash federation.
+His or her major task is to ensure smooth communication between the independent teams, respectively their managers. The project teams needs to coordinate how the systems they are developing communicate with each other. Their major communication paths are predefined by the communication structure of the system federation. This strategy leads to a high socio-technical-congruence. Figure \ref{Multiple-team} (CS: no missing) shows the team and communication structure of the dog food order-to-cash federation.
 
 \begin{figure}[htbp]
 	\centering
@@ -603,13 +581,13 @@ The tasks can be divided into three types:\\
 \\
 
 
-\subsection{Conjclusion and Further Work}
+\subsection{Conclusion and Further Work}
 We have presented an approach for developing federated systems. The concept considers the characteristics of virtual enterprises combining the services of the partners to satisfy customer needs while keeping legal, organizational, technological and cultural independence.
 Our communication-oriented view follows the idea that the decentralized structure of federated systems needs to be reflected in the organizational structure of multiple project teams for developing such systems. Those teams belong to separate enterprises and are mutually independent with respect to methodology, technology etc. they use to develop their individual part of the federated system. 
 The proposed approach establishes a layer above the enterprise-specific environments. It helps building coherence on the top level of the federated system solution, while the teams, system elements etc. on the individual level of each federation member keep the highest degree of independence.
 \\
 
-\section{Subject Oriented Fog Computing}
+\section{Subject-Oriented Fog Computing}
 
 Many scenarios related to digitalization increasingly (i) require an easy-to-customize development environment, (ii) capture on-the-edge systems or devices under the control of users or responsible stakeholders. Typical examples are home support systems in healthcare, maker environments producing local goods, and intelligent transport control systems for smart regions. Developing such applications requires architectures that allow to network or compose systems in a modular, while effective and efficient way \cite{article:SurveyCompConcepts}. During the last years, with the advent of advanced equipment and technologies, such as production devices for the private consumer market, networked applications have become common. As a consequence of this trend, a significant issue also appears, namely the increases in the demand of both communication and execution capability. New applications, such as home care support systems, all deal with complex interaction operations, which should be understood by users, and thus require a high level of abstraction \cite{article:FogHealthcare},\cite{article:MobilecloudComp}. 
 \\
@@ -624,7 +602,7 @@ However, according to Syed et al. \cite{article:FogPattern} purely cloud-based s
 \end{list}
 
 In this contribution, we present Subject-oriented Fog Computing (SFC), a choreographic approach and multi-layered infrastructure for Fog Computing. Separating modeling from organizational and technical implementation along a staged procedure it aims for supporting system architects, designers, and developers, who are interested in stakeholder interactions when building Fog Computing solutions. We propose a development and software architecture scheme without platform dependencies, open for various networked settings. It is based on behavior abstractions termed subjects that integrate a socio-technical design perspective, and allows composing applications from a stakeholder perspective (cf. [6-8]).
-In section II we review related research to developing fog applications according to stakeholder needs in various domains. Section III introduces SFC based on a System-of-Systems perspective, and provides an exemplary case from developing home healthcare support systems. Section IV concludes the paper summarizing SFC and indicating further research. 
+In the following section we review related research to developing fog applications according to stakeholder needs in various domains. Subsequently, we introduce SFC based on a System-of-Systems perspective, and provides an exemplary case from developing home healthcare support systems. Finally, we conclude summarizing SFC and indicating further standardization activities. 
 
 \subsection{Fog Computing and Subjects}
 
@@ -667,7 +645,7 @@ SFC structures SoS, e.g., when federating a blood pressure measurement device wi
 \subsubsection{Execution}
 Once a Subject Behavior Diagram, e.g., for the Blood Pressure Measurement subject is instantiated, it has to be decided (i) whether a human or a digital device (organizational implementation) and (ii) which actual device is assigned to the subject, acting as technical subject carrier (technical implementation) (cf. \cite{Flei12}). Typical subjects as edge devices are smart devices, which can have Internet connectivity, including smart phones, tablets, laptops, healthcare devices, etc. The subject-oriented runtime engine \cite{article:StakeHolderCentered} is then a Fog Computing infrastructure providing low-latency virtualized services and is linked with the Cloud Computing infrastructure by the same subject interaction mechanism. As there can be a variety of edge devices, such a Fog Computing platform also needs to manage and control these devices (see also foglets described below). 
 \\
-Size, storage capacity, processing capabilities, and latency increase as we move closer to cloud computing. The subject-oriented Fog acts as an intermediate layer between the edge devices and the cloud. Edge devices request computing, storage and communication services from the Fog according to the subject-oriented communication scheme. The Fog provides local, low latency response to these requests and forwards relevant data for computationally intensive processing, long-term analytics and persistent storage over to the cloud. Figure 4 provides a schematic visualization of this constellation, as it can be used for implementing the sample home healthcare support system.
+Size, storage capacity, processing capabilities, and latency increase as we move closer to cloud computing. The subject-oriented Fog acts as an intermediate layer between the edge devices and the cloud. Edge devices request computing, storage and communication services from the Fog according to the subject-oriented communication scheme. The Fog provides local, low latency response to these requests and forwards relevant data for computationally intensive processing, long-term analytics and persistent storage over to the cloud. Figure[Fog Computing Architecture]{Fog Computing Architecture} provides a schematic visualization of this constellation, as it can be used for implementing the sample home healthcare support system.
 
 \begin{figure}[htbp]
 	\centering
@@ -707,12 +685,13 @@ Fog Computing (FC) as a near-the-edge-computing paradigm has the potential to im
 \item multi-agencies choreography, loosening the need for orchestration, due to the inherent concept of choreography in subject-oriented architecting. Hence, Fog actors or subjects only need to be synchronized as tight as required, e.g., when a running monitor subject requires coordination with healthcare policy implementation at the same time
 \item consistency, due to mapping all respective requirements to corresponding interaction patterns. Hence, demands and capabilities can be adjusted specifying message exchange patterns, in order to ensure overall consistent system states, either through subjects working in parallel, or through information distribution triggering further subject behavior.
 \end{list}
-Our future research will focus on including network configuration information into the subject-oriented behavior abstractions, in order to optimize FC applications. The objective is to qualify end users for fine tuning their setting according to their needs and available Fog actors. Once they are able to edit and validate the subject behavior models, they also can deal with organizational and technical implementation details, allowing them to adapt an entire application as System-of-System dynamically. Adaptation to new policies can be implemented in this way (cf. \cite{article:SecurityMgmt}), leading to more situation-sensitive Fog applications (cf. \cite{article:FogSimToolKit}). 
+Our future standardization effort will focus on including for networking information into the subject-oriented behavior abstractions, to enable modeling stakholder-specific settings according to their case-specific needs and available Fog actors. Once stakeholders are able to edit and validate the subject behavior models, they also can deal with organizational and technical implementation details, allowing them to adapt an entire application as System-of-System dynamically. Adaptation to new policies can be implemented in this way (cf. \cite{article:SecurityMgmt}), leading to more situation-sensitive Fog applications (cf. \cite{article:FogSimToolKit}). 
 
 
 
 \section{Activity Based Costing}
 
+CS: table refs are incorrect
 
 \subsection{Basic Concepts}
 \subsubsection{Process Controlling}

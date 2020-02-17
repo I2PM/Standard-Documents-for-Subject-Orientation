@@ -1,3 +1,4 @@
+% Review Christian Stary January 2020
 \section{ASM Definition of Subject Execution}
 
 \setminted{fontsize=\small}
@@ -9,7 +10,7 @@ which allowed it to shorten various rules for a focus on their core semantics.
 Therefore all contents of this section are a non-normative introduction to the topic of formal execution semantics.
 
 There are some conceptional differences between the reference implementation and the OWL description.
-The End State is a distinguished state instead a property on a Do State or Receive State.
+The End State is a distinguished state instead of a property of a Do State or Receive State.
 Choice Segment Paths are always both mandatory to start and end, also they have to be started with the Modal Split Function and joined with the Modal Join Function.
 Furthermore the reference implementation supports advanced features that are not covered by the OWL description, for example the Mobility of Channels concept and CorrelationIDs.
 A complete comparision of the conceptual differences is given in~\ref{CoreASM-Reference-Implementation-Differences-OWL-Model}.
@@ -46,7 +47,7 @@ Therefore a subject instance is identified by the tuple (Process~Model~ID, Proce
 This tuple is called \textit{Channel} (short: \asminline{ch}), as it used in the mobility of channels concept in order to support distributed communication patterns.
 
 In the interpreter, each subject instance has an ASM Agent assigned, that keeps track of its current state,
-where the meaning of state is in the sense of which subject data is present, the content of the inputpool queues and also the active SBD states.
+where the meaning of state is in the sense of which subject data is present, the content of the input pool queues and also the active SBD states.
 This state is stored in ASM functions and assigned to the \textit{Channel}.
 
 \begin{listing}[htbp]
@@ -121,7 +122,7 @@ the payload / business objects are abstracted to be just a text given as string.
 For the communication with MultiSubjects, i.e. sending the same Message to
 multiple Agents of one Subject, the \textit{all-or-none} strategy is used. This
 is accomplished by separating the sending of a Message into two phases: first
-a reservation Message is placed at each receiver into the Inputpool.
+a reservation Message is placed at each receiver into the input pool.
 Only after all reservations could be placed they are then replaced with the
 actual Message.
 
@@ -469,7 +470,7 @@ a new CorrelationID is created and stored in the \asminline{messageCorrelationID
 It will be stored in the Variable after the messages have been send.
 If the message that will be send correlates to a previous message from the receiver
 the CorrelationID from the Variable in \asminline{messageWithCorrelationVar} will be loaded
-so that the message is stored in the corresponding inputpool queue of the receiver.
+so that the message is stored in the corresponding input pool queue of the receiver.
 
 
 \begin{listing}[htbp]
@@ -774,7 +775,7 @@ queue.
 \subsection{Receive Function}
 
 
-The Receive Function retrieves Messages from the Inputpool. The state function
+The Receive Function retrieves Messages from the input pool. The state function
 updates the enabled outgoing transitions according to the available Messages in
 the corresponding queue. When an outgoing transition is selected the Messages
 are removed from the queue by the transition function.
@@ -783,7 +784,7 @@ are removed from the queue by the transition function.
 In the beginning of the state function the Timeout is started and then checked
 each time.
 If the Timeout doesn't need to be activated each outgoing transition is either set to
-be enabled or disabled by the \asminline{CheckIP} rule.
+be enabled, or disabled by the \asminline{CheckIP} rule.
 
 
 \begin{listing}[htbp]
@@ -835,7 +836,7 @@ rule PerformReceive(MI, currentStateNumber) =
 
 
 When exactly one auto transition is enabled, and no transition had been selected, an
-automatic selection for that transition is made. Otherwise a transtion decision from
+automatic selection for that transition is made. Otherwise, a transition decision from
 the environment is required.
 
 
@@ -867,11 +868,11 @@ The \asminline{CheckIP} rule loads the parameters from the communication transit
 to determine the corresponding queue and the available Messages in it. The
 \asminline{messageSubjectCountMin} argument defines the minimal required
 number of different sender Agents of a MultiSubject. If the optional
-parameter \asminline{messageWithCorrelationVar} is not set the
+parameter \asminline{messageWithCorrelationVar} is not set, the
 CorrelationID~0 is used.
 
 When there are sufficient Messages, from different Agents of a MultiSubject,
-available the transition is enabled, otherwise it is set to be disabled.
+available, the transition is enabled, otherwise it is set to be disabled.
 
 
 
@@ -903,7 +904,7 @@ rule PerformTransitionReceive(MI, currentStateNumber, t) =
 \label{lst:shortasm:PerformTransitionReceive}
 \end{listing}
 
-The transition function removes the available Messages from the Inputpool and
+The transition function removes the available Messages from the input pool and
 optionally stores them in the Variable given as transition parameter
 \asminline{messageStoreMessagesVar}.
 
@@ -986,7 +987,7 @@ execution path leads to this state.
 Until all but one execution paths are joined the current state is removed
 from the list of active states of the current Macro Instance. If the last
 execution path reached this state the \asminline{joinCount} function is reset for the next
-iteration and the state function is set to completed, so that the Macro Behavior proceeds
+iteration, and the state function is set to ''completed'', so that the Macro Behavior proceeds
 regularly to the next state.
 
 
@@ -1169,11 +1170,11 @@ until no other states are active in the current Macro Instance.
 If the current Macro Instance is the Main Macro Instance the Subject terminates.
 To do so the End Function resets all Variables of the Subject and terminates the
 ASM agent.
-Additionally, the \asminline{FinalizeInteraction} rule is called ... % TODO
+Additionally, the \asminline{FinalizeInteraction} rule is called. ... % TODO
 
-Otherwise the Macro Instance was created by a CallMacro Function and only the
+Otherwise,  the Macro Instance was created by a CallMacro Function and only the
 Variables of the current Macro Instance are reset. If the End Function has a
-parameter it is stored in the function \asminline{macroTerminationResult}, so
+parameter, it is stored in the function \asminline{macroTerminationResult}, so
 that the CallMacro Function proceeds with the corresponding outgoing transition.
 If no parameter is given the value is just set to \asminline{true} to indicate a
 termination without any particular result.

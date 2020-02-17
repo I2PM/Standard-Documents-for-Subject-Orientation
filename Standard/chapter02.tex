@@ -1,13 +1,19 @@
+% Review Christia Stary January 2020
+
 \chapter{Structure of a PASS Description}
 \label{PASSStruct}
 
 In this chapter, we describe the structure of a PASS specification. The structure of a PASS description consists of the subjects and the messages they exchange.
 
+CS: In this chapter, concepts are presented, that are not all part of the diagrammatic representation (SIDs or BDs). It should be somewhere noted that modeling and runtine knowledge, in particular about the input pool, has to be acquired in textual form when using the specification scheme. So, standardizing the PASS description contains of text and diagrams.
+
 \section{Informal Description}
 \subsection{Subject}
 \label{sec: Subject}
 
-Subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. Subjects communicate with each other by exchanging messages. Messages have a name and a payload. The name should express the meaning of a message informally and the payloads are the data (business objects) transported. Internal subjects execute local activities such as calculating a price, storing an address, etc. External subjects represent interfaces for other business processes.
+As already detailed previously, subjects represent the behavior of an active entity. A specification of a subject does not say anything about the technology used to execute the described behavior. Subjects communicate with each other by exchanging messages. Messages have a name and a payload. The name should express the meaning of a message informally and the payloads are the data (business objects) transported. Internal subjects execute local activities such as calculating a price, storing an address, etc. External subjects represent interfaces for other business processes.
+
+CS: would it not be more convenient to move the conceptual understanding to section 1.1 and then just refer to this part, instead of rephrasing the same concept several times?
 
 A subject sends messages to other subjects, receives messages from other subjects, and executes internal actions. All these activities are done in logical order which is defined in a subject's behavior specification.
 
@@ -39,7 +45,7 @@ This is the standard subject type. A subject communicates with other subjects by
 
 Multi-subjects are similar to fully specified subjects. If in a process model several identical subjects are required, e.g. to increase the throughput, this requirement can be modeled by a multi-subject. If several communicating subjects in a process model are multi-subjects they can be combined to a multi-process.
 
-In a business process, there may be several identical sub-processes that perform certain similar tasks in parallel and independently. This is often the case in a procurement process when bids from multiple suppliers are solicited. A process or sub-process is therefore executed simultaneously or sequentially multiple times during overall process execution. A set of type-identical, independently running processes or sub-processes are termed multi-process. The actual number of these independent sub-processes is determined at runtime.
+In a business process, there may be several identical sub-processes that perform certain similar tasks in parallel and independently. This is often the case in a procurement process when bids from multiple suppliers are solicited. A process or sub-process is therefore executed simultaneously or sequentially multiple times during overall process execution. A set of type-identical, independently running processes or sub-processes is termed multi-process. The actual number of these independent sub-processes is determined at runtime.
 
 Multi-processes simplify process execution since a specific sequence of actions can be used by different processes. They are recommended for recurring structures and similar process flows. 
 
@@ -51,7 +57,7 @@ Single subjects can be instantiated only once. They are used if for the executio
 
 \subsubsection{Interface Subjects}
 
-Interface subjects are used as interfaces to other process systems. If a subject of a process system sends or receives messages from a subject which belongs to another workflow system. These so-called interface subjects represent fully described subjects which belong to that other process system. Interface subjects specifications contain the sent messages, received messages and the reference to the fully described subject which they represent.
+Interface subjects are used as interfaces to other process systems (CS: this term needs explanation or other wording, e.g., "other context"). If a subject of a process system sends or receives messages from a subject which belongs to another workflow system. These so-called interface subjects represent fully described subjects which belong to that other process system. Interface subjects specifications contain the sent messages, received messages and the reference to the fully described subject which they represent.
 
 \subsection{Subject-to-Subject Communication}
 
@@ -131,7 +137,7 @@ The various building blocks of a PASS description and their relations are define
 	\label{fig:20171217-passprocessmodellelement}
 \end{figure*}
 
-The class \texttt{PASSProcessModelElement} has five subclasses (subclass relations 084, 055, 069, 001 and 085 in figure \ref{fig:20171217-passprocessmodellelement}). Only the classes \texttt{PASSProcessModel}, \texttt{DataDescriptionCOmponent}, \texttt{InteractionDescribingComponent} are used for defining the structural aspects of a process specification in PASS. The classes \texttt{BehaviorDescribingComponent} and \texttt{SubjectBehavior} define the dynamic aspects. In which sequences messages are sent and received or internal actions are executed. These dynamic aspects are considered in detail in the next chapter. 
+The class \texttt{PASSProcessModelElement} has five subclasses (subclass relations 084, 055, 069, 001 and 085 in figure \ref{fig:20171217-passprocessmodellelement}). Only the classes \texttt{PASSProcessModel}, \texttt{DataDescriptionCOmponent}, \texttt{InteractionDescribingComponent} are used for defining the structural aspects of a process specification in PASS. The classes \texttt{BehaviorDescribingComponent} and \texttt{SubjectBehavior} define the dynamic aspects, namely in which sequences messages are sent and received or internal actions are executed. These dynamic aspects are considered in detail in the next chapter. 
 
 \subsection{PASS Process Model}
 
@@ -157,7 +163,7 @@ Each subject encapsulates data (business objects). The values of these data elem
 	\label{fig:20181218-data}
 \end{figure}
 
-Three subclasses are derived from the class \texttt{DtadescribingCombonent} (in figure \ref{fig:20181218-data} are these the relations 060, 056 and 066). The subclass \texttt{PayLoadDescription} defines the data tranported by messages. The relation of \texttt{PayloadDescriptions} to messages is defined by the property \texttt{ContainsPayloadDescription} (in figure \ref{fig:20181218-data} number 204).
+Three subclasses are derived from the class \texttt{DtadescribingComponent} (in figure \ref{fig:20181218-data} are these the relations 060, 056 and 066). The subclass \texttt{PayLoadDescription} defines the data tranported by messages. The relation of \texttt{PayloadDescriptions} to messages is defined by the property \texttt{ContainsPayloadDescription} (in figure \ref{fig:20181218-data} number 204).
 
 There are two types of payloads. The class \texttt{PayloadPhysicalObjectDescription} is used if a message will be later implemented by a physical transport like a parcel. The class \texttt{PayLoadDataObjectDefinition} is used to transport normal data (Subclass relations 068 and 67 in figure \ref{fig:20181218-data}). These payload objects are also a subclass of the class \texttt{DataObjectDefinition} (Subclass relation 058 in figure \ref{fig:20181218-data}).
 
@@ -174,13 +180,13 @@ The following figure \ref{fig:ontogrsubjectinteraction} shows the subset of the 
 	\label{fig:ontogrsubjectinteraction}
 \end{figure*}
 
-The central classes are \texttt{Subject} and \texttt{MessageExchange}. Between these classes are defined the properties \texttt{hasIncomingTransition} (in figure \ref{fig:ontogrsubjectinteraction} number 217) and \texttt{hasOutgoingTransition} (in figure \ref{fig:ontogrsubjectinteraction} number 224). This properties defines that subjects have incoming and outgoing messages. Each message has a sender and a receiver (in figure \ref{fig:ontogrsubjectinteraction} number 227 and number 225). Messages have a type. This is expressed by the property \texttt{hasMessageType} (in figure \ref{fig:ontogrsubjectinteraction} number 222). Instead of the property 222 a message exchange may have the property 201 if a list of messages is used instead of a single message.
+The central classes are \texttt{Subject} and \texttt{MessageExchange}. Between these classes are defined the properties \texttt{hasIncomingTransition} (in figure \ref{fig:ontogrsubjectinteraction} number 217) and \texttt{hasOutgoingTransition} (in figure \ref{fig:ontogrsubjectinteraction} number 224). These properties define that subjects have incoming and outgoing messages. Each message has a sender and a receiver (in figure \ref{fig:ontogrsubjectinteraction} number 227 and number 225). Messages have a type. This is expressed by the property \texttt{hasMessageType} (in figure \ref{fig:ontogrsubjectinteraction} number 222). Instead of the property 222 a message exchange may have the property 201 if a list of messages is used instead of a single message.
 
 Each subject has an input pool. Input pools have three types of constraints (see section \ref{sec: inputpool}). This is expressed by the property references  (in figure \ref{fig:ontogrsubjectinteraction} number 236) and \texttt{InputPoolConstraints} (in figure \ref{fig:ontogrsubjectinteraction} number 219). Constraints which are related to certain messages have references to the class \texttt{MessageSpecification}.
 
 There are four subclasses of the class \texttt{subject} (in figure \ref{fig:ontogrsubjectinteraction} number 079, 080, 081 and 082). The specialties of these subclasses are described in section \ref{sec: Subject}. A class \texttt{StartSubject} (in figure \ref{fig:ontogrsubjectinteraction} number 83) which is a subclass of class subject denotes the subject in which a process instance is started.
 
-All other relations are subclass relations. The class \texttt{PASSProcessModelElement} is the central PASS class. From this class, all the other classes are derived (see next sections). From class \texttt{InteractionDescribingCOmponent} all the classes required for describing the structure of a process system are derived.
+All other relations are subclass relations. The class \texttt{PASSProcessModelElement} is the central PASS class. From this class, all the other classes are derived (see next sections). From class \texttt{InteractionDescribingComponent} all the classes required for describing the structure of a process system are derived.
 
 \section{ASM Description}
 

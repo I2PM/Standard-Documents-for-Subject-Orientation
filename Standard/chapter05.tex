@@ -207,6 +207,15 @@ A behavoral interface is always relative to a communication partner. In figure \
 The behavioral interface relative to a partner subject can be automatically derived from the complete behavior of a subject
 (see \cite{article:jCPEX}).
 
+\subsection{Future Work}
+
+Due to the novel conceptual integration addressed, several aspects and topics need to be addressed by future research:
+\begin{list}{-}{spacing}
+	\item Clarify terminology e.g. using the term interface subject, system interface, implementation
+	\item Definition of structural semantics in OWL
+	\item Definition of execution semantics in ASM. The semantic of the behaiour interface and its relation to the behavior of the related subject has to be described.
+\end{list}
+
 
 \section{Business Activity Monitoring for S-BPM}\label{sec:BAMinSubjectOrientation}
 
@@ -432,11 +441,16 @@ Back on the level of subject interaction diagram we could also model to determin
 
 \subsection {Conclusion and future Work}
 This contribution systematized Business Process Monitoring and shed some light on the current state of monitoring in the context of S-BPM. Starting there we emphasized Business Activity Monitoring and took a closer look to the modelling of BAM parameters. We showed that the approach for BPMN presented by Friedenstab et al. can be adapted to S-BPM with little effort and that S-BPM shows additional potential to further develop the concept.
-This is where future work needs to continue. The first step to go should be elaborating, detailing and tailoring the modeling language for the needs of S-BPM in order define a comprehensive basis for the succeeding task of developing easy-to-use software tool support. 
 \\
-The BAM modeling tool should make use of the model data created by the process modeling tool and add its results to a combined model base both for process execution and BAM. The third step would then be to build BAM functionality which at runtime processes events according to the subject-oriented BAM models. There is some evidence that S-BPM provides good premises to support event processing \cite{article:nondeterministicEvents}, e.g. by integration of a CEP Engine or single Event Processing Agents as subjects into processes. This has to be proven by a thorough investigation of the interrelationship and integration potential of CEP and S-BPM concepts and solutions. Generating code for BAM functionality out of the BAM model is another challenge to tackle \cite{article:BPMNActivityMon}. With the clear formal semantic of its underlying process algebra the S-BPM modeling language allows this for process models \cite{Flei12}. Consequently it seems to be worthwhile to investigate the possibilities of code generation out of BAM models too. 
-\\
-\\
+\subsection{Future Work}
+
+Due to the novel conceptual integration addressed, several aspects and topics need to be addressed by future research:
+\begin{list}{-}{spacing}
+	\item Extension of the structural semantics in OWL with possibilities to add Process Performance Indicators
+	\item ASM definition of execution semantics for throwing events if process performance indicator bounderies are violated.
+	\item ASM definition of execution semantics for handling violation events 
+\end{list}
+ 
 
 \section{Subject Oriented Project Management}
 
@@ -581,10 +595,14 @@ The tasks can be divided into three types:\\
 \\
 
 
-\subsection{Conclusion and Further Work}
+\subsection{Conclusion}
 We have presented an approach for developing federated systems. The concept considers the characteristics of virtual enterprises combining the services of the partners to satisfy customer needs while keeping legal, organizational, technological and cultural independence.
 Our communication-oriented view follows the idea that the decentralized structure of federated systems needs to be reflected in the organizational structure of multiple project teams for developing such systems. Those teams belong to separate enterprises and are mutually independent with respect to methodology, technology etc. they use to develop their individual part of the federated system. 
 The proposed approach establishes a layer above the enterprise-specific environments. It helps building coherence on the top level of the federated system solution, while the teams, system elements etc. on the individual level of each federation member keep the highest degree of independence.
+
+\subsection{Future Work}
+It has to be investigated whether the OWL definition and/or the execution semantics has to be adapted for a better project management support. Based on that results some guidelines for a subject oriented project management has to be developed and enhanced based on practical experiences.
+
 \\
 
 \section{Subject-Oriented Fog Computing}
@@ -961,9 +979,11 @@ As mentioned before key figures need to be defined carefully and precisely. A us
 \caption{Fact Sheet for the Key Figure 'Average costs of a process activity'}
 \end{table}
 
-\subsection{Conclusion and Future Work}
+\subsection{Conclusion}
 With the example in chapter 3 we could show that it is relatively easy to integrate cost information into S-BPM. Focusing on personnel costs as suggested avoids the problematic proportioning of costs and therefore is particularly suited for people-intensive areas with a high degree of indirect costs as it is characteristic for services.
-A more detailed investigation of how the implementation of Activity-Based Costing can benefit from a preceding S-BPM implementation seems to be promising. Exploiting the conceptual particularities coming with and the data collected by S-BPM seems to bear considerable potential of savings when introducing ABC. Processes are defined and modeled and as-is process quantities per period are available as well as the distribution of the overall capacity of the cost centers over the process steps. These parameters allow determining a standard time for processes which lays the ground for planning process costs.
-Next steps could be to extend the example by determining and specifying more key figures and testing them with representative numbers of instances of different processes. Learning from this could help to further elaborate the ABC concept for S-BPM.
-References
 
+
+\subsection{ Future Work}
+A more detailed investigation of how the implementation of Activity-Based Costing can benefit from a preceding S-BPM implementation seems to be promising. Exploiting the conceptual particularities coming with and the data collected by S-BPM seems to bear considerable potential of savings when introducing ABC. Processes are defined and modeled and as-is process quantities per period are available as well as the distribution of the overall capacity of the cost centers over the process steps. These parameters allow determining a standard time for processes which lays the ground for planning process costs.
+Next steps could be to extend the example by determining and specifying more key figures and testing them with representative numbers of instances of different processes. Learning from this could help to further elaborate the ABC concept for S-BPM.\\
+The OWL specification has to be extended with features which support Activity based costing. This includes the data which should be collected and the structure in which these data are stored.

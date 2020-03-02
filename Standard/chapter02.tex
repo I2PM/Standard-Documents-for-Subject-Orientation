@@ -5,7 +5,7 @@
 
 In this chapter, we describe the structure of a PASS specification. The structure of a PASS description consists of the subjects and the messages they exchange.
 
-CS: In this chapter, concepts are presented, that are not all part of the diagrammatic representation (SIDs or BDs). It should be somewhere noted that modeling and runtine knowledge, in particular about the input pool, has to be acquired in textual form when using the specification scheme. So, standardizing the PASS description contains of text and diagrams.
+\emph{\underline{\textit{\textbf{Review CS: In this chapter, concepts are presented, that are not all part of the diagrammatic representation (SIDs or BDs). It should be somewhere noted that modeling and runtine knowledge, in particular about the input pool, has to be acquired in textual form when using the specification scheme. So, standardizing the PASS description contains of text and diagrams.}}}}
 
 \section{Informal Description}
 \subsection{Subject}
@@ -87,7 +87,7 @@ In the previous subsection, we have stated that messages are transferred between
 
 \subsubsection{Synchronous and Asynchronous Exchange of Messages}
 
-In the case of an asynchronous exchange of messages, sender and receiver wait for each other until a message can be passed on. If a subject wants to send a message and the receiver (subject) is not yet in a corresponding receive state, the sender waits until the receiver can accept this message. Conversely, a recipient has to wait for the desired message until it is made available by the sender.
+In the case of an synchronous exchange of messages, sender and receiver wait for each other until a message can be passed on. If a subject wants to send a message and the receiver (subject) is not yet in a corresponding receive state, the sender waits until the receiver can accept this message. Conversely, a recipient has to wait for the desired message until it is made available by the sender.
 
 The disadvantage of the synchronous method is a close temporal coupling between sender and receiver. This raises problems in the implementation of business processes in the form of workflows, especially across organizational borders. As a rule, these also represent system boundaries across which a tight coupling between sender and receiver is usually very costly. For long-running processes, sender and receiver may wait for days, or even weeks, for each other.
 
@@ -128,7 +128,16 @@ By limiting the size of the input pool, its ability to store messages may be blo
 \section{OWL Description}
 \label{OWL-DescriptionSID}
 
-The various building blocks of a PASS description and their relations are defined in an ontology. The following figure \ref{fig:20171217-passprocessmodellelement} gives an overview of the structure of the PASS specifications.   
+\underline{\textit{\textbf{Übergang von informeller zur formalen Beschreibung sehr abrupt und unverstaändlich}}}
+
+
+
+
+The various building blocks of a PASS description and their relations are defined in an ontology. The following figure \ref{fig:20171217-passprocessmodellelement} gives an overview of the structure of the PASS specifications.  
+
+ 
+ \underline{\textit{\textbf{Nummerierung erklären, Wie kommen Nummern zustande}}}
+
 
 \begin{figure*}[htbp]
 	\centering

@@ -2,7 +2,7 @@
 
 \RequirePackage{snapshot}
 
-\documentclass[11pt, showtrims, final]{memoir}
+\documentclass[11pt, showtrims, final, oldfontcommands]{memoir}
 
 \usepackage[T1]{fontenc}
 
@@ -21,6 +21,10 @@
 \usepackage{pdfpages}
 \usepackage{caption}
 \usepackage{minted}
+\usepackage{amssymb}
+\usepackage{program}
+\usepackage{mathtools}
+\usepackage{graphicx}
 
 \newmintinline[asminline]{lexer.py:CoreASMLexer -x}{escapeinside=~~}
 
@@ -80,7 +84,7 @@
 \setsecnumdepth{subsection}
 
 % extra index for first lines
-\makeindex[lines]
+%\makeindex[lines]
 
 % keine Links anzeigen
 \hypersetup{
@@ -89,6 +93,8 @@
 }
 
 \renewcommand*{\sideparfont}{\normalfont\footnotesize}
+
+\include{mathdef}
 
 \begin{document}
 

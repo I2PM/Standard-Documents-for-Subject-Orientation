@@ -1,0 +1,84 @@
+\DeclareMathSymbol{\dres}{\mathbin}{AMSa}{"43}
+\DeclareMathSymbol{\rres}{\mathbin}{AMSa}{"42}
+\def\boole{{ \sf I\!B}}
+%\def\natnull{{ \sf I\!N}_{o}}           % |No
+%\def\natohnenull{{ \sf I\!N}}           % |N
+\def\llhd{\dsub}
+%\def\llhd{{\lhd\!\!\!\!\!-}}
+
+%---- Funktioniert im Standard-Dokument nicht 
+%\def\rrhd{\rsub}
+
+%---- Neuer Versuch
+\newcommand{\rrhd}{\mathrel{%
+    \ooalign{$\triangleright$\cr\hidewidth\scalebox{.65}[1]{$-$}\hidewidth\cr}%
+    }}
+%\def\rrhd{{\rhd\!\!\!\!\!-}}
+\def\natohnenull{{ I\!\!N}}           % |N
+\def\natnull{\natohnenull_{o}}           % |N
+\def\oder{{\cap\!\cap}}
+\def\und{{\cup\!\cup}}
+\def\RETURN{{\keyword{return}}}
+
+% Hier meine Makros
+%--------------------------
+\def\beztyp{\mathcal{B}}
+\def\bez{B}
+\def\oetyp{\mathcal{OE}}
+\def\ftyp{\mathcal{F}}
+\def\orgtyp{\mathcal{O}}
+\def\oe{OE}
+\def\OrgElementMenge{\mathcal{ORG}}
+\def\Bezeichner{\mathcal{BEZ}}
+\def\f{F}
+\def\a{A}
+\def\orginstanz{\mathcal{o}}
+%\def\rel{\Gamma_{\oetyp,\oetyp}}
+\def\reloetypoetyp1{\Theta_{\oetyp,\oetyp}}
+\def\beispielende{$\Diamond$}
+\def\relmenge{\mathfrak{R}}
+\def\attribute{\mathcal{ATT}}
+\def\zeitausdruck{ZA}
+\def\za{za}
+\def\zeit{T}
+\def\ID{ID}
+\def\id{id}
+\def\domaene{\mathcal{DOM}}
+\def\praedikat{\mathcal{P}}
+\def\relname{\mathcal{RN}}
+\def\rel{\Gamma}
+\def\relationen{\mathcal{REL}}
+\def\WerteMenge{\mathcal{W}}
+
+%--------------------------------------------------------------------
+% Definitionen der Relationssymbole
+%--------------------------------------------------------------------
+
+\def\typsymbol{\Upsilon}
+\def\struktursymbol{s}
+\def\benutzersymbol{b}
+\def\instsymbol{A}
+\def\OEFsymbol{E}
+\def\FAsymbol{\f\a}
+\def\relmengetyp{{\relmenge}^{\typsymbol}}
+\def\typstrukturrelation{{\rel}^{\typsymbol}_{\struktursymbol}}
+\def\typbenutzerrelationenmenge{{\relmenge}^{\typsymbol}_{\benutzersymbol}}
+\def\typbenutzerrelation{{\rel}^{\typsymbol}_{\benutzersymbol}}
+\def\relmengeinst{{\relmenge}^{\instsymbol}} %R^A
+\def\relmengeinstOE_F{{\relmenge}^{\OEFsymbol}}
+\def\relstrukturOE_F{{\rel}^{\OEFsymbol}_{\struktursymbol}}
+\def\relmengebenutzerinstOE_F{{\relmenge}^{\OEFsymbol}_{\benutzersymbol}}
+\def\relbenutzerinstOE_F{{\rel}^{\OEFsymbol}_{\benutzersymbol}}
+\def\relmengeinstFA{{\relmenge}^{\FAsymbol}}
+\def\relstrukturFA{{\rel}^{\FAsymbol}_{\struktursymbol}}
+\def\relmengebenutzerFA{{\relmenge}^{\FAsymbol}_{\benutzersymbol}}
+\def\relbenutzerFA{{\rel}^{\FAsymbol}_{\benutzersymbol}}
+
+
+%----------------------------
+\let\rsa=\rightarrow
+
+\def\plus{{\sqcup\!\!\!\sqcup}}
+\def\minus{{\backslash\!\backslash}}
+\newtheorem{algorithm}{Algorithm}
+

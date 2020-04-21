@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 % !TeX spellcheck = en_US
 
 % Review Christian Stary January 2020
@@ -237,3 +238,221 @@ ISBN: 978-3-123-45678-9 (dummy)
 \bibliography{Standard}
 
 \end{document}
+=======
+% !TeX spellcheck = en_US
+
+\RequirePackage{snapshot}
+
+\documentclass[11pt, showtrims, final, oldfontcommands]{memoir}
+
+\usepackage[T1]{fontenc}
+
+\usepackage{memsty}
+\usepackage{memlays}
+\usepackage{titlepages}
+\usepackage{dpfloat}
+\usepackage{fonttable}[2009/04/01]
+\usepackage{sidecap}
+\usepackage{wrapfig}
+\usepackage[htt]{hyphenat}
+\usepackage{lscape}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{pdfpages}
+\usepackage{caption}
+\usepackage{minted}
+\usepackage{amssymb}
+\usepackage{program}
+\usepackage{mathtools}
+\usepackage{graphicx}
+
+\newmintinline[asminline]{lexer.py:CoreASMLexer -x}{escapeinside=~~}
+
+\setlistdepth{9}
+
+\setlist[itemize,1]{label=$\bullet$}
+\setlist[itemize,2]{label=$\bullet$}
+\setlist[itemize,3]{label=$\bullet$}
+\setlist[itemize,4]{label=$\bullet$}
+\setlist[itemize,5]{label=$\bullet$}
+\setlist[itemize,6]{label=$\bullet$}
+\setlist[itemize,7]{label=$\bullet$}
+\setlist[itemize,8]{label=$\bullet$}
+\setlist[itemize,9]{label=$\bullet$}
+
+\renewlist{itemize}{itemize}{9}
+
+% Use the built-in division styling
+\headstyles{memman}
+
+% BoD bietet zwei Grossformate an: A4 und etwas kleiner
+% Springer empfiehlt 24 x 17
+\setstocksize{29.7cm}{21cm}
+
+% size of the page after trimming the typeblock
+% Springer Textfeld inkl. Kopfzeile 20.5 x 13.5
+\settrimmedsize{29.7cm}{21.0cm}{*}
+
+% lines of text
+\settypeblocksize{50\onelineskip}{32pc}{*}
+
+% Stocksize ist deckungsgleich mit Druckbereich
+\setlength{\trimtop}{0pt}
+\setlength{\trimedge}{\stockwidth}
+\addtolength{\trimedge}{-\paperwidth}
+
+% Margins
+%\setulmargins{2.0cm}{*}{*}
+%\setlrmargins{2.0cm}{*}{*}
+
+%\setheadfoot{\onelineskip}{\onelineskip}
+%\setheaderspaces{*}{\onelineskip}{*}
+
+%\setmarginnotes{17pt}{3cm}{\onelineskip}
+
+%\sideparmargin{outer}
+%\sidecapmargin{outer}
+
+\checkandfixthelayout[lines]
+
+\title{Standard for the Subject-oriented\\ Specification of Systems}
+\author{Stephan Borgert, Matthes Elstermann, Albert Fleischmann, \\ Reinhard Gniza, Herbert Kindermann, Florian Krenn,\\ Christian Stary, Werner Schmidt, Robert Singer, Florian Strecker, Andr\'e Wolski}
+
+% ToC down to subsections
+\settocdepth{subsection}
+% Numbering down to subsections as well
+\setsecnumdepth{subsection}
+
+% extra index for first lines
+%\makeindex[lines]
+
+% keine Links anzeigen
+\hypersetup{
+	colorlinks=false,
+	pdfborder={0 0 0},
+}
+
+\renewcommand*{\sideparfont}{\normalfont\footnotesize}
+
+\include{mathdef}
+
+\begin{document}
+
+\chapterstyle{veelo}
+
+\frontmatter
+
+\pagestyle{empty}
+
+% half-title page
+\vspace*{3cm}
+\begin{adjustwidth}{0cm}{-3cm}
+	\begin{flushright}
+		\LARGE\textsf Standard for the Subject-oriented\\Specification of Systems
+	\end{flushright}
+\end{adjustwidth}
+\vspace*{\fill}
+\cleardoublepage
+
+% title page
+\vspace*{0cm}
+\begin{flushleft}
+	\Large\textsf{Albert Fleischmann \textit{Editor}}\par
+\end{flushleft}
+\vspace{2cm}
+\begin{flushleft}
+	\Huge\textsf{Standard for the Subject-oriented\\Specification of Systems}\par
+	\bigskip\bigskip
+	\Large\textsf{Working Document}
+\end{flushleft}
+\vspace{2.5cm}
+\begin{flushleft}
+	%\normalsize\textsf{With 178 Figures}
+\end{flushleft}
+\vspace*{\fill}
+\clearpage
+
+% copyright page
+\begingroup
+\footnotesize
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+% Platz 
+\vspace*{3cm}
+% Autoren
+\begin{flushleft}
+	Egon B\"orger\\
+	xyz\\
+	\medskip
+	Stephan Borgert\\
+	xyz\\
+	\medskip
+	Matthes Elstermann\\
+	xyz\\
+	\medskip
+	Albert Fleischmann\\
+	xyz\\
+	\medskip
+	Werner Schmidt\\
+	xyz\\
+	\medskip
+	Robert Singer\\
+	FH JOANNEUM--University of Applied Sciences\\
+	\medskip
+	Christian Stary\\
+	xyz\\
+	\medskip
+	Andr\'e Wolski\\
+	TU Darmstadt\\
+\end{flushleft}
+\vspace*{\fill}
+This work is subject to copyright. All rights are reserved, whether the whole or part of the material is concerned, specifically the rights of translation, reprinting, reuse of illustrations, recitation, broadcasting, reproduction on microfilm or in any other way, and storage in data banks. Duplication of this publication or parts thereof is permitted only under the provisions of the German Copyright Law of September 9, 1965, in its current version. Violations
+are liable to prosecution under the German Copyright Law.\par
+\textcopyright{ 2020} Institute of Innovative Process Management, Ingolstadt\par
+The use of general descriptive names, registered names, trademarks, etc. in this publication does not imply, even in the absence of a specific statement, that such names are exempt from the relevant protective laws and regulations and therefore free for general use.\par
+Typeset by the authors\par
+Production and publishing: XYZ\par
+ISBN: 978-3-123-45678-9 (dummy)
+\endgroup
+\clearpage
+
+\pagestyle{companion}
+
+\setupshorttoc
+\tableofcontents
+\cleardoublepage
+
+\chapter{Preface}
+
+\cleardoublepage
+
+\setupparasubsecs
+\setupmaintoc
+\tableofcontents
+\setlength{\unitlength}{1pt}
+\cleardoublepage
+
+%\listoffigures
+%\clearpage
+%\listoftables
+
+%\lipsum{2}
+
+%===================================
+
+\mainmatter
+
+\include{chapter01}
+\include{chapter02}
+\include{chapter03}
+\include{chapter04}
+\include{appendix}
+
+\backmatter
+
+%\bibliographystyle{IEEEtran}
+\bibliography{Standard}
+
+\end{document}
+>>>>>>> pr/16

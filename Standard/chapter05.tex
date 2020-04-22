@@ -323,32 +323,40 @@ Replacing the content column by more formal ontology-based linguistic patterns a
 \begin{table}[htbp]
 	\footnotesize
 	\centering
-	\begin{tabular}[t]{@{}1 p{0.4\linewidth} p{0.4\linewidth} p{0.4\linewidth} @{}}
-		\toprule
+%	\begin{tabular}[t]{@{}1 p{0.3\linewidth} p{0.3\linewidth} p{0.4\linewidth} @{}}
+	\begin{tabular}[t]{ p{2 cm} p{5 cm} p{5 cm} }	
+	\toprule
 		\textbf{Attribute} & \textbf{Linguistic Pattern}  & \textbf{Example}
 		\\
 		\midrule
 		PPI-<ID> & <PPI descriptive name> & PPI-001 Average time of RFC analysis
 		\\
+		\midrule
 		Process	& <process ID the PPI is related to> & Request for change (RFC)
 		\\
+		\midrule
 		Goals & <strategic or operational goals the PPI is related to> & BG-002: Improve customer satisfaction \newline
 		BG-014: Reduce RFC time to response
 		\\
-		Definition & The PPI is defined as \{<DurationMeasure> | <CountMeasure> | <ConditionMeasure> | <DataMeasure> | <DerivedMeasure> | <AggregatedMeasure>\} [expressed in <unit of measure>] & The PPI is defined as the average of Duration of Analyse RFC activity
+		\midrule
+		Definition & The PPI is defined as \newline \{<DurationMeasure> \newline \textbar <CountMeasure> \newline \textbar <ConditionMeasure> \newline \textbar <DataMeasure> \newline \textbar <DerivedMeasure> \newline \textbar <AggregatedMeasure> \} \newline {[}expressed in <unit of measure>{]} &  The PPI is defined as the average of Duration of Analyse RFC activity
 		\\
-		Target & The PPI value must \{
-			be \{greater | lower\} than [or equal to] <bound> | be between <lower bound> and <upper bound> [inclusive] | \newline fulfil the following constraint: <target constraint>\} \} & The PPI value must be slower than or equal to 1 working day
+		\midrule
+		Target & The PPI value must \newline \{be \{greater \textbar lower\} than \newline {[}or equal to{]} <bound> \newline \textbar be between <lower bound> and \newline <upper bound> {[}inclusive{]} \textbar \newline fulfil the following constraint: <target constraint>\} \} & The PPI value must be slower than or equal to 1 working day
 		\\
-		Scope & The process instances considered for this PPI are \{
-			the last <n> ones |
-			those in the analysis period <AP-x> \} & The process instances considered for this PPI are the last 100 ones
+		\midrule
+		Scope & The process instances considered for this PPI are \newline \{the last <n> ones \textbar those in the analysis period <AP-x> \} & The process instances considered for this PPI are the last 100 ones
+		\\
+		\midrule
 		Source & <source from which the PPI measure can be obtained> &	Event logs of BPMS
 		\\
-		Responsible & \{ <role> | <department> | <organization> | <person> \} &	Planning and quality manager
+		\midrule
+		Responsible & \{ <role> \textbar <department> \textbar <organization> \textbar <person> \} &	Planning and quality manager
 		\\
-		Informed & \{ <role> | <department> | <organization> | <person> \} & CIO
+		\midrule
+		Informed & \{ <role> \textbar <department> \textbar <organization> \textbar <person> \} & CIO
 		\\
+		\midrule
 		Comments & <additional comments about the PPI> & Most RFCs are created after 12:00
 		\\
 \bottomrule
@@ -356,6 +364,11 @@ Replacing the content column by more formal ontology-based linguistic patterns a
 \caption{PPI Template based on Linguistic Patterns \cite{article:ProcessPerfInd}}
 \label{tbl:Fact-Sheet-PPI}
 \end{table}
+
+
+
+
+
 Friedenstab et al. argue that such linguistic patterns do not fit to the usually graphical modeling of processes which makes integration difficult \cite{article:BPMNActivityMon}. The authors discuss some more approaches to BAM modeling. With regard to the limitations revealed, they present a BAM-related extension of the graphical Business Process Model Notation (BPMN) \cite{article:BPMNActivityMon}.
 Using an abstract language syntax based on the Unified Modeling Language (UML) they started defining meta models for language constructs needed for BAM as there are Duration, Frequency, Composed Basic Measure, Aggregated Measure, Filter, Target Definition, Actions, Measure-based Expressions and Dashboard. Figure \ref{fig:Meta-Model} depicts the example for the duration of elements on different levels of detail, where the grey colored parts indicate references to the BPMN specification.
 

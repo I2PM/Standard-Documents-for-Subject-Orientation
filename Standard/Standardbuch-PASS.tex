@@ -155,7 +155,7 @@
 	xyz\\
 	\medskip
 	Albert Fleischmann\\
-	xyz\\
+	InterAktiv Unternehmensberatung, Pfaffenhofen a.d. Ilm, Germany\\
 	\medskip
 	Reinhard Gniza\\
 	xyz\\
@@ -170,22 +170,22 @@
 	xyz\\
 	\medskip
 	Werner Schmidt\\
-	xyz\\
+	Technische Hochschule, Ingolstadt, Germany\\
 	\medskip
 	Robert Singer\\
-	FH JOANNEUM--University of Applied Sciences\\
+	FH JOANNEUM--University of Applied Sciences, Graz, Austria\\
 	\medskip
 	Christian Stary\\
-	xyz\\
+	Johannes Kepler Universit\"at, Linz, Austria\\
 	\medskip
 	Florian Strecker\\
 	xyz\\
 	\medskip
 	Andr\'e Wolski\\
-	TU Darmstadt\\
+	Technische Universit\"at, Darmstadt, Germany\\
 	\medskip
 	Conny Zebold\\
-	Technische Hochschule Ingolstadt\\
+	Technische Hochschule, Ingolstadt, Germany\\
 \end{flushleft}
 \vspace*{\fill}
 This work is subject to copyright. All rights are reserved, whether the whole or part of the material is concerned, specifically the rights of translation, reprinting, reuse of illustrations, recitation, broadcasting, reproduction on microfilm or in any other way, and storage in data banks. Duplication of this publication or parts thereof is permitted only under the provisions of the German Copyright Law of September 9, 1965, in its current version. Violations
@@ -205,6 +205,15 @@ ISBN: 978-3-123-45678-9 (dummy)
 \cleardoublepage
 
 \chapter{Preface}
+This book is a collection of all the essential aspects of subject oriented modeling and programming. Many parts of this documents are copy pasts of various books and papers. Table \ref{tbl:sources} shows the sources for the various chapters and sections.\\
+In chapter 1 an overview is given to subject orientated language PASS and the methods which are used to describe its structural and execution semantics. OWl (Web Ontology Language) \cite{Web:OWL} is used to describe the structural semantics and Abstract State Machines (ASM) \cite{book:ASM-2018}, \cite{book:ASM-2003} is applied to specify the execution demantics precisely.\\
+In chapter 2 the structure of PASS specification is considered in detail and its semantic is defined precisely in a formal way using OWL and ASM. The semantic of the execution of PASS models is described in chapter 3. The execution semantic uses coreASM which is an executable extension of the ASM method. This means that models described in PASS can be executed by a coresponding interpreter.\\
+Chapter 4 shows how the abstract implementation independent PASS models can be implemented using software components, physical components or human.  A formal language is described how the right ressources are assigned to the entities of the model.\\
+In the last chapter some additional aspects of the subject oriented modeling approach is considered. Thes aspects extend the kernel which was defined in chapter 2, 3 and 4.\\
+The appendix contains the details of the formal semantic of PASS. Appendix A contains the complete Ontology, Abbendix B defines the mapping of the ontology to the ASM definition of PASS and Appendix C containes the complete formal execution semantics.
+
+\include{preface}
+
 
 \cleardoublepage
 

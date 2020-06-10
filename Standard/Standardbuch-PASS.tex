@@ -7,6 +7,7 @@
 \RequirePackage{snapshot}
 
 \documentclass[11pt, showtrims, final, oldfontcommands]{memoir}
+% Resolve conflict between functions in class memoir and package changes
 \let\classadded\added 	 % save the class’ definition
 \let\added\relax		 % ‘undefine’ \foo
 \let\deleted\relax    % neutralize \deleted command
@@ -19,9 +20,17 @@
 
 \usepackage{morewrites}
 
-
-\usepackage[draft, markup=underlined]{changes}
-\definechangesauthor[color=green]{AF}
+% prepare package changes for managing the review process
+\usepackage[draft, markup=underlined, highlightmarkup=background]{changes}
+\definechangesauthor[name= Albert Fleischmann, color=green]{AF}
+\definechangesauthor[name= Werner Schmidt, color=blue]{WS}
+\definechangesauthor[name= Robert Singer, color=cyan]{RS}
+\definechangesauthor[name= Christian Stary, color=purple]{CS}
+\definechangesauthor[name= Andre Wolski, color=magenta]{AW}
+\definechangesauthor[name= Stephan Borgert, color=orange]{SB}
+\definechangesauthor[name= Matthes Elstermann, color=pink]{ME}
+\definechangesauthor[name= Thomas Schaller, color=violet]{TS}
+\definechangesauthor[name= alle anderen, color=lightgray]{STAR}
 
 \usepackage{soulutf8}
 \usepackage{soul}
@@ -232,16 +241,59 @@ ISBN: 978-3-123-45678-9 (dummy)
 \tableofcontents
 \cleardoublepage
 
-\chapter{Preface}
+\chapter{Commands for Reciew process}
+For managing changes the package change is used. Following commands are essential:\\
+\textbf{Mark text without id:}\\
 \hl{
-	This is the way  todos required are inserted
+	This is the way  text is marked
 }\\
-\todo[inline]{The original todo note withouth changed colours.\newline Here's another line.} vvvvvv
-\added[id=AF, comment=xxxxx]{dddddddddddddddddddd} mmmmmm
-\highlight[id=AF, comment=ccccccc]{<texttttttttt>}
+
+\textbf{Add todo withaout id:}\\
+Here is some text
+\todo{The original todo note withouth changed colours.\newline Here's another line.} Here is some text
+\newline
+\newline
+\newline
+\newline
+\textbf{Add todo withaout id and inline:}\\
+Here is some text
+\todo[inline]{The original todo note withouth changed colours.\newline Here's another line.} Here is some text
+\newline
+
+\textbf{Add text with id:}\\
+\added[id=AF, comment=remarks to added text]{Added text}\\
+
+\textbf{Delete command with id:}\\
+\deleted[id=WS, comment=example for delete]{Here is the text to be deleted}
+Here is some text\\
+\newline
+\textbf{Replace text with id:}\newline
+Here is some text
+\replaced[id=CS, comment=Remarks to Replace text]{new text}{old text}
+Here is some text\\
+
+\textbf{highlight text with id:}\\
+Here is some text
+\highlight[id=AF, comment=remarks]{highlighted text}\\
+
+\textbf{Add todo with fancy line but without id:}\\
+Here is some text \todo[color=green!40, fancyline]{The original todo note.\newline Here's another line with a fancy line}
+ Here is some text
+\newline 
+\newline
+\newline
+\newline 
+\newline
+\newline
+For todo commands ids are not allowed. For the add, highlight and
+Documentation for using the changes package can be found:\\
+http://ctan.ebinger.cc/tex-archive/macros/latex/contrib/changes/changes.english.pdf
+\newline
+The ids and colors for the various reviewers can be found in the preamble (line 29-33) of the text file.
+
+\chapter{Preface}
 This book is a collection of all the essential aspects of subject oriented modeling and programming. Many parts of this documents are copy pasts of various books and papers. Table \ref{tbl:sources} shows the sources for the various chapters and sections.\\
 In chapter 1 an overview is given to subject orientated language PASS and the methods which are used to describe its structural and execution semantics. OWl (Web Ontology Language) \cite{Web:OWL} is used to describe the structural semantics and Abstract State Machines (ASM) \cite{book:ASM-2018}, \cite{book:ASM-2003} is applied to specify the execution demantics precisely.\\
-\todo[color=green!40, fancyline]{The original todo note withouth changed colours.\newline Here's another line.}
 In chapter 2 the structure of PASS specification is considered in detail and its semantic is defined precisely in a formal way using OWL and ASM. The semantic of the execution of PASS models is described in chapter 3. The execution semantic uses coreASM which is an executable extension of the ASM method. This means that models described in PASS can be executed by a coresponding interpreter.\\
 Chapter 4 shows how the abstract implementation independent PASS models can be implemented using software components, physical components or human.  A formal language is described how the right ressources are assigned to the entities of the model.\\
 In the last chapter some additional aspects of the subject oriented modeling approach is considered. Thes aspects extend the kernel which was defined in chapter 2, 3 and 4.\\

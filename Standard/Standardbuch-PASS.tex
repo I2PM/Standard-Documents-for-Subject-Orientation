@@ -7,8 +7,24 @@
 \RequirePackage{snapshot}
 
 \documentclass[11pt, showtrims, final, oldfontcommands]{memoir}
+\let\classadded\added 	 % save the class’ definition
+\let\added\relax		 % ‘undefine’ \foo
+\let\deleted\relax    % neutralize \deleted command
+\let\comment\relax    % neutralize \comment command
+
+
 
 \usepackage[T1]{fontenc}
+\usepackage[textsize=footnotesize]{todonotes}
+
+\usepackage{morewrites}
+
+
+\usepackage[draft, markup=underlined]{changes}
+\definechangesauthor[color=green]{AF}
+
+\usepackage{soulutf8}
+\usepackage{soul}
 
 \usepackage{memsty}
 \usepackage{memlays}
@@ -24,11 +40,23 @@
 \usepackage{longtable}
 \usepackage{pdfpages}
 \usepackage{caption}
-\usepackage{minted}
+
 \usepackage{amssymb}
 \usepackage{program}
 \usepackage{mathtools}
 \usepackage{graphicx}
+\usepackage{minted}
+
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage{xcolor}  % Coloured text etc.
+
+
+
+
+
+
+
+
 
 \newmintinline[asminline]{lexer.py:CoreASMLexer -x}{escapeinside=~~}
 
@@ -205,14 +233,24 @@ ISBN: 978-3-123-45678-9 (dummy)
 \cleardoublepage
 
 \chapter{Preface}
+\hl{
+	This is the way  todos required are inserted
+}\\
+\todo[inline]{The original todo note withouth changed colours.\newline Here's another line.} vvvvvv
+\added[id=AF, comment=xxxxx]{dddddddddddddddddddd} mmmmmm
+\highlight[id=AF, comment=ccccccc]{<texttttttttt>}
 This book is a collection of all the essential aspects of subject oriented modeling and programming. Many parts of this documents are copy pasts of various books and papers. Table \ref{tbl:sources} shows the sources for the various chapters and sections.\\
 In chapter 1 an overview is given to subject orientated language PASS and the methods which are used to describe its structural and execution semantics. OWl (Web Ontology Language) \cite{Web:OWL} is used to describe the structural semantics and Abstract State Machines (ASM) \cite{book:ASM-2018}, \cite{book:ASM-2003} is applied to specify the execution demantics precisely.\\
+\todo[color=green!40, fancyline]{The original todo note withouth changed colours.\newline Here's another line.}
 In chapter 2 the structure of PASS specification is considered in detail and its semantic is defined precisely in a formal way using OWL and ASM. The semantic of the execution of PASS models is described in chapter 3. The execution semantic uses coreASM which is an executable extension of the ASM method. This means that models described in PASS can be executed by a coresponding interpreter.\\
 Chapter 4 shows how the abstract implementation independent PASS models can be implemented using software components, physical components or human.  A formal language is described how the right ressources are assigned to the entities of the model.\\
 In the last chapter some additional aspects of the subject oriented modeling approach is considered. Thes aspects extend the kernel which was defined in chapter 2, 3 and 4.\\
 The appendix contains the details of the formal semantic of PASS. Appendix A contains the complete Ontology, Abbendix B defines the mapping of the ontology to the ASM definition of PASS and Appendix C containes the complete formal execution semantics.
 
+
 \include{preface}
+
+
 
 
 \cleardoublepage
@@ -244,5 +282,9 @@ The appendix contains the details of the formal semantic of PASS. Appendix A con
 
 %\bibliographystyle{IEEEtran}
 \bibliography{Standard}
+
+\listoftodos
+\listofchanges[style=list, show=all]
+
 
 \end{document}

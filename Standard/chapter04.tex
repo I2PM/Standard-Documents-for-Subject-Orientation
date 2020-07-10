@@ -1,4 +1,4 @@
-% Review Christian Stary January 2020
+% Review Thomas Schaller June 2020
 
 %\usepackage{amssymb}
 %\usepackage{mathtools}
@@ -38,15 +38,19 @@ The assignment of the implementation type forms the transition between the syste
 
 \section{People and organizations}
 
-In this section, we show how the organizational view of a company can be formally modeled and how elements of it can be referenced with a modeling language.  Expressions of this language are stored in the subjects (the abstract actors) and resolved at runtime into concrete actors of the organization. These are then assigned the activities for processing. The presented approach is able to map any resources of a company (people, software, machines etc.) and any relationships between them. In this way, the organizational structure of a company can be mapped very precisely.
+This section describes how the organizational view of a company can be modeled formally and elements of it can be referenced with a modeling language.  Expressions of this language are stored in the subjects (the abstract actors) and resolved at runtime to a set of concrete actors. The actvities can then be assigned to them. 
+The research presented here is able to represent any kind of resources of a company (people, software, machines etc.) and their arbitrary relationships amongst them. This way, the organizational structure of a company can be mapped very precisely.
 
-It should also be briefly pointed out that the original idea of the approach goes back to Schaller's work  \cite{Schaller98}. Enhancements were made in the following articles \cite{Lawall2014, Lawall2014a, Lawall2014b, Lawall2014d, Lawall2014c, Lawall2013, Lawall2011}.
+The original idea of the approach goes back to Schaller's work  \cite{Schaller98}. Enhancements were made in the following articles \cite{Lawall2014, Lawall2014a, Lawall2014b, Lawall2014d, Lawall2014c, Lawall2013, Lawall2011}.
+
+Let's start with the essential question whats makes up an organization. 
 
 
 \subsection{What is an organization?}
 
 \paragraph{Insights}
-Let's start with a real world scenario in the context of an insurance company. A claims department usually has a manager, a number of clerks and a lawyer. Generally the lawyer is the deputy of the department head, cf. figure \ref{GeneralDep}.
+We are looking at a real world scenario in the context of an insurance company. 
+A claims department usually has a manager, a number of clerks and a lawyer. Generally the lawyer is the deputy of the department head, cf. figure \ref{GeneralDep}.
 	\begin{figure}[htb!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Figures/ExampleDepartmentGeneral.pdf}
@@ -588,4 +592,125 @@ In addition to the user interface, the implementation provides a service that ca
 
 \section{Physical infrastructure}
 
-\section{IT-Systems and Software}
+\todo{Bibtex-File muss noch angepasst werden.}
+
+The previous remarks always referred to human actors. But executors in a business process can also be machines or software components. We will therefore look at how the concept presented in the previous chapters can be extended to the area of non-human actors. Here, the already introduced concepts such as substitutions are also used. 
+
+Let us take a look at the Industry 4.0 area. 
+
+Production plants as we know them today are actually overthought within the smart factories initiative. Central production plans for manufacturing big numbers of similar products are replaced by intelligent objects embedded in self-organizing systems called smart factories \cite{Gronau2015}. These objects are cyber-physical systems \cite{meissner2013} using intelligent sensors for gathering information about the world around them.  They are able to react to environmental changes and to generate plans for fulfilling their goals. So, if a customer orders a product at a manufacturing company an agent responsible for the production of the article is created. This agent knows all about the bill of material and the working plan for the creation of the product. On basis of this information the agent generates a plan how the product can be manufactured. For this he has to talk other agents representing the resources of the company. 
+
+%In this article we show a graph-based approach for maintaining the resources of a smart factory and searching for them using a declarative query language. This language can be used by the production agent looking for resources that are able to fulfill manufacturing tasks of the working plan.
+
+%\subsection{Organizational Model} \label{modell} 
+
+\begin{figure*}[htb!]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/orgamodelfed.jpg}
+	\caption{Federation between Partner Companies}
+	\label{fig:federation}
+\end{figure*}
+
+Figure \ref{fig:federation} depicts an excerpt of the organizational model of a manufacturing company producing wooden chairs. The model encompasses the internal organizational unit \emph{Manufacturing Company} with the subordinate internal functional units \emph{Turner}, \emph{Mill} and \emph{Assembly}. The internal resources \emph{Turner 1} to \emph{Turner 3} are related to \emph{Turner}, \emph{Mill 1} to \emph{Mill 4} belong to \emph{Mill} and \emph{Assembly 1} to \emph{Assembly 4} are part of the internal functional unit \emph{Assembly}. 
+
+The properties and capabilities of the elements of the organization can be described using attributes. In our example, the maximum length of a workpiece to be processed and the shape of a workpiece on the machines is of interest.
+Table \ref{tab:intagents}  describes an excerpt of attributes in conjunction with their values. 
+
+%The table \ref{tab:intagents} depicts attribute-value pairs of internal automatic resources of the \emph{Manufacturing Company}.
+\begin{table}[htb!]
+	\centering
+	\begin{tabular}{|l||l|l|}
+		\hline
+		Resource & Attribute & Value \\ 
+		\hline
+		\hline
+		Turner 1 & minworkpieceLength & 30 \\
+		\hline 
+		& maxworkpieceLength & 50\\
+		\hline
+		& workpieceKind & octagonal\\
+		\hline
+		&...&...\\
+		\hline
+		Turner 2 & minworkpieceLength & 35\\
+		\hline
+		& maxworkpieceLength & 40\\
+		\hline
+		& workpieceKind & octagonal\\
+		\hline
+		&...&...\\
+		\hline
+		Turner 3&minworkpieceLength & 40 \\
+		\hline
+		& maxworkpieceLength & 50\\
+		\hline
+		& workpieceKind & square\\
+		\hline		
+		&...&...\\
+		\hline
+		Mill 1& maxLength & 100cm \\
+		\hline
+		& maxWidth & 100cm\\
+		\hline
+		& maxHeight & 20 cm\\
+		\hline
+		Mill 2& .... & ... \\
+		\hline
+		Assembly1 & Type & 304456\\
+		\hline
+		& ... & ...\\
+		\hline
+		Assembly2(PC) & Type & 304456\\
+		\hline
+		& ... & ...\\
+		\hline
+	%	&...&...\\
+	%	\hline
+	%	Mill 3& & \\
+	%	\hline
+	%	&...&...\\
+	%	\hline
+	%	Mill 4& & \\
+	%	\hline
+	%	&...&...\\
+	%	\hline
+	%	Assembly 1& & \\
+	%	\hline
+	%	&...&...\\
+	%	\hline
+	%	Assembly 2& & \\
+	%	\hline
+	%	&...&...\\
+	%	\hline
+	%	Assembly 3& & \\
+	%	\hline
+	%	&...&...\\
+	%	\hline
+	\end{tabular} 
+	\caption{Attributes of Resources} 
+	\label{tab:intagents}
+\end{table}
+
+Looking at the relationships there exists an external partner company (assembly company) that can take over assembly tasks on load peaks
+\footnote{The automated propagation of model elements (entities, relations and attributes) to partner organizations is described in \cite{Lawall2014a}.}. The federation between the manufacturing company and the assembly company extends the aforementioned organizational model. The external organizational unit \emph{Assembly Company} encompasses the external functional unit \emph{Assembly} in conjunction with the external resources \emph{Assembly 1} to \emph{Assembly 4}. 
+
+%So a partner company can act as a proxy. This substitution is described in detail using attributes and hyperedges. For a deeper understanding, please refer to the article \cite{Lawall2014a}.  
+
+Finding the correct agent for a specific task is done by resolving an organzational language expression that is defined in the subject specification.
+The expression can reference entities, relations and/or attributes. 
+Suppose a production agent wants to have 64 chair legs manufactured for the production of a batch of chairs of type 304456. He first looks in the master data record to see what specifications the legs must have. He finds a length of 40 cm and octagonal shape. He can use these two specifications to find a suitable machine. The expression looks like this:\\
+
+\texttt{(Turner)(Manufacturing Company). ATT.(minworkpieceLength $\leq$ "40" AND maxworkpieceLength $\geq$ AND workpieceKind = "octagonal")}\\
+
+This means the production agent is looking for an agent of type "`turner"' that is able to produce workpieces with length 40cm and an octogonal form.The
+search is local to the manufacturing company. In our example, turning machines 1 and 2 are eligible for the production step.
+Finding a production resource to manufacture the 64 seats and backrests works on the same principle. Now the chairs still have to be assembled. The agent finds a suitable assembly unit with the following query:\\
+
+\texttt{ (Assembly)(*).ATT.\\(Model $=$ "304456"))} \\
+ 
+The asterisk means that substitutions are also permitted for this request. Thus, the company's own production facility (Assembly 1) as well as the machine of the partner company (Assembly 2) can be found. Depending on the degree of workload of the resources, the agent decides whether he then locks the order on his own machine or the machine of the partner company. \\
+
+Similar to production resources, software products, actuators or sensors can be modelled and managed according to the same principle. 
+
+
+%\section{IT-Systems and Software}

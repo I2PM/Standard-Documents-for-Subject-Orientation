@@ -331,6 +331,17 @@
   *{file}   {Figures/Chapter5/figuresshared/SharedInputPoolExample.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/figuresshared/SharedInputPoolEvent.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/figuresshared/Block-Chain.jpg}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/process-architecture.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/S-PM-process-Ortder.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/execute-transport.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/s-PM-subject-view.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SCD-Order.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SBD-Customer-AO.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SBD-ForwardingAGentAO.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/CarrierAO.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SCD-ExecuteTransport.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SBD-Carrier-ET.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/Inpurt-Execution-Output.png}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Level1.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Leve2.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Lev3.jpg}{0000/00/00 v0.0}

@@ -1,19 +1,15 @@
-% !TeX spellcheck = en_US
-% Review Christian Stary January 2020
-% Merge mit Thomas Schaller Pfad Chapter 4
-
-% testcomment
+% new structure 25.6.2020 by RS
+% more ISO standard like
 
 \RequirePackage{snapshot}
 
 \documentclass[11pt, showtrims, final, oldfontcommands]{memoir}
+
 % Resolve conflict between functions in class memoir and package changes
-\let\classadded\added 	 % save the class’ definition
-\let\added\relax		 % ‘undefine’ \foo
+\let\classadded\added % save the class’ definition
+\let\added\relax	  % ‘undefine’ \foo
 \let\deleted\relax    % neutralize \deleted command
 \let\comment\relax    % neutralize \comment command
-
-
 
 \usepackage[T1]{fontenc}
 \usepackage[textsize=footnotesize]{todonotes}
@@ -49,23 +45,19 @@
 \usepackage{longtable}
 \usepackage{pdfpages}
 \usepackage{caption}
+\usepackage{lipsum}
 
 \usepackage{amssymb}
 \usepackage{program}
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{minted}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{bookmark}
 
-\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage{xargs}   % Use more than one optional parameter in a new commands
 \usepackage{xcolor}  % Coloured text etc.
-
-
-
-
-
-
-
-
 
 \newmintinline[asminline]{lexer.py:CoreASMLexer -x}{escapeinside=~~}
 
@@ -114,231 +106,162 @@
 %\sideparmargin{outer}
 %\sidecapmargin{outer}
 
+% no parindent
+\setlength{\parindent}{0em} 
+% space after par
+\setlength{\parskip}{1em}
+
 \checkandfixthelayout[lines]
 
-\title{Standard for the Subject-oriented\\ Specification of Systems}
-\author{Stephan Borgert, Matthes Elstermann, Albert Fleischmann, \\ Reinhard Gniza, Herbert Kindermann, Florian Krenn,\\ Christian Stary, Werner Schmidt, Robert Singer, Florian Strecker, Andr\'e Wolski}
-
 % ToC down to subsections
-\settocdepth{subsection}
+\settocdepth{section}
 % Numbering down to subsections as well
-\setsecnumdepth{subsection}
+\setsecnumdepth{section}
 
 % extra index for first lines
 %\makeindex[lines]
 
 % keine Links anzeigen
+%\hypersetup{
+%	colorlinks=false,
+%	pdfborder={0 0 0},
+%}
 \hypersetup{
-	colorlinks=false,
-	pdfborder={0 0 0},
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+	pdftitle={Subject-oriented Specification of Systems},
+	bookmarks=true,
+	pdfpagemode=UseOutlines,
 }
 
 \renewcommand*{\sideparfont}{\normalfont\footnotesize}
 
 \include{mathdef}
 
+% END OF LATEX STUFF :-)
+
 \begin{document}
+	
+	% CHANGE?
+	\chapterstyle{article}
+	%
+	
+	\pagestyle{empty}
+	
+	% FIRST PAGE ---------------------
+	\vspace*{0cm}
+	\begin{adjustwidth}{3cm}{-3cm}
+		\begin{flushright}
+			\HUGE\textsf{International Standard}
+			\vspace*{3cm}\\
+			\large\textsf{Draft\\1.7.2020}
+			\vspace*{3cm}\\
+			\LARGE\textsf{\textbf{Subject-oriented Specification of Systems}}
+			\vfill
+			\includegraphics[height=2cm]{figures/i2pm.pdf}
+		\end{flushright}
+	\end{adjustwidth}
+	\clearpage
+	% FIRST PAGE ---------------------
+	
+	% SECOND PAGE --------------------
+	\vspace*{\fill}
+	\footnotesize
+	
+	This work is subject to copyright. All rights are reserved, whether the whole or part of the material is concerned, specifically the rights of translation, reprinting, reuse of illustrations, recitation, broadcasting, reproduction on microfilm or in any other way, and storage in data banks. Duplication of this publication or parts thereof is permitted only under the provisions of the German Copyright Law of September 9, 1965, in its current version. Violations are liable to prosecution under the German Copyright Law.
+	
+	\textcopyright{ 2020} Institute of Innovative Process Management, Ingolstadt
+	
+	The use of general descriptive names, registered names, trademarks, etc. in this publication does not imply, even in the absence of a specific statement, that such names are exempt from the relevant protective laws and regulations and therefore free for general use.
+	
+	Production and publishing: XYZ
+	
+	ISBN: 978-3-123-45678-9 (dummy)
+	\normalsize
+	\clearpage
+	% SECOND PAGE --------------------
+	
+	% THIRD PAGE ---------------------
+	\pagestyle{companion}
+	
+	\setupshorttoc
+	\setupmaintoc
+	\setupparasubsecs
+	\tableofcontents
+	
+	\cleardoublepage
+	% THIRD PAGE ---------------------
+	
+	\listoffigures
+	\cleardoublepage
+	
+	\listoftables
+	\cleardoublepage
+	
+	%TESTCODE
+	\renewcommand{\clearforchapter}{}
+	
 
-\chapterstyle{veelo}
-
-\frontmatter
-
-\pagestyle{empty}
-
-% half-title page
-\vspace*{3cm}
-\begin{adjustwidth}{0cm}{-3cm}
-	\begin{flushright}
-		\LARGE\textsf {Standard for the Subject-oriented\\Specification of Systems}
-	\end{flushright}
-\end{adjustwidth}
-\vspace*{\fill}
-\cleardoublepage
-
-% title page
-\vspace*{0cm}
-\begin{flushleft}
-	\Large\textsf{Albert Fleischmann \textit{Editor}}\par
-\end{flushleft}
-\vspace{2cm}
-\begin{flushleft}
-	\Huge\textsf{Standard for the Subject-oriented\\Specification of Systems}\par
-	\bigskip\bigskip
-	\Large\textsf{Working Document}
-\end{flushleft}
-\vspace{2.5cm}
-\begin{flushleft}
-	%\normalsize\textsf{With 178 Figures}
-\end{flushleft}
-\vspace*{\fill}
-\clearpage
-
-% copyright page
-\begingroup
-\footnotesize
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{\baselineskip}
-% Platz
-\vspace*{3cm}
-% Autoren
-\begin{flushleft}
-	Egon B\"orger\\
-	xyz\\
-	\medskip
-	Stephan Borgert\\
-	xyz\\
-	\medskip
-	Matthes Elstermann\\
-	xyz\\
-	\medskip
-	Albert Fleischmann\\
-	InterAktiv Unternehmensberatung, Pfaffenhofen a.d. Ilm, Germany\\
-	\medskip
-	Reinhard Gniza\\
-	xyz\\
-	\medskip
-	Herbert Kindermann\\
-	xyz\\
-	\medskip
-	Florian Krenn\\
-	xyz\\
-	\medskip
-	Thomas Schaller\\
-	Hochschule Hof, Germany\\
-	\medskip
-	Werner Schmidt\\
-	Technische Hochschule, Ingolstadt, Germany\\
-	\medskip
-	Robert Singer\\
-	FH JOANNEUM--University of Applied Sciences, Graz, Austria\\
-	\medskip
-	Christian Stary\\
-	Johannes Kepler Universit\"at, Linz, Austria\\
-	\medskip
-	Florian Strecker\\
-	xyz\\
-	\medskip
-	Andr\'e Wolski\\
-	Technische Universit\"at, Darmstadt, Germany\\
-	\medskip
-	Conny Zebold\\
-	Technische Hochschule, Ingolstadt, Germany\\
-\end{flushleft}
-\vspace*{\fill}
-This work is subject to copyright. All rights are reserved, whether the whole or part of the material is concerned, specifically the rights of translation, reprinting, reuse of illustrations, recitation, broadcasting, reproduction on microfilm or in any other way, and storage in data banks. Duplication of this publication or parts thereof is permitted only under the provisions of the German Copyright Law of September 9, 1965, in its current version. Violations
-are liable to prosecution under the German Copyright Law.\par
-\textcopyright{ 2020} Institute of Innovative Process Management, Ingolstadt\par
-The use of general descriptive names, registered names, trademarks, etc. in this publication does not imply, even in the absence of a specific statement, that such names are exempt from the relevant protective laws and regulations and therefore free for general use.\par
-Typeset by the authors\par
-Production and publishing: XYZ\par
-ISBN: 978-3-123-45678-9 (dummy)
-\endgroup
-\clearpage
-
-\pagestyle{companion}
-
-\setupshorttoc
-\tableofcontents
-\cleardoublepage
-
-\chapter{Commands for Reciew process}
-For managing changes the package change is used. Following commands are essential:\\
-\textbf{Mark text without id:}\\
-\hl{
-	This is the way  text is marked
-}\\
-
-\textbf{Add todo withaout id:}\\
-Here is some text
-\todo{The original todo note withouth changed colours.\newline Here's another line.} Here is some text
-\newline
-\newline
-\newline
-\newline
-\textbf{Add todo withaout id and inline:}\\
-Here is some text
-\todo[inline]{The original todo note withouth changed colours.\newline Here's another line.} Here is some text
-\newline
-
-\textbf{Add text with id:}\\
-\added[id=AF, comment=remarks to added text]{Added text}\\
-
-\textbf{Delete command with id:}\\
-\deleted[id=WS, comment=example for delete]{Here is the text to be deleted}
-Here is some text\\
-\newline
-\textbf{Replace text with id:}\newline
-Here is some text
-\replaced[id=CS, comment=Remarks to Replace text]{new text}{old text}
-Here is some text\\
-
-\textbf{highlight text with id:}\\
-Here is some text
-\highlight[id=AF, comment=remarks]{highlighted text}\\
-
-\textbf{Add todo with fancy line but without id:}\\
-Here is some text \todo[color=green!40, fancyline]{The original todo note.\newline Here's another line with a fancy line}
- Here is some text
-\newline 
-\newline
-\newline
-\newline 
-\newline
-\newline
-For todo commands ids are not allowed. For the add, highlight and
-Documentation for using the changes package can be found:\\
-http://ctan.ebinger.cc/tex-archive/macros/latex/contrib/changes/changes.english.pdf
-\newline
-The ids and colors for the various reviewers can be found in the preamble (line 29-33) of the text file.
-
-\chapter{Preface}
-\todo[inline]{The preface has to be more detailed}
-This book is intended for researcher who work in the area of software engineering and business process management. It helps to get a deep understanding of the practical and theoretical aspects of the subject oriented approach for modeling and implementing systems.\\
-The book is a collection of all the essential aspects of subject oriented modeling and programming. Many parts of this documents are copy pasts of various books and papers. Table \ref{tbl:sources} shows the sources for the various chapters and sections.\\
-In chapter 1 an overview is given to the subject orientated language PASS and the methods which are used to describe its structural and execution semantics. OWl (Web Ontology Language) \cite{Web:OWL} is used to describe the structural semantics and Abstract State Machines (ASM) \cite{book:ASM-2018}, \cite{book:ASM-2003} is applied to specify the execution demantics precisely.\\
-In chapter 2 the structure of PASS specification is considered in detail and its semantic is defined precisely in a formal way using OWL and ASM. The semantic of the execution of PASS models is described in chapter 3. The execution semantic uses coreASM which is an executable extension of the ASM method. This means that models described in PASS can be executed by a coresponding interpreter.\\
-Chapter 4 shows how the abstract implementation independent PASS models can be implemented using software components, physical components or human.  A formal language is described how the right ressources are assigned to the entities of the model.\\
-In the last chapter some additional aspects of the subject oriented modeling approach is considered. Thes aspects extend the kernel which was defined in chapter 2, 3 and 4.\\
-The appendix contains the details of the formal semantic of PASS. Appendix A contains the complete Ontology, Abbendix B defines the mapping of the ontology to the ASM definition of PASS and Appendix C containes the complete formal execution semantics.
-
-
-\include{preface}
-
-
-
-
-\cleardoublepage
-
-\setupparasubsecs
-\setupmaintoc
-\tableofcontents
-\setlength{\unitlength}{1pt}
-\cleardoublepage
-
-%\listoffigures
-%\clearpage
-%\listoftables
-
-%\lipsum{2}
-
-%===================================
-
-\mainmatter
-
-\include{chapter01}
-\include{chapter02}
-\include{chapter03}
-\include{chapter04}
-\include{chapter05}
-\include{appendix}
-
-\backmatter
-
-%\bibliographystyle{IEEEtran}
-\bibliography{Standard}
-
-\listoftodos
-\listofchanges[style=list, show=all]
-
-
+	% END TESTCODE
+	
+	\chapter*{Foreword}
+	\todo[inline]{Kapitelstruktur in Anlehung an ISO/IEC 19510:2013}
+	\lipsum*[1]
+	\cleardoublepage
+	
+	\chapter*{Introduction}
+	\lipsum*[2]
+	\cleardoublepage
+	
+	\chapter{Scope}
+	\lipsum*[3]
+	
+	\chapter{Conformance}
+	Software can claim compliance or conformance with this standard if and only if the software fully matches the applicable compliance points as stated in ...
+	
+	%Define model conformance and execution conformance
+	
+	\chapter{Normative References}
+	\lipsum*[4]
+	
+	\chapter{Terms and Definitions}
+	\lipsum*[5]
+	
+	\chapter{Symbols}
+	\lipsum*[6]
+	
+	\chapter{Additional Information}
+	\lipsum*[7]
+	\section{Conventions}
+	\section{Structure of this Document}
+	\section{Acknowledgments}
+	\subsection{Submitting Organizations}
+	\subsection{Supporting Organizations}
+	\subsection{Special Acknowledgments}
+	
+	\cleardoublepage
+	
+	%===================================
+	
+	\mainmatter
+	
+	\include{chapter01}
+	\include{chapter02}
+	\include{chapter03}
+	\include{chapter04}
+	\include{chapter05}
+	\include{appendix} 
+	
+	\include{review} 
+	
+	\backmatter
+	
+	%\bibliographystyle{IEEEtran}
+	%\bibliography{Standard}
+	
+	%\listoftodos
+	%\listofchanges[style=list, show=all]
+	
 \end{document}

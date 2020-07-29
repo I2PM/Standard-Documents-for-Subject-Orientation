@@ -1,0 +1,50 @@
+\chapter{Commands for Reciew process}
+
+For managing changes the package change is used. Following commands are essential:\\
+\textbf{Mark text without id:}\\
+\hl{
+	This is the way  text is marked
+}\\
+
+\textbf{Add todo withaout id:}\\
+Here is some text
+\todo{The original todo note withouth changed colours.\newline Here's another line.} Here is some text
+\newline
+\newline
+\newline
+\newline
+\textbf{Add todo withaout id and inline:}\\
+Here is some text
+\todo[inline]{The original todo note withouth changed colours.\newline Here's another line.} Here is some text
+\newline
+
+\textbf{Add text with id:}\\
+\added[id=AF, comment=remarks to added text]{Added text}\\
+
+\textbf{Delete command with id:}\\
+\deleted[id=WS, comment=example for delete]{Here is the text to be deleted}
+Here is some text\\
+\newline
+\textbf{Replace text with id:}\newline
+Here is some text
+\replaced[id=CS, comment=Remarks to Replace text]{new text}{old text}
+Here is some text\\
+
+\textbf{highlight text with id:}\\
+Here is some text
+\highlight[id=AF, comment=remarks]{highlighted text}\\
+
+\textbf{Add todo with fancy line but without id:}\\
+Here is some text \todo[color=green!40, fancyline]{The original todo note.\newline Here's another line with a fancy line}
+ Here is some text
+\newline 
+\newline
+\newline
+\newline 
+\newline
+\newline
+For todo commands ids are not allowed. For the add, highlight and
+Documentation for using the changes package can be found:\\
+http://ctan.ebinger.cc/tex-archive/macros/latex/contrib/changes/changes.english.pdf
+\newline
+The ids and colors for the various reviewers can be found in the preamble (line 29-33) of the text file.

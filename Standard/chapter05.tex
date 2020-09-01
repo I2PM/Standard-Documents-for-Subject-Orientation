@@ -173,7 +173,7 @@ In order to transform an S-PM into a subject-communication specification we cons
 \end{figure}
 Each subject in the matrix corresponds to a subject in the subject communication diagram. The names of the subjects in the S-PM are extended with an Id for the process. In our case to each subject name the letters AO are added (AO=Accept Order). A subject sends a message to another subject if in the S-PM the E-action in the succeeding phase is executed by a different subject or the subject needs supports from an other subject. If subjects send a message to the subject executing the E-activity in the succeeding phase the message is named 'E-name-of the-succeeding-phase'. If a subject requests support from another subject the message is named 'S-Name-of-the-phase?'. The receiving subject sends the result of the support request back with a message called 'S-Name-of-the-phase!'. Figure \ref{fig:SCD-Order} shows the communication structure derived from the S-PM shown in figure \ref{fig:S-PM-Order}.
 \begin{figure}[hbtp]
-	\includegraphics[scale=0.7]{Figures/Chapter5/Subject-Phase/SCD-Order.png}
+	\includegraphics[scale=0.7]{Figures/Chapter5/Subject-Phase/SCD-Order_NEW.png}
 	\caption{Subject Communication Diagram of S-PM of Process 'Order'}
 	\label{fig:SCD-Order}
 \end{figure}
@@ -181,7 +181,7 @@ Each subject in the matrix corresponds to a subject in the subject communication
 Subject 'Customer-AO' is the start subject. It is the only subject which executes activities in the start phase of the S-PM Order. The succeeding phase 'Handle order' is executed by subject 'Forwarding Agent' therefore subject 'Customer' sends the message 'E-handle-Order' to subject 'Forwarding agent-AO'. This subject executes the activities in phase 'Handle Order' (see figure \ref{fig:S-PM-Order}). \\
 Figure \ref{fig:SBD-Customer-AO} shows the behavior of subject 'Customer-AO'. In order to see the relationship between the phases in the S-PM and the activities in the SBD the activities in the SBD belonging to certain phase in the S-PM have frames marked with the phase name.
 \begin{figure}[hbtp]
-	\includegraphics[scale=0.35]{Figures/Chapter5/Subject-Phase/SBD-Customer-AO.png}
+	\includegraphics[scale=0.35]{Figures/Chapter5/Subject-Phase/SBD-Customer-AO_NEW.png}
 	\caption{SBD of Subject 'Customer-AO'}
 	\label{fig:SBD-Customer-AO}
 \end{figure}
@@ -191,7 +191,7 @@ The subject 'ForwardingAgent-AO' receives the message 'E-Handle-Order' from the 
 
 
 \begin{figure}[hbtp]
-	\includegraphics[scale=0.7]{Figures/Chapter5/Subject-Phase/SBD-ForwardingAGentAO.png}
+	\includegraphics[scale=0.7]{Figures/Chapter5/Subject-Phase/SBD-ForwardingAGentAO_NEW.png}
 	\caption{SBD of subject 'Forwarding-Agent' in Process 'Accept Order'}
 	\label{fig:SBD-ForwardingAGentAO}
 \end{figure}
@@ -200,7 +200,7 @@ The subject 'ForwardingAgent-AO' receives the message 'E-Handle-Order' from the 
 Figure \ref{fig:CarrierAO} shows the behavior of subject 'Carrier-AO'. In process 'Accept Order' the subject 'Carrier-AO' only supports subject 'ForwardinAgent-AO' in phase 'Execute Order'. This means the subject 'Carrier-AO' receives a support request message 'S-Execute-Order?', excutes the support activities and send the result back to the subject 'ForwardingAgent-AO' by the message 'S-Execute Order!'.
 
 \begin{figure}[hbtp]
-	\includegraphics[scale=0.4]{Figures/Chapter5/Subject-Phase/CarrierAO.png}
+	\includegraphics[scale=0.4]{Figures/Chapter5/Subject-Phase/CarrierAO_NEW.png}
 	\caption{SBD of subject 'Carrier-AO' in Process 'Accept Order'}
 	\label{fig:CarrierAO}
 \end{figure}
@@ -209,7 +209,7 @@ Figure \ref{fig:SCD-ExecuteTransport} shows the SBD of process 'Execute Process'
 
 
 \begin{figure}[hbtp]
-	\includegraphics[scale=0.4, angle=90]{Figures/Chapter5/Subject-Phase/SCD-ExecuteTransport.png}
+	\includegraphics[scale=0.4, angle=90]{Figures/Chapter5/Subject-Phase/SCD-ExecuteTransport_NEW.png}
 	\caption{SID of Process 'Execute Transport'}
 	\label{fig:SCD-ExecuteTransport}
 \end{figure}
@@ -218,7 +218,7 @@ Figure \ref{fig:SBD-Carrier-ET} shows the behavior of subject 'Carrier-ET' for t
 
 
 \begin{figure}[hbtp]
-	\includegraphics[scale=0.7]{Figures/Chapter5/Subject-Phase/SBD-Carrier-ET.png}
+	\includegraphics[scale=0.7]{Figures/Chapter5/Subject-Phase/SBD-Carrier-ET_NEW.png}
 	\caption{SBD of Subject 'Carrier-ET' in Process 'Execute Transport'}
 	\label{fig:SBD-Carrier-ET}
 \end{figure}
@@ -271,6 +271,7 @@ Several aspects and topics need to be addressed by future research:
 
 
 \section{Hierarchies in Communication Oriented Business Process Models}
+
 PASS  offers powerful possibilities for structuring complex process systems. The ways to do that are demonstrated with an example.
 As an example we will consider a process for realizing a car break down service. This service consists of several connected processes. There is the main process for handling the car accident and supporting e.g. processes for organising towing and repair shop services. Insurance companies may be involved for covering damages, the customer gets an invoice, uses money transfer services or banks for paying the invoice. These processes are executed by various organisations like help desk service companies, towing service companies, car repair workshops banks etc.. In most business process projects not all parts of processes are described in detail. Only a certain part is considered, e.g. only the help desk process has to be considered in detail. In order to do so we have to consider the whole environment in which a considered process is embedded. We have to know which relations exists to these other processes. It is necessary to know which inputs are rquired by neighbour processes and which results they deliver. A help desk process which organizes the towing services has to know how the towing service is requested and which further interactions are required. For instance it must be agreed whether the towing service informs the client about the arrival time of the towing truck or the help desk does it.
 

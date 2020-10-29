@@ -1,19 +1,16 @@
 \RequireVersions{
-  *{application}{TeX}     {1990/03/25 v3.x}
-  *{format} {LaTeX2e}     {2018-12-01 v2.e}
-  *{package}{snapshot}    {2002/03/05 v1.14}
-  *{class}  {memoir}      {2018/12/12 v3.7h}
-  *{package}{ifpdf}       {2018/09/07 v3.3}
-  *{package}{ifetex}      {2018/03/31 v1.2a}
-  *{package}{ifxetex}     {2010/09/12 v0.6}
-  *{package}{ifluatex}    {2016/05/16 v1.4}
+  *{application}{pdfeTeX} {0000/00/00 v0.14021}
+  *{format} {LaTeX2e}     {2020-02-02 v2.e}
+  *{package}{snapshot}    {2012/08/06 v2.13}
+  *{class}  {memoir}      {2020/06/02 v3.7l}
+  *{package}{iftex}       {2020/03/06 v1.0d}
   *{file}   {mem11.clo}   {2008/01/30 v0.3}
-  *{package}{array}       {2018/12/30 v2.4k}
+  *{package}{array}       {2019/08/31 v2.4l}
   *{package}{dcolumn}     {2014/10/28 v1.06}
   *{package}{delarray}    {2014/10/28 v1.01}
-  *{package}{tabularx}    {2016/02/03 v2.11b}
+  *{package}{tabularx}    {2020/01/15 v2.11c}
+  *{package}{textcase}    {2019/09/14 v1.00}
   *{package}{fontenc}     {0000/00/00 v0.0}
-  *{file}   {t1enc.def}   {2018/08/11 v2.0j}
   *{package}{todonotes}   {2018/11/22 v0.0}
   *{package}{ifthen}      {2014/09/29 v1.1c}
   *{package}{xkeyval}     {2014/12/03 v2.7a}
@@ -21,24 +18,24 @@
   *{package}{xcolor}      {2016/05/11 v2.12}
   *{file}   {color.cfg}   {2016/01/02 v1.6}
   *{file}   {pdftex.def}  {2018/01/08 v1.0l}
-  *{package}{tikz}        {2019/02/02 v3.1.1}
-  *{package}{pgf}         {2019/02/02 v3.1.1}
-  *{package}{pgfrcs}      {2019/02/02 v3.1.1}
+  *{package}{tikz}        {2020/01/08 v3.1.5b}
+  *{package}{pgf}         {2020/01/08 v3.1.5b}
+  *{package}{pgfrcs}      {2020/01/08 v3.1.5b}
   *{package}{everyshi}    {2001/05/15 v3.00}
   *{file}   {pgfrcs.code.tex}{0000/00/00 v0.0}
-  *{package}{pgfcore}     {2019/02/02 v3.1.1}
-  *{package}{graphicx}    {2017/06/01 v1.1a}
-  *{package}{graphics}    {2017/06/25 v1.2c}
+  *{package}{pgfcore}     {2020/01/08 v3.1.5b}
+  *{package}{graphicx}    {2019/11/30 v1.2a}
+  *{package}{graphics}    {2019/11/30 v1.4a}
   *{package}{trig}        {2016/01/03 v1.10}
   *{file}   {graphics.cfg}{2016/06/04 v1.11}
-  *{package}{pgfsys}      {2019/02/02 v3.1.1}
+  *{package}{pgfsys}      {2020/01/08 v3.1.5b}
   *{file}   {pgfsys.code.tex}{0000/00/00 v0.0}
-  *{file}   {pgfsyssoftpath.code.tex}{2019/02/02 v3.1.1}
-  *{file}   {pgfsysprotocol.code.tex}{2019/02/02 v3.1.1}
+  *{file}   {pgfsyssoftpath.code.tex}{2020/01/08 v3.1.5b}
+  *{file}   {pgfsysprotocol.code.tex}{2020/01/08 v3.1.5b}
   *{file}   {pgfcore.code.tex}{0000/00/00 v0.0}
-  *{package}{pgfcomp-version-0-65}{2019/02/02 v3.1.1}
-  *{package}{pgfcomp-version-1-18}{2019/02/02 v3.1.1}
-  *{package}{pgffor}      {2019/02/02 v3.1.1}
+  *{package}{pgfcomp-version-0-65}{2020/01/08 v3.1.5b}
+  *{package}{pgfcomp-version-1-18}{2020/01/08 v3.1.5b}
+  *{package}{pgffor}      {2020/01/08 v3.1.5b}
   *{package}{pgfkeys}     {0000/00/00 v0.0}
   *{file}   {pgfkeys.code.tex}{0000/00/00 v0.0}
   *{package}{pgfmath}     {0000/00/00 v0.0}
@@ -47,20 +44,18 @@
   *{file}   {tikz.code.tex}{0000/00/00 v0.0}
   *{package}{calc}        {2017/05/25 v4.3}
   *{package}{morewrites}  {2018/12/29 v0.0}
-  *{package}{expl3}       {2019-02-15 v3}
-  *{file}   {expl3-code.tex}{2019-02-15 v3}
-  *{file}   {l3pdfmode.def}{2019-02-15 v3}
+  *{package}{expl3}       {2020-06-03 v3}
+  *{file}   {l3backend-pdfmode.def}{2020-06-03 v3}
   *{package}{primargs}    {2018/12/29 v0.0}
-  *{package}{changes}     {2019/01/26 v3.1.2}
+  *{package}{changes}     {2019/11/17 v3.2.1}
   *{package}{xifthen}     {2015/11/05 v1.4.0}
   *{package}{xstring}     {2019/02/06 v1.83}
-  *{package}{pdfcolmk}    {2016/05/16 v1.3}
-  *{package}{ulem}        {2012/05/18 v0.0}
+  *{package}{ulem}        {2019/11/18 v0.0}
   *{package}{truncate}    {2001/08/20 v3.6}
-  *{package}{soulutf8}    {2016/05/16 v1.1}
+  *{package}{soulutf8}    {2019/12/15 v1.2}
   *{package}{soul}        {2003/11/17 v2.4}
-  *{package}{infwarerr}   {2016/05/16 v1.4}
-  *{package}{etexcmds}    {2016/05/16 v1.6}
+  *{package}{infwarerr}   {2019/12/03 v1.5}
+  *{package}{etexcmds}    {2019/12/15 v1.7}
   *{package}{memsty}      {2010/02/09 v0.0}
   *{package}{etex}        {2016/08/01 v2.7}
   *{package}{layouts}     {2009/09/02 v2.6d}
@@ -69,44 +64,36 @@
   *{package}{alltt}       {1997/06/16 v2.0g}
   *{package}{latexsym}    {1998/08/17 v2.2e}
   *{package}{memfonts}    {2007/11/13 v1.0}
-  *{package}{pifont}      {2005/04/12 v9.2a}
+  *{package}{pifont}      {2020/03/25 v9.3}
   *{file}   {upzd.fd}     {2001/06/04 v0.0}
   *{file}   {upsy.fd}     {2001/06/04 v0.0}
-  *{package}{amsmath}     {2018/12/01 v2.17b}
+  *{package}{amsmath}     {2020/01/20 v2.17e}
   *{package}{amstext}     {2000/06/29 v2.01}
   *{package}{amsgen}      {1999/11/30 v2.0}
   *{package}{amsbsy}      {1999/11/29 v1.2d}
   *{package}{amsopn}      {2016/03/08 v2.02}
   *{package}{fontenc}     {0000/00/00 v0.0}
-  *{file}   {t1enc.def}   {2018/08/11 v2.0j}
-  *{package}{hyperref}    {2018/11/30 v6.88e}
-  *{package}{hobsub-hyperref}{2016/05/16 v1.14}
-  *{package}{hobsub-generic}{2016/05/16 v1.14}
-  *{package}{hobsub}      {2016/05/16 v1.14}
-  *{package}{ltxcmds}     {2016/05/16 v1.23}
-  *{package}{ifvtex}      {2016/05/16 v1.6}
-  *{package}{intcalc}     {2016/05/16 v1.2}
-  *{package}{kvsetkeys}   {2016/05/16 v1.17}
-  *{package}{kvdefinekeys}{2016/05/16 v1.4}
-  *{package}{pdftexcmds}  {2018/09/10 v0.29}
-  *{package}{pdfescape}   {2016/05/16 v1.14}
-  *{package}{bigintcalc}  {2016/05/16 v1.4}
-  *{package}{bitset}      {2016/05/16 v1.2}
-  *{package}{uniquecounter}{2016/05/16 v1.3}
-  *{package}{letltxmacro} {2016/05/16 v1.5}
-  *{package}{hopatch}     {2016/05/16 v1.3}
-  *{package}{xcolor-patch}{2016/05/16 v0.0}
-  *{package}{atveryend}   {2016/05/16 v1.9}
-  *{package}{atbegshi}    {2016/06/09 v1.18}
-  *{package}{refcount}    {2016/05/16 v3.5}
-  *{package}{hycolor}     {2016/05/16 v1.8}
-  *{package}{auxhook}     {2016/05/16 v1.4}
-  *{package}{kvoptions}   {2016/05/16 v3.12}
-  *{file}   {pd1enc.def}  {2018/11/30 v6.88e}
-  *{file}   {hyperref.cfg}{2002/06/06 v1.2}
-  *{package}{memhfixc}    {2013/05/30 v1.17}
-  *{file}   {hpdftex.def} {2018/11/30 v6.88e}
-  *{package}{rerunfilecheck}{2016/05/16 v1.8}
+  *{file}   {t1ppl.fd}    {2001/06/04 v1/ppl.}
+  *{package}{hyperref}    {2020-05-15 v7.00e}
+  *{package}{ltxcmds}     {2019/12/15 v1.24}
+  *{package}{pdftexcmds}  {2019/11/24 v0.31}
+  *{package}{kvsetkeys}   {2019/12/15 v1.18}
+  *{package}{kvdefinekeys}{2019-12-19 v1.6}
+  *{package}{pdfescape}   {2019/12/09 v1.15}
+  *{package}{hycolor}     {2020-01-27 v1.10}
+  *{package}{letltxmacro} {2019/12/03 v1.6}
+  *{package}{auxhook}     {2019-12-17 v1.6}
+  *{package}{kvoptions}   {2019/11/29 v3.13}
+  *{file}   {pd1enc.def}  {2020-05-15 v7.00e}
+  *{package}{intcalc}     {2019/12/15 v1.3}
+  *{package}{bitset}      {2019/12/09 v1.3}
+  *{package}{bigintcalc}  {2019/12/15 v1.5}
+  *{package}{atbegshi}    {2019/12/05 v1.19}
+  *{package}{memhfixc}    {2019/10/24 v1.18}
+  *{file}   {hpdftex.def} {2020-05-15 v7.00e}
+  *{package}{atveryend}   {2019-12-11 v1.11}
+  *{package}{rerunfilecheck}{2019/12/05 v1.9}
+  *{package}{uniquecounter}{2019/12/15 v1.4}
   *{package}{memlays}     {2002/08/10 v1.0}
   *{package}{titlepages}  {2009/07/09 v1.1}
   *{package}{dpfloat}     {2006/10/05 v0.0}
@@ -115,17 +102,17 @@
   *{package}{wrapfig}     {2003/01/31 v3.6}
   *{package}{hyphenat}    {2009/09/02 v2.3c}
   *{package}{lscape}      {2000/10/22 v3.01}
-  *{package}{listings}    {2018/09/02 v1.7}
-  *{package}{lstmisc}     {2018/09/02 v1.7}
-  *{file}   {listings.cfg}{2018/09/02 v1.7}
-  *{package}{enumitem}    {2019/02/04 v3.8}
-  *{package}{longtable}   {2014/10/28 v4.11}
-  *{package}{pdfpages}    {2017/10/31 v0.5l}
+  *{package}{listings}    {2020/03/24 v1.8d}
+  *{package}{lstmisc}     {2020/03/24 v1.8d}
+  *{file}   {listings.cfg}{2020/03/24 v1.8d}
+  *{package}{enumitem}    {2019/06/20 v3.9}
+  *{package}{longtable}   {2020/01/07 v4.13}
+  *{package}{pdfpages}    {2020/01/28 v0.5q}
   *{package}{eso-pic}     {2018/04/12 v2.0h}
-  *{file}   {pppdftex.def}{2017/10/31 v0.5l}
-  *{package}{caption}     {2018/10/06 v3.3-154}
-  *{package}{caption3}    {2018/09/12 v1.8c}
-  *{package}{ltcaption}   {2018/08/26 v1.4-95}
+  *{file}   {pppdftex.def}{2020/01/28 v0.5q}
+  *{package}{caption}     {2020/05/10 v3.4j}
+  *{package}{caption3}    {2020/05/10 v1.11}
+  *{package}{ltcaption}   {2018/08/26 v1.4a}
   *{package}{amssymb}     {2013/01/14 v3.01}
   *{package}{amsfonts}    {2013/01/14 v3.01}
   *{package}{program}     {0000/00/00 v0.0}
@@ -133,42 +120,39 @@
   *{file}   {umsa.fd}     {2013/01/14 v3.01}
   *{file}   {umsb.fd}     {2013/01/14 v3.01}
   *{file}   {ueur.fd}     {2013/01/14 v3.01}
-  *{package}{mathtools}   {2018/01/08 v1.21}
+  *{package}{mathtools}   {2020/03/24 v1.24}
   *{package}{mhsetup}     {2017/03/31 v1.3}
   *{package}{minted}      {2017/07/19 v2.5}
   *{package}{fvextra}     {2019/02/04 v1.4}
-  *{package}{etoolbox}    {2018/08/19 v2.5f}
-  *{package}{fancyvrb}    {2019/01/15 v0.0}
+  *{package}{etoolbox}    {2019/09/21 v2.5h}
+  *{package}{fancyvrb}    {2020/05/03 v3.6}
   *{package}{upquote}     {2012/04/19 v1.3}
-  *{package}{textcomp}    {2018/08/11 v2.0j}
-  *{file}   {ts1enc.def}  {2001/06/05 v3.0e}
-  *{file}   {ts1enc.dfu}  {2018/10/05 v1.2f}
+  *{package}{textcomp}    {2020/02/02 v2.0n}
   *{package}{lineno}      {2005/11/02 v4.41}
-  *{package}{shellesc}    {2016/06/07 v0.02a}
+  *{package}{shellesc}    {2019/11/08 v1.0c}
   *{package}{ifplatform}  {2017/10/13 v0.4a}
-  *{package}{catchfile}   {2016/05/16 v1.7}
-  *{file}   {Standardbuch-PASS.w18}{0000/00/00 v0.0}
+  *{package}{catchfile}   {2019/12/09 v1.8}
+  *{package}{ifluatex}    {2019/10/25 v1.5}
   *{package}{framed}      {2011/10/22 v0.96:}
   *{package}{float}       {2001/11/08 v1.3d}
   *{package}{xargs}       {2008/03/22 v1.1}
   *{file}   {mathdef.tex} {0000/00/00 v0.0}
-  *{file}   {ts1cmr.fd}   {2014/09/29 v2.5h}
-  *{file}   {t1ppl.fd}    {2001/06/04 v1/ppl.}
-  *{file}   {supp-pdf.mkii}{0000/00/00 v0.0}
-  *{package}{epstopdf-base}{2016/05/15 v2.6}
-  *{package}{grfext}      {2016/05/16 v1.2}
-  *{file}   {epstopdf-sys.cfg}{2010/07/13 v1.3}
-  *{package}{nameref}     {2016/05/21 v2.44}
-  *{package}{gettitlestring}{2016/05/16 v1.5}
-  *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
-  *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
-  *{package}{ragged2e}    {2009/05/21 v2.1}
-  *{package}{everysel}    {2011/10/28 v1.2}
-  *{package}{pdflscape}   {2016/05/14 v0.11}
   *{file}   {ts1ppl.fd}   {2001/06/04 v1/ppl.}
+  *{file}   {ueuf.fd}     {2013/01/14 v3.01}
+  *{file}   {ts1lmtt.fd}  {2009/10/30 v1.6}
+  *{-------}{Document-specific files:}{----}
+  *{file}   {supp-pdf.mkii}{0000/00/00 v0.0}
+  *{package}{epstopdf-base}{2020-01-24 v2.11}
+  *{package}{nameref}     {2019/09/16 v2.46}
+  *{package}{refcount}    {2019/12/15 v3.6}
+  *{package}{gettitlestring}{2019/12/15 v1.6}
+  *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
+  *{file}   {Standardbuch-PASS.out}{0000/00/00 v0.0}
+  *{package}{ragged2e}    {2019/07/28 v2.2}
+  *{package}{everysel}    {2011/10/28 v1.2}
+  *{package}{pdflscape}   {2019/12/05 v0.12}
   *{file}   {preface.tex} {0000/00/00 v0.0}
   *{file}   {Figures/Preface.png}{0000/00/00 v0.0}
-  *{file}   {ueuf.fd}     {2013/01/14 v3.01}
   *{file}   {chapter01.tex}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/OrderComStructure.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/OrderCustomerOrderHandling.jpg}{0000/00/00 v0.0}
@@ -184,7 +168,7 @@
   *{file}   {Figures/Ontology/SubjectInteraction/20181218-Data.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectInteraction/OntoGrSubjectInteraction.jpg}{0000/00/00 v0.0}
   *{file}   {chapter03.tex}{0000/00/00 v0.0}
-  *{file}   {chapter03a.tex}{0000/00/00 v0.0}
+  *{file}   {chapter03a}  {0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/sendState.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/SendSTateTimer.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/ReceiveState.jpg}{0000/00/00 v0.0}
@@ -203,7 +187,7 @@
   *{file}   {Figures/Ontology/SubjectExecution/20190104-Behavior-describing-component.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/20190109-States.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Ontology/SubjectExecution/20190105-Transitions.jpg}{0000/00/00 v0.0}
-  *{file}   {chapter03b.tex}{0000/00/00 v0.0}
+  *{file}   {chapter03b}  {0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/default-pyg-prefix.pygstyle}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/default.pygstyle}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/3A53015A4DE50BDA0DE35D6F370582F4F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
@@ -353,12 +337,12 @@
   *{file}   {Figures/Chapter5/Subject-Phase/S-PM-process-Ortder.png}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/Subject-Phase/execute-transport.png}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/Subject-Phase/s-PM-subject-view.png}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Subject-Phase/SCD-Order.png}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Subject-Phase/SBD-Customer-AO.png}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Subject-Phase/SBD-ForwardingAGentAO.png}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Subject-Phase/CarrierAO.png}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Subject-Phase/SCD-ExecuteTransport.png}{0000/00/00 v0.0}
-  *{file}   {Figures/Chapter5/Subject-Phase/SBD-Carrier-ET.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SCD-Order_NEW.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SBD-Customer-AO_NEW.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SBD-ForwardingAGentAO_NEW.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/CarrierAO_NEW.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SCD-ExecuteTransport_NEW.png}{0000/00/00 v0.0}
+  *{file}   {Figures/Chapter5/Subject-Phase/SBD-Carrier-ET_NEW.png}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/Subject-Phase/Inpurt-Execution-Output.png}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Level1.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/figures-hierarchy/Car-Service-Leve2.jpg}{0000/00/00 v0.0}
@@ -388,9 +372,9 @@
   *{file}   {Figures/Chapter5/ActivityBased/CalcPro.jpg}{0000/00/00 v0.0}
   *{file}   {Figures/Chapter5/ActivityBased/embedding.jpg}{0000/00/00 v0.0}
   *{file}   {appendix.tex}{0000/00/00 v0.0}
-  *{file}   {appendixA.tex}{0000/00/00 v0.0}
-  *{file}   {appendixB.tex}{0000/00/00 v0.0}
-  *{file}   {appendixC.tex}{0000/00/00 v0.0}
+  *{file}   {appendixA}   {0000/00/00 v0.0}
+  *{file}   {appendixB}   {0000/00/00 v0.0}
+  *{file}   {appendixC}   {0000/00/00 v0.0}
   *{file}   {Figures/CoreASM/ArchitekturKonsoleCoreASM.pdf}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/4249DAE743D794FE36A3CA47830F45E0F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/C96E57009F6286734B033C8946FAF1FD07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
@@ -409,7 +393,6 @@
   *{file}   {_minted-Standardbuch-PASS/B5CA6BCD31CB23EC0D4D2813B1C91CE6F60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/E7E2CB3C1F12F19DEC539178354B2CA907B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/9D63C76062869B5F8B427D619C40F1E007B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
-  *{file}   {ts1lmtt.fd}  {2009/10/30 v1.6}
   *{file}   {_minted-Standardbuch-PASS/6FA22F6FCBF482F866F914CAE2EDDA3E07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/D5506E90740A77CCA1D54382F780D11F07B37CD1344A9BFEB3BB8D600B282F2F.pygtex}{0000/00/00 v0.0}
   *{file}   {_minted-Standardbuch-PASS/038C7DD45F64033CCABD6BE01C9C4B3AF60A6A8E94233316289A6D23C8A042CF.pygtex}{0000/00/00 v0.0}

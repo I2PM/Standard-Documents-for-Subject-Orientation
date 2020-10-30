@@ -11,7 +11,7 @@
 %CS: Hochkommas und Bindestriche im pdf nicht alle lesbar, oft mt Umlauten gedruckt!
 %}
 
-To facilitate the understanding of the following sections we will introduce the concept of subject-orienting modeling which is based on the Parallel Activity Specification Scheme (PASS). Additionally, we will give a short introduction to ontologies---especially the Web Ontology Language (OWL)---, and to Abstract State Machines (ASM) as underlying concepts of this standard document.
+To facilitate the understanding of the following sections we will introduce the concept of subject-oriented \index{modeling}modeling which is based on the Parallel Activity Specification Scheme (PASS). Additionally, we will give a short introduction to ontologies---especially the Web Ontology Language (OWL)---, and to Abstract State Machines (ASM) as underlying concepts of this standard document.
 
 \section{Subject Orientation and PASS }
 \label{SubjectOrient}
@@ -28,7 +28,7 @@ Subjects represent the behavior of an active entity. A specification of a subjec
 
 Subjects communicate with each other by exchanging messages. Messages have a name and a payload. The name should express the meaning of a message informally and the payloads are the data (business objects) transported. Internally, subjects execute local activities such as calculating a price, storing an address, etc.
 
-A subject sends messages to other subjects, expects messages from other subjects, and executes internal actions. All these activities are done in sequences which are defined in a subject's behavior specification. Subject-oriented process specifications are always embedded in a context. A context is defined by the business organization and the technology by which a business process\todo{Add glossary to the document} is executed.
+A subject sends messages to other subjects, expects messages from other subjects, and executes internal actions. All these activities are done in sequences which are defined in a subject's behavior specification. Subject-oriented process specifications are always embedded in a context. A context is defined by the business organization and the technology by which a business process \index{business process} \todo{Add glossary to the document} is executed.
 
 Subject-oriented system development integrates established theories and concepts. It has been inspired by various process algebras (see e.g. [2], [3], [4]), by the basic structure of nearly all natural languages (Subject, Predicate, Object) and the systemic sociology developed by Niklas Luhmann (an introduction can be found in [5]). According to the organizational theory developed by Luhmann, the smallest organization consists of communication executed between at least two information processing entities [5]. The integrated concepts have been enhanced and adapted to organizational stakeholder requirements, such as providing a simple graphical notation, as detailed in the following sections.
 

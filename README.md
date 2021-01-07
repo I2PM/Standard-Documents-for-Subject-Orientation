@@ -1,4 +1,4 @@
-# Standard document for PASS (Partily Obsolete)
+# Standard document for PASS (Partially Obsolete)
 
 These documents contain the standard description (meta-model) for the subject-oriented modeling language PASS. 
 
